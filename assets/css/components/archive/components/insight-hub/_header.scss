@@ -1,0 +1,29 @@
+.archive-header {
+  padding-top: $ccg-top-page-padding;
+  background-color: rgb(0, 32, 41);
+  position: relative;
+
+  .parallax-bars {
+    &#bar-one {
+      top: 30px;
+      left: -260px;
+      z-index: 1;
+      transform: rotate(40deg);
+
+      @include media-breakpoint-up(lg) {
+        top: 40px;
+        left: -220px;
+      }
+    }
+  }
+
+  h1.title {
+    @include title-text($ccg-off-white);
+  }
+
+  .intro {
+    h2 {
+      @include sub-heading-text($ccg-off-white);
+    }
+  }
+}

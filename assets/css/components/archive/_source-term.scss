@@ -1,0 +1,56 @@
+.archive.tax-source {
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  @import "components/news-work-blog/header";
+
+  .archive-header {
+    .parallax-bars {
+      &#bar-one {
+        top: 30px;
+        right: -260px;
+        transform: rotate(160deg);
+
+        @include media-breakpoint-up(lg) {
+          top: 70px;
+          right: -140px;
+        }
+      }
+
+      &#bar-two {
+        bottom: -60px;
+        left: -250px;
+        transform: rotate(210deg);
+
+        @include media-breakpoint-up(lg) {
+          bottom: -160px;
+          left: -180px;
+        }
+      }
+    }
+  }
+
+  @import "components/news-work-blog/posts";
+
+  .archive-posts-container {
+    background: linear-gradient($ccg-green 100px, $ccg-off-white 10px);
+  }
+
+  .bottom-cta {
+    .parallax-bars {
+      &#bar-three {
+        top: -350px;
+        right: -250px;
+        transform: rotate(170deg);
+
+        @include media-breakpoint-up(lg) {
+          top: -240px;
+          right: -200px;
+        }
+      }
+    }
+  }
+}

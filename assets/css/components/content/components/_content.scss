@@ -1,0 +1,148 @@
+.post-content {
+  margin-bottom: 60px;
+  z-index: 1;
+  position: relative;
+
+  .content {
+    ul {
+      @include body-text($ccg-text);
+      padding-left: 20px;
+
+      li {
+        padding-left: 10px;
+
+        &::marker {
+          content: '\2014';
+        }
+      }
+    }
+
+    li {
+      @include body-text($ccg-text);
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+    }
+
+    span {
+      @include body-text($ccg-text);
+    }
+
+    p {
+      @include body-text($ccg-text);
+
+      & + h3 {
+        margin-top: 44px;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong {
+      font-family: $font-circular-bold;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+      font-family: $font-circular-medium;
+      color: $ccg-orange;
+    }
+  }
+
+  .image {
+    @include media-breakpoint-down(lg) {
+      margin-top: 44px;
+    }
+
+    img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: $ccg-img-border-radius;
+      opacity: 0;
+      transform: translate(0px, 20px);
+    }
+  }
+
+  .image-text {
+    p {
+      @include sub-heading-text($ccg-orange);
+
+      @include media-breakpoint-up(lg) {
+        margin-top: 20px;
+      }
+
+      @include media-breakpoint-down(md) {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .social {
+    .social-icons {
+      display: flex;
+      align-items: center;
+      margin-top: 30px;
+
+      a {
+        margin-right: 20px;
+
+        svg {
+          overflow: visible;
+
+          path {
+            transition: $ccg-transition-all;
+          }
+        }
+
+        &.linkedin-icon:hover, &.x-icon:hover {
+          svg {
+            fill: $ccg-orange;
+          }
+        }
+
+        &.mail-icon:hover {
+          svg path {
+            stroke: $ccg-text;
+          }
+        }
+
+        @include media-breakpoint-only(md) {
+          &.linkedin-icon, &.mail-icon {
+            svg {
+              width: 21px;
+              height: 21px;
+            }
+          }
+
+          &.x-icon {
+            svg {
+              width: 17px;
+              height: 17px;
+            }
+          }
+        }
+
+        @include media-breakpoint-down(md) {
+          &.linkedin-icon, &.mail-icon {
+            svg {
+              width: 19px;
+              height: 19px;
+            }
+          }
+
+          &.x-icon {
+            svg {
+              width: 15px;
+              height: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

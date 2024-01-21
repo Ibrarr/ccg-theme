@@ -1,0 +1,106 @@
+.contact-form {
+  background-color: $ccg-orange;
+  position: relative;
+  z-index: 3;
+  padding: 65px 0;
+  border-radius: 0 0 25px 25px;
+
+  .parallax-bars {
+    svg path {
+      stroke: $ccg-dark-green;
+      fill: $ccg-dark-green;
+    }
+
+    &#bar-three {
+      bottom: 100px;
+      left: -240px;
+      transform: rotate(25deg);
+
+      @include media-breakpoint-only(md) {
+        bottom: 90px;
+        left: -200px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: 40px;
+        left: -30px;
+      }
+    }
+
+    &#bar-four {
+      bottom: -40px;
+      right: -240px;
+      transform: rotate(17deg);
+
+      @include media-breakpoint-only(md) {
+        bottom: 30px;
+        right: -200px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: 100px;
+        right: -40px;
+      }
+    }
+  }
+
+  h3 {
+    @include title-text(#ffffff);
+  }
+
+  .contact-gform-form {
+
+    .gform_heading {
+      display: none;
+    }
+
+    .gform-theme--foundation .gform_fields {
+      grid-row-gap: 20px;
+
+      @include media-breakpoint-down(lg) {
+        display: block;
+      }
+    }
+
+    label {
+      @include body-text(#ffffff);
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"] {
+      border-radius: 8px;
+      border: none;
+      height: 40px;
+
+      @include media-breakpoint-up(lg) {
+        height: 50px;
+      }
+
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+    }
+
+    textarea {
+      border-radius: 8px;
+      border: none;
+      min-block-size: 10rem !important;
+    }
+
+    .contact-us-form_wrapper input[type="submit"].gform_button.button {
+      margin-top: 25px;
+      height: 32px;
+      @include long-button($ccg-dark-green, #ffffff, #ffffff, $ccg-dark-green);
+
+      @include media-breakpoint-up(lg) {
+        height: 44px;
+        margin-top: 40px;
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      .gfield:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.archive-posts-container {
+  padding-top: 58px;
+  padding-bottom: 75px;
+  background: $ccg-off-white;
+
+  @import "term-selector";
+  @import "../../../article-card";
+
+  .article-card {
+    margin-bottom: 30px !important;
+    opacity: 0;
+  }
+
+  .no-results {
+    font-family: $font-circular-medium;
+    color: $ccg-text;
+  }
+
+  .global-button {
+    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+    display: none;
+    margin: auto;
+  }
+
+  #loading-indicator {
+    display: none;
+    text-align: center;
+    position: relative;
+    margin: 40px 0;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 86px;
+    padding-bottom: 110px;
+
+    .article-card {
+      margin-bottom: 60px !important;
+    }
+  }
+}

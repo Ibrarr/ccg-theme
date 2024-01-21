@@ -1,0 +1,53 @@
+.diversity {
+  margin-bottom: 80px;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-two {
+      bottom: 70px;
+      right: -270px;
+      transform: rotate(320deg);
+      z-index: 5;
+
+      @include media-breakpoint-only(md) {
+        bottom: -10px;
+        right: -230px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: -70px;
+        right: -150px;
+      }
+    }
+  }
+
+  .main-image {
+    width: 100%;
+    border-radius: 8px;
+
+    @include media-breakpoint-up(lg) {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @include media-breakpoint-down(lg) {
+      margin-bottom: 30px;
+    }
+  }
+
+  .content-blueprint {
+    @include media-breakpoint-up(lg) {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @import "content";
+
+    .divsersity-blueprint-image {
+      margin-top: 30px;
+      max-width: 270px;
+      border-radius: 8px;
+    }
+  }
+}

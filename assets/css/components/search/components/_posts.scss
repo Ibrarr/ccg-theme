@@ -1,0 +1,46 @@
+.search-posts-container {
+  margin-top: -25px;
+  padding-bottom: 75px;
+
+  @import "search-input";
+
+  #search-count {
+    @include body-text($ccg-orange);
+    font-family: $font-circular-medium;
+    margin: 20px 0;
+  }
+
+  #posts-container {
+    margin-top: 40px;
+  }
+
+  @import "../../article-card";
+
+  .article-card {
+    margin-bottom: 30px !important;
+    opacity: 0;
+    z-index: 3;
+    position: relative;
+
+    @include media-breakpoint-up(lg) {
+      margin-bottom: 60px !important;
+    }
+  }
+
+  .global-button {
+    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+    display: none;
+    margin: auto;
+  }
+
+  #loading-indicator {
+    display: none;
+    text-align: center;
+    position: relative;
+    margin: 40px 0;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-bottom: 110px;
+  }
+}

@@ -1,0 +1,54 @@
+.impact {
+  position: relative;
+  z-index: 4;
+  background-color: $ccg-orange;
+  padding: 50px 0;
+  border-radius: 0 0 25px 25px;
+
+  @include media-breakpoint-up(lg) {
+    padding: 70px 0;
+  }
+
+  h3 {
+    font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
+    font-family: $font-circular-medium;
+    color: #ffffff;
+    margin-bottom: 40px;
+  }
+
+  .number, .plus {
+
+    .title {
+      font-size: clamp(2.375rem, -0.0694rem + 5.0926vw, 3.75rem);
+      line-height: clamp(2.6875rem, -0.5347rem + 6.713vw, 4.5rem);
+      font-family: $font-circular-bold;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    .description {
+      @include body-text($ccg-text);
+    }
+  }
+
+  .quote {
+    @include media-breakpoint-down(lg) {
+      margin-top: 40px;
+    }
+
+    .quote-text {
+      font-family: $font-circular-regular;
+      font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+      line-height: clamp(1.375rem, 0.0417rem + 2.7778vw, 2.125rem);
+      color: #ffffff;
+    }
+
+    .quote-name-company {
+      @include body-text($ccg-text);
+
+      span {
+        font-family: $font-circular-medium;
+      }
+    }
+  }
+}

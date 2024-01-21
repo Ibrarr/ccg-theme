@@ -1,0 +1,58 @@
+.content {
+
+  ul {
+    @include body-text($ccg-dark-green);
+    padding-left: 20px;
+
+    li {
+      @include body-text($ccg-dark-green);
+      padding-left: 10px;
+
+      &::marker {
+        content: '\2014';
+      }
+    }
+  }
+
+  li {
+    @include body-text($ccg-dark-green);
+  }
+
+  span {
+    @include body-text($ccg-text);
+  }
+
+  p {
+    @include body-text($ccg-dark-green);
+
+    & + h3 {
+      margin-top: 44px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  strong {
+    font-family: $font-circular-bold;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+    font-family: $font-circular-medium;
+    color: $ccg-orange;
+  }
+
+  a {
+    font-family: $font-circular-medium;
+    color: $ccg-dark-green;
+    background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+    transition: background-size 350ms;
+
+    &:where(:hover, :focus-visible) {
+      background-size: 100%;
+      background-position-x: left;
+    }
+  }
+}

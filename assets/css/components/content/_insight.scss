@@ -1,0 +1,56 @@
+.single-insight.standard {
+  article {
+    position: relative;
+    margin-bottom: 60px;
+
+    .parallax-bars {
+      &#bar-one {
+        top: 420px;
+        right: -260px;
+        transform: rotate(200deg);
+
+        @include media-breakpoint-only(md) {
+          top: 370px;
+        }
+
+        @include media-breakpoint-up(lg) {
+          top: 370px;
+          right: -50px;
+        }
+      }
+
+      &#bar-two {
+        bottom: 20px;
+        right: -230px;
+        transform: rotate(315deg);
+        z-index: 4;
+
+        @include media-breakpoint-up(lg) {
+          bottom: 0;
+          right: -150px;
+        }
+      }
+    }
+
+    @import "components/header";
+    @import "components/content";
+    @import "components/author";
+  }
+
+  @import "components/related-content";
+
+  .related-content {
+    .parallax-bars {
+      &#bar-three {
+        bottom: 30px;
+        left: -250px;
+        transform: rotate(165deg);
+
+        @include media-breakpoint-up(lg) {
+          bottom: 60px;
+          left: -160px;
+        }
+      }
+    }
+  }
+}

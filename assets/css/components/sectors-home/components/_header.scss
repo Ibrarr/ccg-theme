@@ -1,0 +1,65 @@
+.sectors-header {
+  position: relative;
+  overflow: hidden;
+
+  .sector-name-slide {
+    position: absolute;
+    height: 100%;
+    right: -550px;
+
+    @include media-breakpoint-up(lg) {
+      right: -339px;
+    }
+
+    .splide {
+      height: 100%;
+
+      .splide__track {
+        overflow: visible;
+
+        .splide__slide {
+          transition: all 1s;
+          margin-left: 0;
+          margin-right: -100px;
+
+          @include media-breakpoint-up(lg) {
+            margin-right: -200px;
+          }
+
+          .sector-name {
+            height: 100%;
+            display: flex;
+            align-items: center;
+          }
+
+          h3 {
+            font-family: $font-circular-bold;
+            color: $ccg-off-white;
+            font-size: clamp(5rem, 3.8462rem + 3.2051vw, 6.25rem);
+            opacity: .5;
+            transition: all 1s;
+          }
+
+          &.is-active {
+            margin-right: 0;
+            margin-left: -100px;
+
+            @include media-breakpoint-up(lg) {
+              margin-left: -200px;
+            }
+
+            h3 {
+              color: $ccg-orange;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  img {
+    height: 65vh;
+    width: 100%;
+    object-fit: cover;
+  }
+}

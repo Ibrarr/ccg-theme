@@ -1,0 +1,299 @@
+{
+    "key": "group_6572fb814dd50",
+    "title": "Insight Content - Webinars",
+    "fields": [
+        {
+            "key": "field_6572fb8158b68",
+            "label": "Intro",
+            "name": "intro",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_6572fb815c76f",
+            "label": "Form Section",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6572fb816037e",
+            "label": "Form Header",
+            "name": "form_header",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_6572fb8163f8b",
+            "label": "Select Form",
+            "name": "select_gform_form",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "26": "Contact Form",
+                "5": "How B2B PR Done Right Benefits Your SEO",
+                "7": "How B2B Tech Vendors Can Use PR & Marketing To Attract Channel Partners",
+                "4": "How Do IT Decision-Makers Choose Their Suppliers?",
+                "14": "How Do Modern Enterprises Buy Technology?",
+                "17": "How MediaTech Companies Can Use Integrated Marketing Communications To Achieve Commercial Success",
+                "15": "How Telcos And OTTs Are Disrupting The Traditional Broadcast Industry",
+                "8": "How To Influence FinTech Buyers",
+                "9": "How To Influence FinTech Buyers In Capital Markets",
+                "20": "How To Influence Fintech Buyers: The Shop Window Is Everything",
+                "21": "How to Influence Purchasing Behaviour in a Tough Economic Climate: Cybersecurity Marketing Strategies",
+                "16": "How To Influence Retail Technology Buyers?",
+                "13": "How To Sell To Telcos In The Age Of Digital Transformation",
+                "6": "How to Successfully sell to Telecoms Operators",
+                "2": "How To Use PR To Attract Acquirers",
+                "11": "How Vendors Can Benefit From The Impact Of IP On The Broadcast Industry",
+                "1": "Insight Report",
+                "19": "More Brand, more Buck: How Brand Influences Enterprise Technology Buyers",
+                "28": "Newsletter Popup Form",
+                "18": "Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
+                "3": "Successful Influencer Marketing",
+                "10": "Successfully Marketing And Selling To Broadcast Service Providers",
+                "23": "Telco Transformation: Lessons For Vendor Marketing",
+                "27": "TEST POPUP",
+                "12": "Unaware, Unprepared And Paralysed: Retailer Readiness For PSD2",
+                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6572fb8167bbc",
+            "label": "Form Body Text",
+            "name": "form_body_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "wpautop"
+        },
+        {
+            "key": "field_6572fb816b8b7",
+            "label": "Content Section",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6572fb816f3cc",
+            "label": "Column Amount",
+            "name": "column_amount",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One Column",
+                "two": "Two Column"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_6572fb8172fce",
+            "label": "Heading",
+            "name": "heading",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6572fb8176bec",
+            "label": "Sub Heading",
+            "name": "sub_heading",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_6572fb817a7ea",
+            "label": "Body",
+            "name": "body",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_6572fb817e42a",
+            "label": "Points Heading",
+            "name": "points_heading",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6572fb818200c",
+            "label": "Points",
+            "name": "points",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "insight"
+            },
+            {
+                "param": "post_taxonomy",
+                "operator": "==",
+                "value": "type:webinars"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 1,
+    "modified": 1702034335
+}

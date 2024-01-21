@@ -1,0 +1,38 @@
+.splide__arrows {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-end;
+
+  .splide__arrow {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    background-color: $ccg-blue;
+    transition: $ccg-transition-all;
+    opacity: 1;
+
+    &:hover {
+      background-color: $ccg-dark-green;
+    }
+
+    svg {
+      fill: #ffffff;
+      height: 1em;
+      width: 1em;
+      margin-bottom: -2px;
+    }
+
+    path {
+      fill: #ffffff;
+    }
+
+    &.splide__arrow--prev {
+      margin-right: 50px;
+      transform: rotate(90deg);
+    }
+
+    &.splide__arrow--next {
+      transform: rotate(270deg);
+    }
+  }
+}

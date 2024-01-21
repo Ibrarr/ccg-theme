@@ -1,0 +1,17 @@
+.page-template-page-sectors {
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  #content {
+    background-color: $ccg-off-white;
+  }
+
+  @import "components/header";
+
+  @import "components/dropdown";
+
+  @import "components/sectors-slider";
+}

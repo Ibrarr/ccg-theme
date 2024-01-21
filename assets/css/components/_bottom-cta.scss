@@ -1,0 +1,131 @@
+.bottom-cta {
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  background-color: $ccg-pink;
+  margin-top: -25px;
+  padding: 65px 0 50px;
+  border-radius: 0 0 25px 25px;
+
+  .parallax-bars {
+    svg path {
+      stroke: $ccg-dark-green;
+      fill: $ccg-dark-green;
+    }
+
+    &#bottom-bar-one {
+      bottom: 0;
+      left: -270px;
+      transform: rotate(340deg);
+
+      @include media-breakpoint-only(md) {
+        bottom: 20px;
+        left: -230px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: 120px;
+        left: -100px;
+      }
+    }
+
+    &#bottom-bar-two {
+      top: -60px;
+      right: -230px;
+      transform: rotate(325deg);
+
+      @include media-breakpoint-only(md) {
+        top: -40px;
+        right: -100px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        top: 10px;
+        right: 120px;
+      }
+    }
+
+    &#bottom-bar-three {
+      bottom: -90px;
+      right: -220px;
+      transform: rotate(38deg);
+
+      @include media-breakpoint-only(md) {
+        bottom: -80px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: -60px;
+        right: -120px;
+      }
+    }
+  }
+
+  .first-row {
+    padding-right: 0 !important;
+
+    p {
+      @include term($ccg-dark-green);
+      margin-bottom: 30px;
+    }
+  }
+
+  .second-row {
+    h3 {
+      font-size: clamp(1.625rem, 0.5139rem + 2.3148vw, 2.25rem);
+      line-height: clamp(1.75rem, 0.6389rem + 2.3148vw, 2.375rem);
+      font-family: $font-circular-regular;
+      margin-bottom: 15px;
+
+      @include media-breakpoint-up(lg) {
+        margin-bottom: 55px;
+      }
+    }
+
+    p {
+      @include body-text($ccg-dark-green);
+    }
+  }
+
+  .third-row {
+    padding-left: 0 !important;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    .global-button {
+      margin-top: 35px;
+      background-color: $ccg-dark-green;
+      font-family: $font-circular-medium;
+      cursor: pointer;
+      font-size: 12px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      color: #ffffff;
+      padding: 7px;
+      border-radius: 50px;
+      transition: $ccg-transition-all;
+      width: 100px;
+
+      &:hover {
+        background-color: $ccg-orange;
+        color: #ffffff;
+      }
+
+      @include media-breakpoint-up(lg) {
+        font-size: 14px;
+        padding: 11px;
+        width: 135px;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      justify-content: center;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 98px 0 65px;
+  }
+}

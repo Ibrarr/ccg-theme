@@ -1,0 +1,38 @@
+.blog {
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  @import "components/news-work-blog/header";
+
+  .archive-header {
+    .parallax-bars {
+      &#bar-one {
+        top: 30px;
+        left: -260px;
+        z-index: 1;
+        transform: rotate(40deg);
+
+        @include media-breakpoint-up(lg) {
+          top: 40px;
+          left: -220px;
+        }
+      }
+
+      &#bar-two {
+        bottom: -170px;
+        right: -250px;
+        transform: rotate(335deg);
+
+        @include media-breakpoint-up(md) {
+          bottom: -200px;
+          right: -200px;
+        }
+      }
+    }
+  }
+
+  @import "components/news-work-blog/posts";
+}

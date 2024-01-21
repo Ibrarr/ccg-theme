@@ -1,0 +1,10 @@
+.parallax-bars {
+  will-change: transform;
+  position: absolute;
+
+  svg rect {
+    @include media-breakpoint-down(lg) {
+      height: 40px;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+.error404 {
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  .header {
+    background-color: $ccg-dark-green;
+    padding-top: $ccg-top-page-padding;
+    padding-bottom: 200px;
+
+    h1.title {
+      @include title-text($ccg-off-white);
+    }
+
+    .intro {
+      h2 {
+        @include sub-heading-text($ccg-off-white);
+
+        a {
+          color: $ccg-off-white;
+          background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+          transition: background-size 350ms;
+
+          &:where(:hover, :focus-visible) {
+            background-size: 100%;
+            background-position-x: left;
+          }
+        }
+      }
+    }
+  }
+
+  .bottom-cta {
+    background-color: $ccg-orange;
+  }
+}

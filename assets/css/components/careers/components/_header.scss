@@ -1,0 +1,68 @@
+.careers-header {
+  padding-top: $ccg-top-page-padding;
+  padding-bottom: 60px;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-one {
+      bottom: 0;
+      right: -260px;
+      transform: rotate(13deg);
+
+      @include media-breakpoint-only(md) {
+        right: -220px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: 120px;
+        right: -140px;
+      }
+    }
+  }
+
+  h1.title {
+    @include title-text($ccg-dark-green);
+  }
+
+  .intro {
+    h2 {
+      @include sub-heading-text($ccg-dark-green);
+      margin-bottom: 30px;
+
+      a {
+        color: $ccg-dark-green;
+        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        transition: background-size 350ms;
+
+        &:where(:hover, :focus-visible) {
+          background-size: 100%;
+          background-position-x: left;
+        }
+      }
+    }
+
+    .global-button {
+      background-color: #ffffff;
+      font-family: $font-circular-medium;
+      cursor: pointer;
+      font-size: 12px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      color: $ccg-dark-green;
+      border-radius: 50px;
+      transition: $ccg-transition-all;
+      width: fit-content;
+      padding: 10px 50px;
+
+      &:hover {
+        background-color: $ccg-orange;
+        color: #ffffff;
+      }
+
+      @include media-breakpoint-up(lg) {
+        font-size: 18px;
+      }
+    }
+  }
+}

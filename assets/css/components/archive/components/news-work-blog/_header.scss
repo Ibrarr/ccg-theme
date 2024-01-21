@@ -1,0 +1,19 @@
+.archive-header {
+  padding-top: $ccg-top-page-padding;
+  background-color: $ccg-green;
+  position: relative;
+
+  h1.title {
+    position: relative;
+    @include title-text($ccg-off-white);
+  }
+
+  .intro {
+    position: relative;
+    z-index: 3;
+
+    h2 {
+      @include sub-heading-text($ccg-off-white);
+    }
+  }
+}

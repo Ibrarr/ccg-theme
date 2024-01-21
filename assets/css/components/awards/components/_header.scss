@@ -1,0 +1,44 @@
+.awards-header {
+  padding-top: $ccg-top-page-padding;
+  padding-bottom: 60px;
+  background-color: $ccg-dark-green;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-one {
+      bottom: 70px;
+      right: -270px;
+      transform: rotate(340deg);
+
+      @include media-breakpoint-only(md) {
+        right: -230px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: 120px;
+        right: -150px;
+      }
+    }
+  }
+
+  h1.title {
+    @include title-text($ccg-off-white);
+  }
+
+  .intro {
+    h2 {
+      @include sub-heading-text($ccg-off-white);
+
+      a {
+        color: $ccg-off-white;
+        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        transition: background-size 350ms;
+
+        &:where(:hover, :focus-visible) {
+          background-size: 100%;
+          background-position-x: left;
+        }
+      }
+    }
+  }
+}

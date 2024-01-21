@@ -1,0 +1,24 @@
+.splide {
+  @import "../../splide-arrows";
+
+  @include media-breakpoint-down(lg) {
+    .splide__arrows {
+      display: none;
+    }
+  }
+
+  .splide__slide {
+    margin-right: 15px;
+    @import "../../article-card";
+
+    .term {
+      font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem) !important;
+    }
+
+    .title {
+      font-family: $font-circular-medium !important;
+      font-size: 14px !important;
+      line-height: clamp(1rem, 0.7778rem + 0.463vw, 1.125rem) !important;
+    }
+  }
+}

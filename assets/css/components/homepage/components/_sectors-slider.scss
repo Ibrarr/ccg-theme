@@ -1,0 +1,192 @@
+.sectors-slider {
+  overflow: hidden;
+  padding-top: 70px;
+  padding-bottom: 50px;
+  background-color: #E5E4E0;
+  position: relative;
+
+  &:before {
+    content: "";
+    transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(https://ccg.test/wp-content/uploads/2023/11/1-18.webp) center center / cover no-repeat;
+    @include media-breakpoint-up(md) {
+      transform: translateX(-35%);
+    }
+  }
+
+  &:after {
+    content: "";
+    transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    @include media-breakpoint-up(md) {
+      transform: translateX(-35%);
+    }
+  }
+
+  &.first-slide-inactive:before, &.first-slide-inactive:after {
+    transform: translateX(-75%);
+  }
+
+  .splide {
+    z-index: 1;
+    @import "../../splide-arrows";
+
+    .splide__arrows {
+      .splide__arrow {
+        background-color: #ffffff !important;
+
+        &:hover {
+          background-color: $ccg-orange !important;
+
+          @include media-breakpoint-down(md) {
+            svg path {
+              fill: #ffffff !important;
+            }
+          }
+        }
+
+
+        &.splide__arrow--next:disabled {
+          background-color: #808080 !important;
+          cursor: auto;
+
+          @include media-breakpoint-down(md) {
+            svg path {
+              fill: $ccg-dark-green !important;
+            }
+          }
+        }
+
+        svg path {
+          @include media-breakpoint-down(md) {
+            fill: $ccg-dark-green !important;
+          }
+        }
+
+        @include media-breakpoint-up(md) {
+          background-color: $ccg-dark-green !important;
+        }
+      }
+    }
+
+    .splide__track {
+      overflow: visible;
+
+      .splide__slide {
+        border-radius: 8px;
+        overflow: hidden;
+
+        &:first-child {
+          padding-right: 60px;
+
+
+          .first-slide {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+
+            .heading {
+              word-spacing: 1000px;
+              font-family: $font-circular-medium;
+              font-size: clamp(2.25rem, -0.6389rem + 6.0185vw, 3.875rem);
+              line-height: clamp(2.375rem, -0.5139rem + 6.0185vw, 4rem);
+              color: #ffffff;
+            }
+
+            .sub-heading {
+              font-family: $font-circular-medium;
+              font-size: clamp(1.5rem, 0.1667rem + 2.7778vw, 2.25rem);
+              line-height: clamp(1.625rem, 0.2917rem + 2.7778vw, 2.375rem);
+              color: #ffffff;
+            }
+
+            .global-button {
+              @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
+            }
+          }
+
+          @include media-breakpoint-up(xl) {
+            width: 600px !important;
+          }
+
+          @include media-breakpoint-only(lg) {
+            width: 450px !important;
+          }
+
+          @include media-breakpoint-only(md) {
+            width: 250px !important;
+          }
+
+          @include media-breakpoint-down(md) {
+            width: 155px !important;
+            padding-right: 0 !important;
+          }
+        }
+
+        &:not(:first-child ) {
+          padding: 50px 60px;
+
+          &:after {
+            transition: all .5s;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.25);
+          }
+
+          .sector-slide {
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+            height: 100%;
+
+            a {
+              text-decoration: none;
+              height: 100%;
+            }
+
+            .heading {
+              font-family: $font-circular-medium;
+              font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.875rem);
+              line-height: clamp(2.125rem, 0.5694rem + 3.2407vw, 3rem);
+              color: #ffffff;
+            }
+
+            .sub-heading {
+              @include body-text(#ffffff);
+              display: none;
+            }
+          }
+
+          &:hover {
+            &:after {
+              background-color: rgba(0, 0, 0, 0.50);
+            }
+          }
+
+          @include media-breakpoint-down(lg) {
+            padding: 35px 40px;
+          }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-bottom: 100px;
+  }
+}

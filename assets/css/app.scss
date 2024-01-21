@@ -1,0 +1,60 @@
+:root {
+  --app-height: 100%;
+}
+
+#wrapper {
+  overflow-x: hidden;
+}
+
+// Fonts
+@import 'fonts';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Splide
+@import '~@splidejs/splide/dist/css/splide.min.css';
+
+// Variables
+@import 'variables';
+
+// Mixins
+@import 'mixins';
+
+// Components
+@import "components/header/header";
+
+@import "components/homepage/homepage";
+@import "components/sectors-home/sectors";
+@import "components/services-home/services";
+@import "components/about-page/about";
+@import "components/senior-team/senior-team";
+@import "components/awards/awards";
+@import "components/contact/contact";
+@import "components/default-page/default-page";
+@import "components/where-we-work/where-we-work";
+@import "components/careers/careers";
+@import "components/404/404";
+@import "components/search/search";
+@import "components/site-map/site-map";
+@import "components/holding-page/holding-page";
+
+@import "components/content/blog";
+@import "components/content/insight";
+@import "components/content/insight-report";
+@import "components/content/webinar";
+@import "components/content/work";
+
+@import "components/archive/insight-hub";
+@import "components/archive/our-work";
+@import "components/archive/our-news";
+@import "components/archive/our-blog";
+@import "components/archive/sector-term";
+@import "components/archive/service-term";
+@import "components/archive/type-term";
+@import "components/archive/source-term";
+@import "components/archive/category-term";
+
+@import "components/parallax_bars";
+@import "components/bottom-cta";
+@import "components/footer/footer";

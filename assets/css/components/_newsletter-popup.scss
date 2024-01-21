@@ -1,0 +1,94 @@
+.newsletter-popup {
+  background-color: $ccg-orange;
+  padding: 40px;
+  border-radius: 8px;
+  width: 380px;
+
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+  }
+
+  h3 {
+    font-family: $font-circular-regular;
+    font-size: 30px;
+    line-height: 30px;
+    color: $ccg-dark-green;
+    margin-bottom: 30px;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 40px;
+      line-height: 40px;
+    }
+  }
+
+  .newsletter-popup-form_wrapper {
+
+    .gform_heading {
+      display: none;
+    }
+
+    .gform_fields {
+      grid-row-gap: 20px;
+
+      @include media-breakpoint-down(lg) {
+        display: block;
+      }
+    }
+
+    label {
+      @include body-text(#ffffff);
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"] {
+      border-radius: 8px;
+      border: none;
+      height: 40px;
+
+      @include media-breakpoint-up(lg) {
+        height: 50px;
+      }
+
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+    }
+
+    textarea {
+      border-radius: 8px;
+      border: none;
+      min-block-size: 10rem !important;
+    }
+
+    input[type="submit"].gform_button.button {
+      margin-top: 25px;
+      height: 32px;
+      margin-bottom: 20px;
+      @include long-button($ccg-dark-green, #ffffff, #ffffff, $ccg-dark-green);
+
+      @include media-breakpoint-up(lg) {
+        height: 44px;
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      .gfield:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .close-newsletter {
+    float: right;
+    line-height: 0;
+    cursor: pointer;
+
+    svg {
+      width: 10px;
+      height: 10px;
+
+      path {
+        fill: #ffffff;
+      }
+    }
+  }
+}

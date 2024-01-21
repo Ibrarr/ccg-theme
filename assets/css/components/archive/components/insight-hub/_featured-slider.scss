@@ -1,0 +1,101 @@
+.featured-slider {
+  padding-top: 45px;
+  margin-top: -5px;
+  background: linear-gradient(180deg, rgb(0, 32, 41) 0%, rgb(0, 32, 41) 50%, $ccg-off-white 50%);
+  position: relative;
+
+  .parallax-bars {
+    &#bar-two {
+      top: 60px;
+      right: -200px;
+      transform: rotate(335deg);
+
+      @include media-breakpoint-only(lg) {
+        top: 0;
+        z-index: 1;
+      }
+
+      @include media-breakpoint-up(xl) {
+        top: 40px;
+        z-index: 1;
+        right: -100px;
+      }
+    }
+
+    &#bar-three {
+      bottom: -20px;
+      left: -220px;
+      transform: rotate(25deg);
+
+      @include media-breakpoint-up(lg) {
+        bottom: -40px;
+        left: -170px;
+      }
+    }
+  }
+
+  .splide {
+    @import "../../../splide-arrows";
+
+    .splide__arrows {
+      .splide__arrow {
+        &:hover {
+          background-color: $ccg-orange !important;
+        }
+      }
+    }
+
+    .splide__track {
+      border-radius: 8px;
+    }
+
+    .featured-post {
+      height: 100%;
+      overflow: hidden;
+
+      .featured-image {
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .featured-content {
+        background-color: $ccg-blue;
+        height: 100%;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+
+        .term {
+          @include term($ccg-orange);
+        }
+
+        .title {
+          font-family: $font-circular-medium;
+          font-size: clamp(1.75rem, 0.8611rem + 1.8519vw, 2.25rem);
+          line-height: clamp(2.125rem, 1.125rem + 2.0833vw, 2.6875rem);
+          color: #ffffff;
+          margin-bottom: 25px;
+        }
+
+        .intro {
+          font-family: $font-circular-regular;
+          font-size: clamp(0.75rem, 0.3056rem + 0.9259vw, 1rem);
+          line-height: clamp(1rem, 0.5556rem + 0.9259vw, 1.25rem);
+          color: #ffffff;
+          margin-bottom: 25px;
+        }
+
+        .global-button {
+          @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
+        }
+      }
+    }
+  }
+}

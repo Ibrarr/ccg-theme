@@ -1,0 +1,31 @@
+.main-menu-container {
+  position: relative;
+  display: none;
+  background-color: #ffffff;
+  border-radius: 0 0 4px 4px;
+  width: 100%;
+  overflow: hidden auto;
+  top: -4px;
+
+  @import "search-container";
+
+  @import "nav-container";
+
+  @include media-breakpoint-down(lg) {
+    position: absolute;
+    left: 0;
+    top: -50px;
+    height: var(--app-height);
+
+    .mobile-menu-header-background {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 130px;
+      z-index: 1;
+      background-color: #ffffff;
+    }
+  }
+}

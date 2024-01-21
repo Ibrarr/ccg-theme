@@ -1,0 +1,123 @@
+.menu-container {
+  position: relative;
+  z-index: 99;
+  width: fit-content;
+  float: right;
+  padding: 17px 20px;
+  //max-width: 825px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  transition: all .3s;
+  cursor: pointer;
+
+  p {
+    font-family: $font-circular-regular;
+    line-height: 16px;
+    font-size: 14px;
+    color: $ccg-dark-green;
+    margin: 0;
+    display: block;
+    transition: $ccg-transition-all;
+
+    @include media-breakpoint-down(lg) {
+      display: none !important;
+    }
+  }
+
+  .menu-text, .search-text {
+    display: none;
+  }
+
+  .search-hamburger {
+    display: flex;
+    align-items: center;
+
+    .header-search {
+      cursor: pointer;
+      margin-right: 38px;
+      line-height: 0;
+
+      svg {
+        height: 15px;
+        width: 15px;
+
+        @include media-breakpoint-up(lg) {
+          height: 20px;
+          width: 20px;
+        }
+      }
+
+      @include media-breakpoint-up(lg) {
+        margin-right: 68px;
+      }
+    }
+
+    .cross, .menu, .header-search {
+      svg path, svg rect {
+        transition: $ccg-transition-all;
+      }
+
+      &:hover svg path, &:hover svg rect {
+        fill: #000000;
+      }
+    }
+
+    .cross {
+      display: none;
+    }
+
+    .menu, .cross {
+      cursor: pointer;
+      line-height: 0;
+
+      svg {
+        width: 20px;
+        height: 12px;
+
+        @include media-breakpoint-up(lg) {
+          width: 24px;
+          height: 15px;
+        }
+      }
+    }
+  }
+
+  &.search-open {
+    .cross, .search-text {
+      display: block;
+    }
+
+    .menu, .main-menu-text {
+      display: none;
+    }
+  }
+
+  &.menu-open {
+    .cross, .menu-text {
+      display: block;
+    }
+
+    .menu, .main-menu-text, .search-open {
+      display: none;
+    }
+  }
+
+  &.menu-open.search-open {
+    .menu-text {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  @include media-breakpoint-down(lg) {
+    &.menu-open {
+      background: #EFEFEC;
+    }
+  }
+}

@@ -1,0 +1,208 @@
+.term-content {
+  margin-bottom: 65px;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-two {
+      bottom: -120px;
+      right: -200px;
+      transform: rotate(20deg);
+
+      @include media-breakpoint-only(md) {
+        bottom: 0;
+        right: -170px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: -100px;
+        right: -140px;
+      }
+    }
+  }
+
+  span {
+    @include body-text($ccg-text);
+  }
+
+  .content {
+    ul {
+      @include body-text($ccg-text);
+      padding-left: 20px;
+
+      li {
+        padding-left: 10px;
+
+        &::marker {
+          content: '\2014';
+        }
+      }
+    }
+
+    li {
+      @include body-text($ccg-text);
+    }
+
+    span {
+      @include body-text($ccg-text);
+    }
+
+    p {
+      @include body-text($ccg-text);
+
+      &:last-child {
+        margin-bottom: 22px;
+
+        @include media-breakpoint-up(lg) {
+          margin-bottom: 44px;
+        }
+      }
+    }
+
+    strong {
+      font-family: $font-circular-bold;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+      font-family: $font-circular-medium;
+      color: $ccg-orange;
+    }
+  }
+
+  .staff-member {
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-bottom: 40px;
+
+    .content {
+      background: #ffffff;
+      padding-top: 35px;
+      padding-left: 30px;
+      padding-bottom: 20px;
+
+      .name {
+        font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+        font-family: $font-circular-medium;
+        color: $ccg-orange;
+      }
+
+      .job-title {
+        @include body-text($ccg-green);
+        margin-bottom: 0;
+      }
+
+      .social-icons {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+
+        a {
+          margin-right: 20px;
+
+          svg {
+            overflow: visible;
+
+            path {
+              transition: $ccg-transition-all;
+            }
+          }
+
+          &.linkedin-icon, &.x-icon {
+            svg {
+              fill: $ccg-green;
+            }
+          }
+
+          &.linkedin-icon:hover, &.x-icon:hover {
+            svg {
+              fill: $ccg-orange;
+            }
+          }
+
+          @include media-breakpoint-up(md) {
+            &.linkedin-icon {
+              svg {
+                width: 21px;
+                height: 21px;
+              }
+            }
+
+            &.x-icon {
+              svg {
+                width: 17px;
+                height: 17px;
+              }
+            }
+          }
+
+          @include media-breakpoint-down(md) {
+            &.linkedin-icon {
+              svg {
+                width: 19px;
+                height: 19px;
+              }
+            }
+
+            &.x-icon {
+              svg {
+                width: 15px;
+                height: 15px;
+              }
+            }
+          }
+        }
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding-top: 45px;
+        padding-left: 40px;
+        padding-bottom: 25px;
+      }
+    }
+
+    .headshot-container {
+      border-radius: 0 8px 8px 0;
+      background: white;
+      overflow: hidden;
+
+      .headshot {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 170px;
+          -o-object-fit: cover;
+          object-fit: cover;
+          border-radius: 0 8px 8px 0;
+
+          @include media-breakpoint-up(lg) {
+            height: 170px;
+          }
+
+          @include media-breakpoint-only(md) {
+            height: 170px;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      background-color: $ccg-orange;
+    }
+  }
+
+  .global-button {
+    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+  }
+
+  @include media-breakpoint-up(lg) {
+    margin-bottom: 125px;
+  }
+
+  @include media-breakpoint-down(md) {
+    margin-bottom: 130px;
+  }
+}

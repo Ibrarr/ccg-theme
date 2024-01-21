@@ -1,0 +1,34 @@
+.header-logo {
+  top: 60px;
+  position: absolute;
+
+  a {
+    position: relative;
+    z-index: 100;
+
+    svg {
+      width: 92px;
+      height: 30px;
+
+      g g path {
+        transition: all 1s;
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: 120px;
+        height: 40px;
+      }
+    }
+  }
+
+  &.mobile-menu-open {
+    position: fixed;
+    z-index: 99;
+
+    a svg g g {
+      path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+        fill: $ccg-dark-green !important;
+      }
+    }
+  }
+}

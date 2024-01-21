@@ -1,0 +1,137 @@
+.services {
+  margin-top: -5px;
+  margin-bottom: 100px;
+  background: linear-gradient($ccg-green 230px, $ccg-off-white 10px);
+  position: relative;
+
+  .parallax-bars {
+    &#bar-three {
+      bottom: 200px;
+      right: -240px;
+      transform: rotate(344deg);
+
+      @include media-breakpoint-up(lg) {
+        right: -140px;
+      }
+    }
+  }
+
+  .analytics, .strategy, .activation {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px 30px 50px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+
+    .service-header {
+      font-family: $font-circular-medium;
+      font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
+      color: $ccg-green;
+      margin-bottom: 20px;
+    }
+
+    .service-intro {
+      p {
+        @include sub-heading-text($ccg-green);
+      }
+    }
+
+    .service-body {
+      p {
+        @include body-text($ccg-green);
+      }
+    }
+
+    .accordion-container {
+      margin-top: 20px;
+
+      .parent-term {
+        @include sub-heading-text($ccg-green);
+        font-family: $font-circular-medium;
+        border-bottom: 1px solid $ccg-dark-green;
+        margin: 0;
+        padding-bottom: 10px;
+      }
+
+      .service-item {
+        padding: 10px 0;
+        border-bottom: 1px solid $ccg-dark-green;
+        cursor: pointer;
+        position: relative;
+
+        .service-name {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          h4 {
+            @include sub-heading-text($ccg-green);
+            margin: 0;
+
+            a {
+              transition: $ccg-transition-all;
+              text-decoration: none;
+              color: $ccg-green;
+            }
+
+            &:hover a {
+              color: $ccg-orange;
+            }
+          }
+
+          .open-close-accordion {
+            display: none;
+
+            svg {
+              path {
+                transition: $ccg-transition-all;
+              }
+
+              &:hover g > path {
+                fill: $ccg-orange;
+              }
+            }
+          }
+        }
+
+        &:has(.service-description) .service-name {
+          .open-close-accordion {
+            display: block;
+
+            svg {
+              width: 30px;
+              height: 30px;
+              @include media-breakpoint-up(lg) {
+                width: 35px;
+                height: 35px;
+              }
+            }
+          }
+        }
+
+        .service-description {
+          display: none;
+          margin-top: 5px;
+
+          p {
+            @include body-text($ccg-text);
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        &.active {
+          .service-name {
+            h4 a {
+              color: $ccg-orange;
+            }
+          }
+        }
+      }
+    }
+  }
+}

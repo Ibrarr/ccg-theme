@@ -1,0 +1,300 @@
+{
+    "key": "group_65668121bb4bb",
+    "title": "Where We Work Page",
+    "fields": [
+        {
+            "key": "field_65668121c24fc",
+            "label": "Intro",
+            "name": "intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_65668121c6128",
+            "label": "Where we work",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6567042c28174",
+            "label": "Content",
+            "name": "content",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "wpautop"
+        },
+        {
+            "key": "field_6566fc23cb993",
+            "label": "Locations",
+            "name": "locations",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_6571de5ea431f",
+                    "label": "Marker",
+                    "name": "marker_colour",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "blue": "Blue",
+                        "red": "Red",
+                        "green": "Green",
+                        "yellow": "Yellow",
+                        "orange": "Orange",
+                        "purple": "Purple",
+                        "pink": "Pink",
+                        "brightpink": "Bright Pink"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_6566fc23cb993"
+                },
+                {
+                    "key": "field_6566fc2ecb994",
+                    "label": "Location",
+                    "name": "location",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6566fc23cb993"
+                }
+            ]
+        },
+        {
+            "key": "field_6566fc98cb996",
+            "label": "GlobalCom Logo",
+            "name": "global_com_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_6566fc45cb995",
+            "label": "Map",
+            "name": "map",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_65668121cd92b",
+            "label": "Form",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_65668121d1533",
+            "label": "Heading",
+            "name": "heading",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_65668121d516f",
+            "label": "Select Form",
+            "name": "select_gform_form",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "26": "Contact Form",
+                "5": "How B2B PR Done Right Benefits Your SEO",
+                "7": "How B2B Tech Vendors Can Use PR & Marketing To Attract Channel Partners",
+                "4": "How Do IT Decision-Makers Choose Their Suppliers?",
+                "14": "How Do Modern Enterprises Buy Technology?",
+                "17": "How MediaTech Companies Can Use Integrated Marketing Communications To Achieve Commercial Success",
+                "15": "How Telcos And OTTs Are Disrupting The Traditional Broadcast Industry",
+                "8": "How To Influence FinTech Buyers",
+                "9": "How To Influence FinTech Buyers In Capital Markets",
+                "20": "How To Influence Fintech Buyers: The Shop Window Is Everything",
+                "21": "How to Influence Purchasing Behaviour in a Tough Economic Climate: Cybersecurity Marketing Strategies",
+                "16": "How To Influence Retail Technology Buyers?",
+                "13": "How To Sell To Telcos In The Age Of Digital Transformation",
+                "6": "How to Successfully sell to Telecoms Operators",
+                "2": "How To Use PR To Attract Acquirers",
+                "11": "How Vendors Can Benefit From The Impact Of IP On The Broadcast Industry",
+                "1": "Insight Report",
+                "19": "More Brand, more Buck: How Brand Influences Enterprise Technology Buyers",
+                "18": "Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
+                "3": "Successful Influencer Marketing",
+                "10": "Successfully Marketing And Selling To Broadcast Service Providers",
+                "23": "Telco Transformation: Lessons For Vendor Marketing",
+                "27": "TEST POPUP",
+                "12": "Unaware, Unprepared And Paralysed: Retailer Readiness For PSD2",
+                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates\/page-where-we-work.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content",
+        "excerpt",
+        "discussion"
+    ],
+    "active": true,
+    "description": "",
+    "show_in_rest": 1,
+    "modified": 1701962003
+}

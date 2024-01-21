@@ -1,0 +1,34 @@
+.link-section {
+  margin-bottom: 150px;
+
+  ul {
+    padding-left: 0;
+
+    li {
+      padding-left: 0;
+
+      a {
+        text-decoration: none;
+        color: $ccg-green;
+        @include body-text($ccg-text);
+        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        transition: background-size 350ms;
+
+        &:where(:hover, :focus-visible) {
+          background-size: 100%;
+          background-position-x: left;
+        }
+      }
+
+      &::marker {
+        content: none;
+      }
+    }
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+    font-family: $font-circular-medium;
+    color: $ccg-orange;
+  }
+}

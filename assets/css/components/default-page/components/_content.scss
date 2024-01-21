@@ -1,0 +1,75 @@
+.content {
+  margin-bottom: 150px;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-two {
+      top: 50%;
+      right: -290px;
+      transform: rotate(10deg);
+
+      @include media-breakpoint-up(lg) {
+        right: -30px;
+      }
+    }
+
+    &#bar-three {
+      bottom: -160px;
+      left: -150px;
+      transform: rotate(337deg);
+
+      @include media-breakpoint-only(md) {
+        bottom: -160px;
+        left: -80px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: -140px;
+        left: 50px;
+      }
+    }
+  }
+
+  span {
+    @include body-text($ccg-text);
+  }
+
+  ul {
+    @include body-text($ccg-text);
+    padding-left: 20px;
+
+    li {
+      padding-left: 10px;
+
+      &::marker {
+        content: '\2014';
+      }
+    }
+  }
+
+  li {
+    @include body-text($ccg-text);
+  }
+
+  p {
+    @include body-text($ccg-text);
+
+    & + h3 {
+      margin-top: 44px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  strong {
+    font-family: $font-circular-bold;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+    font-family: $font-circular-medium;
+    color: $ccg-orange;
+  }
+}

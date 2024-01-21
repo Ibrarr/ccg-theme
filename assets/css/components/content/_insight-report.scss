@@ -1,0 +1,58 @@
+.single-insight.report {
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  .leadinModal {
+    display: none !important;
+  }
+
+  @import "components/report-webinar/header";
+  @import "components/report-webinar/form-section";
+
+  article {
+    background-color: #E5E4E0;
+    padding-bottom: 60px;
+    padding-top: 60px;
+    position: relative;
+
+    .parallax-bars {
+      &#bar-two {
+        bottom: 70px;
+        right: -270px;
+        transform: rotate(346deg);
+
+        @include media-breakpoint-only(md) {
+          bottom: 100px;
+          right: -230px;
+        }
+
+        @include media-breakpoint-up(lg) {
+          bottom: 100px;
+          right: -150px;
+        }
+      }
+    }
+
+    @import "components/report-webinar/content";
+  }
+
+  @import "components/related-content";
+
+  .related-content {
+    .parallax-bars {
+      &#bar-three {
+        bottom: 30px;
+        left: -250px;
+        transform: rotate(165deg);
+
+        @include media-breakpoint-up(lg) {
+          bottom: 60px;
+          left: -160px;
+        }
+      }
+    }
+  }
+}

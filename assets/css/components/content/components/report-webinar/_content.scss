@@ -1,0 +1,44 @@
+.post-content {
+  position: relative;
+  
+  .content-heading {
+    @include sub-heading-text($ccg-dark-green);
+    font-family: $font-circular-medium;
+  }
+
+  .content-sub-heading {
+    @include sub-heading-text($ccg-dark-green);
+  }
+
+  .content-body {
+    @include body-text($ccg-dark-green);
+  }
+
+  .points-section {
+    h3 {
+      @include sub-heading-text($ccg-orange);
+      font-family: $font-circular-medium;
+    }
+
+    p {
+      @include body-text($ccg-dark-green);
+    }
+
+    ul {
+      @include body-text($ccg-text);
+      padding-left: 20px;
+
+      li {
+        padding-left: 10px;
+
+        &::marker {
+          content: '\2014';
+        }
+      }
+    }
+
+    li {
+      @include body-text($ccg-text);
+    }
+  }
+}

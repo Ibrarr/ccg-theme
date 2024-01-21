@@ -1,0 +1,127 @@
+.nav-container {
+  nav {
+    margin: 20px;
+    overflow: hidden;
+    width: fit-content;
+
+    .menu-subheading {
+      a {
+        font-family: $font-circular-medium !important;
+      }
+
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      a {
+        position: relative;
+        transition: all .3s;
+        text-decoration: none;
+      }
+
+      li {
+        > a {
+          font-family: $font-circular-regular;
+          font-size: clamp(1.4375rem, 0.8819rem + 1.1574vw, 1.75rem);
+          line-height: 34px;
+          color: #848484;
+          transition: all .3s;
+
+          &:hover {
+            color: $ccg-dark-green;
+          }
+        }
+
+        ul.sub-menu {
+          display: none;
+          margin-bottom: 30px;
+
+          li {
+            a {
+              font-family: $font-circular-regular;
+              font-size: $ccg-body-size;
+              line-height: $ccg-body-line-height;
+              color: $ccg-dark-green;
+              transition: $ccg-transition-all;
+
+              &:hover {
+                color: $ccg-orange;
+              }
+            }
+          }
+        }
+      }
+
+      li.menu-item-has-children {
+        > a:before {
+          color: #848484;
+          content: '+';
+          margin-right: 10px;
+          transition: all .3s;
+        }
+
+        &:hover > a:before {
+          color: $ccg-dark-green;
+        }
+
+        &.active {
+          > a:before {
+            content: '-';
+          }
+        }
+      }
+
+      li.menu-item-has-children.active {
+        @include media-breakpoint-up(lg) {
+          > a:before {
+            content: '' !important;
+            position: absolute;
+            left: -75px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-right: 0;
+            border-bottom: 2px solid $ccg-dark-green;
+            transition: all .3s;
+          }
+
+          > a {
+            margin-left: 75px;
+            color: $ccg-dark-green;
+
+            &:before {
+              width: 60px;
+            }
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      margin-top: 150px;
+    }
+  }
+
+  .recent-posts {
+    margin-top: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+    @include body-text($ccg-green);
+
+    span {
+      font-family: $font-circular-medium;
+    }
+  }
+
+  .recent-insights {
+    margin: 0 0 20px 20px;
+
+    @import "slider";
+  }
+
+  @import "header-footer";
+}

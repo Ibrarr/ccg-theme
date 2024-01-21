@@ -1,0 +1,98 @@
+@mixin title-text($color) {
+  font-family: $font-circular-medium;
+  font-size: $ccg-heading-size;
+  line-height: $ccg-heading-line-height;
+  color: $color;
+  margin-bottom: 22px;
+
+  @include media-breakpoint-up(lg) {
+    margin-bottom: 32px;
+  }
+}
+
+@mixin sub-heading-text($color) {
+  font-family: $font-circular-regular;
+  font-size: $ccg-sub-heading-size;
+  line-height: $ccg-sub-heading-line-height;
+  color: $color;
+}
+
+@mixin body-text($color) {
+  font-family: $font-circular-regular;
+  font-size: $ccg-body-size;
+  line-height: $ccg-body-line-height;
+  color: $color;
+
+  a {
+    font-family: $font-circular-medium;
+    color: $color;
+    background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+    transition: background-size 350ms;
+
+    &:where(:hover, :focus-visible) {
+      background-size: 100%;
+      background-position-x: left;
+    }
+  }
+}
+
+@mixin term($color) {
+  font-family: $font-circular-bold;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: clamp(0.625rem, 0.1806rem + 0.9259vw, 0.875rem);
+  color: $color;
+}
+
+@mixin long-button($background-color,$hover-background-color,$color,$hover-color) {
+  border: none;
+  background-color: $background-color;
+  font-family: $font-circular-medium;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  color: $color;
+  padding: 7px;
+  border-radius: 50px;
+  transition: $ccg-transition-all;
+  width: 112px;
+
+  &:hover {
+    background-color: $hover-background-color;
+    color: $hover-color;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 14px;
+    padding: 11px;
+    width: 195px;
+  }
+}
+
+@mixin short-button($background-color,$hover-background-color,$color,$hover-color) {
+  background-color: $background-color;
+  font-family: $font-circular-medium;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  color: $color;
+  padding: 7px;
+  border-radius: 50px;
+  transition: $ccg-transition-all;
+  width: 112px;
+
+  &:hover {
+    background-color: $hover-background-color;
+    color: $hover-color;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 14px;
+    padding: 11px;
+    width: 125px;
+  }
+}

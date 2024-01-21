@@ -1,0 +1,42 @@
+a {
+  text-decoration: none;
+
+  .image-wrapper {
+    position: relative;
+
+    img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: $ccg-img-border-radius;
+      background-color: $ccg-text;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: $ccg-img-border-radius;
+      background-color: $ccg-text;
+      opacity: 0;
+      transition: .5s ease;
+    }
+  }
+
+  .term {
+    @include term($ccg-green);
+    margin-bottom: 0;
+    margin-top: 20px;
+  }
+
+  .title {
+    @include body-text($ccg-text);
+  }
+
+  &:hover .image-wrapper:before {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,31 @@
+.post-header {
+  padding-top: $ccg-top-page-padding;
+  margin-bottom: 60px;
+  z-index: 2;
+  position: relative;
+
+  p.term {
+    @include term($ccg-orange);
+  }
+
+  h1.title {
+    @include title-text($ccg-green);
+  }
+
+  .intro {
+    h2 {
+      @include sub-heading-text($ccg-green);
+
+      a {
+        color: $ccg-green;
+        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        transition: background-size 350ms;
+
+        &:where(:hover, :focus-visible) {
+          background-size: 100%;
+          background-position-x: left;
+        }
+      }
+    }
+  }
+}

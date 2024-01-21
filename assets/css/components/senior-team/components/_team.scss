@@ -1,0 +1,341 @@
+.team {
+  margin-top: -5px;
+  margin-bottom: 100px;
+  background: linear-gradient($ccg-green 100px, $ccg-off-white 10px);
+  position: relative;
+
+  .parallax-bars {
+    &#bar-two {
+      top: -20px;
+      left: -270px;
+      transform: rotate(26deg);
+
+      @include media-breakpoint-only(md) {
+        top: 0;
+        left: -240px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        top: 30px;
+        left: -200px
+      }
+    }
+
+    &#bar-three {
+      bottom: 0;
+      left: -270px;
+      transform: rotate(20deg);
+
+      @include media-breakpoint-only(md) {
+        left: -230px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: 0;
+        left: -150px;
+      }
+    }
+  }
+
+  .person-container {
+    transition: margin-bottom .5s;
+    opacity: 0;
+
+    .person {
+      margin-bottom: 50px;
+      cursor: pointer;
+      position: relative;
+
+      .headshot {
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+
+        img {
+          width: 100%;
+          transition: $ccg-transition-all;
+          filter: grayscale(100%);
+          position: relative;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: $ccg-dark-green;
+          transition: $ccg-transition-all;
+          opacity: 0.25;
+        }
+      }
+
+      .details-closed {
+        margin-top: 20px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+
+        .info {
+          width: 100%;
+
+          .name {
+            @include body-text($ccg-dark-green);
+            margin-bottom: 0;
+            width: 80%;
+          }
+
+          .job-title {
+            @include body-text($ccg-dark-green);
+            font-family: $font-circular-medium;
+            margin-bottom: 0;
+            width: 80%;
+          }
+        }
+
+        .plus-icon {
+          svg {
+            width: 40px;
+            height: 40px;
+
+            path {
+              transition: $ccg-transition-all;
+            }
+
+            @include media-breakpoint-up(lg) {
+              width: 50px;
+              height: 50px;
+            }
+          }
+        }
+      }
+
+      .details-open {
+        z-index: 1;
+        padding: 30px;
+        border-radius: 8px;
+        display: none;
+        position: absolute;
+        top: 0;
+        width: 212%;
+        background-color: $ccg-dark-green;
+
+        .top-section {
+          width: 50%;
+          margin-left: 50%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+
+          .name {
+            @include body-text($ccg-orange);
+            font-family: $font-circular-medium;
+            margin-bottom: 0;
+          }
+
+          .job-title {
+            @include body-text(#ffffff);
+            margin-bottom: 0;
+          }
+
+          .email {
+            @include body-text(#ffffff);
+            margin-top: 20px;
+            width: fit-content;
+
+            background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+            transition: background-size 350ms;
+
+            &:where(:hover, :focus-visible) {
+              background-size: 100%;
+              background-position-x: left;
+            }
+          }
+
+          .social-icons {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+
+            a {
+              margin-right: 20px;
+
+              svg {
+                overflow: visible;
+
+                path {
+                  transition: $ccg-transition-all;
+                }
+              }
+
+              &.linkedin-icon, &.x-icon {
+                svg {
+                  fill: #ffffff;
+                }
+              }
+
+              &.linkedin-icon:hover, &.x-icon:hover {
+                svg {
+                  fill: $ccg-orange;
+                }
+              }
+
+              @include media-breakpoint-up(md) {
+                &.linkedin-icon {
+                  svg {
+                    width: 21px;
+                    height: 21px;
+                  }
+                }
+
+                &.x-icon {
+                  svg {
+                    width: 17px;
+                    height: 17px;
+                  }
+                }
+              }
+
+              @include media-breakpoint-down(md) {
+                &.linkedin-icon {
+                  svg {
+                    width: 19px;
+                    height: 19px;
+                  }
+                }
+
+                &.x-icon {
+                  svg {
+                    width: 15px;
+                    height: 15px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .bio {
+          margin-top: 30px;
+
+          p {
+            @include body-text(#ffffff);
+          }
+        }
+
+        .cross-icon {
+          margin-left: auto;
+          width: fit-content;
+
+          svg {
+            width: 40px;
+            height: 40px;
+
+            path {
+              transition: $ccg-transition-all;
+            }
+
+            @include media-breakpoint-up(lg) {
+              width: 50px;
+              height: 50px;
+            }
+          }
+
+          &:hover svg g {
+
+            > path {
+              fill: $ccg-orange;
+            }
+
+            g path {
+              fill: #ffffff !important;
+            }
+          }
+        }
+      }
+
+      &:hover {
+        .headshot {
+          &:after {
+            opacity: 0;
+          }
+
+          img {
+            filter: grayscale(0%);
+          }
+        }
+
+        .details-closed {
+          .plus-icon {
+            svg {
+              g > path {
+                fill: $ccg-orange;
+              }
+
+              g > g path {
+                fill: #ffffff;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.active {
+      .person {
+        .headshot {
+          z-index: 2;
+
+          &:after {
+            opacity: 0;
+          }
+
+          img {
+            filter: grayscale(0%);
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      &:nth-child(4n) .details-open {
+        margin-left: -112%;
+
+        .top-section {
+          margin-left: 0;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      &:nth-child(2n) .details-open {
+        margin-left: -112%;
+
+        .top-section {
+          margin-left: 0;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      &:nth-child(2n) .details-open {
+        margin-left: -115%;
+
+        .top-section {
+          margin-left: 0;
+        }
+      }
+
+      .details-open {
+        width: 215% !important;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    background: linear-gradient($ccg-green 180px, $ccg-off-white 10px);
+  }
+}
+
+

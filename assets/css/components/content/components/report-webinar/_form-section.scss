@@ -1,0 +1,90 @@
+.form-section {
+  margin-top: -5px;
+  background-color: $ccg-dark-green;
+  padding-top: 70px;
+  padding-bottom: 100px;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-one {
+      top: 0;
+      right: -240px;
+      transform: rotate(337deg);
+
+      @include media-breakpoint-only(md) {
+        right: -200px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        top: 30px;
+        right: -140px;
+      }
+    }
+  }
+
+  .form-header {
+    @include sub-heading-text(#ffffff);
+    margin-bottom: 40px;
+  }
+
+  .insight-reports-form {
+    .gform_heading {
+      display: none;
+    }
+
+    .gform-theme--foundation .gform_fields {
+      grid-row-gap: 20px;
+
+      @include media-breakpoint-down(lg) {
+        display: block;
+      }
+    }
+
+    label {
+      @include body-text(#ffffff);
+    }
+
+    input[type="text"] {
+      border-radius: 8px;
+      border: none;
+      height: 40px;
+
+      @include media-breakpoint-up(lg) {
+        height: 50px;
+      }
+
+      @include media-breakpoint-down(lg) {
+        width: 100%;
+      }
+    }
+
+    input[type="submit"].gform_button.button {
+      margin-top: 25px;
+      height: 32px;
+      @include long-button($ccg-orange, #ffffff, $ccg-dark-green, $ccg-dark-green);
+
+      @include media-breakpoint-up(lg) {
+        height: 44px;
+        margin-top: 40px;
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      .gfield:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-bottom: 35px;
+    }
+  }
+
+  .form-body-text {
+    @include body-text(#ffffff);
+
+    p:first-child {
+      color: $ccg-orange;
+    }
+  }
+}

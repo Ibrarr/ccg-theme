@@ -1,0 +1,21 @@
+header {
+  width: 100%;
+  position: fixed;
+  z-index: 99;
+  top: 50px;
+  transition: $ccg-transition-all;
+
+  @import "components/menu-container";
+
+  @import "components/main-menu-container";
+}
+
+@import "components/header-logo";
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.custom-cursor {
+  cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NCIgaGVpZ2h0PSI1NCIgdmlld0JveD0iMCAwIDU0IDU0Ij48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxODI0NCAtNDk0NikiPjxjaXJjbGUgY3g9IjI3IiBjeT0iMjciIHI9IjI3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTgyNDQgNDk0NikiIGZpbGw9IiNmZmYiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTMzMTYuNzE0IDIzMjQ0LjM5NSkgcm90YXRlKDkwKSI+PHJlY3Qgd2lkdGg9IjE3LjMzNSIgaGVpZ2h0PSIyLjE2NyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4Mjc2LjI1OCA0ODkzLjI4Nikgcm90YXRlKDQ1KSIgZmlsbD0iIzVmNWY1ZiIvPjxyZWN0IHdpZHRoPSIxNy4zMzUiIGhlaWdodD0iMi4xNjYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xODI2NCA0ODk0LjgxOCkgcm90YXRlKDEzNSkiIGZpbGw9IiM1ZjVmNWYiLz48L2c+PC9nPjwvc3ZnPg=='), auto;
+}

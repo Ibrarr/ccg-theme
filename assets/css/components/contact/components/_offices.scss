@@ -1,0 +1,50 @@
+.offices {
+  margin-bottom: 50px;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-two {
+      bottom: -50px;
+      right: -240px;
+      transform: rotate(25deg);
+
+      @include media-breakpoint-only(md) {
+        bottom: -20px;
+        right: -200px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: 20px;
+        right: -130px;
+      }
+    }
+  }
+
+  .acf-map {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 30px;
+  }
+
+  .acf-map img {
+    max-width: inherit !important;
+  }
+
+  .office-location {
+    h3 {
+      @include sub-heading-text($ccg-dark-green);
+      font-family: $font-circular-medium;
+      margin-bottom: 30px;
+    }
+
+    p {
+      @include sub-heading-text($ccg-dark-green);
+
+      @include media-breakpoint-down(md) {
+        &:last-child {
+          margin-bottom: 50px;
+        }
+      }
+    }
+  }
+}

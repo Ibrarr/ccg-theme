@@ -1,0 +1,34 @@
+// Boostrap Override
+:root {
+  --bs-body-bg: #EFEFEC;
+}
+
+// Typography
+$font-circular-bold: "CircularXXWeb-Bold", sans-serif;
+$font-circular-medium: "CircularXXWeb-Medium", sans-serif;
+$font-circular-regular: "CircularXXWeb-Regular", sans-serif;
+$font-circular-italic: "CircularXXWeb-Italic", sans-serif;
+
+// Typography Sizes
+$ccg-heading-size: clamp(2.375rem, 0.375rem + 4.1667vw, 3.5rem);
+$ccg-heading-line-height: clamp(2.625rem, -0.375rem + 6.25vw, 4.3125rem);
+$ccg-sub-heading-size: clamp(1rem, -0.3333rem + 2.7778vw, 1.75rem);
+$ccg-sub-heading-line-height: clamp(1.25rem, -0.3056rem + 3.2407vw, 2.125rem);
+$ccg-body-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
+$ccg-body-line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
+
+// Colors
+$ccg-body-bg: #EFEFEC;
+$ccg-off-white: #E5E4E0;
+$ccg-related-content-bg: #FCF2E4;
+$ccg-pink: #F08974;
+$ccg-orange: #EAAC4D;
+$ccg-green: #0A433D;
+$ccg-dark-green: #002C38;
+$ccg-blue: #02657E;
+$ccg-text: #2B2B2B;
+
+//Other
+$ccg-img-border-radius: 10px;
+$ccg-transition-all: all .3s;
+$ccg-top-page-padding: 200px;

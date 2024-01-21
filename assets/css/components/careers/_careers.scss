@@ -1,0 +1,21 @@
+.page-template-page-careers {
+
+  @import "components/header";
+
+  @import "components/diversity";
+
+  @import "components/values";
+
+  @import "components/life-here";
+
+  @import "components/culture";
+
+  @import "components/other-info";
+
+  @import "components/vacancies";
+
+  .slide-in-image {
+    opacity: 0;
+    transform: translate(0px, 20px);
+  }
+}

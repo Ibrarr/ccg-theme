@@ -1,0 +1,26 @@
+.home.page {
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  @import "components/header-slider";
+
+  .intro {
+    padding: 65px 0;
+    background-color: $ccg-off-white;
+
+    h2 {
+      font-family: $font-circular-regular;
+      font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.875rem);
+      line-height: clamp(2.125rem, 0.5694rem + 3.2407vw, 3rem);
+      color: $ccg-pink;
+      text-align: center;
+    }
+  }
+
+  @import "components/recent-posts";
+
+  @import "components/sectors-slider";
+}

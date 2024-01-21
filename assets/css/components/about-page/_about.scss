@@ -1,0 +1,13 @@
+.page-template-page-about {
+  display: none;
+
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  @import "components/slider";
+
+  @import "components/content";
+}

@@ -1,0 +1,19 @@
+.page-template-page-awards {
+  .header-logo a svg g g {
+    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+      fill: #ffffff;
+    }
+  }
+
+  @import "components/header";
+
+  #content {
+    background-color: $ccg-off-white;
+  }
+
+  @import "components/accordion";
+
+  .bottom-cta {
+    background-color: $ccg-orange;
+  }
+}

@@ -1,0 +1,59 @@
+.services-header {
+  padding-top: $ccg-top-page-padding;
+  padding-bottom: 60px;
+  background-color: $ccg-green;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-one {
+      top: 100px;
+      right: -240px;
+      transform: rotate(27deg);
+
+      @include media-breakpoint-only(md) {
+        right: -210px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        top: 80px;
+        right: -140px;
+      }
+    }
+
+    &#bar-two {
+      bottom: 40px;
+      left: -240px;
+      transform: rotate(31deg);
+      z-index: 1;
+
+      @include media-breakpoint-up(lg) {
+        bottom: 50px;
+        left: -200px;
+      }
+    }
+  }
+
+  h1.title {
+    @include title-text($ccg-off-white);
+  }
+
+  .intro {
+    position: relative;
+    z-index: 1;
+
+    h2 {
+      @include sub-heading-text($ccg-off-white);
+
+      a {
+        color: $ccg-off-white;
+        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        transition: background-size 350ms;
+
+        &:where(:hover, :focus-visible) {
+          background-size: 100%;
+          background-position-x: left;
+        }
+      }
+    }
+  }
+}

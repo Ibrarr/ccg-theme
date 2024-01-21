@@ -1,0 +1,50 @@
+.header {
+  background-color: $ccg-dark-green;
+  padding-top: $ccg-top-page-padding;
+  padding-bottom: 50px;
+  position: relative;
+
+  .parallax-bars {
+    &#bar-one {
+      top: 40px;
+      right: -260px;
+      transform: rotate(160deg);
+
+      @include media-breakpoint-up(lg) {
+        right: -140px;
+      }
+    }
+
+    &#bar-two {
+      bottom: -110px;
+      left: -250px;
+      transform: rotate(210deg);
+
+      @include media-breakpoint-up(lg) {
+        bottom: -160px;
+        left: -180px;
+      }
+    }
+  }
+
+  h1.title {
+    @include title-text($ccg-off-white);
+  }
+
+  .intro {
+    h2 {
+      @include sub-heading-text($ccg-off-white);
+
+      a {
+        color: $ccg-off-white;
+        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        transition: background-size 350ms;
+
+        &:where(:hover, :focus-visible) {
+          background-size: 100%;
+          background-position-x: left;
+        }
+      }
+    }
+  }
+}
