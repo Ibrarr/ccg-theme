@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Add schema to pages
+ *
+ * @return void
+ */
 function ccg_schema_type() {
 	$schema = 'https://schema.org/';
 	if ( is_single() ) {

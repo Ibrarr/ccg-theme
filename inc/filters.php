@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Modify the document title separator.
+ */
 add_filter( 'document_title_separator', 'ccg_document_title_separator' );
 function ccg_document_title_separator( $sep ) {
 	$sep = esc_html( '|' );
@@ -7,6 +10,9 @@ function ccg_document_title_separator( $sep ) {
 	return $sep;
 }
 
+/**
+ * Modify the title before displaying it.
+ */
 add_filter( 'the_title', 'ccg_title' );
 function ccg_title( $title ) {
 	if ( $title == '' ) {
@@ -16,6 +22,9 @@ function ccg_title( $title ) {
 	}
 }
 
+/**
+ * Add schema to menu link
+ */
 add_filter( 'nav_menu_link_attributes', 'ccg_schema_url', 10 );
 function ccg_schema_url( $atts ) {
 	$atts['itemprop'] = 'url';
@@ -23,6 +32,9 @@ function ccg_schema_url( $atts ) {
 	return $atts;
 }
 
+/**
+ * Modify the "read more" link in the content.
+ */
 add_filter( 'the_content_more_link', 'ccg_read_more_link' );
 function ccg_read_more_link() {
 	if ( ! is_admin() ) {
@@ -30,6 +42,9 @@ function ccg_read_more_link() {
 	}
 }
 
+/**
+ * Modify the "read more" link in excerpts.
+ */
 add_filter( 'excerpt_more', 'ccg_excerpt_read_more_link' );
 function ccg_excerpt_read_more_link( $more ) {
 	if ( ! is_admin() ) {
@@ -39,7 +54,14 @@ function ccg_excerpt_read_more_link( $more ) {
 	}
 }
 
+/**
+ * Disable big image size threshold.
+ */
 add_filter( 'big_image_size_threshold', '__return_false' );
+
+/**
+ * Override intermediate image sizes.
+ */
 add_filter( 'intermediate_image_sizes_advanced', 'ccg_image_insert_override' );
 function ccg_image_insert_override( $sizes ) {
 	unset( $sizes['medium_large'] );
@@ -49,8 +71,14 @@ function ccg_image_insert_override( $sizes ) {
 	return $sizes;
 }
 
+/**
+ * Enable classic editor
+ */
 add_filter( 'use_block_editor_for_post', '__return_false', 10 );
 
+/**
+ * Replace news permalink with ACF field
+ */
 add_filter( 'post_type_link', 'modify_news_post_link', 10, 2 );
 function modify_news_post_link( $url, $post ) {
 	if ( $post->post_type == 'news' ) {
@@ -63,6 +91,9 @@ function modify_news_post_link( $url, $post ) {
 	return $url;
 }
 
+/**
+ * Add body classes
+ */
 add_filter( 'body_class', 'custom_body_classes' );
 function custom_body_classes( $classes ) {
 	if ( 'insight' === get_post_type() ) {
@@ -78,6 +109,9 @@ function custom_body_classes( $classes ) {
 	return $classes;
 }
 
+/**
+ * Fetch all Gravity Forms for ACF dropdown field
+ */
 add_filter( 'acf/load_field/name=newsletter_popup_form_gravity_form_id', 'acf_populate_gf_forms_ids' );
 add_filter( 'acf/load_field/name=select_gform_form', 'acf_populate_gf_forms_ids' );
 function acf_populate_gf_forms_ids( $field ) {

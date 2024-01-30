@@ -1,6 +1,8 @@
 <?php
 
-// Register Insights Post Type
+/**
+ * Register Insights Post Type
+ */
 add_action( 'init', 'insight_post_type', 0 );
 function insight_post_type() {
 
@@ -62,7 +64,9 @@ function insight_post_type() {
 
 }
 
-// Register Work Post Type
+/**
+ * Register Work Post Type
+ */
 add_action( 'init', 'work_post_type', 0 );
 function work_post_type() {
 
@@ -124,7 +128,9 @@ function work_post_type() {
 
 }
 
-// Register News Post Type
+/**
+ * Register News Post Type
+ */
 add_action( 'init', 'news_post_type', 0 );
 function news_post_type() {
 
@@ -186,7 +192,9 @@ function news_post_type() {
 
 }
 
-// Change Posts to Blog
+/**
+ * Change Posts to Blog
+ */
 add_action( 'init', 'change_post_labels_to_news' );
 function change_post_labels_to_news() {
 	$get_post_type = get_post_type_object( 'post' );
@@ -205,10 +213,4 @@ function change_post_labels_to_news() {
 	$labels->all_items          = 'All Blogs';
 	$labels->menu_name          = 'Blog';
 	$labels->name_admin_bar     = 'Blog';
-}
-
-// Remove content editor on default post type
-add_action( 'init', 'disable_content_editor_on_post' );
-function disable_content_editor_on_post() {
-	remove_post_type_support( 'post', 'editor' );
 }

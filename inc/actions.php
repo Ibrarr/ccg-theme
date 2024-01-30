@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Initial setup
+ */
 add_action( 'after_setup_theme', 'ccg_setup' );
 function ccg_setup() {
 	load_theme_textdomain( 'ccg', get_template_directory() . '/languages' );
@@ -17,12 +20,18 @@ function ccg_setup() {
 	register_nav_menus( array( 'main-menu' => esc_html__( 'Main Menu', 'ccg' ) ) );
 }
 
+/**
+ * Register main stylesheet and jquery
+ */
 add_action( 'wp_enqueue_scripts', 'ccg_enqueue' );
 function ccg_enqueue() {
 	wp_enqueue_style( 'ccg-style', get_stylesheet_uri() );
 	wp_enqueue_script( 'jquery' );
 }
 
+/**
+ * Add script to the footer to check which device/browser the user is using
+ */
 add_action( 'wp_footer', 'ccg_footer' );
 function ccg_footer() {
 	?>
@@ -53,17 +62,26 @@ function ccg_footer() {
 	<?php
 }
 
+/**
+ * Wrapper function to execute the 'wp_body_open' action.
+ */
 if ( ! function_exists( 'ccg_wp_body_open' ) ) {
 	function ccg_wp_body_open() {
 		do_action( 'wp_body_open' );
 	}
 }
 
+/**
+ * Adds a skip-to-content link in the header for accessibility.
+ */
 add_action( 'wp_body_open', 'ccg_skip_link', 5 );
 function ccg_skip_link() {
 	echo '<a href="#content" class="skip-link screen-reader-text">' . esc_html__( 'Skip to the content', 'ccg' ) . '</a>';
 }
 
+/**
+ * Adds a pingback link to the header if the post supports pingbacks.
+ */
 add_action( 'wp_head', 'ccg_pingback_header' );
 function ccg_pingback_header() {
 	if ( is_singular() && pings_open() ) {
@@ -71,11 +89,19 @@ function ccg_pingback_header() {
 	}
 }
 
+/**
+ * Create new Yoast variable to use for meta descriptions
+ */
 add_action( 'wpseo_register_extra_replacements', 'register_custom_yoast_variable' );
 function register_custom_yoast_variable() {
 	wpseo_register_var_replacement( '%%intro120%%', 'get_intro_text_for_yoast', 'advanced', 'Gets the first 120 characters of the intro field' );
 }
 
+/**
+ * Get ACF intro field from posts
+ *
+ * @return mixed|string
+ */
 function get_intro_text_for_yoast() {
 	$intro = get_field( 'intro' );
 
@@ -86,9 +112,15 @@ function get_intro_text_for_yoast() {
 	return '';
 }
 
+/**
+ * Register menus
+ */
 register_nav_menus( array( 'footer-menu' => esc_html__( 'Footer Menu', 'ccg' ) ) );
 register_nav_menus( array( 'info-menu' => esc_html__( 'Info Menu', 'ccg' ) ) );
 
+/**
+ * Send form data to hubspot
+ */
 add_action( 'gform_after_submission', 'send_to_hubspot', 10, 2 );
 function send_to_hubspot( $entry, $form ) {
 	$hubspot_form_guid = rgar( $entry, '6' );
@@ -124,18 +156,9 @@ function send_to_hubspot( $entry, $form ) {
 //	error_log( 'HubSpot Response: ' . print_r( $response, true ) );
 }
 
-//add_action( 'template_redirect', 'custom_taxonomy_term_redirect' );
-//function custom_taxonomy_term_redirect() {
-//	if ( is_tax( 'type' ) ) {
-//		$term_slug = get_query_var( 'term_slug' );
-//		if ( $term_slug ) {
-//			$redirect_url = home_url( "/insight-hub/?types=$term_slug" );
-//			wp_redirect( $redirect_url, 301 );
-//			exit();
-//		}
-//	}
-//}
-
+/**
+ * Setup 404 page
+ */
 add_filter( 'template_include', 'custom_404_redirect' );
 function custom_404_redirect( $template ) {
 	if ( is_404() ) {
@@ -160,6 +183,9 @@ function custom_modify_category_taxonomy() {
 	register_taxonomy( 'category', 'post', $args );
 }
 
+/**
+ * Redirect searches to search page
+ */
 add_action( 'template_redirect', 'wpb_change_search_url' );
 function wpb_change_search_url() {
 	if ( is_search() && empty( $_GET['s'] ) ) {
@@ -171,6 +197,9 @@ function wpb_change_search_url() {
 	}
 }
 
+/**
+ * Setup holding page
+ */
 add_action( 'template_redirect', 'enable_maintenance_mode' );
 function enable_maintenance_mode() {
 	if ( ! is_user_logged_in() && get_field( 'enable_maintenance_mode', 'option' ) ) {
@@ -184,4 +213,12 @@ function enable_maintenance_mode() {
 		include( CCG_TEMPLATE_DIR . '/page-templates/page-holding-page.php' );
 		die();
 	}
+}
+
+/**
+ * Remove content editor on default post type
+ */
+add_action( 'init', 'disable_content_editor_on_post' );
+function disable_content_editor_on_post() {
+    remove_post_type_support( 'post', 'editor' );
 }

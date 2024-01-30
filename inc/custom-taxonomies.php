@@ -1,6 +1,8 @@
 <?php
 
-// Register Sector Taxonomy
+/**
+ * Register Sector Taxonomy
+ */
 add_action( 'init', 'sector_taxonomy', 0 );
 function sector_taxonomy() {
 
@@ -53,7 +55,9 @@ function sector_taxonomy() {
 	wp_insert_term( 'Emerging Tech', 'sector' );
 }
 
-// Register Type Taxonomy
+/**
+ * Register Type Taxonomy
+ */
 add_action( 'init', 'type_taxonomy', 0 );
 function type_taxonomy() {
 
@@ -104,7 +108,9 @@ function type_taxonomy() {
 	wp_insert_term( 'Podcasts', 'type' );
 }
 
-// Register Source Taxonomy
+/**
+ * Register Source Taxonomy
+ */
 add_action( 'init', 'source_taxonomy', 0 );
 function source_taxonomy() {
 
@@ -148,7 +154,9 @@ function source_taxonomy() {
 	register_taxonomy( 'source', array( 'news' ), $args );
 }
 
-// Register Services  Taxonomy
+/**
+ * Register Services  Taxonomy
+ */
 add_action( 'init', 'services_taxonomy', 0 );
 function services_taxonomy() {
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Load posts for Insight Hub
+ */
 add_action( 'wp_ajax_load_insight_hub_posts', 'load_insight_hub_posts' );
 add_action( 'wp_ajax_nopriv_load_insight_hub_posts', 'load_insight_hub_posts' );
 function load_insight_hub_posts() {
@@ -80,6 +83,9 @@ function load_insight_hub_posts() {
 	die();
 }
 
+/**
+ * Load post for Work archive
+ */
 add_action( 'wp_ajax_load_our_work_posts', 'load_our_work_posts' );
 add_action( 'wp_ajax_nopriv_load_our_work_posts', 'load_our_work_posts' );
 function load_our_work_posts() {
@@ -137,6 +143,9 @@ function load_our_work_posts() {
 	die();
 }
 
+/**
+ * Load posts for Blog archive
+ */
 add_action( 'wp_ajax_load_our_blog_posts', 'load_our_blog_posts' );
 add_action( 'wp_ajax_nopriv_load_our_blog_posts', 'load_our_blog_posts' );
 function load_our_blog_posts() {
@@ -185,6 +194,9 @@ function load_our_blog_posts() {
 	die();
 }
 
+/**
+ * Load posts for News archive
+ */
 add_action( 'wp_ajax_load_our_news_posts', 'load_our_news_posts' );
 add_action( 'wp_ajax_nopriv_load_our_news_posts', 'load_our_news_posts' );
 function load_our_news_posts() {
@@ -234,6 +246,9 @@ function load_our_news_posts() {
 	die();
 }
 
+/**
+ * Load search results for header search
+ */
 add_action( 'wp_ajax_load_search_results_header', 'load_search_results_header' );
 add_action( 'wp_ajax_nopriv_load_search_results_header', 'load_search_results_header' );
 function load_search_results_header() {
@@ -279,6 +294,9 @@ function load_search_results_header() {
 	die();
 }
 
+/**
+ * Load search results for search page
+ */
 add_action( 'wp_ajax_load_search_results_page', 'load_search_results_page' );
 add_action( 'wp_ajax_nopriv_load_search_results_page', 'load_search_results_page' );
 function load_search_results_page() {
@@ -337,6 +355,9 @@ function load_search_results_page() {
 	die();
 }
 
+/**
+ * Load posts for type archives
+ */
 add_action( 'wp_ajax_load_type_posts', 'load_type_posts' );
 add_action( 'wp_ajax_nopriv_load_type_posts', 'load_type_posts' );
 function load_type_posts() {
@@ -386,6 +407,9 @@ function load_type_posts() {
 	die();
 }
 
+/**
+ * Load posts for category archives
+ */
 add_action( 'wp_ajax_load_category_posts', 'load_category_posts' );
 add_action( 'wp_ajax_nopriv_load_category_posts', 'load_category_posts' );
 function load_category_posts() {
@@ -429,6 +453,9 @@ function load_category_posts() {
 	die();
 }
 
+/**
+ * Load posts for source archives
+ */
 add_action( 'wp_ajax_load_source_posts', 'load_source_posts' );
 add_action( 'wp_ajax_nopriv_load_source_posts', 'load_source_posts' );
 function load_source_posts() {

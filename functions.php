@@ -32,5 +32,8 @@ require CCG_INC_PATH . '/custom-taxonomies.php';
 // ACF
 require CCG_INC_PATH . '/acf.php';
 
+// Shortcodes
+require CCG_INC_PATH . '/shortcodes.php';
+
 // Ajax Calls
 require CCG_INC_PATH . '/ajax-calls.php';

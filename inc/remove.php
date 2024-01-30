@@ -23,12 +23,18 @@ function disable_comments_support() {
 	}
 }
 
+/**
+ * Remove comments from menu
+ */
 add_action('wp_before_admin_bar_render', 'remove_comments_from_admin_bar');
 function remove_comments_from_admin_bar() {
 	global $wp_admin_bar;
 	$wp_admin_bar->remove_menu('comments');
 }
 
+/**
+ * Remove comments page
+ */
 add_action('admin_menu', 'remove_comments_admin_menu');
 function remove_comments_admin_menu() {
 	remove_menu_page('edit-comments.php');
