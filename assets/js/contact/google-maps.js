@@ -84,6 +84,7 @@
 
             // Show info window when marker is clicked.
             google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent('Hello, we’re here!');
                 infowindow.open(map, marker);
             });
         }
