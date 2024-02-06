@@ -109,6 +109,14 @@ $term_name_text = single_term_title( '', false );
 <?php
 $pinned_posts = new WP_Query( array(
 	'posts_per_page' => 4,
+	'tax_query'      => array(
+		array(
+			'taxonomy'         => 'sector',
+			'field'            => 'slug',
+			'terms'            => $current_term->slug,
+			'include_children' => false
+		),
+	),
 	'meta_query'     => array(
 		array(
 			'key'     => 'pinned',
@@ -133,7 +141,7 @@ if ( $remaining_posts_to_fetch > 0 ) {
 			array(
 				'taxonomy'         => 'sector',
 				'field'            => 'slug',
-				'terms'            => $term_name_text,
+				'terms'            => $current_term->slug,
 				'include_children' => false
 			),
 		),
