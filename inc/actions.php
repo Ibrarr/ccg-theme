@@ -140,10 +140,11 @@ function send_to_hubspot( $entry, $form ) {
 	$hubspot_api_url = get_field( 'hubspot_api_url', 'option' ) . $hubspot_form_guid;
 	$hubspot_api_key = get_field( 'hubspot_api_key', 'option' );
 
-	$post_json = json_encode( array(
-		'fields' => array_map( function ( $value, $name ) {
-		}, $hubspot_data, array_keys( $hubspot_data ) )
-	) );
+	$fields = array_map( function ( $value, $name ) {
+		return array( 'name' => $name, 'value' => $value );
+	}, $hubspot_data, array_keys( $hubspot_data ) );
+
+	$post_json = json_encode( array( 'fields' => $fields ) );
 
 	$response = wp_remote_post( $hubspot_api_url, array(
 		'body'    => $post_json,
@@ -153,7 +154,7 @@ function send_to_hubspot( $entry, $form ) {
 		)
 	) );
 
-//	error_log( 'HubSpot Response: ' . print_r( $response, true ) );
+	// error_log( 'HubSpot Response: ' . json_encode( $response, JSON_PRETTY_PRINT ) );
 }
 
 /**
@@ -220,5 +221,5 @@ function enable_maintenance_mode() {
  */
 add_action( 'init', 'disable_content_editor_on_post' );
 function disable_content_editor_on_post() {
-    remove_post_type_support( 'post', 'editor' );
+	remove_post_type_support( 'post', 'editor' );
 }
