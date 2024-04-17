@@ -26,8 +26,8 @@ get_header();
 					the_row();
 					echo '<div class="award-year">';
 					echo '<h4>' . get_sub_field( 'year' ) . '</h4>';
+					echo '<div class="all-awards-container">';
 					if ( have_rows( 'winning_awards' ) ):
-						echo '<div class="all-awards-container">';
 						echo '<h5>Winning Awards</h5>';
 						echo '<div class="row justify-content-center winning-awards">';
 						echo '<div class="col-md-10">';

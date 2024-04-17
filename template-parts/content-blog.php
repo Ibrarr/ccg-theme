@@ -88,7 +88,7 @@ if ( $remaining_posts_to_fetch > 0 ) {
 			array(
 				'taxonomy'         => $taxonomy,
 				'field'            => 'slug',
-				'terms'            => $term_name,
+				'terms'            => $terms[0]->slug,
 				'include_children' => false
 			),
 		),
