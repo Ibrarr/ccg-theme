@@ -1,4 +1,4 @@
-.term-content {
+.content-staff-member {
   margin-bottom: 65px;
   position: relative;
 
@@ -192,9 +192,5 @@
 
   .global-button {
     @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
-  }
-
-  @include media-breakpoint-up(lg) {
-    margin-bottom: 125px;
   }
 }

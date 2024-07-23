@@ -17,7 +17,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_655e1213772ab",
@@ -113,10 +114,12 @@
                 "26": "Contact Form",
                 "5": "How B2B PR Done Right Benefits Your SEO",
                 "7": "How B2B Tech Vendors Can Use PR & Marketing To Attract Channel Partners",
+                "47": "How Can IoT Technology Vendors Successfully Market And Sell To Buyers?",
                 "4": "How Do IT Decision-Makers Choose Their Suppliers?",
                 "14": "How Do Modern Enterprises Buy Technology?",
                 "17": "How MediaTech Companies Can Use Integrated Marketing Communications To Achieve Commercial Success",
                 "15": "How Telcos And OTTs Are Disrupting The Traditional Broadcast Industry",
+                "51": "How to influence fintech acquirers",
                 "8": "How To Influence FinTech Buyers",
                 "9": "How To Influence FinTech Buyers In Capital Markets",
                 "20": "How To Influence Fintech Buyers: The Shop Window Is Everything",
@@ -127,15 +130,34 @@
                 "2": "How To Use PR To Attract Acquirers",
                 "11": "How Vendors Can Benefit From The Impact Of IP On The Broadcast Industry",
                 "1": "Insight Report",
+                "52": "Money20\/20 Europe 2023 Infographic - May '24",
                 "19": "More Brand, more Buck: How Brand Influences Enterprise Technology Buyers",
+                "46": "Navigating Telco Turbulence: Lessons For Vendor Marketing",
                 "28": "Newsletter Popup Form",
+                "54": "RSA 2024 Infographic - Cyber",
                 "18": "Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
                 "3": "Successful Influencer Marketing",
                 "10": "Successfully Marketing And Selling To Broadcast Service Providers",
                 "23": "Telco Transformation: Lessons For Vendor Marketing",
-                "27": "TEST POPUP",
+                "48": "Trusted advisors: the role of industry analysts in telecoms purchasing - lessons for vendors",
                 "12": "Unaware, Unprepared And Paralysed: Retailer Readiness For PSD2",
-                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process"
+                "53": "Understanding enterprise technology buying: Lessons for vendor marketing",
+                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process",
+                "36": "Webinar: Analyst Prioritization: How To Focus Your Analyst Relations",
+                "30": "Webinar: Analysts & The Future Of Work: Influencing Analysts In A World Of Uncertainty",
+                "32": "Webinar: Fintech: Which Analyst Firms Are Most Valuable And Why?",
+                "45": "Webinar: How analysts shift fintech purchasing and M&A",
+                "39": "Webinar: How Industry Analysts Influence Security Technology Buyers",
+                "37": "Webinar: How To Influence Telco Operators Through Industry Analysts",
+                "31": "Webinar: Influencing Buyers Through Telecoms Analysts",
+                "44": "Webinar: Integrated marketing communications: key principles, methods and outcomes",
+                "33": "Webinar: Mind The Gap: What AR Delivers, And What It’s Asked For",
+                "35": "Webinar: Navigating Telco Turbulence: Lessons For Vendor Marketing",
+                "38": "Webinar: Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
+                "34": "Webinar: Tech: How Firms And Investors Can Attract The Right Fit?",
+                "43": "Webinar: Use Analyst Relations To Accelerate Sales",
+                "40": "Webinar: Use Measurement To Drive Analyst Relations Objectives",
+                "29": "Webinar: What Telcos Want From Vendors: Marketing Strategies That Deliver"
             },
             "default_value": false,
             "return_format": "value",
@@ -160,7 +182,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_655bab88d23a6",
@@ -268,7 +291,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_655babdfd23ad",
@@ -341,7 +365,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6571e87ea6dd7",
@@ -398,7 +423,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6572cd116018d",
@@ -472,11 +498,32 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
-            "key": "field_658db850bdfff",
-            "label": "Maintenance Mode",
+            "key": "field_658db863be000",
+            "label": "Enable Maintenance Mode",
+            "name": "enable_maintenance_mode",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_669ee6fc5aec9",
+            "label": "Why choose CCGroup",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -489,14 +536,75 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
-            "key": "field_658db863be000",
-            "label": "Enable Maintenance Mode",
-            "name": "enable_maintenance_mode",
+            "key": "field_669ee71e5aeca",
+            "label": "1st Title",
+            "name": "why_choose_ccgroup_1st_title",
             "aria-label": "",
-            "type": "true_false",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_669ee75f5aecb",
+            "label": "2nd Title",
+            "name": "why_choose_ccgroup_2nd_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_669ee7725aecd",
+            "label": "3rd Title",
+            "name": "why_choose_ccgroup_3rd_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_669ee78e5aece",
+            "label": "Description",
+            "name": "why_choose_ccgroup_description",
+            "aria-label": "",
+            "type": "textarea",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -505,31 +613,11 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
-            "default_value": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        },
-        {
-            "key": "field_658db863be000",
-            "label": "Enable Maintenance Mode",
-            "name": "enable_maintenance_mode",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "wpautop"
         }
     ],
     "location": [
@@ -550,5 +638,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1705846683
+    "modified": 1721726575
 }

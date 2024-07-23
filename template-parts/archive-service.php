@@ -59,9 +59,9 @@ $term_name_text = single_term_title( '', false );
         </div>
     </section>
 
-    <section class="term-content">
-        <div class="parallax-bars"
-             id="bar-two"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/bars/yellow.svg' ) ?></div>
+    <section class="content-staff-member">
+<!--        <div class="parallax-bars"-->
+<!--             id="bar-two">--><?php //echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/bars/yellow.svg' ) ?><!--</div>-->
         <div class="container px-4 position-relative">
             <div class="row">
 				<?php
@@ -109,9 +109,80 @@ $term_name_text = single_term_title( '', false );
             </div>
 			<?php } ?>
 			<?php } ?>
+<!--            <div class="row">-->
+<!--                <div class="col-md-3 col-6 contact-container">-->
+<!--                    <a href="/contact-us" class="global-button">Get in touch</a>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </section>
+
+    <?php if (get_field('enable_services', $current_term)) { ?>
+        <section class="services-slider">
+            <div class="container px-4">
+                <div class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <li class="splide__slide">
+                                <div class="first-slide">
+                                    <div class="down-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/down-arrow.svg' ) ?></div>
+                                    <h3 class="heading">Our <?php echo $term_name_text ?> services</h3>
+                                    <p class="description"><?php the_field( 'services_description', $current_term ); ?></p>
+                                </div>
+                            </li>
+                            <?php
+                            if ( have_rows( 'services', $current_term ) ):
+                                $total_count = count( get_field( 'services', $current_term ) );
+                                $current_count = 1;
+                                while ( have_rows( 'services', $current_term ) ) : the_row();
+                                    ?>
+                                    <li class="splide__slide">
+                                        <div class="service-slide">
+                                            <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
+                                            <p class="description"><?php the_sub_field( 'description' ); ?></p>
+                                            <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                        </div>
+                                    </li>
+                                    <?php
+                                    $current_count++;
+                                endwhile;
+                            endif;
+                            ?>
+                        </ul>
+                    </div>
+                    <div class="splide__arrows splide__arrows--ltr">
+                        <button
+                                class="splide__arrow splide__arrow--prev"
+                                type="button"
+                                aria-label="Previous slide"
+                                aria-controls="splide01-track"
+                        >
+                            <?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
+                        </button>
+                        <button
+                                class="splide__arrow splide__arrow--next"
+                                type="button"
+                                aria-label="Next slide"
+                                aria-controls="splide01-track"
+                        >
+                            <?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php } ?>
+
+    <section class="why-css">
+        <div class="container px-4 position-relative">
             <div class="row">
-                <div class="col-md-3 col-6 contact-container">
-                    <a href="/contact-us" class="global-button">Get in touch</a>
+                <div class="col-md-6">
+                    <h1><?php the_field( 'why_choose_ccgroup_1st_title', 'option' ) ?></h1>
+                    <h2><?php the_field( 'why_choose_ccgroup_2nd_title', 'option' ) ?></h2>
+                    <h3><?php the_field( 'why_choose_ccgroup_3rd_title', 'option' ) ?></h3>
+                </div>
+                <div class="col-md-6">
+                    <p><?php the_field( 'why_choose_ccgroup_description', 'option' ) ?></p>
                 </div>
             </div>
         </div>
