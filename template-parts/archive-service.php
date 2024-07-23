@@ -188,6 +188,46 @@ $term_name_text = single_term_title( '', false );
         </div>
     </section>
 
+    <?php if (get_field('enable_quotes', $current_term)) { ?>
+        <section class="quotes-slider">
+            <div class="container px-4">
+                <div class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <?php
+                            if ( have_rows( 'quotes', $current_term ) ):
+                                $total_count = count( get_field( 'quotes', $current_term ) );
+                                $current_count = 1;
+                                while ( have_rows( 'quotes', $current_term ) ) : the_row();
+                                    $link = get_sub_field( 'link');
+                                    ?>
+                                    <li class="splide__slide">
+                                        <div class="service-slide">
+                                            <p class="quote">“<?php the_sub_field( 'quote' ); ?>”</p>
+                                            <p class="author">
+                                                <?php the_sub_field( 'author_name' ); ?>,
+                                                <?php the_sub_field( 'author_job_title' ); ?> -
+                                                <strong><?php the_sub_field( 'author_company' ); ?></strong>
+                                            </p>
+                                            <?php if ($link) { ?>
+                                                <a class="link" href="<?php echo $link['url']; ?>"
+                                                   target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+                                            <?php } ?>
+                                            <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                        </div>
+                                    </li>
+                                    <?php
+                                    $current_count++;
+                                endwhile;
+                            endif;
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php } ?>
+
 <?php
 $pinned_posts = new WP_Query( array(
 	'posts_per_page' => 4,

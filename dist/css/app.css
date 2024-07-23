@@ -24368,6 +24368,9 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   padding: 120px 0;
   margin-top: -25px;
   position: relative;
+  z-index: 9;
+  overflow: hidden;
+  border-radius: 0 0 25px 25px;
 }
 .archive.tax-service .why-ccg:after {
   content: "";
@@ -24415,6 +24418,84 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   transition: background-size 350ms;
 }
 .archive.tax-service .why-ccg p a:where(:hover, :focus-visible) {
+  background-size: 100%;
+  background-position-x: left;
+}
+.archive.tax-service .quotes-slider {
+  padding: 120px 0 80px 0;
+  margin-top: -25px;
+  position: relative;
+  z-index: 8;
+  background-color: #EAAC4D;
+  border-radius: 0 0 25px 25px;
+}
+.archive.tax-service .quotes-slider .quote {
+  font-size: clamp(1.75rem, 0.2463rem + 1.8519vw, 2.875rem);
+  line-height: clamp(1.75rem, 0.2932rem + 1.8519vw, 3.125rem);
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #002C38;
+  text-align: center;
+  margin: 0 auto 40px;
+  max-width: 1050px;
+}
+.archive.tax-service .quotes-slider .author {
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  font-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
+  line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
+  color: #002C38;
+  text-align: center;
+}
+.archive.tax-service .quotes-slider .author a {
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #002C38;
+  background: -webkit-gradient(linear, left bottom, left top, from(#EAAC4D), to(#EAAC4D)) no-repeat right bottom/0;
+  background: linear-gradient(0deg, #EAAC4D, #EAAC4D) no-repeat right bottom/0;
+  -webkit-transition: background-size 350ms;
+  transition: background-size 350ms;
+}
+.archive.tax-service .quotes-slider .author a:where(:hover, :focus-visible) {
+  background-size: 100%;
+  background-position-x: left;
+}
+.archive.tax-service .quotes-slider .link {
+  text-decoration: underline;
+  display: block;
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  font-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
+  line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
+  color: #002C38;
+  text-align: center;
+}
+.archive.tax-service .quotes-slider .link a {
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #002C38;
+  background: -webkit-gradient(linear, left bottom, left top, from(#EAAC4D), to(#EAAC4D)) no-repeat right bottom/0;
+  background: linear-gradient(0deg, #EAAC4D, #EAAC4D) no-repeat right bottom/0;
+  -webkit-transition: background-size 350ms;
+  transition: background-size 350ms;
+}
+.archive.tax-service .quotes-slider .link a:where(:hover, :focus-visible) {
+  background-size: 100%;
+  background-position-x: left;
+}
+.archive.tax-service .quotes-slider .count {
+  display: block;
+  margin-top: 40px;
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  font-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
+  line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
+  color: #fff;
+  text-align: center;
+}
+.archive.tax-service .quotes-slider .count a {
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #fff;
+  background: -webkit-gradient(linear, left bottom, left top, from(#EAAC4D), to(#EAAC4D)) no-repeat right bottom/0;
+  background: linear-gradient(0deg, #EAAC4D, #EAAC4D) no-repeat right bottom/0;
+  -webkit-transition: background-size 350ms;
+  transition: background-size 350ms;
+}
+.archive.tax-service .quotes-slider .count a:where(:hover, :focus-visible) {
   background-size: 100%;
   background-position-x: left;
 }
