@@ -1,6 +1,6 @@
 .awards {
   position: relative;
-  z-index: 6;
+  z-index: 7;
   margin-top: -25px;
   background-color: #fff;
   padding: 55px 0;
@@ -23,6 +23,10 @@
 
   .years {
     @include body-text($ccg-text);
+  }
+
+  img {
+    width: 100%;
   }
 
   .name {

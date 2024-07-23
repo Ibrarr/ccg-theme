@@ -24139,7 +24139,7 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   padding-bottom: 50px;
   background-color: #EFEFEC;
   position: relative;
-  z-index: 10;
+  z-index: 11;
   margin-top: -25px;
   border-radius: 0 0 25px 25px;
 }
@@ -24368,7 +24368,7 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   padding: 120px 0;
   margin-top: -25px;
   position: relative;
-  z-index: 9;
+  z-index: 10;
   overflow: hidden;
   border-radius: 0 0 25px 25px;
 }
@@ -24425,7 +24425,7 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   padding: 120px 0 80px 0;
   margin-top: -25px;
   position: relative;
-  z-index: 8;
+  z-index: 9;
   background-color: #EAAC4D;
   border-radius: 0 0 25px 25px;
 }
@@ -24501,7 +24501,7 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 }
 .archive.tax-service .related-content {
   position: relative;
-  z-index: 7;
+  z-index: 8;
   margin-top: -25px;
   background-color: #FCF2E4;
   padding: 55px 0;
@@ -24676,7 +24676,7 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 }
 .archive.tax-service .awards {
   position: relative;
-  z-index: 6;
+  z-index: 7;
   margin-top: -25px;
   background-color: #fff;
   padding: 55px 0;
@@ -24713,6 +24713,9 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 .archive.tax-service .awards .years a:where(:hover, :focus-visible) {
   background-size: 100%;
   background-position-x: left;
+}
+.archive.tax-service .awards img {
+  width: 100%;
 }
 .archive.tax-service .awards .name {
   font-family: "CircularXXWeb-Regular", sans-serif;
@@ -24763,6 +24766,129 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 }
 @media (min-width: 992px) {
   .archive.tax-service .awards {
+    padding: 75px 0;
+  }
+}
+.archive.tax-service .explained {
+  position: relative;
+  z-index: 6;
+  margin-top: -25px;
+  background-color: #FCF2E4;
+  padding: 55px 0;
+  border-radius: 0 0 25px 25px;
+}
+.archive.tax-service .explained h3, .archive.tax-service .explained .h3 {
+  font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #EAAC4D;
+  margin-bottom: 40px;
+}
+@media (min-width: 992px) {
+  .archive.tax-service .explained h3, .archive.tax-service .explained .h3 {
+    margin-bottom: 50px;
+  }
+}
+@media (min-width: 992px) {
+  .archive.tax-service .explained {
+    padding: 75px 0;
+  }
+}
+.archive.tax-service .challenges-opportunities {
+  position: relative;
+  z-index: 5;
+  margin-top: -25px;
+  background-color: #0A433D;
+  padding: 55px 0;
+  border-radius: 0 0 25px 25px;
+}
+.archive.tax-service .challenges-opportunities h3, .archive.tax-service .challenges-opportunities .h3 {
+  font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #EAAC4D;
+  margin-bottom: 40px;
+}
+@media (min-width: 992px) {
+  .archive.tax-service .challenges-opportunities h3, .archive.tax-service .challenges-opportunities .h3 {
+    margin-bottom: 50px;
+  }
+}
+.archive.tax-service .challenges-opportunities .large {
+  font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  color: #fff;
+}
+.archive.tax-service .challenges-opportunities .body {
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  font-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
+  line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
+  color: #fff;
+}
+.archive.tax-service .challenges-opportunities .body a {
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #fff;
+  background: -webkit-gradient(linear, left bottom, left top, from(#EAAC4D), to(#EAAC4D)) no-repeat right bottom/0;
+  background: linear-gradient(0deg, #EAAC4D, #EAAC4D) no-repeat right bottom/0;
+  -webkit-transition: background-size 350ms;
+  transition: background-size 350ms;
+}
+.archive.tax-service .challenges-opportunities .body a:where(:hover, :focus-visible) {
+  background-size: 100%;
+  background-position-x: left;
+}
+.archive.tax-service .challenges-opportunities img {
+  width: 100%;
+  border-radius: 10px;
+}
+@media (min-width: 992px) {
+  .archive.tax-service .challenges-opportunities {
+    padding: 75px 0;
+  }
+}
+.archive.tax-service .thought-leadership {
+  position: relative;
+  z-index: 4;
+  margin-top: -25px;
+  background-color: #FCF2E4;
+  padding: 55px 0;
+  border-radius: 0 0 25px 25px;
+}
+.archive.tax-service .thought-leadership h3, .archive.tax-service .thought-leadership .h3 {
+  font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #EAAC4D;
+  margin-bottom: 40px;
+}
+@media (min-width: 992px) {
+  .archive.tax-service .thought-leadership h3, .archive.tax-service .thought-leadership .h3 {
+    margin-bottom: 50px;
+  }
+}
+@media (min-width: 992px) {
+  .archive.tax-service .thought-leadership {
+    padding: 75px 0;
+  }
+}
+.archive.tax-service .other-services {
+  position: relative;
+  z-index: 3;
+  margin-top: -25px;
+  background-color: #0A433D;
+  padding: 55px 0;
+  border-radius: 0 0 25px 25px;
+}
+.archive.tax-service .other-services h3, .archive.tax-service .other-services .h3 {
+  font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #EAAC4D;
+  margin-bottom: 40px;
+}
+@media (min-width: 992px) {
+  .archive.tax-service .other-services h3, .archive.tax-service .other-services .h3 {
+    margin-bottom: 50px;
+  }
+}
+@media (min-width: 992px) {
+  .archive.tax-service .other-services {
     padding: 75px 0;
   }
 }

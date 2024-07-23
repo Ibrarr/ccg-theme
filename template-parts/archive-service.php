@@ -321,8 +321,67 @@ $term_name_text = single_term_title( '', false );
                 </div>
         </section>
     <?php } ?>
-<?php
 
+    <?php if (get_field('enable_service_explained', $current_term)) { ?>
+        <section class="explained">
+            <div class="container px-4">
+                <div class="container px-4">
+                    <h3><?php echo $term_name_text ?> explained</h3>
+                    <div class="row mb-3">
+                        <?php
+                        if ( have_rows( 'explained', $current_term ) ):
+                            while ( have_rows( 'explained', $current_term ) ) : the_row();
+                                ?>
+                                <?php
+                            endwhile;
+                        endif;
+                        ?>
+                    </div>
+                </div>
+        </section>
+    <?php } ?>
+
+    <?php if (get_field('enable_challenges_opportunities', $current_term)) { ?>
+        <section class="challenges-opportunities">
+            <div class="container px-4">
+                <div class="container px-4">
+                    <h3>Challenges & opportunities</h3>
+                    <div class="row mb-3">
+                        <div class="col-lg-4 col-12">
+                            <p class="large"><?php the_field('challenges_opportunities_large_text', $current_term) ?></p>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <p class="body"><?php the_field('challenges_opportunities_body_text', $current_term) ?></p>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <img src="<?php the_field('challenges_opportunities_image', $current_term) ?>" alt="">
+                        </div>
+                    </div>
+                </div>
+        </section>
+    <?php } ?>
+
+    <section class="thought-leadership">
+        <div class="container px-4">
+            <div class="container px-4">
+                <h3>Thought leadership</h3>
+                <div class="row mb-3">
+
+                </div>
+            </div>
+    </section>
+
+    <section class="other-services">
+        <div class="container px-4">
+            <div class="container px-4">
+                <h3>Other services</h3>
+                <div class="row mb-3">
+
+                </div>
+            </div>
+    </section>
+
+<?php
 if ( ! get_field( 'disable_bottom_cta', $current_term ) ) {
 	if ( get_field( 'custom_bottom_cta', $current_term ) ) {
 		$custom_link = get_field( 'custom_bottom_cta_button', $current_term );

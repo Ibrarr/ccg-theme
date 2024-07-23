@@ -1,0 +1,23 @@
+.explained {
+  position: relative;
+  z-index: 6;
+  margin-top: -25px;
+  background-color: $ccg-related-content-bg;
+  padding: 55px 0;
+  border-radius: 0 0 25px 25px;
+
+  h3 {
+    font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
+    font-family: $font-circular-medium;
+    color: $ccg-orange;
+    margin-bottom: 40px;
+
+    @include media-breakpoint-up(lg) {
+      margin-bottom: 50px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 75px 0;
+  }
+}
