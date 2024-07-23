@@ -24887,6 +24887,27 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
     margin-bottom: 50px;
   }
 }
+.archive.tax-service .other-services .service-header {
+  color: #fff;
+  margin-bottom: 20px;
+}
+.archive.tax-service .other-services .service-item {
+  border-bottom: 1px solid #fff;
+  padding: 10px 0;
+}
+.archive.tax-service .other-services .service-item:first-of-type {
+  border-top: 1px solid #fff;
+}
+.archive.tax-service .other-services .service-item .service-name p {
+  font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  color: #fff;
+  margin: 0;
+}
+.archive.tax-service .other-services .service-item .service-name a {
+  text-decoration: none;
+  color: #fff;
+}
 @media (min-width: 992px) {
   .archive.tax-service .other-services {
     padding: 75px 0;

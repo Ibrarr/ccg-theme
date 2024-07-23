@@ -376,7 +376,93 @@ $term_name_text = single_term_title( '', false );
             <div class="container px-4">
                 <h3>Other services</h3>
                 <div class="row mb-3">
+                    <div class="col-lg-4 col-md-6">
+                        <h3 class="service-header">Analytics</h3>
+                        <?php
+                        $analytic_terms = get_terms( array(
+                            'taxonomy'   => 'service',
+                            'hide_empty' => false,
+                            'parent'     => 0,
+                        ) );
 
+                        foreach ( $analytic_terms as $analytic_term ) {
+                            if ( $analytic_term->name === 'Analytics' ) {
+                                $child_terms = get_term_children( $analytic_term->term_id, 'service' );
+
+                                if ( ! empty( $child_terms ) ) {
+                                    foreach ( $child_terms as $child_term_id ) {
+                                        $child_term = get_term( $child_term_id, 'service' );
+                                        ?>
+                                        <div class="service-item">
+                                            <div class="service-name">
+                                                <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h3 class="service-header">Strategy</h3>
+                        <?php
+                        $strategy_terms = get_terms( array(
+                            'taxonomy'   => 'service',
+                            'hide_empty' => false,
+                            'parent'     => 0,
+                        ) );
+
+                        foreach ( $strategy_terms as $strategy_term ) {
+                            if ( $strategy_term->name === 'Strategy' ) {
+                                $child_terms = get_term_children( $strategy_term->term_id, 'service' );
+
+                                if ( ! empty( $child_terms ) ) {
+                                    foreach ( $child_terms as $child_term_id ) {
+                                        $child_term = get_term( $child_term_id, 'service' );
+                                        ?>
+                                        <div class="service-item">
+                                            <div class="service-name">
+                                                <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h3 class="service-header">Activation</h3>
+                        <?php
+                        $activation_terms = get_terms( array(
+                            'taxonomy'   => 'service',
+                            'hide_empty' => false,
+                            'parent'     => 0,
+                        ) );
+
+                        foreach ( $activation_terms as $activation_term ) {
+                            if ( $activation_term->name === 'Activation' ) {
+                                $child_terms = get_term_children( $activation_term->term_id, 'service' );
+
+                                if ( ! empty( $child_terms ) ) {
+                                    foreach ( $child_terms as $child_term_id ) {
+                                        $child_term = get_term( $child_term_id, 'service' );
+                                        ?>
+                                        <div class="service-item">
+                                            <div class="service-name">
+                                                <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
     </section>
