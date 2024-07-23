@@ -228,74 +228,100 @@ $term_name_text = single_term_title( '', false );
         </section>
     <?php } ?>
 
+    <?php
+    $pinned_posts = new WP_Query( array(
+        'posts_per_page' => 4,
+        'tax_query'      => array(
+            array(
+                'taxonomy'         => 'service',
+                'field'            => 'slug',
+                'terms'            => $current_term->slug,
+                'include_children' => false
+            ),
+        ),
+        'meta_query'     => array(
+            array(
+                'key'     => 'pinned',
+                'value'   => '1',
+                'compare' => '='
+            )
+        )
+    ) );
+
+    $remaining_posts_to_fetch = 4;
+
+    if ( $pinned_posts->have_posts() ) {
+        $remaining_posts_to_fetch -= $pinned_posts->post_count;
+    }
+
+    if ( $remaining_posts_to_fetch > 0 ) {
+        $exclude_post_ids = wp_list_pluck( $pinned_posts->posts, 'ID' );
+        $args             = array(
+            'posts_per_page' => $remaining_posts_to_fetch,
+            'post__not_in'   => array_merge( array( get_the_ID() ), $exclude_post_ids ),
+            'tax_query'      => array(
+                array(
+                    'taxonomy'         => 'service',
+                    'field'            => 'slug',
+                    'terms'            => $current_term->slug,
+                    'include_children' => false
+                ),
+            ),
+        );
+
+        $query = new WP_Query( $args );
+
+        if ( $pinned_posts->have_posts() || $query->have_posts() ) {
+            echo '<section class="related-content">';
+            echo '<div class="container px-4">';
+            echo '<h3>' . $term_name_text . ' case studies</h3>';
+            echo '<div class="row mb-3">';
+
+            while ( $pinned_posts->have_posts() ) {
+                $term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+                $pinned_posts->the_post();
+                require( 'article-card-longer.php' );
+            }
+
+            while ( $query->have_posts() ) {
+                $term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+                $query->the_post();
+                require( 'article-card-longer.php' );
+            }
+
+            echo '</div>';
+            echo '</div>';
+            echo '</section>';
+        }
+        wp_reset_postdata();
+    }
+    ?>
+
+    <?php if (get_field('enable_awards', $current_term)) { ?>
+        <section class="awards">
+            <div class="container px-4">
+                <div class="container px-4">
+                    <h3>Awards</h3>
+                    <div class="row mb-3">
+                        <?php
+                        if ( have_rows( 'awards', $current_term ) ):
+                            while ( have_rows( 'awards', $current_term ) ) : the_row();
+                                ?>
+                                <div class="col-lg-4 col-6 mb-4 award">
+                                    <img class="image" src="<?php the_sub_field( 'image' ); ?>" alt="">
+                                    <p class="years"><?php the_sub_field( 'years' ); ?></p>
+                                    <p class="name"><?php the_sub_field( 'name' ); ?></p>
+                                </div>
+                                <?php
+                            endwhile;
+                        endif;
+                        ?>
+                    </div>
+                    <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+                </div>
+        </section>
+    <?php } ?>
 <?php
-$pinned_posts = new WP_Query( array(
-	'posts_per_page' => 4,
-	'tax_query'      => array(
-		array(
-			'taxonomy'         => 'service',
-			'field'            => 'slug',
-			'terms'            => $current_term->slug,
-			'include_children' => false
-		),
-	),
-	'meta_query'     => array(
-		array(
-			'key'     => 'pinned',
-			'value'   => '1',
-			'compare' => '='
-		)
-	)
-) );
-
-$remaining_posts_to_fetch = 4;
-
-if ( $pinned_posts->have_posts() ) {
-	$remaining_posts_to_fetch -= $pinned_posts->post_count;
-}
-
-if ( $remaining_posts_to_fetch > 0 ) {
-	$exclude_post_ids = wp_list_pluck( $pinned_posts->posts, 'ID' );
-	$args             = array(
-		'posts_per_page' => $remaining_posts_to_fetch,
-		'post__not_in'   => array_merge( array( get_the_ID() ), $exclude_post_ids ),
-		'tax_query'      => array(
-			array(
-				'taxonomy'         => 'service',
-				'field'            => 'slug',
-				'terms'            => $current_term->slug,
-				'include_children' => false
-			),
-		),
-	);
-
-	$query = new WP_Query( $args );
-
-	if ( $pinned_posts->have_posts() || $query->have_posts() ) {
-		echo '<section class="related-content">';
-		echo '<div class="container px-4">';
-		echo '<h3>' . $term_name_text . ' Insights & experience</h3>';
-		echo '<div class="row mb-3">';
-
-		while ( $pinned_posts->have_posts() ) {
-			$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
-			$pinned_posts->the_post();
-			require( 'article-card.php' );
-		}
-
-		while ( $query->have_posts() ) {
-			$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
-			$query->the_post();
-			require( 'article-card.php' );
-		}
-
-		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/our-work?services=' . $current_term->slug . '">See More</a></div>';
-		echo '</div>';
-		echo '</section>';
-	}
-	wp_reset_postdata();
-}
 
 if ( ! get_field( 'disable_bottom_cta', $current_term ) ) {
 	if ( get_field( 'custom_bottom_cta', $current_term ) ) {
