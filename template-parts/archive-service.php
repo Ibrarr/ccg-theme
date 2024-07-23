@@ -173,11 +173,11 @@ $term_name_text = single_term_title( '', false );
         </section>
     <?php } ?>
 
-    <section class="why-css">
+    <section class="why-ccg" style="background-image: url('<?php echo ( CCG_TEMPLATE_URI . '/assets/images/backgrounds/ccg-background.jpg' ) ?>');">
         <div class="container px-4 position-relative">
-            <div class="row">
+            <div class="row content">
+                <div class="col-12"><h1><?php the_field( 'why_choose_ccgroup_1st_title', 'option' ) ?></h1></div>
                 <div class="col-md-6">
-                    <h1><?php the_field( 'why_choose_ccgroup_1st_title', 'option' ) ?></h1>
                     <h2><?php the_field( 'why_choose_ccgroup_2nd_title', 'option' ) ?></h2>
                     <h3><?php the_field( 'why_choose_ccgroup_3rd_title', 'option' ) ?></h3>
                 </div>

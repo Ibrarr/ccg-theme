@@ -617,7 +617,7 @@
             "maxlength": "",
             "rows": "",
             "placeholder": "",
-            "new_lines": "wpautop"
+            "new_lines": "br"
         }
     ],
     "location": [
@@ -638,5 +638,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1721726575
+    "modified": 1721758690
 }
