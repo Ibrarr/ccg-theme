@@ -24863,6 +24863,119 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
     margin-bottom: 50px;
   }
 }
+.archive.tax-service .thought-leadership .article-card a {
+  text-decoration: none;
+}
+.archive.tax-service .thought-leadership .article-card a .image-wrapper {
+  position: relative;
+}
+.archive.tax-service .thought-leadership .article-card a .image-wrapper img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 10px;
+  background-color: #2B2B2B;
+}
+.archive.tax-service .thought-leadership .article-card a .image-wrapper:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #2B2B2B;
+  opacity: 0;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+.archive.tax-service .thought-leadership .article-card a .term {
+  font-family: "CircularXXWeb-Bold", sans-serif;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: clamp(0.625rem, 0.1806rem + 0.9259vw, 0.875rem);
+  color: #0A433D;
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+.archive.tax-service .thought-leadership .article-card a .title {
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  font-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
+  line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
+  color: #2B2B2B;
+}
+.archive.tax-service .thought-leadership .article-card a .title a {
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #2B2B2B;
+  background: -webkit-gradient(linear, left bottom, left top, from(#EAAC4D), to(#EAAC4D)) no-repeat right bottom/0;
+  background: linear-gradient(0deg, #EAAC4D, #EAAC4D) no-repeat right bottom/0;
+  -webkit-transition: background-size 350ms;
+  transition: background-size 350ms;
+}
+.archive.tax-service .thought-leadership .article-card a .title a:where(:hover, :focus-visible) {
+  background-size: 100%;
+  background-position-x: left;
+}
+.archive.tax-service .thought-leadership .article-card a:hover .image-wrapper:before {
+  opacity: 0.5;
+}
+@media (min-width: 992px) {
+  .archive.tax-service .thought-leadership .article-card:nth-child(n+4) {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .archive.tax-service .thought-leadership .article-card:nth-of-type(n+3) {
+    display: none;
+  }
+}
+.archive.tax-service .thought-leadership .no-posts {
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  font-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
+  line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
+  color: #2B2B2B;
+}
+.archive.tax-service .thought-leadership .no-posts a {
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  color: #2B2B2B;
+  background: -webkit-gradient(linear, left bottom, left top, from(#EAAC4D), to(#EAAC4D)) no-repeat right bottom/0;
+  background: linear-gradient(0deg, #EAAC4D, #EAAC4D) no-repeat right bottom/0;
+  -webkit-transition: background-size 350ms;
+  transition: background-size 350ms;
+}
+.archive.tax-service .thought-leadership .no-posts a:where(:hover, :focus-visible) {
+  background-size: 100%;
+  background-position-x: left;
+}
+.archive.tax-service .thought-leadership .global-button {
+  border: none;
+  background-color: #002C38;
+  font-family: "CircularXXWeb-Medium", sans-serif;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  color: #ffffff;
+  padding: 7px;
+  border-radius: 50px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 112px;
+  margin: auto;
+}
+.archive.tax-service .thought-leadership .global-button:hover {
+  background-color: #EAAC4D;
+  color: #ffffff;
+}
+@media (min-width: 992px) {
+  .archive.tax-service .thought-leadership .global-button {
+    font-size: 14px;
+    padding: 11px;
+    width: 195px;
+  }
+}
 @media (min-width: 992px) {
   .archive.tax-service .thought-leadership {
     padding: 75px 0;

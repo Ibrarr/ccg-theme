@@ -11,12 +11,7 @@
         </div>
         <p class="term"><?php echo $term_name; ?></p>
         <p class="title"><strong><?php the_title(); ?></strong></p>
-        <?php
-            $intro_paragraphs = explode('</p>', $intro_content);
-            if (isset($intro_paragraphs[0])) {
-                echo '<p class="intro">' . strip_tags($intro_paragraphs[0]) . '</p>';
-            }
-        ?>
+        <p class="intro"><?php echo $intro ?></p>
         <p class="find-out-more">Find out more here</p>
         <p></p>
     </a>

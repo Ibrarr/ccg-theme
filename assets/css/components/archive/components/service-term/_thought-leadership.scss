@@ -17,6 +17,31 @@
     }
   }
 
+  .article-card {
+    @import '../../../article-card';
+
+    @include media-breakpoint-up(lg) {
+      &:nth-child(n+4) {
+        display: none;
+      }
+    }
+
+    @include media-breakpoint-only(md) {
+      &:nth-of-type(n+3) {
+        display: none;
+      }
+    }
+  }
+
+  .no-posts {
+    @include body-text($ccg-text);
+  }
+
+  .global-button {
+    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+    margin: auto;
+  }
+
   @include media-breakpoint-up(lg) {
     padding: 75px 0;
   }
