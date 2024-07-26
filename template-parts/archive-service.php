@@ -295,7 +295,7 @@ $term_name_text = single_term_title( '', false );
                                 <div class="explain-card-content">
                                     <h3><?php the_sub_field( 'title' ); ?></h3>
                                     <p><?php the_sub_field( 'content' ); ?></p>
-                                    <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                    <span class="count"><span class="number"><?php echo $current_count; ?> — <?php echo $total_count ?></span> <span class="right-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/right-arrow.svg' ) ?></span></span>
                                 </div>
                             </div>
                             <?php
