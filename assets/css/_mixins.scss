@@ -36,6 +36,25 @@
   }
 }
 
+@mixin body-text-white-rollover($color) {
+  font-family: $font-circular-regular;
+  font-size: $ccg-body-size;
+  line-height: $ccg-body-line-height;
+  color: $color;
+
+  a {
+    font-family: $font-circular-medium;
+    color: $color;
+    background: linear-gradient(0deg, #fff, #fff) no-repeat right bottom / 0;
+    transition: background-size 350ms;
+
+    &:where(:hover, :focus-visible) {
+      background-size: 100%;
+      background-position-x: left;
+    }
+  }
+}
+
 @mixin term($color) {
   font-family: $font-circular-bold;
   text-transform: uppercase;

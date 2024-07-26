@@ -12,7 +12,7 @@
         <p class="term"><?php echo $term_name; ?></p>
         <p class="title"><strong><?php the_title(); ?></strong></p>
         <p class="intro"><?php echo $intro ?></p>
-        <p class="find-out-more">Find out more here</p>
+        <p class="find-out-more"><a href="<?php the_permalink(); ?>">Find out more here</a></p>
         <p></p>
     </a>
 </div>

@@ -203,15 +203,21 @@ $term_name_text = single_term_title( '', false );
                                     ?>
                                     <li class="splide__slide">
                                         <div class="service-slide">
-                                            <p class="quote">“<?php the_sub_field( 'quote' ); ?>”</p>
+                                            <?php if (get_sub_field( 'two_color_quote' )) { ?>
+                                                <p class="quote">“<span class="quote-dark"><?php the_sub_field( 'quote_dark' ); ?></span><span class="quote-light"><?php the_sub_field( 'quote_light' ); ?></span>”</p>
+                                            <?php } else { ?>
+                                                <p class="quote">“<?php the_sub_field( 'quote' ); ?>”</p>
+                                            <?php } ?>
                                             <p class="author">
                                                 <?php the_sub_field( 'author_name' ); ?>,
                                                 <?php the_sub_field( 'author_job_title' ); ?> -
                                                 <strong><?php the_sub_field( 'author_company' ); ?></strong>
                                             </p>
                                             <?php if ($link) { ?>
-                                                <a class="link" href="<?php echo $link['url']; ?>"
-                                                   target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+                                                <p class="link">
+                                                    <a href="<?php echo $link['url']; ?>"
+                                                       target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+                                                </p>
                                             <?php } ?>
                                             <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
                                         </div>
@@ -253,64 +259,71 @@ $term_name_text = single_term_title( '', false );
     <?php if (get_field('enable_awards', $current_term)) { ?>
         <section class="awards">
             <div class="container px-4">
-                <div class="container px-4">
-                    <h3>Awards</h3>
-                    <div class="row mb-3">
-                        <?php
-                        if ( have_rows( 'awards', $current_term ) ):
-                            while ( have_rows( 'awards', $current_term ) ) : the_row();
-                                ?>
-                                <div class="col-lg-4 col-6 mb-4 award">
-                                    <img class="image" src="<?php the_sub_field( 'image' ); ?>" alt="">
-                                    <p class="years"><?php the_sub_field( 'years' ); ?></p>
-                                    <p class="name"><?php the_sub_field( 'name' ); ?></p>
-                                </div>
-                                <?php
-                            endwhile;
-                        endif;
-                        ?>
-                    </div>
-                    <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+                <h3>Awards</h3>
+                <div class="row mb-3">
+                    <?php
+                    if ( have_rows( 'awards', $current_term ) ):
+                        while ( have_rows( 'awards', $current_term ) ) : the_row();
+                            ?>
+                            <div class="col-lg-4 col-6 mb-4 award">
+                                <img class="image" src="<?php the_sub_field( 'image' ); ?>" alt="">
+                                <p class="years"><?php the_sub_field( 'years' ); ?></p>
+                                <p class="name"><?php the_sub_field( 'name' ); ?></p>
+                            </div>
+                            <?php
+                        endwhile;
+                    endif;
+                    ?>
                 </div>
+                <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+            </div>
         </section>
     <?php } ?>
 
     <?php if (get_field('enable_service_explained', $current_term)) { ?>
         <section class="explained">
             <div class="container px-4">
-                <div class="container px-4">
-                    <h3><?php echo $term_name_text ?> explained</h3>
-                    <div class="row mb-3">
-                        <?php
-                        if ( have_rows( 'explained', $current_term ) ):
-                            while ( have_rows( 'explained', $current_term ) ) : the_row();
-                                ?>
-                                <?php
-                            endwhile;
-                        endif;
-                        ?>
-                    </div>
+                <h3><?php echo $term_name_text ?> explained</h3>
+                <div class="cards-container">
+                    <?php
+                    if ( have_rows( 'explained', $current_term ) ):
+                        $total_count = count( get_field( 'explained', $current_term ) );
+                        $current_count = 1;
+                        while ( have_rows( 'explained', $current_term ) ) : the_row();
+                            ?>
+                            <div class="explain-card" style="background-color: <?php the_sub_field( 'background_color' ); ?>">
+                                <div class="explain-card-content">
+                                    <h3><?php the_sub_field( 'title' ); ?></h3>
+                                    <p><?php the_sub_field( 'content' ); ?></p>
+                                    <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                </div>
+                            </div>
+                            <?php
+                            $current_count++;
+                        endwhile;
+                    endif;
+                    ?>
                 </div>
+            </div>
         </section>
     <?php } ?>
 
     <?php if (get_field('enable_challenges_opportunities', $current_term)) { ?>
         <section class="challenges-opportunities">
             <div class="container px-4">
-                <div class="container px-4">
-                    <h3>Challenges & opportunities</h3>
-                    <div class="row mb-3">
-                        <div class="col-lg-4 col-12">
-                            <p class="large"><?php the_field('challenges_opportunities_large_text', $current_term) ?></p>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <p class="body"><?php the_field('challenges_opportunities_body_text', $current_term) ?></p>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <img src="<?php the_field('challenges_opportunities_image', $current_term) ?>" alt="">
-                        </div>
+                <h3>Challenges & opportunities</h3>
+                <div class="row mb-3">
+                    <div class="col-lg-4 col-12">
+                        <p class="large"><?php the_field('challenges_opportunities_large_text', $current_term) ?></p>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <p class="body"><?php the_field('challenges_opportunities_body_text', $current_term) ?></p>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <img src="<?php the_field('challenges_opportunities_image', $current_term) ?>" alt="">
                     </div>
                 </div>
+            </div>
         </section>
     <?php } ?>
 
@@ -339,98 +352,97 @@ $term_name_text = single_term_title( '', false );
 
     <section class="other-services">
         <div class="container px-4">
-            <div class="container px-4">
-                <h3>Other services</h3>
-                <div class="row mb-3">
-                    <div class="col-lg-4 col-md-6">
-                        <h3 class="service-header">Analytics</h3>
-                        <?php
-                        $analytic_terms = get_terms( array(
-                            'taxonomy'   => 'service',
-                            'hide_empty' => false,
-                            'parent'     => 0,
-                        ) );
+            <h3>Other services</h3>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="service-header">Analytics</h3>
+                    <?php
+                    $analytic_terms = get_terms( array(
+                        'taxonomy'   => 'service',
+                        'hide_empty' => false,
+                        'parent'     => 0,
+                    ) );
 
-                        foreach ( $analytic_terms as $analytic_term ) {
-                            if ( $analytic_term->name === 'Analytics' ) {
-                                $child_terms = get_term_children( $analytic_term->term_id, 'service' );
+                    foreach ( $analytic_terms as $analytic_term ) {
+                        if ( $analytic_term->name === 'Analytics' ) {
+                            $child_terms = get_term_children( $analytic_term->term_id, 'service' );
 
-                                if ( ! empty( $child_terms ) ) {
-                                    foreach ( $child_terms as $child_term_id ) {
-                                        $child_term = get_term( $child_term_id, 'service' );
-                                        ?>
-                                        <div class="service-item">
-                                            <div class="service-name">
-                                                <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
-                                            </div>
+                            if ( ! empty( $child_terms ) ) {
+                                foreach ( $child_terms as $child_term_id ) {
+                                    $child_term = get_term( $child_term_id, 'service' );
+                                    ?>
+                                    <div class="service-item">
+                                        <div class="service-name">
+                                            <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
                                         </div>
-                                        <?php
-                                    }
+                                    </div>
+                                    <?php
                                 }
                             }
                         }
-                        ?>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <h3 class="service-header">Strategy</h3>
-                        <?php
-                        $strategy_terms = get_terms( array(
-                            'taxonomy'   => 'service',
-                            'hide_empty' => false,
-                            'parent'     => 0,
-                        ) );
+                    }
+                    ?>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="service-header">Strategy</h3>
+                    <?php
+                    $strategy_terms = get_terms( array(
+                        'taxonomy'   => 'service',
+                        'hide_empty' => false,
+                        'parent'     => 0,
+                    ) );
 
-                        foreach ( $strategy_terms as $strategy_term ) {
-                            if ( $strategy_term->name === 'Strategy' ) {
-                                $child_terms = get_term_children( $strategy_term->term_id, 'service' );
+                    foreach ( $strategy_terms as $strategy_term ) {
+                        if ( $strategy_term->name === 'Strategy' ) {
+                            $child_terms = get_term_children( $strategy_term->term_id, 'service' );
 
-                                if ( ! empty( $child_terms ) ) {
-                                    foreach ( $child_terms as $child_term_id ) {
-                                        $child_term = get_term( $child_term_id, 'service' );
-                                        ?>
-                                        <div class="service-item">
-                                            <div class="service-name">
-                                                <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
-                                            </div>
+                            if ( ! empty( $child_terms ) ) {
+                                foreach ( $child_terms as $child_term_id ) {
+                                    $child_term = get_term( $child_term_id, 'service' );
+                                    ?>
+                                    <div class="service-item">
+                                        <div class="service-name">
+                                            <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
                                         </div>
-                                        <?php
-                                    }
+                                    </div>
+                                    <?php
                                 }
                             }
                         }
-                        ?>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <h3 class="service-header">Activation</h3>
-                        <?php
-                        $activation_terms = get_terms( array(
-                            'taxonomy'   => 'service',
-                            'hide_empty' => false,
-                            'parent'     => 0,
-                        ) );
+                    }
+                    ?>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="service-header">Activation</h3>
+                    <?php
+                    $activation_terms = get_terms( array(
+                        'taxonomy'   => 'service',
+                        'hide_empty' => false,
+                        'parent'     => 0,
+                    ) );
 
-                        foreach ( $activation_terms as $activation_term ) {
-                            if ( $activation_term->name === 'Activation' ) {
-                                $child_terms = get_term_children( $activation_term->term_id, 'service' );
+                    foreach ( $activation_terms as $activation_term ) {
+                        if ( $activation_term->name === 'Activation' ) {
+                            $child_terms = get_term_children( $activation_term->term_id, 'service' );
 
-                                if ( ! empty( $child_terms ) ) {
-                                    foreach ( $child_terms as $child_term_id ) {
-                                        $child_term = get_term( $child_term_id, 'service' );
-                                        ?>
-                                        <div class="service-item">
-                                            <div class="service-name">
-                                                <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
-                                            </div>
+                            if ( ! empty( $child_terms ) ) {
+                                foreach ( $child_terms as $child_term_id ) {
+                                    $child_term = get_term( $child_term_id, 'service' );
+                                    ?>
+                                    <div class="service-item">
+                                        <div class="service-name">
+                                            <p><a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a></p>
                                         </div>
-                                        <?php
-                                    }
+                                    </div>
+                                    <?php
                                 }
                             }
                         }
-                        ?>
-                    </div>
+                    }
+                    ?>
                 </div>
             </div>
+        </div>
     </section>
 
 <?php

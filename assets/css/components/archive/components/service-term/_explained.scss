@@ -17,6 +17,107 @@
     }
   }
 
+  .cards-container {
+    position: relative;
+
+    .explain-card:nth-child(3n + 1) {
+      z-index: 3;
+
+      @include media-breakpoint-up(md) {
+        margin-right: -33%;
+      }
+    }
+
+    .explain-card:nth-child(3n + 2) {
+      z-index: 2;
+      cursor: pointer;
+
+      @include media-breakpoint-up(md) {
+        margin-right: -33%;
+      }
+
+      @include media-breakpoint-down(md) {
+        margin-top: -95%;
+      }
+    }
+
+    .explain-card:nth-child(3n + 3) {
+      z-index: 1;
+      cursor: pointer;
+
+      @include media-breakpoint-down(md) {
+        margin-top: -95%;
+      }
+    }
+
+    .explain-card {
+      padding: 50px;
+      border-radius: 8px;
+      border: none;
+      height: auto;
+      box-shadow: 0 0 18px 0 rgba(0, 0, 0, .15);
+      position: relative;
+
+      &.is-active {
+        z-index: 3;
+      }
+
+      .explain-card-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        h3 {
+          color: $ccg-dark-green;
+          margin-bottom: 20px;
+
+          @include media-breakpoint-up(md) {
+            min-height: 200px;
+          }
+        }
+
+        p {
+          @include body-text($ccg-dark-green);
+          margin-bottom: 40px;
+        }
+
+        .count {
+          @include body-text($ccg-dark-green);
+
+          @include media-breakpoint-only(md) {
+            margin-top: auto;
+          }
+
+          @include media-breakpoint-down(md) {
+            bottom: 50px;
+            position: absolute;
+          }
+        }
+      }
+
+      @include media-breakpoint-up(xl) {
+        min-width: 600px;
+      }
+
+      @include media-breakpoint-only(lg) {
+        min-width: 400px;
+      }
+
+      @include media-breakpoint-only(md) {
+        min-width: 300px;
+      }
+
+      @include media-breakpoint-down(md) {
+        min-width: 100%;
+        min-height: 550px;
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      display: flex;
+    }
+  }
+
   @include media-breakpoint-up(lg) {
     padding: 75px 0;
   }

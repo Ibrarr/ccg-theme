@@ -472,6 +472,27 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
+                    "key": "field_66a35453c1f6f",
+                    "label": "Two colour quote",
+                    "name": "two_color_quote",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "parent_repeater": "field_669eeb732df80"
+                },
+                {
                     "key": "field_669eeb8d2df81",
                     "label": "Quote",
                     "name": "quote",
@@ -479,7 +500,73 @@
                     "type": "textarea",
                     "instructions": "",
                     "required": 1,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66a35453c1f6f",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_669eeb732df80"
+                },
+                {
+                    "key": "field_66a354a5c1f70",
+                    "label": "Quote dark",
+                    "name": "quote_dark",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66a35453c1f6f",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_669eeb732df80"
+                },
+                {
+                    "key": "field_66a354cec1f71",
+                    "label": "Quote light",
+                    "name": "quote_light",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_66a35453c1f6f",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -941,6 +1028,25 @@
                     "placeholder": "",
                     "new_lines": "",
                     "parent_repeater": "field_669f6d42df726"
+                },
+                {
+                    "key": "field_66a2548ede2d9",
+                    "label": "Background color",
+                    "name": "background_color",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string",
+                    "parent_repeater": "field_669f6d42df726"
                 }
             ]
         },
@@ -1171,5 +1277,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1721829509
+    "modified": 1721980173
 }

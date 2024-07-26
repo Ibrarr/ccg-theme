@@ -13520,6 +13520,7 @@ jQuery(document).ready(function ($) {
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
+var __webpack_exports__ = {};
 /*!************************************************!*\
   !*** ./assets/js/service-term/quote-slider.js ***!
   \************************************************/
@@ -13539,6 +13540,17 @@ var servicesSlider = new _splidejs_splide__WEBPACK_IMPORTED_MODULE_0__["default"
   easing: 'cubic-bezier(0.77, 0, 0.175, 1)'
 });
 servicesSlider.mount();
+}();
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+!function() {
+/*!*************************************************!*\
+  !*** ./assets/js/service-term/explain-cards.js ***!
+  \*************************************************/
+jQuery(document).ready(function ($) {
+  $('.explain-card').click(function () {
+    $(this).prependTo('.cards-container');
+  });
+});
 }();
 /******/ })()
 ;
