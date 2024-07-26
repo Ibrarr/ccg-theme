@@ -284,7 +284,7 @@ $term_name_text = single_term_title( '', false );
         <section class="explained">
             <div class="container px-4">
                 <h3><?php echo $term_name_text ?> explained</h3>
-                <div class="cards-container">
+                <div class="cards-container" id="explain-cards">
                     <?php
                     if ( have_rows( 'explained', $current_term ) ):
                         $total_count = count( get_field( 'explained', $current_term ) );
