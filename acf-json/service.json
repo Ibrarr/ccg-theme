@@ -3,6 +3,26 @@
     "title": "Service",
     "fields": [
         {
+            "key": "field_66a91c67a61b4",
+            "label": "Smaller intro text",
+            "name": "smaller_into_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
             "key": "field_6564ded163be1",
             "label": "Content",
             "name": "",
@@ -586,7 +606,7 @@
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
-                    "required": 1,
+                    "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -607,7 +627,7 @@
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
-                    "required": 1,
+                    "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -628,7 +648,7 @@
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
-                    "required": 1,
+                    "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -981,8 +1001,8 @@
             },
             "layout": "row",
             "pagination": 0,
-            "min": 1,
-            "max": 0,
+            "min": 3,
+            "max": 3,
             "collapsed": "",
             "button_label": "Add Row",
             "rows_per_page": 20,
@@ -1277,5 +1297,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1721980173
+    "modified": 1722370402
 }

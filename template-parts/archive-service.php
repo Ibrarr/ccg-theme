@@ -25,6 +25,9 @@ $term_name_text = single_term_title( '', false );
 					}
 					?>
                     <div class="intro"><h2><?php echo strip_tags( term_description(), '<a>' ); ?></h2></div>
+                    <?php if ( get_field( 'headshot', $current_term ) ) { ?>
+                        <div class="smaller-intro"><h3><?php the_field( 'smaller_into_text', $current_term ); ?></h3></div>
+                    <?php } ?>
                 </div>
                 <div class="col-lg-4 col-md-3 col-6 d-flex align-items-center justify-content-end services-links">
                     <div class="service-dropdown-container">

@@ -55,4 +55,10 @@
       }
     }
   }
+
+  .smaller-intro {
+    h3 {
+      @include body-text($ccg-green);
+    }
+  }
 }
