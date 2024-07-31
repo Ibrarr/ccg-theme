@@ -72,6 +72,9 @@ mix.js([
 mix.js([
     'assets/js/service-term/gsap-animations.js',
     'assets/js/service-term/dropdown.js',
+    'assets/js/service-term/services-slider.js',
+    'assets/js/service-term/quote-slider.js',
+    'assets/js/service-term/explain-cards.js',
 ], 'js/service-term.js');
 
 mix.js([

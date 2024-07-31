@@ -1,6 +1,6 @@
-.related-content {
+.thought-leadership {
   position: relative;
-  z-index: 8;
+  z-index: 4;
   margin-top: -25px;
   background-color: $ccg-related-content-bg;
   padding: 55px 0;
@@ -19,16 +19,6 @@
 
   .article-card {
     @import '../../../article-card';
-
-    .intro {
-      @include body-text($ccg-text);
-      color: $ccg-text !important;
-    }
-
-    .find-out-more {
-      @include body-text($ccg-text);
-      text-decoration: underline;
-    }
 
     @include media-breakpoint-up(lg) {
       &:nth-child(n+4) {
