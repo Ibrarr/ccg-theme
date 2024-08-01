@@ -25,7 +25,7 @@ $term_name_text = single_term_title( '', false );
 					}
 					?>
                     <div class="intro"><h2><?php echo strip_tags( term_description(), '<a>' ); ?></h2></div>
-                    <?php if ( get_field( 'headshot', $current_term ) ) { ?>
+                    <?php if ( get_field( 'smaller_into_text', $current_term ) ) { ?>
                         <div class="smaller-intro"><h3><?php the_field( 'smaller_into_text', $current_term ); ?></h3></div>
                     <?php } ?>
                 </div>
@@ -185,7 +185,11 @@ $term_name_text = single_term_title( '', false );
                     <h3><?php the_field( 'why_choose_ccgroup_3rd_title', 'option' ) ?></h3>
                 </div>
                 <div class="col-md-6">
-                    <p><?php the_field( 'why_choose_ccgroup_description', 'option' ) ?></p>
+                    <?php if (get_field('why_ccg_override_global_body_text', $current_term)) { ?>
+                        <p><?php the_field( 'why_ccg_override_global_body_text', $current_term ) ?></p>
+                    <?php } else { ?>
+                       <p><?php the_field( 'why_choose_ccgroup_description', 'option' ) ?></p>
+                    <?php } ?>
                 </div>
             </div>
         </div>
