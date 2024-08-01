@@ -424,6 +424,44 @@
             ]
         },
         {
+            "key": "field_66ab3b690097a",
+            "label": "Why CCG",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_66ab3b760097b",
+            "label": "Override global body text",
+            "name": "why_ccg_override_global_body_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
             "key": "field_669ee7e5469fe",
             "label": "Quotes",
             "name": "",
@@ -1297,5 +1335,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1722370402
+    "modified": 1722498248
 }
