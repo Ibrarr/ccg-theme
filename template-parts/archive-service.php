@@ -359,7 +359,7 @@ $term_name_text = single_term_title( '', false );
 
     <section class="other-services">
         <div class="container px-4">
-            <h3>Other services</h3>
+            <h3>Our services</h3>
             <div class="row mb-3">
                 <div class="col-lg-4 col-md-6">
                     <h3 class="service-header">Analytics</h3>
