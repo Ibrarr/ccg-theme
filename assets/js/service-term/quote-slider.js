@@ -1,6 +1,7 @@
+console.log('File loaded');
 import Splide from '@splidejs/splide';
 
-const servicesSlider = new Splide('.quotes-slider .splide', {
+const newQuotesSlider = new Splide('.quotes-slider .splide', {
     type: 'loop',
     pagination: false,
     arrows: false,
@@ -13,4 +14,4 @@ const servicesSlider = new Splide('.quotes-slider .splide', {
     easing: 'cubic-bezier(0.77, 0, 0.175, 1)',
 });
 
-servicesSlider.mount();
+newQuotesSlider.mount();

@@ -67,17 +67,16 @@ mix.js([
     'assets/js/sector-term/gsap-animations.js',
     'assets/js/sector-term/newsletter-popup.js',
     'assets/js/sector-term/dropdown.js',
-    'assets/js/service-term/services-slider.js',
-    'assets/js/service-term/quote-slider.js',
-    'assets/js/service-term/explain-cards.js',
+    'assets/js/sector-term/quote-slider.js',
+    'assets/js/sector-term/explain-cards.js',
 ], 'js/sector-term.js');
 
 mix.js([
-    'assets/js/service-term/gsap-animations.js',
     'assets/js/service-term/dropdown.js',
-    'assets/js/service-term/services-slider.js',
-    'assets/js/service-term/quote-slider.js',
     'assets/js/service-term/explain-cards.js',
+    'assets/js/service-term/gsap-animations.js',
+    'assets/js/service-term/quote-slider.js',
+    'assets/js/service-term/services-slider.js',
 ], 'js/service-term.js');
 
 mix.js([
