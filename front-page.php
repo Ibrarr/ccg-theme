@@ -250,4 +250,182 @@
         </div>
     </section>
 
+    <section class="latest-content">
+        <div class="container px-4">
+            <h3>Latest content</h3>
+            <div class="row mb-3">
+				<?php
+				$args = array(
+					'post_type' => array('insight', 'posts'),
+					'posts_per_page' => 4,
+					'orderby' => 'date',
+					'order' => 'DESC'
+				);
+
+				$latest_posts = new WP_Query($args);
+
+                while ($latest_posts->have_posts()) {
+                    $latest_posts->the_post();
+                    $terms = get_the_terms(get_the_ID(), 'sector');
+                    $term_name = $terms ? $terms[0]->name : 'Blog';
+                    require('template-parts/article-card.php');
+                }
+                wp_reset_postdata();
+				?>
+            </div>
+            <div class="row">
+                <a class="global-button" href="/insight-hub">See More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-ccg">
+        <div class="container px-4">
+            <?php the_field( 'about_ccg' ); ?>
+        </div>
+    </section>
+
+    <section class="services-slider">
+        <div class="container px-4">
+            <div class="splide">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="first-slide">
+                                <div class="down-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/down-arrow.svg' ) ?></div>
+                                <p class="service-head">Our Services:</p>
+                                <div class="accordion-container">
+                                    <div class="service-item">
+                                        <div class="service-name">
+                                            <h4><?php the_field( 'first_service_name' ); ?></a></h4>
+                                            <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                        </div>
+                                        <div class="service-description">
+                                            <p><?php the_field( 'first_service_description' ); ?></p>
+                                        </div>
+                                    </div>
+                                    <div class="service-item">
+                                        <div class="service-name">
+                                            <h4><?php the_field( 'second_service_name' ); ?></a></h4>
+                                            <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                        </div>
+                                        <div class="service-description">
+                                            <p><?php the_field( 'second_service_description' ); ?></p>
+                                        </div>
+                                    </div>
+                                    <div class="service-item">
+                                        <div class="service-name">
+                                            <h4><?php the_field( 'third_service_name' ); ?></a></h4>
+                                            <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                        </div>
+                                        <div class="service-description">
+                                            <p><?php the_field( 'third_service_description' ); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+						<?php
+						$terms = get_terms( array(
+							'taxonomy'   => 'sector',
+							'hide_empty' => false,
+							'slug'       => $sector_slugs,
+						) );
+
+						foreach ( $sector_slugs as $slug ) {
+							$term = get_term_by( 'slug', $slug, 'sector' );
+
+							if ( get_term_meta( $term->term_id, 'include_on_frontend', true ) ) {
+								$image_id  = get_term_meta( $term->term_id, 'image', true );
+								$image_url = wp_get_attachment_image_url( $image_id, 'header-image' );
+								?>
+                                <li class="splide__slide">
+                                    <img src="<?php echo $image_url; ?>">
+                                    <div class="sector-slide">
+                                        <a href="<?php echo get_term_link( $term ); ?>">
+                                            <h3 class="heading"><?php echo $term->name; ?></h3>
+                                            <p class="sub-heading"><?php echo $term->description; ?></p>
+                                        </a>
+                                    </div>
+                                </li>
+								<?php
+							}
+						}
+						?>
+                    </ul>
+                </div>
+                <div class="splide__arrows splide__arrows--ltr">
+                    <button
+                            class="splide__arrow splide__arrow--prev"
+                            type="button"
+                            aria-label="Previous slide"
+                            aria-controls="splide01-track"
+                    >
+						<?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
+                    </button>
+                    <button
+                            class="splide__arrow splide__arrow--next"
+                            type="button"
+                            aria-label="Next slide"
+                            aria-controls="splide01-track"
+                    >
+						<?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-studies">
+        <div class="container px-4">
+            <h3>Case studies</h3>
+            <div class="row mb-3">
+				<?php
+				$args = array(
+					'post_type' => array('work'),
+					'posts_per_page' => 4,
+					'orderby' => 'date',
+					'order' => 'DESC'
+				);
+
+				$latest_posts = new WP_Query($args);
+
+				while ($latest_posts->have_posts()) {
+					$latest_posts->the_post();
+					$terms = get_the_terms(get_the_ID(), 'sector');
+					$term_name = $terms ? $terms[0]->name : 'Blog';
+					require('template-parts/article-card.php');
+				}
+				wp_reset_postdata();
+				?>
+            </div>
+            <div class="row">
+                <a class="global-button" href="/our-work">See More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="awards">
+        <div class="container px-4">
+            <h3>Awards</h3>
+            <div class="row mb-3">
+				<?php
+				if ( have_rows( 'awards' ) ):
+					while ( have_rows( 'awards' ) ) : the_row();
+						?>
+                        <div class="col-lg-4 col-6 mb-4 award">
+                            <img class="image" src="<?php the_sub_field( 'image' ); ?>" alt="">
+                            <p class="years"><?php the_sub_field( 'years' ); ?></p>
+                            <p class="name"><?php the_sub_field( 'name' ); ?></p>
+                        </div>
+					<?php
+					endwhile;
+				endif;
+				?>
+            </div>
+            <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+        </div>
+    </section>
+
+
 <?php get_footer(); ?>

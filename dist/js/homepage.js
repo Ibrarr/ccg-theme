@@ -1,5 +1,4 @@
 /******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/@splidejs/splide/dist/js/splide.esm.js":
@@ -8,6 +7,7 @@
   \*************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CLASSES: function() { return /* binding */ CLASSES; },
@@ -3773,6 +3773,7 @@ var SplideRenderer = /*#__PURE__*/function () {
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CSSPlugin: function() { return /* binding */ CSSPlugin; },
@@ -5367,6 +5368,7 @@ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.gsap.registerPlugin(CSSPlugin);
   \***************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Observer: function() { return /* binding */ Observer; },
@@ -6076,6 +6078,7 @@ _getGSAP() && gsap.registerPlugin(Observer);
   \********************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ScrollTrigger: function() { return /* binding */ ScrollTrigger; },
@@ -8749,6 +8752,7 @@ _getGSAP() && gsap.registerPlugin(ScrollTrigger);
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Animation: function() { return /* binding */ Animation; },
@@ -13317,6 +13321,7 @@ var Power0 = _easeMap.Power0,
   \************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Back: function() { return /* reexport safe */ _gsap_core_js__WEBPACK_IMPORTED_MODULE_0__.Back; },
@@ -13413,8 +13418,9 @@ TweenMaxWithCSS = gsapWithCSS.core.Tween;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
+"use strict";
 var __webpack_exports__ = {};
 /*!***********************************************!*\
   !*** ./assets/js/homepage/gsap-animations.js ***!
@@ -13448,8 +13454,9 @@ gsap__WEBPACK_IMPORTED_MODULE_0__.gsap.to("#bar-three", _objectSpread(_objectSpr
   yPercent: -400
 }));
 }();
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
+"use strict";
 var __webpack_exports__ = {};
 /*!*********************************************!*\
   !*** ./assets/js/homepage/header-slider.js ***!
@@ -13474,8 +13481,10 @@ var headerSlider = new _splidejs_splide__WEBPACK_IMPORTED_MODULE_0__["default"](
 });
 headerSlider.mount();
 }();
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
+"use strict";
+var __webpack_exports__ = {};
 /*!*********************************************!*\
   !*** ./assets/js/homepage/sector-slider.js ***!
   \*********************************************/
@@ -13532,6 +13541,77 @@ jQuery(document).ready(function ($) {
     } else {
       $('.sectors-slider').addClass('first-slide-inactive');
       $('.first-slide').fadeOut(1000);
+    }
+  });
+});
+}();
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
+"use strict";
+var __webpack_exports__ = {};
+/*!***********************************************!*\
+  !*** ./assets/js/homepage/services-slider.js ***!
+  \***********************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _splidejs_splide__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @splidejs/splide */ "./node_modules/@splidejs/splide/dist/js/splide.esm.js");
+
+var sectorCardSlider = new _splidejs_splide__WEBPACK_IMPORTED_MODULE_0__["default"]('.services-slider .splide', {
+  type: 'slide',
+  pagination: false,
+  updateOnMove: true,
+  cover: true,
+  omitEnd: true,
+  perMove: 1,
+  perPage: 3,
+  speed: 1000,
+  height: '530px',
+  fixedWidth: '400px',
+  gap: '2em',
+  easing: 'cubic-bezier(0.77, 0, 0.175, 1)',
+  breakpoints: {
+    1400: {
+      perPage: 2
+    },
+    991: {
+      perPage: 1
+    },
+    800: {
+      height: '360px',
+      fixedWidth: '275px'
+    }
+  }
+});
+sectorCardSlider.mount();
+jQuery(document).ready(function ($) {
+  $('.next-slide').on('click', function () {
+    $('.sectors-slider .splide__arrow.splide__arrow--next').trigger('click');
+  });
+  sectorCardSlider.on('move', function (newIndex) {
+    if (newIndex === 0) {
+      $('.first-slide').fadeIn(1500);
+    } else {
+      $('.first-slide').fadeOut(1000);
+    }
+  });
+});
+}();
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+!function() {
+/*!*****************************************!*\
+  !*** ./assets/js/homepage/accordion.js ***!
+  \*****************************************/
+jQuery(document).ready(function ($) {
+  $('.service-item').first().addClass('active').find('.service-description').show();
+  $('.service-item .open-close-accordion').click(function (event) {
+    event.stopPropagation();
+    var $currentItem = $(this).closest('.service-item');
+    var $currentDescription = $currentItem.find('.service-description');
+    $('.service-item').not($currentItem).removeClass('active').find('.service-description').slideUp().addClass('inactive');
+    $currentItem.toggleClass('active');
+    if ($currentItem.hasClass('active')) {
+      $currentDescription.slideDown().removeClass('inactive');
+    } else {
+      $currentDescription.slideUp().addClass('inactive');
     }
   });
 });

@@ -10,6 +10,8 @@ mix.js([
     'assets/js/homepage/gsap-animations.js',
     'assets/js/homepage/header-slider.js',
     'assets/js/homepage/sector-slider.js',
+    'assets/js/homepage/services-slider.js',
+    'assets/js/homepage/accordion.js',
 ], 'js/homepage.js');
 
 mix.js([
