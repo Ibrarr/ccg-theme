@@ -7,6 +7,10 @@
   padding: 55px 0;
   border-radius: 0 0 25px 25px;
 
+  > .first-set, > .second-set, > .third-set {
+    display: none;
+  }
+
   .accordion-container {
 
     .service-item {
@@ -21,20 +25,19 @@
         align-items: center;
         justify-content: space-between;
 
+        &:hover svg g > path {
+          fill: $ccg-orange;
+        }
+
+        &:hover h4 {
+          color: $ccg-orange;
+        }
+
         h4 {
           @include sub-heading-text($ccg-green);
           font-family: $font-circular-medium;
           margin: 0;
-
-          a {
-            transition: $ccg-transition-all;
-            text-decoration: none;
-            color: $ccg-green;
-          }
-
-          &:hover a {
-            color: $ccg-orange;
-          }
+          transition: $ccg-transition-all;
         }
 
         .open-close-accordion {
@@ -43,10 +46,6 @@
           svg {
             path {
               transition: $ccg-transition-all;
-            }
-
-            &:hover g > path {
-              fill: $ccg-orange;
             }
           }
         }
@@ -181,35 +180,38 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: $ccg-dark-green;
           }
 
           .sector-slide {
             position: relative;
+            display: flex;
+            flex-direction: column;
             z-index: 1;
-            cursor: pointer;
             height: 100%;
 
-            a {
-              text-decoration: none;
-              height: 100%;
-            }
-
             .heading {
-              font-family: $font-circular-medium;
-              font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.875rem);
-              line-height: clamp(2.125rem, 0.5694rem + 3.2407vw, 3rem);
-              color: #ffffff;
+              @include sub-heading-text(#ffffff);
+              margin-bottom: 20px;
             }
 
-            .sub-heading {
+            p {
               @include body-text(#ffffff);
+              margin-bottom: 0;
             }
-          }
 
-          &:hover {
-            &:after {
-              background-color: rgba(0, 0, 0, 0.50);
+            .count {
+              width: 100%;
+              @include body-text($ccg-orange);
+
+              @include media-breakpoint-up(md) {
+                margin-top: auto;
+              }
+
+              @include media-breakpoint-down(md) {
+                bottom: 0;
+                position: absolute;
+              }
             }
           }
 

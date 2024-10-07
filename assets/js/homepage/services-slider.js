@@ -4,7 +4,6 @@ const sectorCardSlider = new Splide('.services-slider .splide', {
     type: 'slide',
     pagination: false,
     updateOnMove: true,
-    cover: true,
     omitEnd: true,
     perMove: 1,
     perPage: 3,
@@ -21,7 +20,6 @@ const sectorCardSlider = new Splide('.services-slider .splide', {
             perPage: 1,
         },
         800: {
-            height: '360px',
             fixedWidth: '275px',
         },
     }
@@ -30,15 +28,46 @@ const sectorCardSlider = new Splide('.services-slider .splide', {
 sectorCardSlider.mount();
 
 jQuery(document).ready(function ($) {
-    $('.next-slide').on('click', function () {
-        $('.sectors-slider .splide__arrow.splide__arrow--next').trigger('click');
-    });
+    $('.service-item').first().addClass('active').find('.service-description').show();
+    moveSlidesToSplide('.first-set');
 
-    sectorCardSlider.on('move', function (newIndex) {
-        if (newIndex === 0) {
-            $('.first-slide').fadeIn(1500);
-        } else {
-            $('.first-slide').fadeOut(1000);
+    $('.service-item').click(function (event) {
+        event.stopPropagation();
+
+        let $currentItem = $(this).closest('.service-item');
+        let $currentDescription = $currentItem.find('.service-description');
+
+        if ($currentItem.hasClass('active')) {
+            return;
+        }
+
+        $('.service-item').removeClass('active').find('.service-description').slideUp().addClass('inactive');
+
+        $currentItem.addClass('active');
+        $currentDescription.slideDown().removeClass('inactive');
+
+        if ($currentItem.hasClass('first')) {
+            moveSlidesToSplide('.first-set');
+        } else if ($currentItem.hasClass('second')) {
+            moveSlidesToSplide('.second-set');
+        } else if ($currentItem.hasClass('third')) {
+            moveSlidesToSplide('.third-set');
         }
     });
+
+    function moveSlidesToSplide(slideClass) {
+        const $servicesSlider = $('.services-slider');
+        const $splideList = $servicesSlider.find('.splide__list');
+
+        const $currentSlides = $splideList.children(':not(:first)');
+        if ($currentSlides.length) {
+            $currentSlides.appendTo($servicesSlider);
+        }
+
+        $servicesSlider.find(slideClass).each(function () {
+            $splideList.append($(this));
+        });
+
+        sectorCardSlider.refresh();
+    }
 });

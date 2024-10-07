@@ -286,6 +286,56 @@
     </section>
 
     <section class="services-slider">
+	    <?php
+	    if ( have_rows( 'first_service_cards' ) ):
+		    $total_count = count( get_field( 'first_service_cards' ) );
+		    $current_count = 1;
+		    while ( have_rows( 'first_service_cards' ) ) : the_row();
+			    ?>
+                <li class="splide__slide first-set">
+                    <div class="sector-slide">
+                        <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
+					    <?php the_sub_field( 'description' ); ?>
+                        <span class="count"><?php the_field( 'first_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                    </div>
+                </li>
+			    <?php
+			    $current_count++;
+		    endwhile;
+	    endif;
+	    if ( have_rows( 'second_service_cards' ) ):
+		    $total_count = count( get_field( 'second_service_cards' ) );
+		    $current_count = 1;
+		    while ( have_rows( 'second_service_cards' ) ) : the_row();
+			    ?>
+                <li class="splide__slide second-set">
+                    <div class="sector-slide">
+                        <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
+					    <?php the_sub_field( 'description' ); ?>
+                        <span class="count"><?php the_field( 'second_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                    </div>
+                </li>
+			    <?php
+			    $current_count++;
+		    endwhile;
+	    endif;
+	    if ( have_rows( 'third_service_cards' ) ):
+		    $total_count = count( get_field( 'third_service_cards' ) );
+		    $current_count = 1;
+		    while ( have_rows( 'third_service_cards' ) ) : the_row();
+			    ?>
+                <li class="splide__slide third-set">
+                    <div class="sector-slide">
+                        <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
+					    <?php the_sub_field( 'description' ); ?>
+                        <span class="count"><?php the_field( 'third_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                    </div>
+                </li>
+			    <?php
+			    $current_count++;
+		    endwhile;
+	    endif;
+	    ?>
         <div class="container px-4">
             <div class="splide">
                 <div class="splide__track">
@@ -295,7 +345,7 @@
                                 <div class="down-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/down-arrow.svg' ) ?></div>
                                 <p class="service-head">Our Services:</p>
                                 <div class="accordion-container">
-                                    <div class="service-item">
+                                    <div class="service-item first">
                                         <div class="service-name">
                                             <h4><?php the_field( 'first_service_name' ); ?></a></h4>
                                             <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
@@ -304,7 +354,7 @@
                                             <p><?php the_field( 'first_service_description' ); ?></p>
                                         </div>
                                     </div>
-                                    <div class="service-item">
+                                    <div class="service-item second">
                                         <div class="service-name">
                                             <h4><?php the_field( 'second_service_name' ); ?></a></h4>
                                             <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
@@ -313,7 +363,7 @@
                                             <p><?php the_field( 'second_service_description' ); ?></p>
                                         </div>
                                     </div>
-                                    <div class="service-item">
+                                    <div class="service-item third">
                                         <div class="service-name">
                                             <h4><?php the_field( 'third_service_name' ); ?></a></h4>
                                             <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
@@ -325,33 +375,6 @@
                                 </div>
                             </div>
                         </li>
-						<?php
-						$terms = get_terms( array(
-							'taxonomy'   => 'sector',
-							'hide_empty' => false,
-							'slug'       => $sector_slugs,
-						) );
-
-						foreach ( $sector_slugs as $slug ) {
-							$term = get_term_by( 'slug', $slug, 'sector' );
-
-							if ( get_term_meta( $term->term_id, 'include_on_frontend', true ) ) {
-								$image_id  = get_term_meta( $term->term_id, 'image', true );
-								$image_url = wp_get_attachment_image_url( $image_id, 'header-image' );
-								?>
-                                <li class="splide__slide">
-                                    <img src="<?php echo $image_url; ?>">
-                                    <div class="sector-slide">
-                                        <a href="<?php echo get_term_link( $term ); ?>">
-                                            <h3 class="heading"><?php echo $term->name; ?></h3>
-                                            <p class="sub-heading"><?php echo $term->description; ?></p>
-                                        </a>
-                                    </div>
-                                </li>
-								<?php
-							}
-						}
-						?>
                     </ul>
                 </div>
                 <div class="splide__arrows splide__arrows--ltr">
