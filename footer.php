@@ -2,8 +2,11 @@
 <footer id="footer" role="contentinfo">
     <div class="container px-4">
         <div class="row">
-            <div class="footer-logo">
+            <div class="col-md-3 footer-logo">
                 <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/footer-logo.svg' ) ?></a>
+            </div>
+            <div class="col-md-9 logo-text">
+                <p>B2B TECH PR & MARKETING</p>
             </div>
         </div>
         <div class="footer-sections">

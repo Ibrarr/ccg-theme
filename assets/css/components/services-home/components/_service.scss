@@ -99,6 +99,13 @@
         &:has(.service-description) .service-name {
           .open-close-accordion {
             display: block;
+            position: relative;
+            width: 30px;
+            height: 30px;
+            @include media-breakpoint-up(lg) {
+              width: 35px;
+              height: 35px;
+            }
 
             svg {
               width: 30px;
@@ -109,6 +116,14 @@
               }
             }
           }
+        }
+
+        .open-close-accordion .plus, .open-close-accordion .minus {
+          position: absolute;
+        }
+
+        .open-close-accordion .minus {
+          display: none;
         }
 
         .service-description {

@@ -43,8 +43,14 @@ jQuery(document).ready(function ($) {
 
         $('.service-item').removeClass('active').find('.service-description').slideUp().addClass('inactive');
 
+        $('.service-item').find('.open-close-accordion .minus').fadeOut();
+        $('.service-item').find('.open-close-accordion .plus').fadeIn();
+
         $currentItem.addClass('active');
         $currentDescription.slideDown().removeClass('inactive');
+
+        $currentItem.find('.open-close-accordion .plus').fadeOut();
+        $currentItem.find('.open-close-accordion .minus').fadeIn();
 
         if ($currentItem.hasClass('first')) {
             moveSlidesToSplide('.first-set');

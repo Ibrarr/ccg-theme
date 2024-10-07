@@ -51,7 +51,8 @@ get_header();
                                                         <a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a>
                                                     </h4>
                                                     <div class="open-close-accordion">
-														<?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?>
+                                                        <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                        <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
                                                     </div>
                                                 </div>
 												<?php if ( $child_term->description ) { ?>
@@ -97,7 +98,8 @@ get_header();
                                                         <a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a>
                                                     </h4>
                                                     <div class="open-close-accordion">
-														<?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?>
+                                                        <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                        <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
                                                     </div>
                                                 </div>
 												<?php if ( $child_term->description ) { ?>
@@ -146,7 +148,8 @@ get_header();
                                                             <a href="<?php echo get_term_link( $child_term ); ?>"><?php echo $child_term->name ?></a>
                                                         </h4>
                                                         <div class="open-close-accordion">
-															<?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?>
+                                                            <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                            <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
                                                         </div>
                                                     </div>
 													<?php if ( $child_term->description ) { ?>

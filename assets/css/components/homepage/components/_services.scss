@@ -54,6 +54,13 @@
       &:has(.service-description) .service-name {
         .open-close-accordion {
           display: block;
+          position: relative;
+          width: 30px;
+          height: 30px;
+          @include media-breakpoint-up(lg) {
+            width: 35px;
+            height: 35px;
+          }
 
           svg {
             width: 30px;
@@ -79,20 +86,28 @@
         }
       }
 
-      &:first-child .service-description {
-        display: block;
+      &:first-child {
+        .open-close-accordion .plus {
+          display: none;
+        }
+
+        .service-description {
+          display: block;
+        }
+      }
+
+      &:not(:first-child) {
+        .open-close-accordion .minus {
+          display: none;
+        }
       }
 
       &.inactive .service-description {
         display: none;
       }
 
-      &.active {
-        .service-name {
-          h4 a {
-            color: $ccg-orange;
-          }
-        }
+      .open-close-accordion .plus, .open-close-accordion .minus {
+        position: absolute;
       }
     }
   }

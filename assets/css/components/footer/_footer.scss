@@ -17,6 +17,17 @@ footer {
     }
   }
 
+  .logo-text {
+    text-transform: uppercase;
+    font-family: $font-circular-bold;
+    font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
+    color: #ffffff;
+
+    @include media-breakpoint-down(md) {
+      margin-top: 20px;
+    }
+  }
+
   .footer-sections {
     overflow: hidden;
 
@@ -44,7 +55,7 @@ footer {
       }
 
       @include media-breakpoint-down(md) {
-        margin-top: 40px;
+        margin-top: 20px;
         padding-bottom: 30px;
         margin-bottom: 30px;
         border-bottom: 1px solid #264b55;

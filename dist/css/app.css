@@ -15233,6 +15233,15 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 }
 .home.page .services-slider .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion {
   display: block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+@media (min-width: 992px) {
+  .home.page .services-slider .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion {
+    width: 35px;
+    height: 35px;
+  }
 }
 .home.page .services-slider .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion svg {
   width: 30px;
@@ -15269,14 +15278,20 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 .home.page .services-slider .accordion-container .service-item .service-description p:last-child {
   margin-bottom: 0;
 }
+.home.page .services-slider .accordion-container .service-item:first-child .open-close-accordion .plus {
+  display: none;
+}
 .home.page .services-slider .accordion-container .service-item:first-child .service-description {
   display: block;
+}
+.home.page .services-slider .accordion-container .service-item:not(:first-child) .open-close-accordion .minus {
+  display: none;
 }
 .home.page .services-slider .accordion-container .service-item.inactive .service-description {
   display: none;
 }
-.home.page .services-slider .accordion-container .service-item.active .service-name h4 a, .home.page .services-slider .accordion-container .service-item.active .service-name .h4 a {
-  color: #EAAC4D;
+.home.page .services-slider .accordion-container .service-item .open-close-accordion .plus, .home.page .services-slider .accordion-container .service-item .open-close-accordion .minus {
+  position: absolute;
 }
 .home.page .services-slider .splide {
   z-index: 1;
@@ -16329,6 +16344,15 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 }
 .page-template-page-services .services .analytics .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion, .page-template-page-services .services .strategy .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion, .page-template-page-services .services .activation .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion {
   display: block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+@media (min-width: 992px) {
+  .page-template-page-services .services .analytics .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion, .page-template-page-services .services .strategy .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion, .page-template-page-services .services .activation .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion {
+    width: 35px;
+    height: 35px;
+  }
 }
 .page-template-page-services .services .analytics .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion svg, .page-template-page-services .services .strategy .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion svg, .page-template-page-services .services .activation .accordion-container .service-item:has(.service-description) .service-name .open-close-accordion svg {
   width: 30px;
@@ -16339,6 +16363,12 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
     width: 35px;
     height: 35px;
   }
+}
+.page-template-page-services .services .analytics .accordion-container .service-item .open-close-accordion .plus, .page-template-page-services .services .analytics .accordion-container .service-item .open-close-accordion .minus, .page-template-page-services .services .strategy .accordion-container .service-item .open-close-accordion .plus, .page-template-page-services .services .strategy .accordion-container .service-item .open-close-accordion .minus, .page-template-page-services .services .activation .accordion-container .service-item .open-close-accordion .plus, .page-template-page-services .services .activation .accordion-container .service-item .open-close-accordion .minus {
+  position: absolute;
+}
+.page-template-page-services .services .analytics .accordion-container .service-item .open-close-accordion .minus, .page-template-page-services .services .strategy .accordion-container .service-item .open-close-accordion .minus, .page-template-page-services .services .activation .accordion-container .service-item .open-close-accordion .minus {
+  display: none;
 }
 .page-template-page-services .services .analytics .accordion-container .service-item .service-description, .page-template-page-services .services .strategy .accordion-container .service-item .service-description, .page-template-page-services .services .activation .accordion-container .service-item .service-description {
   display: none;
@@ -28174,6 +28204,17 @@ footer .footer-logo svg {
     height: 40px;
   }
 }
+footer .logo-text {
+  text-transform: uppercase;
+  font-family: "CircularXXWeb-Bold", sans-serif;
+  font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
+  color: #ffffff;
+}
+@media (max-width: 767.98px) {
+  footer .logo-text {
+    margin-top: 20px;
+  }
+}
 footer .footer-sections {
   overflow: hidden;
 }
@@ -28199,7 +28240,7 @@ footer .footer-sections .main-footer-menu ul a:hover {
 }
 @media (max-width: 767.98px) {
   footer .footer-sections .main-footer-menu {
-    margin-top: 40px;
+    margin-top: 20px;
     padding-bottom: 30px;
     margin-bottom: 30px;
     border-bottom: 1px solid #264b55;

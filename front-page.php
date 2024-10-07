@@ -252,7 +252,7 @@
 
     <section class="latest-content">
         <div class="container px-4">
-            <h3>Latest content</h3>
+            <h3>Insight reports</h3>
             <div class="row mb-3">
 				<?php
 				$args = array(
@@ -348,7 +348,10 @@
                                     <div class="service-item first">
                                         <div class="service-name">
                                             <h4><?php the_field( 'first_service_name' ); ?></a></h4>
-                                            <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                            <div class="open-close-accordion">
+                                                <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                            </div>
                                         </div>
                                         <div class="service-description">
                                             <p><?php the_field( 'first_service_description' ); ?></p>
@@ -357,7 +360,10 @@
                                     <div class="service-item second">
                                         <div class="service-name">
                                             <h4><?php the_field( 'second_service_name' ); ?></a></h4>
-                                            <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                            <div class="open-close-accordion">
+                                                <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                            </div>
                                         </div>
                                         <div class="service-description">
                                             <p><?php the_field( 'second_service_description' ); ?></p>
@@ -366,7 +372,10 @@
                                     <div class="service-item third">
                                         <div class="service-name">
                                             <h4><?php the_field( 'third_service_name' ); ?></a></h4>
-                                            <div class="open-close-accordion"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                            <div class="open-close-accordion">
+                                                <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                            </div>
                                         </div>
                                         <div class="service-description">
                                             <p><?php the_field( 'third_service_description' ); ?></p>
