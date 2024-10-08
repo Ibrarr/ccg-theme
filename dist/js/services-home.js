@@ -9677,22 +9677,12 @@ jQuery(document).ready(function ($) {
     event.stopPropagation();
     var $currentItem = $(this).closest('.service-item');
     var $description = $currentItem.find('.service-description');
-
-    // Slide up all other descriptions except the current one
     $('.service-description').not($description).slideUp();
-
-    // Fade out minus and fade in plus for all other items
     $('.service-item').not($currentItem).find('.open-close-accordion .minus').fadeOut();
     $('.service-item').not($currentItem).find('.open-close-accordion .plus').fadeIn();
-
-    // Slide toggle the current item's description
     $description.slideToggle();
-
-    // Toggle active class on the current item and remove from others
     $('.service-item').not($currentItem).removeClass('active');
     $currentItem.toggleClass('active');
-
-    // If the current item is active, fade out the plus and fade in the minus, else reverse
     if ($currentItem.hasClass('active')) {
       $currentItem.find('.open-close-accordion .plus').fadeOut();
       $currentItem.find('.open-close-accordion .minus').fadeIn();

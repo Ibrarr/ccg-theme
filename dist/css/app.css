@@ -15287,9 +15287,6 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 .home.page .services-slider .accordion-container .service-item:not(:first-child) .open-close-accordion .minus {
   display: none;
 }
-.home.page .services-slider .accordion-container .service-item.inactive .service-description {
-  display: none;
-}
 .home.page .services-slider .accordion-container .service-item .open-close-accordion .plus, .home.page .services-slider .accordion-container .service-item .open-close-accordion .minus {
   position: absolute;
 }
@@ -28208,7 +28205,7 @@ footer .logo-text {
   text-transform: uppercase;
   font-family: "CircularXXWeb-Bold", sans-serif;
   font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-  color: #ffffff;
+  color: #E5E4E0;
 }
 @media (max-width: 767.98px) {
   footer .logo-text {

@@ -354,7 +354,7 @@
                                             </div>
                                         </div>
                                         <div class="service-description">
-                                            <p><?php the_field( 'first_service_description' ); ?></p>
+                                            <?php the_field( 'first_service_description' ); ?>
                                         </div>
                                     </div>
                                     <div class="service-item second">
@@ -366,7 +366,7 @@
                                             </div>
                                         </div>
                                         <div class="service-description">
-                                            <p><?php the_field( 'second_service_description' ); ?></p>
+                                            <?php the_field( 'second_service_description' ); ?>
                                         </div>
                                     </div>
                                     <div class="service-item third">
@@ -378,7 +378,7 @@
                                             </div>
                                         </div>
                                         <div class="service-description">
-                                            <p><?php the_field( 'third_service_description' ); ?></p>
+                                            <?php the_field( 'third_service_description' ); ?>
                                         </div>
                                     </div>
                                 </div>

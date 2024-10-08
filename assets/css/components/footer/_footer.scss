@@ -21,7 +21,7 @@ footer {
     text-transform: uppercase;
     font-family: $font-circular-bold;
     font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-    color: #ffffff;
+    color: $ccg-off-white;
 
     @include media-breakpoint-down(md) {
       margin-top: 20px;
