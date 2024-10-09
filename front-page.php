@@ -252,7 +252,7 @@
 
     <section class="latest-content">
         <div class="container px-4">
-            <h3>Insight reports</h3>
+            <h3>Recent Insights</h3>
             <div class="row mb-3">
 				<?php
 				$args = array(
