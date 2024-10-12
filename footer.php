@@ -6,7 +6,7 @@
                 <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/footer-logo.svg' ) ?></a>
             </div>
             <div class="col-md-9 logo-text">
-                <p>B2B TECH PR & MARKETING</p>
+                <p><?php the_field( 'footer_text', 'option' ) ?></p>
             </div>
         </div>
         <div class="footer-sections">
