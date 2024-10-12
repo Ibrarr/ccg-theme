@@ -279,134 +279,138 @@
         </div>
     </section>
 
-    <section class="about-ccg">
-        <div class="container px-4">
-            <?php the_field( 'about_ccg' ); ?>
-        </div>
-    </section>
+    <?php if (get_field( 'enable_about' )) { ?>
+        <section class="about-ccg">
+            <div class="container px-4">
+                <?php the_field( 'about_ccg' ); ?>
+            </div>
+        </section>
+	<?php } ?>
 
-    <section class="services-slider">
-	    <?php
-	    if ( have_rows( 'first_service_cards' ) ):
-		    $total_count = count( get_field( 'first_service_cards' ) );
-		    $current_count = 1;
-		    while ( have_rows( 'first_service_cards' ) ) : the_row();
-			    ?>
-                <li class="splide__slide first-set">
-                    <div class="sector-slide">
-                        <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-					    <?php the_sub_field( 'description' ); ?>
-                        <span class="count"><?php the_field( 'first_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
-                    </div>
-                </li>
-			    <?php
-			    $current_count++;
-		    endwhile;
-	    endif;
-	    if ( have_rows( 'second_service_cards' ) ):
-		    $total_count = count( get_field( 'second_service_cards' ) );
-		    $current_count = 1;
-		    while ( have_rows( 'second_service_cards' ) ) : the_row();
-			    ?>
-                <li class="splide__slide second-set">
-                    <div class="sector-slide">
-                        <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-					    <?php the_sub_field( 'description' ); ?>
-                        <span class="count"><?php the_field( 'second_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
-                    </div>
-                </li>
-			    <?php
-			    $current_count++;
-		    endwhile;
-	    endif;
-	    if ( have_rows( 'third_service_cards' ) ):
-		    $total_count = count( get_field( 'third_service_cards' ) );
-		    $current_count = 1;
-		    while ( have_rows( 'third_service_cards' ) ) : the_row();
-			    ?>
-                <li class="splide__slide third-set">
-                    <div class="sector-slide">
-                        <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-					    <?php the_sub_field( 'description' ); ?>
-                        <span class="count"><?php the_field( 'third_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
-                    </div>
-                </li>
-			    <?php
-			    $current_count++;
-		    endwhile;
-	    endif;
-	    ?>
-        <div class="container px-4">
-            <div class="splide">
-                <div class="splide__track">
-                    <ul class="splide__list">
-                        <li class="splide__slide">
-                            <div class="first-slide">
-                                <div class="down-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/down-arrow.svg' ) ?></div>
-                                <p class="service-head">Our Services:</p>
-                                <div class="accordion-container">
-                                    <div class="service-item first">
-                                        <div class="service-name">
-                                            <h4><?php the_field( 'first_service_name' ); ?></a></h4>
-                                            <div class="open-close-accordion">
-                                                <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
-                                                <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+    <?php if (get_field( 'enable_services' )) { ?>
+        <section class="services-slider">
+            <?php
+            if ( have_rows( 'first_service_cards' ) ):
+                $total_count = count( get_field( 'first_service_cards' ) );
+                $current_count = 1;
+                while ( have_rows( 'first_service_cards' ) ) : the_row();
+                    ?>
+                    <li class="splide__slide first-set">
+                        <div class="sector-slide">
+                            <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
+                            <?php the_sub_field( 'description' ); ?>
+                            <span class="count"><?php the_field( 'first_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                        </div>
+                    </li>
+                    <?php
+                    $current_count++;
+                endwhile;
+            endif;
+            if ( have_rows( 'second_service_cards' ) ):
+                $total_count = count( get_field( 'second_service_cards' ) );
+                $current_count = 1;
+                while ( have_rows( 'second_service_cards' ) ) : the_row();
+                    ?>
+                    <li class="splide__slide second-set">
+                        <div class="sector-slide">
+                            <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
+                            <?php the_sub_field( 'description' ); ?>
+                            <span class="count"><?php the_field( 'second_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                        </div>
+                    </li>
+                    <?php
+                    $current_count++;
+                endwhile;
+            endif;
+            if ( have_rows( 'third_service_cards' ) ):
+                $total_count = count( get_field( 'third_service_cards' ) );
+                $current_count = 1;
+                while ( have_rows( 'third_service_cards' ) ) : the_row();
+                    ?>
+                    <li class="splide__slide third-set">
+                        <div class="sector-slide">
+                            <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
+                            <?php the_sub_field( 'description' ); ?>
+                            <span class="count"><?php the_field( 'third_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                        </div>
+                    </li>
+                    <?php
+                    $current_count++;
+                endwhile;
+            endif;
+            ?>
+            <div class="container px-4">
+                <div class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <li class="splide__slide">
+                                <div class="first-slide">
+                                    <div class="down-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/down-arrow.svg' ) ?></div>
+                                    <p class="service-head">Our Services:</p>
+                                    <div class="accordion-container">
+                                        <div class="service-item first">
+                                            <div class="service-name">
+                                                <h4><?php the_field( 'first_service_name' ); ?></a></h4>
+                                                <div class="open-close-accordion">
+                                                    <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                    <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                                </div>
+                                            </div>
+                                            <div class="service-description">
+                                                <?php the_field( 'first_service_description' ); ?>
                                             </div>
                                         </div>
-                                        <div class="service-description">
-                                            <?php the_field( 'first_service_description' ); ?>
-                                        </div>
-                                    </div>
-                                    <div class="service-item second">
-                                        <div class="service-name">
-                                            <h4><?php the_field( 'second_service_name' ); ?></a></h4>
-                                            <div class="open-close-accordion">
-                                                <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
-                                                <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                        <div class="service-item second">
+                                            <div class="service-name">
+                                                <h4><?php the_field( 'second_service_name' ); ?></a></h4>
+                                                <div class="open-close-accordion">
+                                                    <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                    <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                                </div>
+                                            </div>
+                                            <div class="service-description">
+                                                <?php the_field( 'second_service_description' ); ?>
                                             </div>
                                         </div>
-                                        <div class="service-description">
-                                            <?php the_field( 'second_service_description' ); ?>
-                                        </div>
-                                    </div>
-                                    <div class="service-item third">
-                                        <div class="service-name">
-                                            <h4><?php the_field( 'third_service_name' ); ?></a></h4>
-                                            <div class="open-close-accordion">
-                                                <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
-                                                <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                        <div class="service-item third">
+                                            <div class="service-name">
+                                                <h4><?php the_field( 'third_service_name' ); ?></a></h4>
+                                                <div class="open-close-accordion">
+                                                    <div class="plus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/plus.svg' ) ?></div>
+                                                    <div class="minus"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/minus.svg' ) ?></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="service-description">
-                                            <?php the_field( 'third_service_description' ); ?>
+                                            <div class="service-description">
+                                                <?php the_field( 'third_service_description' ); ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="splide__arrows splide__arrows--ltr">
-                    <button
-                            class="splide__arrow splide__arrow--prev"
-                            type="button"
-                            aria-label="Previous slide"
-                            aria-controls="splide01-track"
-                    >
-						<?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
-                    </button>
-                    <button
-                            class="splide__arrow splide__arrow--next"
-                            type="button"
-                            aria-label="Next slide"
-                            aria-controls="splide01-track"
-                    >
-						<?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
-                    </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="splide__arrows splide__arrows--ltr">
+                        <button
+                                class="splide__arrow splide__arrow--prev"
+                                type="button"
+                                aria-label="Previous slide"
+                                aria-controls="splide01-track"
+                        >
+                            <?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
+                        </button>
+                        <button
+                                class="splide__arrow splide__arrow--next"
+                                type="button"
+                                aria-label="Next slide"
+                                aria-controls="splide01-track"
+                        >
+                            <?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/arrow.svg' ) ?>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php } ?>
 
     <section class="case-studies">
         <div class="container px-4">
@@ -437,27 +441,29 @@
         </div>
     </section>
 
-    <section class="awards">
-        <div class="container px-4">
-            <h3>Awards</h3>
-            <div class="row mb-3">
-				<?php
-				if ( have_rows( 'awards' ) ):
-					while ( have_rows( 'awards' ) ) : the_row();
-						?>
-                        <div class="col-lg-4 col-6 mb-4 award">
-                            <img class="image" src="<?php the_sub_field( 'image' ); ?>" alt="">
-                            <p class="years"><?php the_sub_field( 'years' ); ?></p>
-                            <p class="name"><?php the_sub_field( 'name' ); ?></p>
-                        </div>
-					<?php
-					endwhile;
-				endif;
-				?>
+    <?php if (get_field( 'enable_awards' )) { ?>
+        <section class="awards">
+            <div class="container px-4">
+                <h3>Awards</h3>
+                <div class="row mb-3">
+                    <?php
+                    if ( have_rows( 'awards' ) ):
+                        while ( have_rows( 'awards' ) ) : the_row();
+                            ?>
+                            <div class="col-lg-4 col-6 mb-4 award">
+                                <img class="image" src="<?php the_sub_field( 'image' ); ?>" alt="">
+                                <p class="years"><?php the_sub_field( 'years' ); ?></p>
+                                <p class="name"><?php the_sub_field( 'name' ); ?></p>
+                            </div>
+                        <?php
+                        endwhile;
+                    endif;
+                    ?>
+                </div>
+                <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
             </div>
-            <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
-        </div>
-    </section>
+        </section>
+	<?php } ?>
 
 
 <?php get_footer(); ?>
