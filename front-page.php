@@ -256,7 +256,7 @@
             <div class="row mb-3">
 				<?php
 				$args = array(
-					'post_type' => array('insight', 'posts'),
+					'post_type' => array('insight', 'post'),
 					'posts_per_page' => 4,
 					'orderby' => 'date',
 					'order' => 'DESC'
