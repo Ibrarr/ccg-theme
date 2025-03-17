@@ -305,19 +305,21 @@
         </div>
     </div>
 
-    <div class="announce-popup-container">
-        <div class="announce-popup">
-            <div class="close-announce-popup"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/new-cross.svg' ) ?></div>
-            <div class="popup-content">
-                <h3>CCGroup is now proud to be part of The Hoffman Agency</h3>
-                <a href="https://ccgrouppr.com/blog/ccgroup-x-the-hoffman-agency/">
-                    <p>Find out more here <i><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/feather-arrow-right.svg' ) ?></i></p>
-                </a>
-            </div>
-            <div class="popup-image">
-                <img src="https://ccgrouppr.com/wp-content/uploads/2025/03/hoffman-popup.png" alt="">
+    <?php if (get_field( 'enable_announce_popup', 'option' )) : ?>
+        <div class="announce-popup-container">
+            <div class="announce-popup">
+                <div class="close-announce-popup"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/new-cross.svg' ) ?></div>
+                <div class="popup-content">
+                    <h3>CCGroup is now proud to be part of The Hoffman Agency</h3>
+                    <a href="https://ccgrouppr.com/blog/ccgroup-x-the-hoffman-agency/">
+                        <p>Find out more here <i><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/feather-arrow-right.svg' ) ?></i></p>
+                    </a>
+                </div>
+                <div class="popup-image">
+                    <img src="https://ccgrouppr.com/wp-content/uploads/2025/03/hoffman-popup.png" alt="">
+                </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 
     <main id="content" role="main">

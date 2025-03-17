@@ -191,6 +191,27 @@
             "placeholder": ""
         },
         {
+            "key": "field_67d8963947976",
+            "label": "Enable announce popup",
+            "name": "enable_announce_popup",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
             "key": "field_655bab3ad23a5",
             "label": "Socials",
             "name": "",
@@ -661,5 +682,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1728749641
+    "modified": 1742247516
 }
