@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
     } else {
         setTimeout(function () {
             $('.announce-popup-container').fadeIn();
-        }, 30000);
+        }, 5000);
     }
 
     $('.close-announce-popup').click(function () {
