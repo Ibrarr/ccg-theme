@@ -3,7 +3,8 @@ const mix = require('laravel-mix');
 mix.js([
     'assets/js/header/main-menu.js',
     'assets/js/header/sliders.js',
-    'assets/js/header/load-search-results.js'
+    'assets/js/header/load-search-results.js',
+    'assets/js/header/announce-popup.js'
 ], 'js/header.js');
 
 mix.js([

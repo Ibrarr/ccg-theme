@@ -26,22 +26,48 @@ get_header();
 						<?php the_field( 'content' ); ?>
                     </div>
 
-                    <div class="row gx-5 locations-logo d-lg-flex d-none">
-                        <div class="col-lg-6 col-md-3 col-6">
-                            <img src="<?php the_field( 'global_com_logo' ); ?>" alt="">
-                        </div>
-                        <div class="col-lg-6 col-md-3 col-6 d-lg-flex justify-content-lg-end">
+                    <div class="row locations-logo d-lg-flex d-none">
+                        <h4>Offices</h4>
+                        <div>
                             <div class="locations">
-                                <h4>Locations</h4>
+                                <h4>North America</h4>
 								<?php
-								if ( have_rows( 'locations' ) ):
+								if ( have_rows( 'north_america_locations' ) ):
 									echo '<ul>';
-									while ( have_rows( 'locations' ) ) : the_row();
-										echo '<li class="' . get_sub_field( 'marker_colour' ) . '">' . get_sub_field( 'location' ) . '</li>';
+									while ( have_rows( 'north_america_locations' ) ) : the_row();
+										echo '<li class="yellow">' . get_sub_field( 'location' ) . '</li>';
 									endwhile;
 									echo '</ul>';
 								endif;
 								?>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="locations">
+                                <h4>Europe</h4>
+			                    <?php
+			                    if ( have_rows( 'europe_locations' ) ):
+				                    echo '<ul>';
+				                    while ( have_rows( 'europe_locations' ) ) : the_row();
+					                    echo '<li class="red">' . get_sub_field( 'location' ) . '</li>';
+				                    endwhile;
+				                    echo '</ul>';
+			                    endif;
+			                    ?>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="locations">
+                                <h4>Asia-Pacific</h4>
+			                    <?php
+			                    if ( have_rows( 'asia-pacific_locations' ) ):
+				                    echo '<ul>';
+				                    while ( have_rows( 'asia-pacific_locations' ) ) : the_row();
+					                    echo '<li class="blue">' . get_sub_field( 'location' ) . '</li>';
+				                    endwhile;
+				                    echo '</ul>';
+			                    endif;
+			                    ?>
                             </div>
                         </div>
                     </div>
@@ -51,24 +77,51 @@ get_header();
                     <img src="<?php the_field( 'map' ); ?>" alt="">
                 </div>
 
-                <div class="row gx-5 locations-logo d-lg-none">
-                    <div class="col-md-3 col-6">
-                        <img src="<?php the_field( 'global_com_logo' ); ?>" alt="">
-                    </div>
-                    <div class="col-md-3 col-6 d-lg-flex justify-content-lg-end">
+                <div class="row locations-logo d-lg-none">
+                    <h4>Offices</h4>
+                    <div>
                         <div class="locations">
-                            <h4>Locations</h4>
-							<?php
-							if ( have_rows( 'locations' ) ):
-								echo '<ul>';
-								while ( have_rows( 'locations' ) ) : the_row();
-									echo '<li class="' . get_sub_field( 'marker_colour' ) . '">' . get_sub_field( 'location' ) . '</li>';
-								endwhile;
-								echo '</ul>';
-							endif;
-							?>
+                            <h4>North America</h4>
+			                <?php
+			                if ( have_rows( 'north_america_locations' ) ):
+				                echo '<ul>';
+				                while ( have_rows( 'north_america_locations' ) ) : the_row();
+					                echo '<li class="yellow">' . get_sub_field( 'location' ) . '</li>';
+				                endwhile;
+				                echo '</ul>';
+			                endif;
+			                ?>
                         </div>
                     </div>
+                    <div>
+                        <div class="locations">
+                            <h4>Europe</h4>
+			                <?php
+			                if ( have_rows( 'europe_locations' ) ):
+				                echo '<ul>';
+				                while ( have_rows( 'europe_locations' ) ) : the_row();
+					                echo '<li class="red">' . get_sub_field( 'location' ) . '</li>';
+				                endwhile;
+				                echo '</ul>';
+			                endif;
+			                ?>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="locations">
+                            <h4>Asia-Pacific</h4>
+			                <?php
+			                if ( have_rows( 'asia-pacific_locations' ) ):
+				                echo '<ul>';
+				                while ( have_rows( 'asia-pacific_locations' ) ) : the_row();
+					                echo '<li class="blue">' . get_sub_field( 'location' ) . '</li>';
+				                endwhile;
+				                echo '</ul>';
+			                endif;
+			                ?>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

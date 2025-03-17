@@ -3767,6 +3767,34 @@ var SplideRenderer = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./assets/js/header/announce-popup.js":
+/*!********************************************!*\
+  !*** ./assets/js/header/announce-popup.js ***!
+  \********************************************/
+/***/ (function() {
+
+jQuery(document).ready(function ($) {
+  if (document.cookie.indexOf('announcePopupClosed=true') !== -1) {
+    $('.announce-popup-container').hide();
+  } else {
+    setTimeout(function () {
+      $('.announce-popup-container').fadeIn();
+    }, 30000);
+  }
+  $('.close-announce-popup').click(function () {
+    $('.announce-popup-container').fadeOut();
+    document.cookie = "announcePopupClosed=true; expires=" + new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
+  });
+  jQuery(document).on('gform_confirmation_loaded', function (event, formId) {
+    setTimeout(function () {
+      $('.announce-popup-container').fadeOut();
+      document.cookie = "announcePopupClosed=true; expires=" + new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
+    }, 5000);
+  });
+});
+
+/***/ }),
+
 /***/ "./assets/js/header/load-search-results.js":
 /*!*************************************************!*\
   !*** ./assets/js/header/load-search-results.js ***!
@@ -10481,6 +10509,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	__webpack_require__.O(undefined, ["css/app"], function() { return __webpack_require__("./assets/js/header/main-menu.js"); })
 /******/ 	__webpack_require__.O(undefined, ["css/app"], function() { return __webpack_require__("./assets/js/header/sliders.js"); })
 /******/ 	__webpack_require__.O(undefined, ["css/app"], function() { return __webpack_require__("./assets/js/header/load-search-results.js"); })
+/******/ 	__webpack_require__.O(undefined, ["css/app"], function() { return __webpack_require__("./assets/js/header/announce-popup.js"); })
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], function() { return __webpack_require__("./assets/css/app.scss"); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	

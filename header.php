@@ -13,8 +13,7 @@
             <div class="row justify-content-end">
                 <div class="col-xl-8 col-lg-9 col-6">
                     <div class="menu-container">
-                        <p class="main-menu-text">CCGroup is a B2B Technology PR, Industry Analyst Relations & Marketing
-                            Agency</p>
+                        <p class="main-menu-text">CCGroup, a Hoffman Agency, is a B2B Technology PR & Marketing Consultancy</p>
                         <p class="menu-text">Menu</p>
                         <p class="search-text">Search</p>
                         <div class="search-hamburger">
@@ -305,4 +304,20 @@
             <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/header-logo.svg' ) ?></a>
         </div>
     </div>
+
+    <div class="announce-popup-container">
+        <div class="announce-popup">
+            <div class="close-announce-popup"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/new-cross.svg' ) ?></div>
+            <div class="popup-content">
+                <h3>CCGroup is now proud to be part of The Hoffman Agency</h3>
+                <a href="https://ccgrouppr.com/blog/ccgroup-x-the-hoffman-agency/">
+                    <p>Find out more here <i><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/feather-arrow-right.svg' ) ?></i></p>
+                </a>
+            </div>
+            <div class="popup-image">
+                <img src="https://ccgrouppr.com/wp-content/uploads/2025/03/hoffman-popup.png" alt="">
+            </div>
+        </div>
+    </div>
+
     <main id="content" role="main">

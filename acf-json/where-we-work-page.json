@@ -37,7 +37,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6567042c28174",
@@ -61,8 +62,8 @@
         },
         {
             "key": "field_6566fc23cb993",
-            "label": "Locations",
-            "name": "locations",
+            "label": "North America Locations",
+            "name": "north_america_locations",
             "aria-label": "",
             "type": "repeater",
             "instructions": "",
@@ -81,39 +82,6 @@
             "button_label": "Add Row",
             "rows_per_page": 20,
             "sub_fields": [
-                {
-                    "key": "field_6571de5ea431f",
-                    "label": "Marker",
-                    "name": "marker_colour",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "blue": "Blue",
-                        "red": "Red",
-                        "green": "Green",
-                        "yellow": "Yellow",
-                        "orange": "Orange",
-                        "purple": "Purple",
-                        "pink": "Pink",
-                        "brightpink": "Bright Pink"
-                    },
-                    "default_value": false,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "parent_repeater": "field_6566fc23cb993"
-                },
                 {
                     "key": "field_6566fc2ecb994",
                     "label": "Location",
@@ -138,11 +106,11 @@
             ]
         },
         {
-            "key": "field_6566fc98cb996",
-            "label": "GlobalCom Logo",
-            "name": "global_com_logo",
+            "key": "field_67d88ee7fa10a",
+            "label": "Europe Locations",
+            "name": "europe_locations",
             "aria-label": "",
-            "type": "image",
+            "type": "repeater",
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
@@ -151,16 +119,83 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "url",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium"
+            "layout": "table",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_67d88ee7fa10b",
+                    "label": "Location",
+                    "name": "location",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_67d88ee7fa10a"
+                }
+            ]
+        },
+        {
+            "key": "field_67d88ef2fa10c",
+            "label": "Asia-Pacific Locations",
+            "name": "asia-pacific_locations",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_67d88ef2fa10d",
+                    "label": "Location",
+                    "name": "location",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_67d88ef2fa10c"
+                }
+            ]
         },
         {
             "key": "field_6566fc45cb995",
@@ -202,7 +237,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_65668121d1533",
@@ -240,12 +276,16 @@
             },
             "choices": {
                 "26": "Contact Form",
+                "56": "End to end: The role of industry analysts in the enterprise technology buying process",
+                "55": "Founders Report - CCGroup & F1rst",
                 "5": "How B2B PR Done Right Benefits Your SEO",
                 "7": "How B2B Tech Vendors Can Use PR & Marketing To Attract Channel Partners",
+                "47": "How Can IoT Technology Vendors Successfully Market And Sell To Buyers?",
                 "4": "How Do IT Decision-Makers Choose Their Suppliers?",
                 "14": "How Do Modern Enterprises Buy Technology?",
                 "17": "How MediaTech Companies Can Use Integrated Marketing Communications To Achieve Commercial Success",
                 "15": "How Telcos And OTTs Are Disrupting The Traditional Broadcast Industry",
+                "51": "How to influence fintech acquirers",
                 "8": "How To Influence FinTech Buyers",
                 "9": "How To Influence FinTech Buyers In Capital Markets",
                 "20": "How To Influence Fintech Buyers: The Shop Window Is Everything",
@@ -256,14 +296,34 @@
                 "2": "How To Use PR To Attract Acquirers",
                 "11": "How Vendors Can Benefit From The Impact Of IP On The Broadcast Industry",
                 "1": "Insight Report",
+                "52": "Money20\/20 Europe 2023 Infographic - May '24",
                 "19": "More Brand, more Buck: How Brand Influences Enterprise Technology Buyers",
+                "46": "Navigating Telco Turbulence: Lessons For Vendor Marketing",
+                "28": "Newsletter Popup Form",
+                "54": "RSA 2024 Infographic - Cyber",
                 "18": "Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
                 "3": "Successful Influencer Marketing",
                 "10": "Successfully Marketing And Selling To Broadcast Service Providers",
                 "23": "Telco Transformation: Lessons For Vendor Marketing",
-                "27": "TEST POPUP",
+                "48": "Trusted advisors: the role of industry analysts in telecoms purchasing - lessons for vendors",
                 "12": "Unaware, Unprepared And Paralysed: Retailer Readiness For PSD2",
-                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process"
+                "53": "Understanding enterprise technology buying: Lessons for vendor marketing",
+                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process",
+                "36": "Webinar: Analyst Prioritization: How To Focus Your Analyst Relations",
+                "30": "Webinar: Analysts & The Future Of Work: Influencing Analysts In A World Of Uncertainty",
+                "32": "Webinar: Fintech: Which Analyst Firms Are Most Valuable And Why?",
+                "45": "Webinar: How analysts shift fintech purchasing and M&A",
+                "39": "Webinar: How Industry Analysts Influence Security Technology Buyers",
+                "37": "Webinar: How To Influence Telco Operators Through Industry Analysts",
+                "31": "Webinar: Influencing Buyers Through Telecoms Analysts",
+                "44": "Webinar: Integrated marketing communications: key principles, methods and outcomes",
+                "33": "Webinar: Mind The Gap: What AR Delivers, And What It’s Asked For",
+                "35": "Webinar: Navigating Telco Turbulence: Lessons For Vendor Marketing",
+                "38": "Webinar: Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
+                "34": "Webinar: Tech: How Firms And Investors Can Attract The Right Fit?",
+                "43": "Webinar: Use Analyst Relations To Accelerate Sales",
+                "40": "Webinar: Use Measurement To Drive Analyst Relations Objectives",
+                "29": "Webinar: What Telcos Want From Vendors: Marketing Strategies That Deliver"
             },
             "default_value": false,
             "return_format": "value",
@@ -296,5 +356,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1701962003
+    "modified": 1742245637
 }
