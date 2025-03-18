@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
-    if (document.cookie.indexOf('announcePopupClosed=true') !== -1) {
+    // Check if popup has been shown in this tab session
+    if (sessionStorage.getItem('announcePopupClosed') === 'true') {
         $('.announce-popup-container').hide();
     } else {
         setTimeout(function () {
@@ -10,14 +11,16 @@ jQuery(document).ready(function ($) {
     $('.close-announce-popup').click(function () {
         $('.announce-popup-container').fadeOut();
 
-        document.cookie = "announcePopupClosed=true; expires=" + new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
+        // Save to sessionStorage instead of cookies
+        sessionStorage.setItem('announcePopupClosed', 'true');
     });
 
     jQuery(document).on('gform_confirmation_loaded', function (event, formId) {
         setTimeout(function () {
             $('.announce-popup-container').fadeOut();
 
-            document.cookie = "announcePopupClosed=true; expires=" + new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
+            // Save to sessionStorage instead of cookies
+            sessionStorage.setItem('announcePopupClosed', 'true');
         }, 2000);
     });
 });
