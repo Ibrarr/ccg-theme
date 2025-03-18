@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
     } else {
         setTimeout(function () {
             $('.announce-popup-container').fadeIn();
-        }, 5000);
+        }, 2000);
     }
 
     $('.close-announce-popup').click(function () {
@@ -18,6 +18,6 @@ jQuery(document).ready(function ($) {
             $('.announce-popup-container').fadeOut();
 
             document.cookie = "announcePopupClosed=true; expires=" + new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
-        }, 5000);
+        }, 2000);
     });
 });
