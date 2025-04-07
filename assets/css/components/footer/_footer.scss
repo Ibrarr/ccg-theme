@@ -11,20 +11,9 @@ footer {
       height: 30px;
 
       @include media-breakpoint-up(lg) {
-        width: 218px;
-        height: 40px;
+        width: 347px;
+        height: 72px;
       }
-    }
-  }
-
-  .logo-text {
-    text-transform: uppercase;
-    font-family: $font-circular-bold;
-    font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-    color: $ccg-off-white;
-
-    @include media-breakpoint-down(md) {
-      margin-top: 20px;
     }
   }
 
@@ -32,6 +21,17 @@ footer {
     overflow: hidden;
 
     .main-footer-menu {
+      .logo-text {
+        text-transform: uppercase;
+        font-family: $font-circular-bold;
+        font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
+        color: $ccg-off-white;
+
+        @include media-breakpoint-down(md) {
+          margin-top: 20px;
+        }
+      }
+
       ul {
         padding: 0;
         list-style: none;
