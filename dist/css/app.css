@@ -28231,14 +28231,53 @@ footer {
   position: relative;
 }
 footer .footer-logo svg {
-  width: 165px;
-  height: 30px;
+  width: 100%;
+  max-width: 250px;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   footer .footer-logo svg {
-    width: 347px;
+    width: 100%;
+    max-width: 347px;
     height: 72px;
   }
+}
+@media (max-width: 991.98px) {
+  footer .footer-logo svg {
+    margin-bottom: 40px;
+  }
+}
+@media (max-width: 767.98px) {
+  footer .footer-logo svg {
+    margin-bottom: 0;
+  }
+}
+footer .credit-text {
+  display: none;
+  height: 100%;
+  margin: 0;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+@media (max-width: 991.98px) {
+  footer .credit-text {
+    margin-top: 5px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+footer .credit-text a {
+  font-family: "CircularXXWeb-Regular", sans-serif;
+  text-decoration: none;
+  font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+  line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
+  color: #636363;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+footer .credit-text a:hover {
+  color: #EFEFEC;
 }
 footer .footer-sections {
   overflow: hidden;
@@ -28329,11 +28368,15 @@ footer .footer-sections .social-contact .social-container .social a {
     border-bottom: 1px solid #264b55;
   }
 }
+@media (max-width: 991.98px) {
+  footer .footer-sections .credit {
+    display: none;
+  }
+}
 footer .footer-sections .credit p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 100%;
   margin: 0;
   -webkit-box-align: end;
   -ms-flex-align: end;
@@ -28356,6 +28399,14 @@ footer .footer-sections .credit p a:hover {
     display: none;
   }
 }
+footer .footer-sections .legal {
+  margin-top: auto;
+}
+@media (max-width: 767.98px) {
+  footer .footer-sections .legal .credit-text {
+    display: none;
+  }
+}
 footer .footer-sections .legal p {
   font-family: "CircularXXWeb-Regular", sans-serif;
   text-decoration: none;
@@ -28367,7 +28418,6 @@ footer .footer-sections .legal .company-name {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 100%;
   margin: 0;
   -webkit-box-align: end;
   -ms-flex-align: end;

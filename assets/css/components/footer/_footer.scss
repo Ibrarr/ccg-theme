@@ -7,12 +7,46 @@ footer {
 
   .footer-logo {
     svg {
-      width: 165px;
-      height: 30px;
+      width: 100%;
+      max-width: 250px;
 
-      @include media-breakpoint-up(lg) {
-        width: 347px;
+      @include media-breakpoint-up(md) {
+        width: 100%;
+        max-width: 347px;
         height: 72px;
+      }
+
+      @include media-breakpoint-down(lg) {
+        margin-bottom: 40px;
+      }
+
+      @include media-breakpoint-down(md) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .credit-text {
+    display: none;
+    height: 100%;
+    margin: 0;
+    align-items: flex-end;
+
+    @include media-breakpoint-down(lg) {
+      margin-top: 5px;
+      display: flex;
+    }
+
+    a {
+      font-family: $font-circular-regular;
+      text-decoration: none;
+      font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+      line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
+      color: #636363;
+      transition: $ccg-transition-all;
+
+      &:hover {
+        color: $ccg-body-bg;
       }
     }
   }
@@ -115,9 +149,12 @@ footer {
     }
 
     .credit {
+      @include media-breakpoint-down(lg) {
+        display: none;
+      }
+
       p {
         display: flex;
-        height: 100%;
         margin: 0;
         align-items: flex-end;
 
@@ -141,6 +178,15 @@ footer {
     }
 
     .legal {
+      margin-top: auto;
+
+      @include media-breakpoint-down(md) {
+
+        .credit-text {
+          display: none;
+        }
+      }
+
       p {
         font-family: $font-circular-regular;
         text-decoration: none;
@@ -151,7 +197,6 @@ footer {
 
       .company-name {
         display: flex;
-        height: 100%;
         margin: 0;
         align-items: flex-end;
 

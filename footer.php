@@ -2,19 +2,19 @@
 <footer id="footer" role="contentinfo">
     <div class="container px-4">
         <div class="row">
-            <div class="col-md-12 footer-logo">
+            <div class="col-lg-4 footer-logo">
                 <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-new.svg' ) ?></a>
             </div>
         </div>
         <div class="footer-sections">
             <div class="row">
-                <div class="col-md-4 offset-md-4 main-footer-menu">
+                <div class="col-lg-4 offset-lg-4 col-md-6 main-footer-menu">
                     <p class="logo-text"><?php the_field( 'footer_text', 'option' ) ?></p>
 					<?php wp_nav_menu( array(
 						'theme_location' => 'footer-menu',
 					) ); ?>
                 </div>
-                <div class="col-md-4 social-contact">
+                <div class="col-lg-4 col-md-6 social-contact">
                     <div class="row">
                         <div class="col-8 col-md-7">
                             <div class="contact">
@@ -47,12 +47,13 @@
             </div>
             <div class="row">
                 <div class="col-md-4 credit">
-                    <p><a href="https://www.todaycreative.co.uk/">Design - Today Creative</a></p>
+                    <p class="credit-text"><a href="https://www.todaycreative.co.uk/">Design - Today Creative</a></p>
                 </div>
-                <div class="col-md-4 legal">
+                <div class="col-lg-4 col-md-6 legal">
                     <p class="company-name">© The Hoffman Agency UK Limited <?php echo date( "Y" ); ?></p>
+                    <p class="credit-text"><a href="https://www.todaycreative.co.uk/">Design - Today Creative</a></p>
                 </div>
-                <div class="col-md-4 legal footer-info">
+                <div class="col-lg-4 col-md-6 legal footer-info">
                     <div class="row align-items-end">
                         <div class="col-8 col-md-7">
                             <div class="legal-text">

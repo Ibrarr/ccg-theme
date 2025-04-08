@@ -301,7 +301,7 @@
     </header>
     <div class="container px-4">
         <div class="header-logo">
-            <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/header-logo.svg' ) ?></a>
+            <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-new.svg' ) ?></a>
         </div>
     </div>
 
