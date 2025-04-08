@@ -1,4 +1,15 @@
 .single-work {
+  .header-logo a {
+    svg rect,
+    svg path {
+      fill: $ccg-dark-green !important;
+    }
+
+    svg g g path:nth-child(25) {
+      fill: $ccg-pink !important;
+    }
+  }
+
   article {
     position: relative;
     margin-bottom: 60px;

@@ -1,4 +1,14 @@
 .page-template-page-where-we-work {
+  .header-logo a {
+    svg rect,
+    svg path {
+      fill: $ccg-dark-green !important;
+    }
+
+    svg g g path:nth-child(25) {
+      fill: $ccg-pink !important;
+    }
+  }
 
   @import "components/header";
   

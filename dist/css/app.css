@@ -13566,6 +13566,11 @@ header .menu-container p {
 }
 @media (max-width: 991.98px) {
   header .menu-container p {
+    font-size: 14px;
+  }
+}
+@media (max-width: 991.98px) {
+  header .menu-container p {
     display: none !important;
   }
 }
@@ -14501,33 +14506,47 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
 }
 
 .header-logo {
-  top: 60px;
+  top: 48px;
   position: absolute;
+}
+@media (max-width: 767.98px) {
+  .header-logo {
+    top: 44px;
+  }
 }
 .header-logo a {
   position: relative;
   z-index: 100;
 }
 .header-logo a svg {
-  width: 92px;
-  height: 30px;
+  max-width: 180px;
+  width: 38vw;
 }
-.header-logo a svg g g path {
+@media (min-width: 768px) {
+  .header-logo a svg {
+    width: 100%;
+    max-width: 296px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .header-logo a svg {
+    max-width: 220px;
+  }
+}
+.header-logo a svg path, .header-logo a svg rect {
   -webkit-transition: all 1s;
   transition: all 1s;
-}
-@media (min-width: 992px) {
-  .header-logo a svg {
-    width: 120px;
-    height: 40px;
-  }
 }
 .header-logo.mobile-menu-open {
   position: fixed;
   z-index: 99;
 }
-.header-logo.mobile-menu-open a svg g g path:nth-child(1), .header-logo.mobile-menu-open a svg g g path:nth-child(2), .header-logo.mobile-menu-open a svg g g path:nth-child(3) {
+.header-logo.mobile-menu-open a svg rect,
+.header-logo.mobile-menu-open a svg path {
   fill: #002C38 !important;
+}
+.header-logo.mobile-menu-open a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
 }
 
 .no-scroll {
@@ -17387,6 +17406,13 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   background-color: #EAAC4D;
 }
 
+.page-template-page-contact .header-logo a svg rect,
+.page-template-page-contact .header-logo a svg path {
+  fill: #002C38 !important;
+}
+.page-template-page-contact .header-logo a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
+}
 .page-template-page-contact .contact-header {
   padding-top: 200px;
   padding-bottom: 60px;
@@ -17822,6 +17848,13 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   color: #EAAC4D;
 }
 
+.page-template-page-where-we-work .header-logo a svg rect,
+.page-template-page-where-we-work .header-logo a svg path {
+  fill: #002C38 !important;
+}
+.page-template-page-where-we-work .header-logo a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
+}
 .page-template-page-where-we-work .header {
   padding-top: 200px;
   padding-bottom: 60px;
@@ -18152,6 +18185,13 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   }
 }
 
+.page-template-page-careers .header-logo a svg rect,
+.page-template-page-careers .header-logo a svg path {
+  fill: #002C38 !important;
+}
+.page-template-page-careers .header-logo a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
+}
 .page-template-page-careers .careers-header {
   padding-top: 200px;
   padding-bottom: 60px;
@@ -19634,6 +19674,13 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   }
 }
 
+.single-post .header-logo a svg rect,
+.single-post .header-logo a svg path {
+  fill: #002C38 !important;
+}
+.single-post .header-logo a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
+}
 .single-post article {
   position: relative;
   margin-bottom: 60px;
@@ -21451,6 +21498,13 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   }
 }
 
+.single-work .header-logo a svg rect,
+.single-work .header-logo a svg path {
+  fill: #002C38 !important;
+}
+.single-work .header-logo a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
+}
 .single-work article {
   position: relative;
   margin-bottom: 60px;
@@ -23676,6 +23730,13 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   }
 }
 
+.archive.tax-sector .header-logo a svg rect,
+.archive.tax-sector .header-logo a svg path {
+  fill: #002C38 !important;
+}
+.archive.tax-sector .header-logo a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
+}
 .archive.tax-sector .term-header {
   padding-top: 200px;
   margin-bottom: 60px;
@@ -25354,6 +25415,13 @@ header .main-menu-container .nav-container .header-footer .menu-info-menu-contai
   fill: #ffffff;
 }
 
+.archive.tax-service .header-logo a svg rect,
+.archive.tax-service .header-logo a svg path {
+  fill: #002C38 !important;
+}
+.archive.tax-service .header-logo a svg g g path:nth-child(25) {
+  fill: #F08974 !important;
+}
 .archive.tax-service .term-header {
   padding-top: 200px;
   margin-bottom: 60px;

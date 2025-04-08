@@ -1,22 +1,30 @@
 .header-logo {
-  top: 60px;
+  top: 48px;
   position: absolute;
+
+  @include media-breakpoint-down(md) {
+    top: 44px;
+  }
 
   a {
     position: relative;
     z-index: 100;
 
     svg {
-      width: 92px;
-      height: 30px;
+      max-width: 180px;
+      width: 38vw;
 
-      g g path {
-        transition: all 1s;
+      @include media-breakpoint-up(md) {
+        width: 100%;
+        max-width: 296px;
       }
 
-      @include media-breakpoint-up(lg) {
-        width: 120px;
-        height: 40px;
+      @include media-breakpoint-between(lg, xl) {
+        max-width: 220px;
+      }
+
+      path, rect {
+        transition: all 1s;
       }
     }
   }
@@ -25,9 +33,14 @@
     position: fixed;
     z-index: 99;
 
-    a svg g g {
-      path:nth-child(1), path:nth-child(2), path:nth-child(3) {
+    a {
+      svg rect,
+      svg path {
         fill: $ccg-dark-green !important;
+      }
+
+      svg g g path:nth-child(25) {
+        fill: $ccg-pink !important;
       }
     }
   }

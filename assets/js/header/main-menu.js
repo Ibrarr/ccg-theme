@@ -213,23 +213,23 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    function fadePathInAndOut() {
-        const path = document.querySelector('.header-logo svg g g path:last-child');
-
-        const timeline = gsap.timeline();
-
-        timeline.to({}, {duration: 1});
-
-        timeline.to(path, {duration: .5, opacity: 0});
-
-        timeline.to({}, {duration: 1});
-
-        timeline.to(path, {duration: .5, opacity: 1});
-
-        timeline.to({}, {duration: 1});
-
-        timeline.repeat(-1);
-    }
-
-    fadePathInAndOut();
+    // function fadePathInAndOut() {
+    //     const path = document.querySelector('.header-logo svg g g path:last-child');
+    //
+    //     const timeline = gsap.timeline();
+    //
+    //     timeline.to({}, {duration: 1});
+    //
+    //     timeline.to(path, {duration: .5, opacity: 0});
+    //
+    //     timeline.to({}, {duration: 1});
+    //
+    //     timeline.to(path, {duration: .5, opacity: 1});
+    //
+    //     timeline.to({}, {duration: 1});
+    //
+    //     timeline.repeat(-1);
+    // }
+    //
+    // fadePathInAndOut();
 });

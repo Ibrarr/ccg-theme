@@ -20,6 +20,10 @@
     transition: $ccg-transition-all;
 
     @include media-breakpoint-down(lg) {
+      font-size: 14px;
+    }
+
+    @include media-breakpoint-down(lg) {
       display: none !important;
     }
   }
