@@ -73,9 +73,9 @@ $term_name_text = single_term_title( '', false );
                                     <p class="name"><?php the_field( 'name', $current_term ); ?></p>
                                     <p class="job-title"><?php the_field( 'job_title', $current_term ); ?></p>
                                     <div class="social-icons">
-                                        <a class="x-icon" rel="nofollow"
-                                           href="<?php the_field( 'x_twitter', $current_term ); ?>"
-                                           target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/x-icon.svg' ) ?></a>
+<!--                                        <a class="x-icon" rel="nofollow"-->
+<!--                                           href="--><?php //the_field( 'x_twitter', $current_term ); ?><!--"-->
+<!--                                           target="_blank">--><?php //echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/x-icon.svg' ) ?><!--</a>-->
                                         <a class="linkedin-icon" rel="nofollow"
                                            href="<?php the_field( 'linkedin', $current_term ); ?>"
                                            target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/linkedin-icon.svg' ) ?></a>
