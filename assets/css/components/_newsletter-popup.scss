@@ -9,7 +9,7 @@
   }
 
   h3 {
-    font-family: $font-circular-regular;
+    font-family: $font-circular-bold;
     font-size: 30px;
     line-height: 30px;
     color: $ccg-dark-green;
@@ -37,6 +37,11 @@
 
     label {
       @include body-text(#ffffff);
+      font-family: $font-circular-regular;
+
+      .gfield_required {
+        display: none;
+      }
     }
 
     input[type="text"], input[type="email"], input[type="tel"] {
@@ -64,6 +69,7 @@
       height: 32px;
       margin-bottom: 20px;
       @include long-button($ccg-dark-green, #ffffff, #ffffff, $ccg-dark-green);
+      max-width: 148px;
 
       @include media-breakpoint-up(lg) {
         height: 44px;

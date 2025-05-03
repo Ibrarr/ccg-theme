@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
     } else {
         setTimeout(function () {
             $('.newsletter-popup-container').fadeIn();
-        }, 30000);
+            }, 30000);
     }
 
     $('.close-newsletter').click(function () {

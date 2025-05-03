@@ -27,14 +27,13 @@
   .newsletter-popup-container {
     display: none;
     position: absolute;
-    z-index: 4;
+    z-index: 11;
     left: 50%;
     transform: translateX(-50%);
     bottom: -250px;
 
     @include media-breakpoint-up(md) {
       position: absolute;
-      z-index: 4;
       left: 430px;
       bottom: -350px;
     }
