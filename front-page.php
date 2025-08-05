@@ -25,7 +25,12 @@
                                     <div class="header-slide">
                                         <h1 class="heading"><?php the_sub_field( 'title' ); ?></h1>
                                         <p class="sub-heading"><?php the_sub_field( 'body' ); ?></p>
-                                    </div>
+	                                    <?php if ($button = get_sub_field('button')) : ?>
+                                            <a class="hero-button" href="<?php echo esc_url($button['url']); ?>">
+			                                    <?php echo esc_html($button['title']); ?>
+                                            </a>
+	                                    <?php endif; ?>
+                                </div>
                                 </div>
                             </li>
 						<?php

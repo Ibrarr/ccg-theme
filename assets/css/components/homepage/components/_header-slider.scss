@@ -87,7 +87,10 @@
 
       .sub-heading {
         @include sub-heading-text($ccg-off-white);
-        margin-bottom: 50px;
+      }
+
+      .hero-button {
+        @include short-button($ccg-off-white, $ccg-dark-green, $ccg-dark-green, $ccg-off-white);
       }
 
       @include media-breakpoint-up(lg) {

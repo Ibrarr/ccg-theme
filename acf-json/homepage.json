@@ -109,6 +109,24 @@
                     "mime_types": "",
                     "preview_size": "medium",
                     "parent_repeater": "field_65605c875ac66"
+                },
+                {
+                    "key": "field_6892497f04644",
+                    "label": "Button",
+                    "name": "button",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_65605c875ac66"
                 }
             ]
         },
@@ -1076,5 +1094,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1728749212
+    "modified": 1754417590
 }
