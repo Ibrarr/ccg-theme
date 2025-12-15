@@ -37,26 +37,34 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6571fc3916bcf",
             "label": "UK Office Map",
             "name": "uk_office_map",
             "aria-label": "",
-            "type": "google_map",
+            "type": "image",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "center_lat": "",
-            "center_lng": "",
-            "zoom": "",
-            "height": ""
+            "return_format": "url",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
         },
         {
             "key": "field_656672db6f5c8",
@@ -139,7 +147,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6566737b6f5cd",
@@ -176,13 +185,23 @@
                 "id": ""
             },
             "choices": {
+                "70": "AR MS Report Sep 2025 - The quiet rebound of Analyst Relations",
                 "26": "Contact Form",
+                "56": "End to end: The role of industry analysts in the enterprise technology buying process",
+                "72": "European Primer Report - Nov 25",
+                "64": "Fintech Mini Report (Feb Hot or Not) - Mar '25",
+                "62": "Fintech Mini Report (Jan Hot or Not) - Feb '24",
+                "65": "Fintech Mini Report March (Hot or Not) - Apr 2025",
+                "66": "Fintech MS Report - June 2025",
+                "55": "Founders Report - CCGroup & F1rst",
                 "5": "How B2B PR Done Right Benefits Your SEO",
                 "7": "How B2B Tech Vendors Can Use PR & Marketing To Attract Channel Partners",
+                "47": "How Can IoT Technology Vendors Successfully Market And Sell To Buyers?",
                 "4": "How Do IT Decision-Makers Choose Their Suppliers?",
                 "14": "How Do Modern Enterprises Buy Technology?",
                 "17": "How MediaTech Companies Can Use Integrated Marketing Communications To Achieve Commercial Success",
                 "15": "How Telcos And OTTs Are Disrupting The Traditional Broadcast Industry",
+                "51": "How to influence fintech acquirers",
                 "8": "How To Influence FinTech Buyers",
                 "9": "How To Influence FinTech Buyers In Capital Markets",
                 "20": "How To Influence Fintech Buyers: The Shop Window Is Everything",
@@ -193,15 +212,42 @@
                 "2": "How To Use PR To Attract Acquirers",
                 "11": "How Vendors Can Benefit From The Impact Of IP On The Broadcast Industry",
                 "1": "Insight Report",
+                "63": "Marketing Services Catalyst 2025",
+                "52": "Money20\/20 Europe 2023 Infographic - May '24",
+                "60": "Money2020 Infographic Nov 24",
+                "71": "Money2020 Infographic Nov25",
                 "19": "More Brand, more Buck: How Brand Influences Enterprise Technology Buyers",
+                "69": "MS Cyber Report - June 2025",
+                "67": "MWC D&A Report 2025 - June 2025",
+                "59": "MWC24 Infographic Oct 24",
+                "46": "Navigating Telco Turbulence: Lessons For Vendor Marketing",
                 "28": "Newsletter Popup Form",
+                "54": "RSA 2024 Infographic - Cyber",
                 "18": "Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
                 "3": "Successful Influencer Marketing",
                 "10": "Successfully Marketing And Selling To Broadcast Service Providers",
                 "23": "Telco Transformation: Lessons For Vendor Marketing",
-                "27": "TEST POPUP",
+                "73": "Telecoms Catalyst 2025",
+                "48": "Trusted advisors: the role of industry analysts in telecoms purchasing - lessons for vendors",
                 "12": "Unaware, Unprepared And Paralysed: Retailer Readiness For PSD2",
-                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process"
+                "53": "Understanding enterprise technology buying: Lessons for vendor marketing",
+                "22": "Understanding The Significant Role Of Industry Analysts In The Cybersecurity Technology Buying Process",
+                "36": "Webinar: Analyst Prioritization: How To Focus Your Analyst Relations",
+                "30": "Webinar: Analysts & The Future Of Work: Influencing Analysts In A World Of Uncertainty",
+                "32": "Webinar: Fintech: Which Analyst Firms Are Most Valuable And Why?",
+                "45": "Webinar: How analysts shift fintech purchasing and M&A",
+                "39": "Webinar: How Industry Analysts Influence Security Technology Buyers",
+                "37": "Webinar: How To Influence Telco Operators Through Industry Analysts",
+                "31": "Webinar: Influencing Buyers Through Telecoms Analysts",
+                "44": "Webinar: Integrated marketing communications: key principles, methods and outcomes",
+                "61": "Webinar: Maximizing media coverage at MWC Barcelona – Routine, realism and relationships",
+                "33": "Webinar: Mind The Gap: What AR Delivers, And What It’s Asked For",
+                "35": "Webinar: Navigating Telco Turbulence: Lessons For Vendor Marketing",
+                "38": "Webinar: Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
+                "34": "Webinar: Tech: How Firms And Investors Can Attract The Right Fit?",
+                "43": "Webinar: Use Analyst Relations To Accelerate Sales",
+                "40": "Webinar: Use Measurement To Drive Analyst Relations Objectives",
+                "29": "Webinar: What Telcos Want From Vendors: Marketing Strategies That Deliver"
             },
             "default_value": false,
             "return_format": "value",
@@ -209,7 +255,9 @@
             "allow_null": 0,
             "ui": 0,
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         }
     ],
     "location": [
@@ -234,5 +282,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1702385963
+    "display_title": "",
+    "modified": 1765798959
 }

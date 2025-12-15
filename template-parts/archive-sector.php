@@ -25,17 +25,37 @@ $term_name_text = single_term_title( '', false );
                         <div class="sector-dropdown">Our Sectors</div>
                         <div class="sector-dropdown-menu-container">
                             <div class="sector-dropdown-menu">
-								<?php
-								$terms = get_terms( array(
-									'taxonomy' => 'sector',
-								) );
+                                <?php
+                                if ( have_rows( 'dropdown_override', $current_term ) ) {
+                                    while ( have_rows( 'dropdown_override', $current_term ) ) {
+                                        the_row();
+                                        $link = get_sub_field( 'link' );
 
-								foreach ( $terms as $term ) {
-									if ( get_term_meta( $term->term_id, 'include_on_frontend', true ) ) {
-										echo '<a class="sector-dropdown-item" href="' . get_term_link( $term ) . '">' . $term->name . '</a>';
-									}
-								}
-								?>
+                                        if ( $link ) {
+                                            $link_url    = $link['url'];
+                                            $link_title  = $link['title'];
+                                            $link_target = $link['target'] ? $link['target'] : '_self';
+                                            ?>
+                                            <a class="sector-dropdown-item" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
+                                                <?php echo esc_html( $link_title ); ?>
+                                            </a>
+                                            <?php
+                                        }
+                                    }
+                                } else {
+                                    $terms = get_terms( array(
+                                        'taxonomy' => 'sector',
+                                    ) );
+
+                                    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+                                        foreach ( $terms as $term ) {
+                                            if ( get_term_meta( $term->term_id, 'include_on_frontend', true ) ) {
+                                                echo '<a class="sector-dropdown-item" href="' . esc_url( get_term_link( $term ) ) . '">' . esc_html( $term->name ) . '</a>';
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>

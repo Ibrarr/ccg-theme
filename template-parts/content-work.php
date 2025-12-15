@@ -31,25 +31,43 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                             <div class="work-dropdown">Our Sectors</div>
                             <div class="work-dropdown-menu-container">
                                 <div class="work-dropdown-menu">
-									<?php
-									$terms = get_terms( array(
-										'taxonomy'   => 'sector',
-										'hide_empty' => true,
-									) );
+                                    <?php
+                                    if ( have_rows( 'dropdown_override' ) ) {
+                                        while ( have_rows( 'dropdown_override' ) ) {
+                                            the_row();
+                                            $link = get_sub_field( 'link' );
 
-									foreach ( $terms as $term ) {
-										if ( get_term_meta( $term->term_id, 'include_on_frontend', true ) ) {
-											echo '<a class="work-dropdown-item" href="' . get_term_link( $term ) . '">' . $term->name . '</a>';
-										}
-									}
+                                            if ( $link ) {
+                                                $link_url    = $link['url'];
+                                                $link_title  = $link['title'];
+                                                $link_target = $link['target'] ? $link['target'] : '_self';
+                                                ?>
+                                                <a class="work-dropdown-item" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
+                                                    <?php echo esc_html( $link_title ); ?>
+                                                </a>
+                                                <?php
+                                            }
+                                        }
+                                    } else {
+                                        $terms = get_terms( array(
+                                            'taxonomy'   => 'sector',
+                                            'hide_empty' => true,
+                                        ) );
 
-									if ( have_rows( 'dropdown_links' ) ):
-										while ( have_rows( 'dropdown_links' ) ) : the_row();
-											$link = get_sub_field( 'link' );
-											echo '<a class="work-dropdown-item" href="' . esc_url( $link['url'] ) . '" target="' . esc_attr( $link['target'] ) . '">' . esc_html( $link['title'] ) . '</a>';
-										endwhile;
-									endif;
-									?>
+                                        foreach ( $terms as $term ) {
+                                            if ( get_term_meta( $term->term_id, 'include_on_frontend', true ) ) {
+                                                echo '<a class="work-dropdown-item" href="' . get_term_link( $term ) . '">' . $term->name . '</a>';
+                                            }
+                                        }
+
+                                        if ( have_rows( 'dropdown_links' ) ):
+                                            while ( have_rows( 'dropdown_links' ) ) : the_row();
+                                                $link = get_sub_field( 'link' );
+                                                echo '<a class="work-dropdown-item" href="' . esc_url( $link['url'] ) . '" target="' . esc_attr( $link['target'] ) . '">' . esc_html( $link['title'] ) . '</a>';
+                                            endwhile;
+                                        endif;
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>

@@ -108,7 +108,7 @@ function add_custom_scripts() {
     }
 
 	if ( is_page_template( 'page-templates/page-contact.php' ) ) {
-		wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?key=' . get_field( 'google_maps_api_key', 'option' ) . '&callback=Function.prototype', array(), null, true );
+//		wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?key=' . get_field( 'google_maps_api_key', 'option' ) . '&callback=Function.prototype', array(), null, true );
 		wp_enqueue_script( 'contact', CCG_TEMPLATE_URI . '/dist/js/contact.js', [ 'jquery' ], filemtime( CCG_TEMPLATE_DIR . '/dist/js/contact.js' ), true );
 	}
 }

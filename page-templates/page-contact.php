@@ -21,11 +21,8 @@ get_header();
         <div class="container px-4">
             <div class="row gx-5">
                 <div class="col-12">
-                    <div class="acf-map" data-zoom="16">
-                        <div class="marker"
-                             data-lat="<?php echo esc_attr( get_field( 'uk_office_map' )['lat'] ); ?>"
-                             data-lng="<?php echo esc_attr( get_field( 'uk_office_map' )['lng'] ); ?>">
-                        </div>
+                    <div class="acf-map">
+                        <img src="<?php the_field( 'uk_office_map' ); ?>" alt="Location map">
                     </div>
                 </div>
 				<?php

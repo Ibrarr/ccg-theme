@@ -28,7 +28,7 @@ mix.js([
 
 mix.js([
     'assets/js/contact/gsap-animations.js',
-    'assets/js/contact/google-maps.js',
+    // 'assets/js/contact/google-maps.js',
 ], 'js/contact.js');
 
 mix.js([
