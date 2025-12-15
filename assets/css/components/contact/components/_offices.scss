@@ -42,6 +42,18 @@
     p {
       @include sub-heading-text($ccg-dark-green);
 
+      a {
+        font-family: $font-circular-medium;
+        color: $ccg-dark-green;
+        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        transition: background-size 350ms;
+
+        &:where(:hover, :focus-visible) {
+          background-size: 100%;
+          background-position-x: left;
+        }
+      }
+
       @include media-breakpoint-down(md) {
         &:last-child {
           margin-bottom: 50px;

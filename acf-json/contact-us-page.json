@@ -114,7 +114,7 @@
                     "label": "Information",
                     "name": "information",
                     "aria-label": "",
-                    "type": "textarea",
+                    "type": "wysiwyg",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -124,10 +124,11 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "maxlength": "",
-                    "rows": "",
-                    "placeholder": "",
-                    "new_lines": "wpautop",
+                    "allow_in_bindings": 0,
+                    "tabs": "visual",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
                     "parent_repeater": "field_656672db6f5c8"
                 }
             ]
@@ -283,5 +284,5 @@
     "description": "",
     "show_in_rest": 1,
     "display_title": "",
-    "modified": 1765798959
+    "modified": 1765803587
 }
