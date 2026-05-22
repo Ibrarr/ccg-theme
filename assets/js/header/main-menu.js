@@ -51,12 +51,32 @@ jQuery(document).ready(function ($) {
         event.stopPropagation();
         event.preventDefault();
 
-        $('.menu-item-has-children.active').not(this).removeClass('active');
-        $('.sub-menu:visible').not($(this).children('.sub-menu')).slideUp(500);
+        const $item = $(this);
 
-        $(this).toggleClass('active');
-        let submenu = $(this).children('.sub-menu');
-        submenu.slideToggle(500);
+        // Close siblings at the same level only, and reset any items they had open inside.
+        $item.siblings('.menu-item-has-children.active')
+            .removeClass('active')
+            .each(function () {
+                const $sibling = $(this);
+                $sibling.find('.menu-item-has-children.active').removeClass('active');
+                $sibling.find('.sub-menu:visible').slideUp(500);
+                $sibling.children('a').attr('aria-expanded', 'false');
+                $sibling.find('a[aria-expanded="true"]').attr('aria-expanded', 'false');
+            });
+
+        const willOpen = !$item.hasClass('active');
+        $item.toggleClass('active');
+        $item.children('.sub-menu').slideToggle(500);
+        $item.children('a').attr('aria-expanded', willOpen ? 'true' : 'false');
+
+        // When this item closes, also reset any descendants it had open.
+        // Only target sub-menus nested INSIDE the direct child sub-menu, so we
+        // don't queue a second animation on the one slideToggle already handles.
+        if (!willOpen) {
+            $item.find('.menu-item-has-children.active').removeClass('active');
+            $item.children('.sub-menu').find('.sub-menu:visible').slideUp(500);
+            $item.find('a[aria-expanded="true"]').attr('aria-expanded', 'false');
+        }
     }
 
     function hoverHandler() {
@@ -117,6 +137,26 @@ jQuery(document).ready(function ($) {
     }
 
     applyEventHandlers();
+
+    // Initialise ARIA state and link each toggling anchor to its sub-menu by id.
+    $('.menu-item-has-children').each(function (index) {
+        const $li = $(this);
+        const $a = $li.children('a').first();
+        const $submenu = $li.children('.sub-menu').first();
+        if (!$submenu.length) return;
+        const submenuId = $submenu.attr('id') || 'sub-menu-' + index;
+        $submenu.attr('id', submenuId);
+        $a.attr('aria-expanded', 'false');
+        $a.attr('aria-controls', submenuId);
+    });
+
+    // Space activates the toggle when the anchor has focus (Enter is native).
+    $('.menu-item-has-children > a').on('keydown', function (event) {
+        if (event.key === ' ' || event.code === 'Space') {
+            event.preventDefault();
+            $(this).parent('.menu-item-has-children').trigger('click');
+        }
+    });
 
     $(window).resize(applyEventHandlers);
 

@@ -99,6 +99,47 @@
           }
         }
       }
+
+      // Level-2 items that have a third-level group: plus icon rotates 45deg
+      // on open. Higher specificity than the level-1 rules above so this
+      // overrides them at level 2 only.
+      ul.sub-menu > li.menu-item-has-children {
+        > a:before {
+          display: inline-block;
+          transform-origin: 50% 50%;
+          transform: rotate(0deg);
+          transition: transform .3s, color .3s;
+        }
+
+        &.active > a:before {
+          content: '+';
+          transform: rotate(45deg);
+        }
+
+        @include media-breakpoint-up(lg) {
+          &.active > a:before {
+            content: '+' !important;
+            position: static;
+            left: auto;
+            top: auto;
+            width: auto;
+            margin-right: 10px;
+            border-bottom: 0;
+            transform: rotate(45deg);
+          }
+
+          &.active > a {
+            margin-left: 0;
+          }
+        }
+      }
+
+      // Level-3 list: indent and tighter spacing. Anchors inherit the existing
+      // ul.sub-menu li a styling above (size, colour, hover).
+      ul.sub-menu ul.sub-menu {
+        margin: 6px 0 10px 18px;
+        padding-left: 0;
+      }
     }
 
     @include media-breakpoint-down(lg) {
