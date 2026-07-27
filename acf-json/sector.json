@@ -3,6 +3,26 @@
     "title": "Sector",
     "fields": [
         {
+            "key": "field_6887c1a4b2e30",
+            "label": "Page heading (H1)",
+            "name": "page_heading",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional. Sets the main heading at the top of this sector page only, for SEO wording such as \"Fintech PR Agency\". Leave blank to use the sector name. Cards, menus, filters and section headings always use the sector name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_66ad38c5e1008",
             "label": "Smaller intro text",
             "name": "smaller_into_text",
@@ -1400,5 +1420,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1722629803
+    "modified": 1785153093
 }

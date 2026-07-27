@@ -5,6 +5,12 @@
  */
 $current_term   = get_queried_object();
 $term_name_text = single_term_title( '', false );
+
+// Optional per-sector H1 override, so the card titles and menus can stay short while the
+// heading carries the fuller wording. ACF returns the raw value whereas single_term_title()
+// is already escaped, so only the override goes through esc_html().
+$page_heading = get_field( 'page_heading', $current_term );
+$page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
 ?>
 
     <section class="term-header">
@@ -14,7 +20,7 @@ $term_name_text = single_term_title( '', false );
             <div class="row">
                 <div class="col-lg-8 title-intro">
                     <p class="term">Sector</p>
-                    <h1 class="title"><?php echo $term_name_text ?></h1>
+                    <h1 class="title"><?php echo $page_heading ?></h1>
                     <div class="intro"><h2><?php echo strip_tags( term_description(), '<a>' ); ?></h2></div>
                     <?php if ( get_field( 'smaller_into_text', $current_term ) ) { ?>
                         <div class="smaller-intro"><h3><?php the_field( 'smaller_into_text', $current_term ); ?></h3></div>
