@@ -1,0 +1,53 @@
+.report-share {
+  .report-share-label {
+    font-family: $font-circular-bold;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $rd-muted;
+    margin-bottom: 12px;
+  }
+
+  .social-icons {
+    display: flex;
+    align-items: flex-end;
+    gap: 17px;
+
+    a {
+      display: inline-flex;
+      align-items: flex-end;
+
+      svg {
+        overflow: visible;
+
+        path {
+          transition: $ccg-transition-all;
+        }
+      }
+
+      &:where(.linkedin-icon, .x-icon):where(:hover, :focus-visible) svg {
+        fill: $rd-coral;
+      }
+
+      &.mail-icon:where(:hover, :focus-visible) svg path {
+        stroke: $rd-coral;
+      }
+    }
+
+    .mail-icon svg {
+      width: 22px;
+      height: 27px;
+    }
+
+    .linkedin-icon svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .x-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

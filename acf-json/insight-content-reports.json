@@ -258,6 +258,11 @@
                 "param": "post_taxonomy",
                 "operator": "==",
                 "value": "type:insight-reports"
+            },
+            {
+                "param": "post_template",
+                "operator": "!=",
+                "value": "page-templates/insight-detailed.php"
             }
         ]
     ],

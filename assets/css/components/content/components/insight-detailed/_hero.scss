@@ -1,0 +1,138 @@
+.report-hero {
+  // The theme styles the bare `header` element as the fixed site header, which
+  // also catches this article header. Resetting top puts it back in flow.
+  top: auto;
+  // Matches $ccg-top-page-padding on every other template so the report hero
+  // sits at the same height as the rest of the site. The Figma's 246px is
+  // measured against a header screenshot the brief calls context-only, and the
+  // real header is shorter than that screenshot.
+  padding-top: $ccg-top-page-padding;
+  position: relative;
+  z-index: 1;
+
+  // Hero rhythm steps 18 / 22 / 24 across the three design frames.
+  > * + * {
+    margin-top: 18px;
+  }
+
+  @include media-breakpoint-up(md) {
+    > * + * {
+      margin-top: 22px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    > * + * {
+      margin-top: 24px;
+    }
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .report-breadcrumb {
+    font-family: $font-circular-regular;
+    font-size: 11px;
+    line-height: 1.2;
+    color: $rd-muted;
+
+    @include media-breakpoint-up(md) {
+      font-size: 12px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    a {
+      color: $rd-muted;
+      text-decoration: none;
+
+      &:where(:hover, :focus-visible) {
+        color: $rd-dark-green;
+        text-decoration: underline;
+      }
+    }
+
+    span {
+      margin: 0 6px;
+    }
+
+    span[aria-current] {
+      margin: 0;
+    }
+  }
+
+  .report-kicker {
+    font-family: $font-circular-bold;
+    font-size: 11px;
+    line-height: 1.2;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $rd-coral;
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 12px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 2px;
+    }
+  }
+
+  .report-title {
+    font-family: $font-circular-medium;
+    font-size: 28px;
+    line-height: 34px;
+    color: $rd-heading;
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 34px;
+      line-height: 41px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 40px;
+      line-height: 48px;
+    }
+  }
+
+  // Regular below lg, Medium at desktop, per the design.
+  .report-standfirst {
+    font-family: $font-circular-regular;
+    font-size: 16px;
+    line-height: 23px;
+    color: $rd-dark-green;
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 17px;
+      line-height: 25px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-family: $font-circular-medium;
+      font-size: 19px;
+      line-height: 28px;
+    }
+  }
+
+  .report-dates {
+    font-family: $font-circular-regular;
+    font-size: 12px;
+    line-height: 17px;
+    color: $rd-muted;
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 13px;
+      line-height: 18px;
+    }
+  }
+}

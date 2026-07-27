@@ -59,6 +59,11 @@
                 "param": "post_taxonomy",
                 "operator": "!=",
                 "value": "type:webinars"
+            },
+            {
+                "param": "post_template",
+                "operator": "!=",
+                "value": "page-templates/insight-detailed.php"
             }
         ]
     ],

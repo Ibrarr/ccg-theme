@@ -1,0 +1,131 @@
+.report-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  @include media-breakpoint-up(md) {
+    gap: 22px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    gap: 20px;
+  }
+
+  h2 {
+    font-family: $font-circular-medium;
+    font-size: 25px;
+    line-height: 31px;
+    color: $rd-dark-green;
+    margin: 0;
+    scroll-margin-top: var(--rd-anchor-offset);
+
+    @include media-breakpoint-up(md) {
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+}
+
+.report-text {
+  font-family: $font-circular-regular;
+  font-size: 16px;
+  line-height: 24px;
+  color: $rd-body;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    font-family: $font-circular-regular;
+    font-size: 16px;
+    line-height: 24px;
+    color: $rd-body;
+    margin-bottom: 20px;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: $font-circular-medium;
+    font-size: 19px;
+    line-height: 26px;
+    color: $rd-dark-green;
+    margin: 4px 0 12px;
+  }
+
+  strong, b {
+    font-family: $font-circular-bold;
+  }
+
+  em, i {
+    font-family: $font-circular-italic;
+  }
+
+  a {
+    font-family: $font-circular-medium;
+    color: $rd-body;
+    background: linear-gradient(0deg, $rd-coral, $rd-coral) no-repeat right bottom / 0 2px;
+    transition: background-size 350ms;
+
+    &:where(:hover, :focus-visible) {
+      background-size: 100% 2px;
+      background-position-x: left;
+    }
+  }
+
+  ul, ol {
+    margin: 0 0 20px;
+    padding-left: 22px;
+  }
+
+  li {
+    font-family: $font-circular-regular;
+    font-size: 16px;
+    line-height: 24px;
+    color: $rd-body;
+
+    & + li {
+      margin-top: 8px;
+    }
+  }
+
+  ul li::marker {
+    color: $rd-coral;
+  }
+}
+
+.report-figure {
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: $rd-radius-xs;
+  }
+
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 12px;
+  }
+
+  .report-figure-caption {
+    font-family: $font-circular-regular;
+    font-size: 14px;
+    line-height: 20px;
+    color: $rd-muted-strong;
+  }
+
+  .report-figure-source {
+    font-family: $font-circular-regular;
+    font-size: 13px;
+    line-height: 18px;
+    color: $rd-muted;
+  }
+}

@@ -4,9 +4,15 @@
  *
  */
 
-$post_type    = 'insight';
-$taxonomy     = 'type';
-$term_name    = 'insight-reports';
+$post_type = 'insight';
+$taxonomy  = 'type';
+// This was set to insight-reports, so webinar pages pulled related Insight
+// Reports and labelled the cards with a raw slug.
+$term_slug = 'webinars';
+// article-card.php prints $term_name, so it holds the readable label while the
+// slug drives the queries.
+$term         = get_term_by( 'slug', $term_slug, $taxonomy );
+$term_name    = $term ? $term->name : '';
 $linkedin_url = get_the_author_meta( 'linkedin' );
 
 $post_thumbnail_id  = get_post_thumbnail_id( get_the_ID() );
@@ -107,17 +113,27 @@ $post_thumbnail_url = wp_get_attachment_image_src( $post_thumbnail_id, 'header-i
     </article>
 
 <?php
+/**
+ * Related content: pinned webinars first, topped up with the most recent. The
+ * IDs are collected before anything renders, so the section still appears when
+ * four or more webinars are pinned.
+ */
+$related_limit = 4;
+$related_tax   = array(
+	array(
+		'taxonomy'         => $taxonomy,
+		'field'            => 'slug',
+		'terms'            => $term_slug,
+		'include_children' => false
+	),
+);
+
 $pinned_posts = new WP_Query( array(
 	'post_type'      => $post_type,
-	'posts_per_page' => 4,
-	'tax_query'      => array(
-		array(
-			'taxonomy'         => $taxonomy,
-			'field'            => 'slug',
-			'terms'            => $term_name,
-			'include_children' => false
-		),
-	),
+	'posts_per_page' => $related_limit,
+	'fields'         => 'ids',
+	'post__not_in'   => array( get_the_ID() ),
+	'tax_query'      => $related_tax,
 	'meta_query'     => array(
 		array(
 			'key'     => 'pinned',
@@ -127,52 +143,44 @@ $pinned_posts = new WP_Query( array(
 	)
 ) );
 
-$remaining_posts_to_fetch = 4;
+$related_ids = $pinned_posts->posts;
 
-if ( $pinned_posts->have_posts() ) {
-	$remaining_posts_to_fetch -= $pinned_posts->post_count;
+if ( count( $related_ids ) < $related_limit ) {
+	$related_ids = array_merge( $related_ids, ( new WP_Query( array(
+		'post_type'      => $post_type,
+		'posts_per_page' => $related_limit - count( $related_ids ),
+		'fields'         => 'ids',
+		'post__not_in'   => array_merge( array( get_the_ID() ), $related_ids ),
+		'tax_query'      => $related_tax,
+	) ) )->posts );
 }
 
-if ( $remaining_posts_to_fetch > 0 ) {
-	$exclude_post_ids = wp_list_pluck( $pinned_posts->posts, 'ID' );
-	$args             = array(
+if ( $related_ids ) {
+	$related_posts = new WP_Query( array(
 		'post_type'      => $post_type,
-		'posts_per_page' => $remaining_posts_to_fetch,
-		'post__not_in'   => array_merge( array( get_the_ID() ), $exclude_post_ids ),
-		'tax_query'      => array(
-			array(
-				'taxonomy'         => $taxonomy,
-				'field'            => 'slug',
-				'terms'            => $term_name,
-				'include_children' => false
-			),
-		),
-	);
+		'post__in'       => $related_ids,
+		'orderby'        => 'post__in',
+		'posts_per_page' => $related_limit,
+	) );
 
-	$query = new WP_Query( $args );
-
-	if ( $pinned_posts->have_posts() || $query->have_posts() ) {
+	if ( $related_posts->have_posts() ) {
 		echo '<section class="related-content">';
 		echo '<div class="parallax-bars" id="bar-three">' . file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/bars/yellow.svg' ) . '</div>';
 		echo '<div class="container px-4">';
 		echo '<h3>Related content</h3>';
 		echo '<div class="row mb-3">';
 
-		while ( $pinned_posts->have_posts() ) {
-			$pinned_posts->the_post();
-			require( 'article-card.php' );
-		}
-
-		while ( $query->have_posts() ) {
-			$query->the_post();
+		while ( $related_posts->have_posts() ) {
+			$related_posts->the_post();
 			require( 'article-card.php' );
 		}
 
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/insight-hub?types=insight-reports">See More</a></div>';
+		echo '<div class="row"><a class="global-button" href="/insight-hub?types=' . $term_slug . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}
+
 	wp_reset_postdata();
 }
 

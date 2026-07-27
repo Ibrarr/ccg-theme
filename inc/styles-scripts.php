@@ -48,7 +48,11 @@ function add_custom_scripts() {
 	}
 
 	if ( is_singular( 'insight' ) ) {
-		wp_enqueue_script( 'insight-single', CCG_TEMPLATE_URI . '/dist/js/insight-single.js', [ 'jquery' ], filemtime( CCG_TEMPLATE_DIR . '/dist/js/insight-single.js' ), true );
+		if ( ccg_is_detailed_insight() ) {
+			wp_enqueue_script( 'insight-detailed', CCG_TEMPLATE_URI . '/dist/js/insight-detailed.js', [ 'jquery' ], filemtime( CCG_TEMPLATE_DIR . '/dist/js/insight-detailed.js' ), true );
+		} else {
+			wp_enqueue_script( 'insight-single', CCG_TEMPLATE_URI . '/dist/js/insight-single.js', [ 'jquery' ], filemtime( CCG_TEMPLATE_DIR . '/dist/js/insight-single.js' ), true );
+		}
 	}
 
 	if ( is_singular( 'post' ) ) {

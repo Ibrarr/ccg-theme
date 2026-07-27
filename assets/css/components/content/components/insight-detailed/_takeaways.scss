@@ -1,0 +1,107 @@
+.report-takeaways {
+  background-color: #ffffff;
+  // The accent bar steps 4 / 5 / 6 across the three design frames.
+  border-left: 4px solid $rd-coral;
+  border-radius: $rd-radius;
+  padding: 18px;
+  margin-top: 18px;
+  position: relative;
+  z-index: 1;
+
+  @include media-breakpoint-up(md) {
+    border-left-width: 5px;
+    padding: 22px 24px;
+    margin-top: 22px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    border-left-width: $rd-accent;
+    padding: 28px 32px;
+    margin-top: 24px;
+  }
+
+  .report-takeaways-label {
+    font-family: $font-circular-bold;
+    font-size: 11px;
+    line-height: 1.2;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $rd-coral-dark;
+    margin-bottom: 10px;
+
+    @include media-breakpoint-up(md) {
+      font-size: 12px;
+      margin-bottom: 11px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    font-family: $font-circular-regular;
+    font-size: 14px;
+    line-height: 20px;
+    color: $rd-body;
+    padding-left: 14px;
+    position: relative;
+
+    & + li {
+      margin-top: 10px;
+    }
+
+    // Dot steps 6 / 7 / 8 with matching gaps of 8 / 10 / 12.
+    &:before {
+      content: '';
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $rd-coral;
+    }
+
+    @include media-breakpoint-up(md) {
+      font-size: 15px;
+      line-height: 22px;
+      padding-left: 17px;
+
+      & + li {
+        margin-top: 11px;
+      }
+
+      &:before {
+        top: 8px;
+        width: 7px;
+        height: 7px;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 16px;
+      line-height: 24px;
+      padding-left: 20px;
+
+      & + li {
+        margin-top: 14px;
+      }
+
+      &:before {
+        top: 8px;
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+}

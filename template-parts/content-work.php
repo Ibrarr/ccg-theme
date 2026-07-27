@@ -3,10 +3,12 @@
  * The template for displaying work posts
  *
  */
-$post_type     = 'work';
-$taxonomy      = 'sector';
-$terms         = get_the_terms( get_the_ID(), $taxonomy );
-$term_name     = $terms[0]->name;
+$post_type = 'work';
+$taxonomy  = 'sector';
+$terms     = get_the_terms( get_the_ID(), $taxonomy );
+// A work post with no sector term would otherwise fatal on $terms[0].
+$term          = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0] : null;
+$term_name     = $term ? $term->name : '';
 $quote_enabled = get_field( 'enable_quote' );
 
 $thumbnail_id = get_post_thumbnail_id( get_the_ID() );
@@ -252,9 +254,18 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
     </section>
 
 <?php
+/**
+ * Related content: pinned work first, topped up with others sharing this post's
+ * sector. The IDs are collected before anything renders, so the section still
+ * appears when four or more work posts are pinned.
+ */
+$related_limit = 4;
+
 $pinned_posts = new WP_Query( array(
 	'post_type'      => $post_type,
-	'posts_per_page' => 4,
+	'posts_per_page' => $related_limit,
+	'fields'         => 'ids',
+	'post__not_in'   => array( get_the_ID() ),
 	'meta_query'     => array(
 		array(
 			'key'     => 'pinned',
@@ -264,52 +275,56 @@ $pinned_posts = new WP_Query( array(
 	)
 ) );
 
-$remaining_posts_to_fetch = 4;
+$related_ids = $pinned_posts->posts;
 
-if ( $pinned_posts->have_posts() ) {
-	$remaining_posts_to_fetch -= $pinned_posts->post_count;
-}
-
-if ( $remaining_posts_to_fetch > 0 ) {
-	$exclude_post_ids = wp_list_pluck( $pinned_posts->posts, 'ID' );
-	$args             = array(
+if ( count( $related_ids ) < $related_limit ) {
+	$args = array(
 		'post_type'      => $post_type,
-		'posts_per_page' => $remaining_posts_to_fetch,
-		'post__not_in'   => array_merge( array( get_the_ID() ), $exclude_post_ids ),
-		'tax_query'      => array(
+		'posts_per_page' => $related_limit - count( $related_ids ),
+		'fields'         => 'ids',
+		'post__not_in'   => array_merge( array( get_the_ID() ), $related_ids ),
+	);
+
+	if ( $term ) {
+		$args['tax_query'] = array(
 			array(
 				'taxonomy'         => $taxonomy,
 				'field'            => 'slug',
-				'terms'            => $terms[0]->slug,
+				'terms'            => $term->slug,
 				'include_children' => false
 			),
-		),
-	);
+		);
+	}
 
-	$query = new WP_Query( $args );
+	$related_ids = array_merge( $related_ids, ( new WP_Query( $args ) )->posts );
+}
 
-	if ( $pinned_posts->have_posts() || $query->have_posts() ) {
+if ( $related_ids ) {
+	$related_posts = new WP_Query( array(
+		'post_type'      => $post_type,
+		'post__in'       => $related_ids,
+		'orderby'        => 'post__in',
+		'posts_per_page' => $related_limit,
+	) );
+
+	if ( $related_posts->have_posts() ) {
 		echo '<section class="related-content">';
 		echo '<div class="parallax-bars" id="bar-three">' . file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/bars/yellow.svg' ) . '</div>';
 		echo '<div class="container px-4">';
 		echo '<h3>Related content</h3>';
 		echo '<div class="row mb-3">';
 
-		while ( $pinned_posts->have_posts() ) {
-			$pinned_posts->the_post();
-			require( 'article-card.php' );
-		}
-
-		while ( $query->have_posts() ) {
-			$query->the_post();
+		while ( $related_posts->have_posts() ) {
+			$related_posts->the_post();
 			require( 'article-card.php' );
 		}
 
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/our-work?sectors=' . sanitize_title( $term_name ) . '">See More</a></div>';
+		echo '<div class="row"><a class="global-button" href="/our-work' . ( $term_name ? '?sectors=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}
+
 	wp_reset_postdata();
 }
 

@@ -1,0 +1,174 @@
+.report-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  @include media-breakpoint-up(md) {
+    gap: 22px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    gap: 20px;
+  }
+
+  h2 {
+    font-family: $font-circular-medium;
+    font-size: 25px;
+    line-height: 31px;
+    color: $rd-dark-green;
+    margin: 0;
+    scroll-margin-top: var(--rd-anchor-offset);
+
+    @include media-breakpoint-up(md) {
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
+  .report-faq-item {
+    border-bottom: 1px solid $rd-hairline;
+    padding-bottom: 12px;
+
+    & + .report-faq-item {
+      margin-top: 12px;
+    }
+
+    @include media-breakpoint-up(md) {
+      padding-bottom: 14px;
+
+      & + .report-faq-item {
+        margin-top: 14px;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      padding-bottom: 16px;
+
+      & + .report-faq-item {
+        margin-top: 16px;
+      }
+    }
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  .report-faq-question {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    cursor: pointer;
+
+    @include media-breakpoint-up(md) {
+      gap: 14px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      gap: 16px;
+    }
+
+    span {
+      flex: 1 0 0;
+      min-width: 0;
+      font-family: $font-circular-medium;
+      font-size: 15px;
+      line-height: 21px;
+      color: $rd-heading;
+      transition: color .3s;
+
+      @include media-breakpoint-up(md) {
+        font-size: 16px;
+        line-height: 22px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        font-size: 17px;
+        line-height: 24px;
+      }
+    }
+
+    i {
+      flex-shrink: 0;
+      font-style: normal;
+      font-family: $font-circular-regular;
+      font-size: 17px;
+      line-height: 1;
+      color: $rd-coral;
+
+      @include media-breakpoint-up(md) {
+        font-size: 18px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        font-size: 20px;
+      }
+
+      &:before {
+        content: '+';
+      }
+    }
+
+    &[aria-expanded="true"] i:before {
+      content: '\2013';
+    }
+
+    &:where(:hover, :focus-visible) span {
+      color: $rd-dark-green;
+    }
+  }
+
+  // Height is driven from JS because the panels have no fixed size. max-height
+  // cannot shrink a box below its own padding, so the gap above the answer sits
+  // on the inner content as a margin instead. overflow: hidden makes this a
+  // block formatting context, so the margin is contained and the collapsed
+  // panel reaches a true zero height.
+  .report-faq-answer {
+    overflow: hidden;
+
+    > *:first-child {
+      margin-top: 8px;
+
+      @include media-breakpoint-up(lg) {
+        margin-top: 10px;
+      }
+    }
+
+    &[hidden] {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: max-height .32s ease;
+    }
+
+    p {
+      font-family: $font-circular-regular;
+      font-size: 14px;
+      line-height: 21px;
+      color: $rd-answer;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      @include media-breakpoint-up(md) {
+        font-size: 15px;
+        line-height: 22px;
+      }
+    }
+  }
+
+}

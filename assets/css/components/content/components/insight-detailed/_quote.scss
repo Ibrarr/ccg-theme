@@ -1,0 +1,71 @@
+.report-quote {
+  display: flex;
+  // Bar and gap step 4/16, 5/20 then 6/26 across the design frames.
+  gap: 16px;
+  align-items: stretch;
+  padding: 0;
+  margin: 0;
+
+  &:before {
+    content: '';
+    flex-shrink: 0;
+    width: 4px;
+    border-radius: 2px;
+    background-color: $rd-coral;
+  }
+
+  @include media-breakpoint-up(md) {
+    gap: 20px;
+
+    &:before {
+      width: 5px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    gap: 26px;
+    padding: 8px 0;
+
+    &:before {
+      width: $rd-accent;
+      border-radius: 3px;
+    }
+  }
+
+  blockquote {
+    flex: 1 0 0;
+    min-width: 0;
+    margin: 0;
+  }
+
+  p {
+    font-family: $font-circular-regular;
+    font-size: 17px;
+    line-height: 25px;
+    color: $rd-dark-green;
+    margin: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 18px;
+      line-height: 27px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+
+  figcaption {
+    font-family: $font-circular-regular;
+    font-size: 13px;
+    line-height: 19px;
+    color: $rd-muted-strong;
+    margin-top: 10px;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}

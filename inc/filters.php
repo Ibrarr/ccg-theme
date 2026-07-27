@@ -97,7 +97,9 @@ function modify_news_post_link( $url, $post ) {
 add_filter( 'body_class', 'custom_body_classes' );
 function custom_body_classes( $classes ) {
 	if ( 'insight' === get_post_type() ) {
-		if ( has_term( 'insight-reports', 'type', get_the_ID() ) ) {
+		if ( ccg_is_detailed_insight() ) {
+			$classes[] = 'detailed';
+		} elseif ( has_term( 'insight-reports', 'type', get_the_ID() ) ) {
 			$classes[] = 'report';
 		} elseif ( has_term( 'webinars', 'type', get_the_ID() ) ) {
 			$classes[] = 'webinar';

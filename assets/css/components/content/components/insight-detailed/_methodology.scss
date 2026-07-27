@@ -1,0 +1,70 @@
+.report-methodology {
+  background-color: $rd-dark-green;
+  // Unlike the takeaways panel, this accent bar stays 6px at every size.
+  border-left: $rd-accent solid $rd-coral;
+  border-radius: $rd-radius;
+  padding: 16px 18px;
+  scroll-margin-top: var(--rd-anchor-offset);
+
+  @include media-breakpoint-up(md) {
+    padding: 18px 22px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 24px 32px;
+  }
+
+  .report-methodology-label {
+    font-family: $font-circular-bold;
+    font-size: 11px;
+    line-height: 1.2;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $rd-coral;
+    margin-bottom: 8px;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+  }
+
+  p, li {
+    font-family: $font-circular-regular;
+    font-size: 14px;
+    line-height: 21px;
+    color: $rd-cream;
+
+    @include media-breakpoint-up(md) {
+      font-size: 15px;
+      line-height: 22px;
+    }
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  a {
+    font-family: $font-circular-medium;
+    color: $rd-cream;
+    background: linear-gradient(0deg, $rd-coral, $rd-coral) no-repeat right bottom / 0 2px;
+    transition: background-size 350ms;
+
+    &:where(:hover, :focus-visible) {
+      background-size: 100% 2px;
+      background-position-x: left;
+    }
+  }
+
+  ul, ol {
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+
+  ul li::marker {
+    color: $rd-coral;
+  }
+}

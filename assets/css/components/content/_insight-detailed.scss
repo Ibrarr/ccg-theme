@@ -1,0 +1,104 @@
+// Detailed Insight report template
+// Tokens are taken directly from the approved Figma (BUILD NOTES frame) rather
+// than the site-wide palette, which uses slightly different greens and greys.
+
+$rd-dark-green: #0B433C;
+$rd-coral: #F08974;
+$rd-coral-dark: #C25A40;
+$rd-amber: #EAAC4D;
+$rd-body: #26312E;
+$rd-heading: #14201E;
+$rd-muted: #8A8A8A;
+$rd-muted-strong: #5F5F5F;
+$rd-answer: #4A5450;
+$rd-cream: #EFEFEC;
+$rd-download-sub: #AFC6C0;
+$rd-placeholder: #9AA6A3;
+$rd-stripe: #F4F7F6;
+$rd-table-border: #E0E0E0;
+$rd-hairline: rgba(11, 67, 60, 0.35);
+$rd-divider: rgba(239, 239, 236, 0.25);
+
+$rd-radius: 8px;
+$rd-radius-sm: 6px;
+$rd-radius-xs: 4px;
+$rd-accent: 6px;
+$rd-gutter: 48px;
+
+.single-insight.detailed {
+  // The logo SVG ships white for dark heroes. This template sits on the
+  // off-white page, so it needs the dark treatment used by the single blog and
+  // work templates.
+  .header-logo a {
+    svg rect,
+    svg path {
+      fill: $ccg-dark-green !important;
+    }
+
+    svg g g path:nth-child(25) {
+      fill: $ccg-pink !important;
+    }
+  }
+
+  // #wrapper uses overflow-x: hidden globally, which turns it into a scroll
+  // container and stops position: sticky working. clip does the same job
+  // without creating one. This template has no parallax bars to contain.
+  #wrapper {
+    overflow-x: clip;
+  }
+
+  // Clears the fixed header when jumping to an anchor.
+  --rd-anchor-offset: 120px;
+  --rd-sticky-top: 120px;
+
+  article {
+    position: relative;
+    padding-bottom: 60px;
+
+    @include media-breakpoint-up(lg) {
+      padding-bottom: 80px;
+    }
+  }
+
+  @import "components/insight-detailed/hero";
+  @import "components/insight-detailed/takeaways";
+  @import "components/insight-detailed/columns";
+  @import "components/insight-detailed/contents";
+  @import "components/insight-detailed/download";
+  @import "components/insight-detailed/share";
+  @import "components/insight-detailed/body";
+  @import "components/insight-detailed/table";
+  @import "components/insight-detailed/stats";
+  @import "components/insight-detailed/quote";
+  @import "components/insight-detailed/methodology";
+  @import "components/insight-detailed/faq";
+  @import "components/insight-detailed/author";
+
+  @import "components/related-content";
+
+  // The shared related-content component starts its cards at opacity 0 and
+  // relies on a GSAP reveal that only ships with the other single templates.
+  // This template renders them visible by default and only hides them once the
+  // reveal script has confirmed it is running, so the cards can never be
+  // invisible if the JavaScript fails.
+  .related-content .article-card {
+    opacity: 1;
+  }
+
+  .related-content.js-reveal .article-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .5s ease, transform .5s ease;
+
+    &.is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .related-content.js-reveal .article-card {
+      transition: none;
+    }
+  }
+}

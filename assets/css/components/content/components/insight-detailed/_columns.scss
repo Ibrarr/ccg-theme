@@ -1,0 +1,57 @@
+.report-columns {
+  margin-top: 18px;
+
+  @include media-breakpoint-up(md) {
+    margin-top: 22px;
+  }
+
+  // 780fr / 444fr reproduces the Figma split exactly at 1440 (content 1272)
+  // and keeps the same ratio at lg and xl, where the Bootstrap container is
+  // narrower than the design frame.
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: minmax(0, 780fr) minmax(0, 444fr);
+    column-gap: $rd-gutter;
+    align-items: start;
+  }
+}
+
+.report-main {
+  display: flex;
+  flex-direction: column;
+  // Body rhythm steps 18 / 22 / 20. Tablet really is looser than desktop.
+  gap: 18px;
+  min-width: 0;
+
+  @include media-breakpoint-up(md) {
+    gap: 22px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    gap: 20px;
+  }
+}
+
+.report-side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
+  min-width: 0;
+
+  @include media-breakpoint-up(lg) {
+    margin-top: 0;
+    position: sticky;
+    top: var(--rd-sticky-top);
+    align-self: start;
+
+    // Once stuck, the sidebar has only the viewport to work with, and the cover
+    // image is what pushes the share row past the bottom. Collapsing it keeps
+    // everything reachable without an internal scrollbar.
+    &.is-stuck .report-download-cover {
+      max-height: 0;
+      margin-bottom: 0;
+      opacity: 0;
+    }
+  }
+}

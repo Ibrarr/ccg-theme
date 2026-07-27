@@ -1,0 +1,105 @@
+.report-table {
+  border: 1px solid $rd-table-border;
+  border-radius: $rd-radius-xs;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .table {
+    --bs-table-bg: transparent;
+    --bs-table-color: #{$rd-body};
+    margin-bottom: 0;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  // The Figma shows no visible caption: tables start at the dark green header
+  // row. Kept in the markup and hidden visually so the survey question still
+  // describes the table to screen readers and search engines.
+  caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  thead th {
+    background-color: $rd-dark-green;
+    font-family: $font-circular-medium;
+    font-size: 15px;
+    line-height: 20px;
+    color: #ffffff;
+    padding: 12px 16px;
+    border: none;
+    vertical-align: middle;
+  }
+
+  tbody th,
+  tbody td {
+    font-family: $font-circular-regular;
+    font-size: 15px;
+    line-height: 20px;
+    color: $rd-body;
+    padding: 10px 16px;
+    border: none;
+    vertical-align: middle;
+    background-color: #ffffff;
+  }
+
+  tbody th {
+    font-weight: normal;
+  }
+
+  tbody tr:nth-child(even) {
+    th, td {
+      background-color: $rd-stripe;
+    }
+  }
+
+  // The design sets fixed value columns and lets the label column take the
+  // remaining space. Widths scale down as the column count grows so one
+  // component serves two to five columns.
+  th:not(:first-child),
+  td:not(:first-child) {
+    width: 150px;
+  }
+
+  &[data-columns="3"] {
+    th:not(:first-child),
+    td:not(:first-child) {
+      width: 125px;
+    }
+  }
+
+  &[data-columns="4"] {
+    th:not(:first-child),
+    td:not(:first-child) {
+      width: 110px;
+    }
+  }
+
+  &[data-columns="5"] {
+    th:not(:first-child),
+    td:not(:first-child) {
+      width: 100px;
+    }
+  }
+
+  // Forces the horizontal scroll the design calls for instead of crushing
+  // columns on narrow screens. Two-column tables still fit at 342.
+  &[data-columns="3"] .table {
+    min-width: 520px;
+  }
+
+  &[data-columns="4"] .table {
+    min-width: 620px;
+  }
+
+  &[data-columns="5"] .table {
+    min-width: 720px;
+  }
+}

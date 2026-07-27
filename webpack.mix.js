@@ -67,6 +67,12 @@ mix.js([
 ], 'js/insight-single.js');
 
 mix.js([
+    'assets/js/insight-detailed/contents-menu.js',
+    'assets/js/insight-detailed/faq.js',
+    'assets/js/insight-detailed/related-content.js',
+], 'js/insight-detailed.js');
+
+mix.js([
     'assets/js/sector-term/gsap-animations.js',
     'assets/js/sector-term/newsletter-popup.js',
     'assets/js/sector-term/dropdown.js',

@@ -1,0 +1,109 @@
+.report-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 0;
+
+  @include media-breakpoint-up(md) {
+    gap: 16px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    gap: 18px;
+    padding-top: 12px;
+  }
+
+  // Avatar steps 48 / 52 / 56.
+  .report-author-avatar {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: $rd-dark-green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include media-breakpoint-up(md) {
+      width: 52px;
+      height: 52px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 56px;
+      height: 56px;
+    }
+
+    span {
+      font-family: $font-circular-bold;
+      font-size: 15px;
+      line-height: 1;
+      color: #ffffff;
+
+      @include media-breakpoint-up(md) {
+        font-size: 16px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        font-size: 18px;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .report-author-details {
+    flex: 1 0 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    @include media-breakpoint-up(lg) {
+      gap: 4px;
+    }
+  }
+
+  .report-author-name {
+    font-family: $font-circular-medium;
+    font-size: 15px;
+    line-height: 21px;
+    color: $rd-heading;
+    margin: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 16px;
+      line-height: 22px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 17px;
+    }
+  }
+
+  .report-author-role {
+    font-family: $font-circular-regular;
+    font-size: 13px;
+    line-height: 19px;
+    color: $rd-muted-strong;
+    margin: 0;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  .report-author-bio {
+    font-family: $font-circular-regular;
+    font-size: 13px;
+    line-height: 19px;
+    color: $rd-muted;
+    margin: 0;
+  }
+}
