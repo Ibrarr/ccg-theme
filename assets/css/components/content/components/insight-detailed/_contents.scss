@@ -55,11 +55,102 @@
   border-radius: $rd-radius;
   margin-top: 24px;
   overflow: hidden;
-  position: relative;
-  z-index: 1;
+  // Sticky rather than fixed, so this stays the same element throughout: it
+  // holds its place in the article, lifts off when the reader scrolls past it,
+  // and settles back on the way up. Its sticky range is the whole article,
+  // because it shares a container with the columns below it. The offset is set
+  // from JS so it tracks the site header.
+  position: sticky;
+  top: 111px;
+  z-index: 98;
+  transition: top .3s;
 
   @include media-breakpoint-up(lg) {
+    position: relative;
+    top: auto;
+    z-index: 1;
     display: none;
+  }
+
+  // Once lifted off, the panel overlays the article instead of pushing it. Any
+  // height added while stuck would shift the content below, and the browser
+  // correcting the scroll for that reads as a scroll down and takes the header
+  // with it, so opening the list would knock it straight off screen.
+  &.is-stuck {
+    overflow: visible;
+
+    .report-contents-panel {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: $rd-dark-green;
+      border-radius: 0 0 $rd-radius $rd-radius;
+    }
+
+    .report-contents-panel-inner {
+      padding-top: 11px;
+    }
+  }
+
+  // While stuck and open the bar and the panel are one box, so the bar's bottom
+  // corners must stop rounding. Left as they are, the panel's square top corners
+  // sit against the bar's rounded ones and leave a notch on either side of the
+  // join. The panel keeps the rounding at the bottom of the pair.
+  &.is-stuck.is-open {
+    border-radius: $rd-radius $rd-radius 0 0;
+  }
+
+  // Opening and closing animate on grid-template-rows, which is the only way to
+  // transition to and from a height the content decides. The inner wrapper is
+  // what collapses against, so it carries the padding: padding on the panel
+  // itself would still show at zero height.
+  // Opening and closing animate on grid-template-rows, the only way to
+  // transition to and from a height the content decides. visibility follows at
+  // the end of the collapse so the links leave the tab order once hidden.
+  .report-contents-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows .32s cubic-bezier(.4, 0, .2, 1),
+                visibility 0s linear .32s;
+  }
+
+  .report-contents-toggle[aria-expanded="true"] + .report-contents-panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows .32s cubic-bezier(.4, 0, .2, 1),
+                visibility 0s;
+  }
+
+  // min-height: 0 is what lets the row reach a true zero: a grid item otherwise
+  // floors at its own minimum size and the track floors with it. This element
+  // does nothing but clip, so it must stay free of padding. Padding is part of
+  // an element's height, so carrying any here would leave that much of the dark
+  // panel showing under the bar while closed.
+  .report-contents-panel-clip {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  // A long list would otherwise run past the bottom of the screen with no way
+  // to reach the end of it.
+  .report-contents-panel-inner {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 18px 16px;
+
+    @include media-breakpoint-up(md) {
+      padding: 0 22px 18px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .report-contents-panel,
+    .report-contents-toggle[aria-expanded="true"] + .report-contents-panel {
+      transition: none;
+    }
   }
 
   .report-contents-toggle {
@@ -114,17 +205,6 @@
     }
   }
 
-  .report-contents-panel {
-    padding: 0 18px 16px;
-
-    @include media-breakpoint-up(md) {
-      padding: 0 22px 18px;
-    }
-
-    &[hidden] {
-      display: none;
-    }
-  }
 
   ul {
     list-style: none;

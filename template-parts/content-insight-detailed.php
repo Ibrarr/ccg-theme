@@ -84,14 +84,23 @@ $gform    = get_field( 'select_gform_form' );
                         <span>On this page: <?php echo count( $contents ); ?> sections</span>
                         <i aria-hidden="true"></i>
                     </button>
-                    <div class="report-contents-panel" id="report-contents-accordion-list" hidden>
-                        <ul>
-							<?php foreach ( $contents as $item ) { ?>
-                                <li>
-                                    <a href="#<?php echo esc_attr( $item['anchor'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
-                                </li>
-							<?php } ?>
-                        </ul>
+                    <?php // Collapsed by CSS off aria-expanded rather than the hidden attribute, so
+                          // opening and closing can be animated. Three elements, each with one job:
+                          // the panel animates its grid row, the clip shrinks to nothing, and the
+                          // inner holds the padding and scrolls when the list is long. The padding
+                          // has to sit below the clip or it would floor the collapsed height. ?>
+                    <div class="report-contents-panel" id="report-contents-accordion-list">
+                        <div class="report-contents-panel-clip">
+                            <div class="report-contents-panel-inner">
+                                <ul>
+								<?php foreach ( $contents as $item ) { ?>
+                                    <li>
+                                        <a href="#<?php echo esc_attr( $item['anchor'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
+                                    </li>
+								<?php } ?>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </nav>
 			<?php } ?>

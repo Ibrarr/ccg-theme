@@ -53,6 +53,9 @@ $rd-gutter: 48px;
   // Clears the fixed header when jumping to an anchor.
   --rd-anchor-offset: 120px;
   --rd-sticky-top: 120px;
+  // Breathing room between the site header and the pinned contents bar below
+  // lg, so the two read as separate elements rather than one block.
+  --rd-pinned-gap: 12px;
 
   article {
     position: relative;
