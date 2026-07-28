@@ -169,6 +169,19 @@
         line-height: 22px;
       }
     }
+
+    // Answers are body copy, so links match the rest of the article.
+    a {
+      font-family: $font-circular-medium;
+      color: $rd-answer;
+      background: linear-gradient(0deg, $rd-amber, $rd-amber) no-repeat right bottom / 0;
+      transition: background-size 350ms;
+
+      &:where(:hover, :focus-visible) {
+        background-size: 100%;
+        background-position-x: left;
+      }
+    }
   }
 
 }

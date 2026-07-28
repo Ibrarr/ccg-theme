@@ -65,14 +65,18 @@
     font-family: $font-circular-italic;
   }
 
+  // The site-wide link rollover from the body-text mixin: an amber block that
+  // grows left to right behind the text. The size transitions while the
+  // position jumps, which is what makes it wipe in one direction rather than
+  // grow from both ends.
   a {
     font-family: $font-circular-medium;
     color: $rd-body;
-    background: linear-gradient(0deg, $rd-coral, $rd-coral) no-repeat right bottom / 0 2px;
+    background: linear-gradient(0deg, $rd-amber, $rd-amber) no-repeat right bottom / 0;
     transition: background-size 350ms;
 
     &:where(:hover, :focus-visible) {
-      background-size: 100% 2px;
+      background-size: 100%;
       background-position-x: left;
     }
   }

@@ -68,15 +68,20 @@
     }
   }
 
+  // Same rollover as the body copy, inverted for the dark panel. The amber
+  // block is unchanged, but cream text would disappear against it, so the text
+  // darkens as the block arrives. Colour is transitioned over the same duration
+  // so the two happen together.
   a {
     font-family: $font-circular-medium;
     color: $rd-cream;
-    background: linear-gradient(0deg, $rd-coral, $rd-coral) no-repeat right bottom / 0 2px;
-    transition: background-size 350ms;
+    background: linear-gradient(0deg, $rd-amber, $rd-amber) no-repeat right bottom / 0;
+    transition: background-size 350ms, color 350ms;
 
     &:where(:hover, :focus-visible) {
-      background-size: 100% 2px;
+      background-size: 100%;
       background-position-x: left;
+      color: $rd-dark-green;
     }
   }
 
