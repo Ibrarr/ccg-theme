@@ -1,8 +1,38 @@
 .report-table {
-  border: 1px solid $rd-table-border;
-  border-radius: $rd-radius-xs;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  margin: 0;
+
+  // The scroll container is the inner wrapper, not this element, so the visible
+  // title above it can wrap at container width. Putting overflow here instead
+  // would drag the title into the scrolling region.
+  .report-table-scroll {
+    border: 1px solid $rd-table-border;
+    border-radius: $rd-radius-xs;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  // Visible stand-in for the caption. The real <caption> cannot be used for
+  // this: its containing block is the table, so on a table with a min-width it
+  // would lay out wider than the screen.
+  .report-table-title {
+    font-family: $font-circular-medium;
+    font-size: 14px;
+    line-height: 20px;
+    color: $rd-heading;
+    margin: 0 0 8px;
+
+    @include media-breakpoint-up(md) {
+      font-size: 15px;
+      line-height: 21px;
+      margin-bottom: 10px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 16px;
+      line-height: 22px;
+      margin-bottom: 12px;
+    }
+  }
 
   .table {
     --bs-table-bg: transparent;
@@ -12,9 +42,8 @@
     width: 100%;
   }
 
-  // The Figma shows no visible caption: tables start at the dark green header
-  // row. Kept in the markup and hidden visually so the survey question still
-  // describes the table to screen readers and search engines.
+  // The visible title carries the text now, so the real caption stays in the
+  // markup purely to give the table its accessible name.
   caption {
     position: absolute;
     width: 1px;
@@ -101,5 +130,98 @@
 
   &[data-columns="5"] .table {
     min-width: 720px;
+  }
+}
+
+// Treatment for tables sitting on the dark methodology panel. The light version
+// above paints white and near-black over the panel green, so every colour has
+// to be reset rather than inherited. A modifier rather than a descendant
+// selector, so it does not depend on import order or on one container.
+.report-table--on-dark {
+  // Fixed at 13px rather than stepping with the breakpoints, per the spec.
+  .report-table-title {
+    font-family: $font-circular-medium;
+    font-size: 13px;
+    line-height: 18px;
+    color: $rd-cream;
+    margin-bottom: 8px;
+
+    @include media-breakpoint-up(md) {
+      font-size: 13px;
+      line-height: 18px;
+      margin-bottom: 8px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 13px;
+      line-height: 18px;
+      margin-bottom: 10px;
+    }
+  }
+
+  // The mock shows no outer frame: the header band and the row rule carry the
+  // structure on their own.
+  .report-table-scroll {
+    border: none;
+    border-radius: 0;
+  }
+
+  // The light treatment gives the label column the remaining space, which suits
+  // a long row label against short values. Respondent profiles are a row of
+  // counts under a short "Total", and the mock spaces them evenly, so the fixed
+  // layout overrides the inherited per-column widths.
+  .table {
+    --bs-table-color: #{$rd-cream};
+    table-layout: fixed;
+  }
+
+  // Scoped through [data-columns] to match the specificity of the per-column
+  // widths above, which are attribute scoped. With those cleared and the layout
+  // fixed, the columns divide evenly.
+  &[data-columns] {
+    th:not(:first-child),
+    td:not(:first-child) {
+      width: auto;
+    }
+  }
+
+  thead th {
+    background-color: $rd-dark-green-deep;
+    color: $rd-cream;
+  }
+
+  tbody th,
+  tbody td {
+    background-color: transparent;
+    color: $rd-cream;
+    border-bottom: 1px solid $rd-divider;
+  }
+
+  // The stripe belongs to the light treatment. On the panel the rows read as
+  // one block separated by rules.
+  tbody tr:nth-child(even) {
+    th,
+    td {
+      background-color: transparent;
+    }
+  }
+
+  // Below 992px these scroll horizontally like every other table, so the
+  // inherited minimums stand. At 992 and above the design shows them fitting,
+  // but the panel's accent bar and padding take around 70px off the content
+  // column, which the inherited values do not allow for and which would leave a
+  // scrollbar on a table that should fit.
+  @include media-breakpoint-up(lg) {
+    &[data-columns="3"] .table {
+      min-width: 420px;
+    }
+
+    &[data-columns="4"] .table {
+      min-width: 520px;
+    }
+
+    &[data-columns="5"] .table {
+      min-width: 600px;
+    }
   }
 }

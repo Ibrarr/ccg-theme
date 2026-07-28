@@ -843,43 +843,6 @@
             ]
         },
         {
-            "key": "field_68a3d1c10026",
-            "label": "Methodology",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0
-        },
-        {
-            "key": "field_68a3d1c10027",
-            "label": "Methodology",
-            "name": "methodology_body",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "Shown in the dark methodology panel near the end of the article.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "visual",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
-        },
-        {
             "key": "field_68a3d1c10028",
             "label": "FAQ",
             "name": "",

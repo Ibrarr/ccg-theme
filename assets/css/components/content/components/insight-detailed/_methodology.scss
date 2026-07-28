@@ -14,6 +14,9 @@
     padding: 24px 32px;
   }
 
+  // This is the section's own H2, so it carries the anchor and the single
+  // contents-menu entry as well as labelling the panel. Styled down to the
+  // small coral label the design calls for rather than a body heading.
   .report-methodology-label {
     font-family: $font-circular-bold;
     font-size: 11px;
@@ -21,7 +24,8 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: $rd-coral;
-    margin-bottom: 8px;
+    margin: 0 0 8px;
+    scroll-margin-top: var(--rd-anchor-offset);
 
     @include media-breakpoint-up(lg) {
       font-size: 12px;
@@ -43,8 +47,25 @@
     }
   }
 
-  p:last-child {
+  // The copy used to be the last thing in the panel. Now a table can follow it,
+  // so the reset has to target the last child of any kind rather than a
+  // trailing paragraph that may no longer be last.
+  > *:last-child {
     margin-bottom: 0;
+  }
+
+  // Breathing room between the copy and the first table, and between tables.
+  // The panel is not a flex container, so this cannot come from a gap.
+  .report-table {
+    margin-top: 18px;
+
+    @include media-breakpoint-up(md) {
+      margin-top: 20px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      margin-top: 22px;
+    }
   }
 
   a {

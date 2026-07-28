@@ -56,6 +56,42 @@ function ccg_insight_detailed_anchor( $heading, &$used ) {
 }
 
 /**
+ * Anchors the template hardcodes elsewhere in the page.
+ *
+ * A body section titled "Methodology" or "Key takeaways" would otherwise
+ * produce a second element with the same id. The takeaways case is the worse
+ * of the two: its panel sits earlier in the document than the article, so
+ * getElementById resolves to the panel and the contents menu scrolls to the
+ * wrong place with no error.
+ *
+ * Reserved unconditionally, not only when the matching field is filled. If the
+ * list moved with the content, filling an empty methodology field would
+ * silently renumber a section anchor and break inbound links.
+ *
+ * @return array
+ */
+function ccg_insight_detailed_reserved_anchors() {
+	// "methodology" is deliberately absent. That section is authored as an
+	// ordinary body section now, so it owns the anchor itself and reserving it
+	// would push the real section to methodology-2.
+	return array( 'key-takeaways', 'frequently-asked-questions' );
+}
+
+/**
+ * Is this the section that renders inside the inverted methodology panel?
+ *
+ * Matched on the heading because that is what the approved spec keys off: the
+ * section titled "Methodology" is the methodology block, and its own H2 gives
+ * the panel its label, its anchor and its single contents-menu entry.
+ *
+ * @param string $heading
+ * @return bool
+ */
+function ccg_insight_detailed_is_methodology( $heading ) {
+	return 'methodology' === sanitize_title( $heading );
+}
+
+/**
  * Normalised body sections with anchors resolved once.
  *
  * @param int|null $post_id
@@ -65,7 +101,7 @@ function ccg_insight_detailed_sections( $post_id = null ) {
 	$post_id  = $post_id ?: get_the_ID();
 	$rows     = get_field( 'body_sections', $post_id );
 	$sections = array();
-	$used     = array();
+	$used     = ccg_insight_detailed_reserved_anchors();
 
 	if ( ! $rows ) {
 		return $sections;
@@ -105,13 +141,8 @@ function ccg_insight_detailed_contents( $post_id = null ) {
 		);
 	}
 
-	if ( get_field( 'methodology_body', $post_id ) ) {
-		$contents[] = array(
-			'label'  => 'Methodology',
-			'anchor' => 'methodology',
-		);
-	}
-
+	// No hardcoded Methodology entry. That section supplies its own, from its
+	// heading, exactly like every other section.
 	if ( get_field( 'faqs', $post_id ) ) {
 		$contents[] = array(
 			'label'  => 'Frequently asked questions',
@@ -318,13 +349,6 @@ function ccg_insight_detailed_render_body( $post_id ) {
 		}
 	}
 
-	$methodology = get_field( 'methodology_body', $post_id );
-
-	if ( $methodology ) {
-		$out[] = '<h2>Methodology</h2>';
-		$out[] = wp_kses_post( $methodology );
-	}
-
 	$faqs = get_field( 'faqs', $post_id );
 
 	if ( $faqs ) {
@@ -479,35 +503,56 @@ function ccg_insight_detailed_schema_graph( $graph, $context ) {
 		return $graph;
 	}
 
-	$post_id   = get_the_ID();
-	$permalink = get_permalink( $post_id );
-	$webpage   = $permalink . '#webpage';
+	$post_id = get_the_ID();
+
+	// Every @id has to be built from the same base Yoast used for its own
+	// nodes, or the references dangle. get_permalink() is not that base: it
+	// applies is_ssl() while Yoast builds ids from the stored indexable, so on
+	// a mixed scheme install the two disagree.
+	$canonical = ( isset( $context->canonical ) && $context->canonical ) ? $context->canonical : get_permalink( $post_id );
+
+	// Yoast's WebPage @id is the bare permalink. It carried a #webpage fragment
+	// in older versions, which is where this template's original value came
+	// from, and that node no longer exists.
+	$webpage = ( isset( $context->main_schema_id ) && $context->main_schema_id ) ? $context->main_schema_id : $canonical;
+
 	$article_types = array( 'Article', 'NewsArticle', 'Report', 'ScholarlyArticle', 'TechArticle', 'BlogPosting' );
+	$has_article   = false;
 
 	foreach ( $graph as $piece ) {
 		foreach ( (array) ( isset( $piece['@type'] ) ? $piece['@type'] : array() ) as $type ) {
 			if ( in_array( $type, $article_types, true ) ) {
-				return $graph;
+				$has_article = true;
+				break 2;
 			}
 		}
 	}
 
 	$article = array(
 		'@type'            => 'Article',
-		'@id'              => $permalink . '#article',
+		'@id'              => $canonical . '#article',
 		'isPartOf'         => array( '@id' => $webpage ),
 		'mainEntityOfPage' => array( '@id' => $webpage ),
 		'headline'         => get_the_title( $post_id ),
 		'datePublished'    => get_the_date( DATE_W3C, $post_id ),
 		'dateModified'     => get_the_modified_date( DATE_W3C, $post_id ),
-		'publisher'        => array( '@id' => trailingslashit( home_url() ) . '#organization' ),
 		'inLanguage'       => get_bloginfo( 'language' ),
 	);
+
+	// Yoast only emits an Organization node when the site is set to represent a
+	// company and has both a name and a logo. Claiming a publisher regardless
+	// leaves a reference to a node that was never output, so follow Yoast's own
+	// Article generator and only claim one when it actually exists. The
+	// reference is taken rather than rebuilt because a site representing a
+	// person uses a hashed id, not #organization.
+	if ( isset( $context->site_represents_reference ) && $context->site_represents_reference ) {
+		$article['publisher'] = $context->site_represents_reference;
+	}
 
 	$description = get_field( 'standfirst', $post_id );
 
 	if ( $description ) {
-		$article['description'] = wp_strip_all_tags( $description );
+		$article['description'] = ccg_insight_detailed_plain_text( $description );
 	}
 
 	$author = ccg_insight_detailed_author( $post_id );
@@ -529,19 +574,23 @@ function ccg_insight_detailed_schema_graph( $graph, $context ) {
 	$thumbnail_id = get_post_thumbnail_id( $post_id );
 
 	if ( $thumbnail_id ) {
-		$article['image'] = array( '@id' => $permalink . '#primaryimage' );
+		$article['image'] = array( '@id' => $canonical . '#primaryimage' );
 	}
 
-	$body = get_post_field( 'post_content', $post_id );
+	$body = ccg_insight_detailed_plain_text( get_post_field( 'post_content', $post_id ) );
 
 	if ( $body ) {
-		$article['wordCount']    = str_word_count( wp_strip_all_tags( $body ) );
-		$article['articleBody'] = wp_strip_all_tags( $body );
+		$article['wordCount']   = ccg_insight_detailed_word_count( $body );
+		$article['articleBody'] = $body;
 	}
 
-	$graph[] = $article;
+	// Only skipped when Yoast or a plugin already published an Article. The FAQ
+	// piece is independent of that, so it is added either way.
+	if ( ! $has_article ) {
+		$graph[] = $article;
+	}
 
-	$faq = ccg_insight_detailed_faq_schema( $post_id, $webpage );
+	$faq = ccg_insight_detailed_faq_schema( $post_id, $webpage, $canonical );
 
 	if ( $faq ) {
 		$graph[] = $faq;
@@ -551,14 +600,57 @@ function ccg_insight_detailed_schema_graph( $graph, $context ) {
 }
 
 /**
+ * Flatten rendered HTML to the plain text the schema should carry.
+ *
+ * wp_strip_all_tags() on its own removes the tags without putting anything in
+ * their place, so adjacent table cells run together as "Increase69%" and the
+ * word count reads them as one word. Block level boundaries become spaces
+ * first, then entities are decoded so the output is not littered with &#039;.
+ *
+ * @param string $html
+ * @return string
+ */
+function ccg_insight_detailed_plain_text( $html ) {
+	if ( ! $html ) {
+		return '';
+	}
+
+	$text = preg_replace( '#<(td|th|tr|p|div|li|h[1-6]|caption|table|thead|tbody|br)\b[^>]*>#i', ' ', $html );
+	$text = preg_replace( '#</(td|th|tr|p|div|li|h[1-6]|caption|table|thead|tbody)>#i', ' ', $text );
+	$text = wp_strip_all_tags( $text );
+	$text = html_entity_decode( $text, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+
+	return trim( preg_replace( '/\s+/u', ' ', $text ) );
+}
+
+/**
+ * Word count that survives non-ASCII copy.
+ *
+ * str_word_count() is byte based and treats accented characters as word
+ * breaks, which understates any report quoting a non-English name or market.
+ *
+ * @param string $text
+ * @return int
+ */
+function ccg_insight_detailed_word_count( $text ) {
+	$words = preg_split( '/\s+/u', trim( $text ), -1, PREG_SPLIT_NO_EMPTY );
+
+	return is_array( $words ) ? count( $words ) : 0;
+}
+
+/**
  * FAQPage piece built from the FAQ repeater.
  *
- * @param int    $post_id
- * @param string $webpage The Yoast WebPage node @id.
+ * @param int         $post_id
+ * @param string      $webpage   The Yoast WebPage node @id.
+ * @param string|null $canonical Base for this piece's own ids. Passed in rather
+ *                               than rebuilt so it cannot drift from the
+ *                               Article's ids on a mixed scheme install.
  * @return array|false
  */
-function ccg_insight_detailed_faq_schema( $post_id, $webpage ) {
-	$faqs = get_field( 'faqs', $post_id );
+function ccg_insight_detailed_faq_schema( $post_id, $webpage, $canonical = null ) {
+	$canonical = $canonical ?: get_permalink( $post_id );
+	$faqs      = get_field( 'faqs', $post_id );
 
 	if ( ! $faqs ) {
 		return false;
@@ -573,12 +665,12 @@ function ccg_insight_detailed_faq_schema( $post_id, $webpage ) {
 
 		$questions[] = array(
 			'@type'          => 'Question',
-			'@id'            => get_permalink( $post_id ) . '#faq-' . ( $index + 1 ),
+			'@id'            => $canonical . '#faq-' . ( $index + 1 ),
 			'position'       => $index + 1,
-			'name'           => wp_strip_all_tags( $faq['question'] ),
+			'name'           => ccg_insight_detailed_plain_text( $faq['question'] ),
 			'acceptedAnswer' => array(
 				'@type' => 'Answer',
-				'text'  => wp_strip_all_tags( $faq['answer'] ),
+				'text'  => ccg_insight_detailed_plain_text( $faq['answer'] ),
 			),
 		);
 	}
@@ -589,7 +681,7 @@ function ccg_insight_detailed_faq_schema( $post_id, $webpage ) {
 
 	return array(
 		'@type'      => 'FAQPage',
-		'@id'        => get_permalink( $post_id ) . '#faqpage',
+		'@id'        => $canonical . '#faqpage',
 		'isPartOf'   => array( '@id' => $webpage ),
 		'inLanguage' => get_bloginfo( 'language' ),
 		'mainEntity' => $questions,
@@ -667,10 +759,24 @@ function ccg_insight_rest_relax_required( $fields, $resource, $http_method ) {
  * Walk a field list clearing required, including repeater sub-fields and the
  * sub-fields inside each Flexible Content layout, because the schema is built
  * from those nested arrays rather than from a flat list.
+ *
+ * A repeater's min and max are cleared for the same reason. ACF turns them into
+ * minItems and maxItems in the REST schema, so the editor's authoring guidance
+ * becomes a hard validation rule over the API: three takeaways is a sensible
+ * house style, but a migration pushing a report that genuinely has two should
+ * not get a 400. The caps still apply in the editor.
  */
 function ccg_insight_rest_clear_required( $fields ) {
 	foreach ( $fields as $i => $field ) {
 		$fields[ $i ]['required'] = 0;
+
+		if ( isset( $field['min'] ) ) {
+			$fields[ $i ]['min'] = '';
+		}
+
+		if ( isset( $field['max'] ) ) {
+			$fields[ $i ]['max'] = '';
+		}
 
 		if ( ! empty( $field['sub_fields'] ) ) {
 			$fields[ $i ]['sub_fields'] = ccg_insight_rest_clear_required( $field['sub_fields'] );

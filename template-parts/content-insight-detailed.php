@@ -13,7 +13,6 @@ $kicker       = ccg_insight_detailed_kicker();
 $sections     = ccg_insight_detailed_sections();
 $contents     = ccg_insight_detailed_contents();
 $author       = ccg_insight_detailed_author();
-$methodology  = get_field( 'methodology_body' );
 $faqs         = get_field( 'faqs' );
 $takeaways    = get_field( 'takeaways' );
 $publish_date = get_field( 'publish_date' );
@@ -102,11 +101,21 @@ $gform    = get_field( 'select_gform_form' );
                 <div class="report-main">
 
 					<?php foreach ( $sections as $section ) { ?>
-                        <section class="report-section">
-                            <h2 id="<?php echo esc_attr( $section['anchor'] ); ?>"><?php echo esc_html( $section['heading'] ); ?></h2>
+						<?php
+						// The section titled Methodology renders in the inverted panel
+						// rather than as ordinary body copy. Its own heading carries the
+						// label, the anchor and the contents-menu entry.
+						$is_methodology = ccg_insight_detailed_is_methodology( $section['heading'] );
+						?>
+                        <section class="<?php echo $is_methodology ? 'report-methodology' : 'report-section'; ?>">
+                            <h2 id="<?php echo esc_attr( $section['anchor'] ); ?>"<?php echo $is_methodology ? ' class="report-methodology-label"' : ''; ?>><?php echo esc_html( $section['heading'] ); ?></h2>
 
 							<?php
 							foreach ( $section['components'] as $component ) {
+								// Tables inside the panel need the dark treatment. Set per
+								// component because the partial reads it from this scope.
+								$variant = $is_methodology ? 'on-dark' : '';
+
 								switch ( $component['acf_fc_layout'] ) {
 									case 'rich_text':
 										include( 'insight-detailed/rich-text.php' );
@@ -126,13 +135,6 @@ $gform    = get_field( 'select_gform_form' );
 								}
 							}
 							?>
-                        </section>
-					<?php } ?>
-
-					<?php if ( $methodology ) { ?>
-                        <section class="report-methodology" id="methodology">
-                            <p class="report-methodology-label">Methodology</p>
-							<?php echo wp_kses_post( $methodology ); ?>
                         </section>
 					<?php } ?>
 
