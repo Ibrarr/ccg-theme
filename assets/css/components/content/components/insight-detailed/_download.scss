@@ -191,19 +191,23 @@
       appearance: none;
       width: 100% !important;
       border: none !important;
-      background-color: $rd-coral !important;
-      color: #ffffff !important;
-      font-family: $font-circular-medium !important;
+      // The one filled-acid button in the system, reserved for a conversion
+      // action on a navy ground (handover T3). $rd-coral resolves to deep
+      // violet, which is the accent role on light grounds, so this is scoped
+      // to acid here rather than taking the token.
+      background-color: $hof-acid !important;
+      color: $hof-navy !important;
+      font-family: $font-sans-semibold !important;
       font-size: 15px !important;
       height: 44px !important;
       padding: 0 !important;
-      border-radius: 22px !important;
+      border-radius: var(--radius-btn) !important;
       cursor: pointer;
       transition: background-color .3s, color .3s;
 
       &:where(:hover, :focus-visible) {
-        background-color: #ffffff !important;
-        color: $rd-dark-green !important;
+        background-color: $hof-white !important;
+        color: $hof-navy !important;
       }
 
       // Gravity Forms draws a blue focus outline from
@@ -217,7 +221,7 @@
       // Keyboard focus still needs to be visible, and a mouse click on a button
       // does not match :focus-visible, so pressing the button shows nothing.
       &:focus-visible {
-        box-shadow: 0 0 0 2px $rd-dark-green, 0 0 0 4px #ffffff !important;
+        box-shadow: 0 0 0 2px $hof-navy, 0 0 0 4px $hof-white !important;
       }
     }
 

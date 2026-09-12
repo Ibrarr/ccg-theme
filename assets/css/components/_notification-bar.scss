@@ -30,14 +30,21 @@ html.notice-dismissed .notification-bar {
   display: none;
 }
 
+// The open menu takes the whole viewport, so the bar steps aside rather than
+// floating over the panel. Hidden rather than removed, so the header and logo
+// offsets do not move while the menu is open.
+body.no-scroll .notification-bar {
+  visibility: hidden;
+}
+
 .notification-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  // Under the header's z-index of 99, so the open menu overlay covers the bar
-  // along with the rest of the page rather than leaving it floating on top.
-  z-index: 98;
+  // Above the header (99) and the logo (100), which is a separately positioned
+  // sibling that would otherwise scroll up over the bar.
+  z-index: 200;
   height: var(--ccg-topbar-height);
   background-color: $hof-acid;
   // Clips rather than spills if an editor pastes copy longer than the field

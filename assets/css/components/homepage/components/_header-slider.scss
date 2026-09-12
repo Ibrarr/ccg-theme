@@ -74,7 +74,8 @@
 
     .header-slide {
       z-index: 1;
-      margin-bottom: 45px;
+      // The frame leaves about 97px below the CTA, roughly 80px at 1440.
+      margin-bottom: clamp(45px, 8vh, 80px);
 
       // The design sets the H1 and the standfirst as one flowing serif
       // sentence: the brand phrase in acid italic, the remainder in white
@@ -85,7 +86,8 @@
         display: inline;
         font-family: $font-serif;
         font-size: clamp(1.75rem, 1rem + 2.5vw, 3.4375rem);
-        line-height: 1.2;
+        // The frame sets roughly 66px on 75px, so 1.14 rather than 1.2.
+        line-height: 1.15;
         margin: 0;
       }
 
@@ -121,14 +123,20 @@
 
         @include media-breakpoint-up(lg) {
           width: fit-content;
-          padding: 12px 32px;
+          // The frame's CTA is 223px wide for this label, about 183px at 1440.
+          padding: 12px 46px;
+          // The frame leaves about 193px between the statement and the CTA,
+          // roughly 158px at a 1440 viewport. Tied to viewport height so it
+          // does not crowd a short window.
+          margin-top: clamp(2rem, 17vh, 11rem);
         }
       }
 
       @include media-breakpoint-up(lg) {
-        // Lands on the design's 1244 of its 1759px frame. The percentage
-        // resolves against a padded container, hence 74 rather than 71.
-        width: 74%;
+        // Lands on the design's 1238 of its 1759px frame, which is about
+        // 1013px at a 1440 viewport. The percentage resolves against the
+        // padded container, hence 84 rather than 70.
+        width: 84%;
       }
     }
   }
