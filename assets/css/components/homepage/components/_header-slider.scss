@@ -58,7 +58,17 @@
     }
   }
 
+  // 7.6 keeps the confetti's shapes and scatter and only moves its fills. On
+  // this navy-washed hero the navy piece would disappear into the ground, so it
+  // takes acid instead, which is what 7.6 prescribes for a dark ground.
+  .parallax-bars#bar-two svg rect {
+    fill: $hof-acid;
+  }
+
   .splide__slide {
+    // The Hoffman wash: navy at 70% over the existing photograph, replacing the
+    // old black scrim. CSS only, so the image element, its src, dimensions and
+    // alt text are untouched.
     &:after {
       content: '';
       position: absolute;
@@ -66,31 +76,60 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(24, 45, 67, 0.7);
     }
 
     .header-slide {
       z-index: 1;
       margin-bottom: 45px;
 
-      .heading {
-        font-size: clamp(3.4375rem, -0.8036rem + 13.5714vw, 9.375rem);
-        line-height: clamp(2.82825rem, -0.659432rem + 11.145108vw, 7.6875rem);
-        font-family: $font-circular-bold;
-        color: $ccg-off-white;
+      // The design sets the H1 and the standfirst as one flowing serif
+      // sentence: the brand phrase in acid italic, the remainder in white
+      // roman. They stay two separate elements, set inline, so the heading
+      // outline and both strings are untouched.
+      .heading,
+      .sub-heading {
+        display: inline;
+        font-family: $font-serif;
+        font-size: clamp(1.75rem, 1rem + 2.5vw, 3.4375rem);
+        line-height: 1.2;
+        margin: 0;
+      }
 
-        @media (min-width: 1400px) {
-          font-size: 193px;
-          line-height: 160px;
-        }
+      .heading {
+        font-style: italic;
+        font-weight: 400;
+        color: $hof-acid;
       }
 
       .sub-heading {
-        @include sub-heading-text($ccg-off-white);
+        color: $hof-white;
+
+        // The separator the design draws between the two halves. A pseudo
+        // element on the standfirst rather than the heading, so the H1's own
+        // accessible name stays exactly as authored.
+        &:before {
+          content: '- ';
+        }
       }
 
       .hero-button {
-        @include short-button($ccg-off-white, $ccg-dark-green, $ccg-dark-green, $ccg-off-white);
+        // Primary on dark, per section 2: transparent with a 2px acid border
+        // and an acid label, inverting to an acid fill on hover. Sentence case,
+        // not the caps of the 7.5 outlined box.
+        @include short-button(transparent, $hof-acid, $hof-acid, $hof-navy, $hof-acid);
+        border: 2px solid $hof-acid;
+        font-family: $font-sans-semibold;
+        // fit-content, not auto: the mixin's display: flex is block-level, so
+        // auto would stretch the button across the whole hero column.
+        width: fit-content;
+        padding: 10px 26px;
+        margin-top: 28px;
+
+        @include media-breakpoint-up(lg) {
+          width: fit-content;
+          padding: 12px 32px;
+        }
       }
 
       @include media-breakpoint-up(lg) {

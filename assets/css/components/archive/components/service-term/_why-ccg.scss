@@ -31,8 +31,12 @@
   }
 
   h2 {
-    font-size: clamp(3.625rem, 0.3611rem + 1.8519vw, 5.1875rem);
-    line-height: clamp(3.1875rem, 0.3182rem + 1.8519vw, 4.5625rem);
+    // Floor lowered from 58px to 36px: at 375px the old floor made a single
+    // unbreakable word ("Communication") wider than its column. The desktop
+    // cap is unchanged, so the design reads as before from md up.
+    font-size: clamp(2.25rem, 1rem + 4.1667vw, 5.1875rem);
+    line-height: clamp(2.5rem, 1.3rem + 4vw, 4.5625rem);
+    overflow-wrap: break-word;
     font-family: $font-circular-bold;
     color: $ccg-pink;
     margin-bottom: 20px;
