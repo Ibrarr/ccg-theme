@@ -43,10 +43,24 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
 }
 
 // Typography
-$font-circular-bold: "CircularXXWeb-Bold", sans-serif;
-$font-circular-medium: "CircularXXWeb-Medium", sans-serif;
-$font-circular-regular: "CircularXXWeb-Regular", sans-serif;
-$font-circular-italic: "CircularXXWeb-Italic", sans-serif;
+//
+// The theme encodes weight in the family name rather than using font-weight
+// (there is exactly one font-weight declaration in the whole codebase), so the
+// new faces are declared the same way and the 209 existing $font-circular-*
+// declarations migrate without edits.
+$font-sans-regular: "Poppins-Regular", "Noto Sans", system-ui, sans-serif;
+$font-sans-medium: "Poppins-Medium", "Noto Sans", system-ui, sans-serif;
+$font-sans-semibold: "Poppins-SemiBold", "Noto Sans", system-ui, sans-serif;
+$font-serif: "Libre Baskerville", Georgia, serif;
+
+// Back-compat aliases. Circular Bold maps to Poppins SemiBold: the handover
+// font plan loads no Poppins 700.
+$font-circular-bold: $font-sans-semibold;
+$font-circular-medium: $font-sans-medium;
+$font-circular-regular: $font-sans-regular;
+// $font-circular-italic is retired. Its two call sites wanted different things:
+// the article byline is a serif micro-label (section 1, added at T3) while body
+// em/i stays sans per 7.4. Both are now set explicitly where they are used.
 
 // Typography Sizes
 $ccg-heading-size: clamp(2.375rem, 0.375rem + 4.1667vw, 3.5rem);
