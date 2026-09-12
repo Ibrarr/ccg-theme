@@ -36,6 +36,14 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
   // Replaces the CCG full pills.
   --radius-btn: 8px;
 
+  // Height of the notification bar, and the single source of truth for the
+  // geometry that depends on it. The bar is fixed at top: 0, so the page is
+  // padded by this value and the fixed header and logo are offset by it. Four
+  // things used to hard-code the 50px header inset independently; they now all
+  // derive from here, and dismissing the bar sets this to 0px, which returns
+  // the whole layout to its previous geometry in one move.
+  --ccg-topbar-height: 0px;
+
   // In-copy link underline sweep. Deep violet is the default because most body
   // copy sits on light grounds, where section 1 bars acid text. Dark-ground
   // sections override this property to acid rather than carrying a second mixin.

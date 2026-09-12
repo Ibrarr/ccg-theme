@@ -4,6 +4,9 @@
 
 #wrapper {
   overflow-x: hidden;
+  // Reserves the fixed notification bar's height from first paint, so there is
+  // no shift when it renders and none when it is dismissed.
+  padding-top: var(--ccg-topbar-height);
 }
 
 // Fonts
@@ -60,4 +63,5 @@
 @import "components/bottom-cta";
 @import "components/footer/footer";
 
+@import "components/notification-bar";
 @import "components/announce-popup";

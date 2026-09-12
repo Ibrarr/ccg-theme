@@ -6,7 +6,11 @@ jQuery(document).ready(function ($) {
         let currentScrollPos = window.pageYOffset;
 
         if (prevScrollpos > currentScrollPos || currentScrollPos <= 70) {
-            document.getElementById("header").style.top = "50px";
+            // Cleared rather than set to a literal: the stylesheet owns this
+            // value now, so the header returns to its inset whether or not a
+            // notification bar is showing. contents-menu.js already falls back
+            // to the computed value when the inline style is empty.
+            document.getElementById("header").style.top = "";
             $('.main-menu-text').fadeIn(300);
         } else {
             document.getElementById("header").style.top = "-100px";

@@ -4,7 +4,8 @@ mix.js([
     'assets/js/header/main-menu.js',
     'assets/js/header/sliders.js',
     'assets/js/header/load-search-results.js',
-    'assets/js/header/announce-popup.js'
+    'assets/js/header/announce-popup.js',
+    'assets/js/header/notification-bar.js'
 ], 'js/header.js');
 
 mix.js([

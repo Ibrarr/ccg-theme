@@ -2,7 +2,9 @@ header {
   width: 100%;
   position: fixed;
   z-index: 99;
-  top: 50px;
+  // 50px visual inset from whatever is above it: the viewport top, or the
+  // notification bar when one is showing.
+  top: calc(50px + var(--ccg-topbar-height));
   transition: $ccg-transition-all;
 
   @import "components/menu-container";

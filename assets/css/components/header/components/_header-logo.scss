@@ -1,9 +1,11 @@
 .header-logo {
-  top: 48px;
+  // Not inside <header>: this is a sibling, absolutely positioned against the
+  // initial containing block, so it carries the same offset independently.
+  top: calc(48px + var(--ccg-topbar-height));
   position: absolute;
 
   @include media-breakpoint-down(md) {
-    top: 44px;
+    top: calc(44px + var(--ccg-topbar-height));
   }
 
   a {

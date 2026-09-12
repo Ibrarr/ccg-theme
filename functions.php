@@ -32,6 +32,9 @@ require CCG_INC_PATH . '/custom-taxonomies.php';
 // Detailed Insight Template
 require CCG_INC_PATH . '/insight-detailed.php';
 
+// Notification Bar
+require CCG_INC_PATH . '/notification-bar.php';
+
 // ACF
 require CCG_INC_PATH . '/acf.php';
 

@@ -1,6 +1,18 @@
 jQuery(document).ready(function ($) {
-    // Check if popup has been shown in this tab session
-    if (sessionStorage.getItem('announcePopupClosed') === 'true') {
+    // Persisted in a cookie rather than sessionStorage so a dismissal survives
+    // the tab closing, and so it behaves the same way as the notification bar
+    // and the newsletter popup.
+    function dismissed() {
+        return document.cookie.indexOf('announcePopupClosed=1') !== -1;
+    }
+
+    function remember() {
+        const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+
+        document.cookie = 'announcePopupClosed=1; expires=' + expires + '; path=/; SameSite=Lax';
+    }
+
+    if (dismissed()) {
         $('.announce-popup-container').hide();
     } else {
         setTimeout(function () {
@@ -11,16 +23,14 @@ jQuery(document).ready(function ($) {
     $('.close-announce-popup').click(function () {
         $('.announce-popup-container').fadeOut();
 
-        // Save to sessionStorage instead of cookies
-        sessionStorage.setItem('announcePopupClosed', 'true');
+        remember();
     });
 
     jQuery(document).on('gform_confirmation_loaded', function (event, formId) {
         setTimeout(function () {
             $('.announce-popup-container').fadeOut();
 
-            // Save to sessionStorage instead of cookies
-            sessionStorage.setItem('announcePopupClosed', 'true');
+            remember();
         }, 2000);
     });
 });

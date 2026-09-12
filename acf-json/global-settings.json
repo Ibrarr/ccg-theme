@@ -153,7 +153,7 @@
                 "2": "How To Use PR To Attract Acquirers",
                 "11": "How Vendors Can Benefit From The Impact Of IP On The Broadcast Industry",
                 "1": "Insight Report",
-                "52": "Money20\/20 Europe 2023 Infographic - May '24",
+                "52": "Money20/20 Europe 2023 Infographic - May '24",
                 "19": "More Brand, more Buck: How Brand Influences Enterprise Technology Buyers",
                 "46": "Navigating Telco Turbulence: Lessons For Vendor Marketing",
                 "28": "Newsletter Popup Form",
@@ -174,7 +174,7 @@
                 "37": "Webinar: How To Influence Telco Operators Through Industry Analysts",
                 "31": "Webinar: Influencing Buyers Through Telecoms Analysts",
                 "44": "Webinar: Integrated marketing communications: key principles, methods and outcomes",
-                "33": "Webinar: Mind The Gap: What AR Delivers, And What It’s Asked For",
+                "33": "Webinar: Mind The Gap: What AR Delivers, And What It\u2019s Asked For",
                 "35": "Webinar: Navigating Telco Turbulence: Lessons For Vendor Marketing",
                 "38": "Webinar: Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
                 "34": "Webinar: Tech: How Firms And Investors Can Attract The Right Fit?",
@@ -210,6 +210,125 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1
+        },
+        {
+            "key": "field_68c4a1b2c3d01",
+            "label": "Notification Bar",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68c4a1b2c3d02",
+            "label": "Enable notification bar",
+            "name": "enable_notification_bar",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Shows the slim strip above the header on every page. Visitors can dismiss it, and it stays dismissed for a year.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_68c4a1b2c3d03",
+            "label": "Kicker",
+            "name": "notification_bar_kicker",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Short label at the start of the bar, shown in capitals. Two or three words.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68c4a1b2c3d02",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 40,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_68c4a1b2c3d04",
+            "label": "Message",
+            "name": "notification_bar_message",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The message itself. Keep it to one line on desktop, around 120 characters.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68c4a1b2c3d02",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "75",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 200,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_68c4a1b2c3d05",
+            "label": "Link",
+            "name": "notification_bar_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Optional. If set, the message becomes a link.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68c4a1b2c3d02",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         },
         {
             "key": "field_655bab3ad23a5",
@@ -682,5 +801,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742247516
+    "modified": 1789230273
 }
