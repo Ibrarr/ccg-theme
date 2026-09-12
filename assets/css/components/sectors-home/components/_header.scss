@@ -2,6 +2,29 @@
   position: relative;
   overflow: hidden;
 
+  // This masthead's ground is a raster plate with the old brand green baked
+  // into the artwork, so recolouring CSS cannot reach it. Section 2's wash is
+  // the system answer for a band that already carries an image ground: navy at
+  // 70% over the top, no change to the asset. A replacement plate in the new
+  // palette would be better still, and is on the client list.
+  > img {
+    position: relative;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: rgba(24, 45, 67, 0.7);
+    pointer-events: none;
+  }
+
+  > *:not(img) {
+    position: relative;
+    z-index: 2;
+  }
+
   .sector-name-slide {
     position: absolute;
     height: 100%;

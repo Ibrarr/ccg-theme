@@ -28,15 +28,12 @@
 
     .splide__arrows {
       .splide__arrow {
-        background-color: $ccg-dark-green !important;
 
         &:hover {
-          background-color: $ccg-orange !important;
         }
 
 
         &.splide__arrow--next:disabled {
-          background-color: #808080 !important;
           cursor: auto;
         }
       }

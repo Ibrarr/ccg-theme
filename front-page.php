@@ -44,7 +44,7 @@
 
     <section class="intro">
         <div class="container px-4">
-            <h2><?php the_field( 'intro' ); ?></h2>
+            <h2><?php echo ccg_statement_band_html( get_field( 'intro' ) ); ?></h2>
         </div>
     </section>
 

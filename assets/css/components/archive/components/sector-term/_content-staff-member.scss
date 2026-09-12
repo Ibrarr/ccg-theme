@@ -116,7 +116,7 @@
 
           &.linkedin-icon:hover, &.x-icon:hover {
             svg {
-              fill: $ccg-orange;
+              fill: var(--interaction-accent);
             }
           }
 

@@ -24,6 +24,22 @@
 // Mixins
 @import 'mixins';
 
+// Dark-ground containers: acid is the interaction accent here, per 7.5. Kept in
+// one place so a new navy section only has to join this list.
+footer,
+.about-ccg,
+.challenges-opportunities,
+.other-services,
+.report-takeaways,
+.report-methodology,
+.term-selector,
+.form-section,
+.holding-page,
+.notification-bar {
+  --interaction-accent: #{$hof-acid};
+}
+
+
 // Components
 @import "components/header/header";
 

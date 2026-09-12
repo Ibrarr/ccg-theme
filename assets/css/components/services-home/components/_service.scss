@@ -77,7 +77,7 @@
             }
 
             &:hover a {
-              color: $ccg-orange;
+              color: var(--interaction-accent);
             }
           }
 
@@ -90,7 +90,7 @@
               }
 
               &:hover g > path {
-                fill: $ccg-orange;
+                fill: var(--interaction-accent);
               }
             }
           }

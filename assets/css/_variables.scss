@@ -48,6 +48,12 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
   // copy sits on light grounds, where section 1 bars acid text. Dark-ground
   // sections override this property to acid rather than carrying a second mixin.
   --link-underline: #{$hof-violet-deep};
+
+  // Hover, focus and active accent, per 7.5: acid on dark grounds, deep violet
+  // on light. Same reasoning as above, so light is the default and dark-ground
+  // containers set it to acid. Every interaction state that used to resolve to
+  // mustard now points here, so none of them can quietly go navy-on-navy.
+  --interaction-accent: #{$hof-violet-deep};
 }
 
 // Typography

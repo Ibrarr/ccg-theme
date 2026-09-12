@@ -37,7 +37,7 @@
         }
 
         &:hover {
-          background-color: $ccg-orange !important;
+          background-color: var(--interaction-accent) !important;
 
           svg, path {
             fill: #fff !important;

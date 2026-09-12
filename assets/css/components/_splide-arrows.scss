@@ -7,23 +7,67 @@
     position: relative;
     width: 3em;
     height: 3em;
-    background-color: $ccg-blue;
     transition: $ccg-transition-all;
     opacity: 1;
 
-    &:hover {
-      background-color: $ccg-dark-green;
-    }
-
     svg {
-      fill: #ffffff;
       height: 1em;
       width: 1em;
       margin-bottom: -2px;
     }
 
-    path {
-      fill: #ffffff;
+    // The section 2 pair, keyed off direction rather than the disabled state:
+    // the design pairs them permanently as prev navy / next acid, so they read
+    // as a set wherever the carousel happens to be.
+    &.splide__arrow--prev {
+      background-color: $hof-navy;
+
+      svg,
+      path {
+        fill: $hof-acid;
+      }
+    }
+
+    &.splide__arrow--next {
+      background-color: $hof-acid;
+
+      svg,
+      path {
+        fill: $hof-navy;
+      }
+    }
+
+    // Hover swaps each arrow for its partner's colours, so the state change
+    // uses only the two brand colours rather than introducing a third.
+    &.splide__arrow--prev:where(:hover, :focus-visible):not([disabled]) {
+      background-color: $hof-acid;
+
+      svg,
+      path {
+        fill: $hof-navy;
+      }
+    }
+
+    &.splide__arrow--next:where(:hover, :focus-visible):not([disabled]) {
+      background-color: $hof-navy;
+
+      svg,
+      path {
+        fill: $hof-acid;
+      }
+    }
+
+    // At the end of the track an arrow does nothing, so it reads as unavailable
+    // without leaving the palette.
+    &[disabled],
+    &:disabled {
+      opacity: 0.45;
+      cursor: auto;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $hof-navy;
+      outline-offset: 3px;
     }
 
     &.splide__arrow--prev {

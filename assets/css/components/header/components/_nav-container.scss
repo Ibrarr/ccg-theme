@@ -50,7 +50,7 @@
               transition: $ccg-transition-all;
 
               &:hover {
-                color: $ccg-orange;
+                color: var(--interaction-accent);
               }
             }
           }

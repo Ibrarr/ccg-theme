@@ -179,7 +179,7 @@
 
               &.linkedin-icon:hover, &.x-icon:hover {
                 svg {
-                  fill: $ccg-orange;
+                  fill: var(--interaction-accent);
                 }
               }
 
@@ -247,7 +247,7 @@
           &:hover svg g {
 
             > path {
-              fill: $ccg-orange;
+              fill: var(--interaction-accent);
             }
 
             g path {

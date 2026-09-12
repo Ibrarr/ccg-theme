@@ -58,13 +58,6 @@
     }
   }
 
-  // 7.6 keeps the confetti's shapes and scatter and only moves its fills. On
-  // this navy-washed hero the navy piece would disappear into the ground, so it
-  // takes acid instead, which is what 7.6 prescribes for a dark ground.
-  .parallax-bars#bar-two svg rect {
-    fill: $hof-acid;
-  }
-
   .splide__slide {
     // The Hoffman wash: navy at 70% over the existing photograph, replacing the
     // old black scrim. CSS only, so the image element, its src, dimensions and
@@ -133,7 +126,9 @@
       }
 
       @include media-breakpoint-up(lg) {
-        width: 60%;
+        // Lands on the design's 1244 of its 1759px frame. The percentage
+        // resolves against a padded container, hence 74 rather than 71.
+        width: 74%;
       }
     }
   }

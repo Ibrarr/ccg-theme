@@ -42,7 +42,7 @@ footer {
       text-decoration: none;
       font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
       line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-      color: #636363;
+      color: $hof-grey-warm;
       transition: $ccg-transition-all;
 
       &:hover {
@@ -79,11 +79,11 @@ footer {
           text-decoration: none;
           font-family: $font-circular-bold;
           font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-          color: $ccg-pink;
+          color: $hof-grey-warm;
           transition: $ccg-transition-all;
 
           &:hover {
-            color: $ccg-orange;
+            color: var(--interaction-accent);
           }
         }
       }
@@ -101,7 +101,7 @@ footer {
         text-transform: uppercase;
         font-family: $font-circular-bold;
         font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-        color: $ccg-pink;
+        color: $hof-acid;
       }
 
       p {
@@ -123,7 +123,7 @@ footer {
         transition: $ccg-transition-all;
 
         &:hover {
-          color: $ccg-orange;
+          color: var(--interaction-accent);
         }
       }
 
@@ -163,7 +163,7 @@ footer {
           text-decoration: none;
           font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
           line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-          color: #636363;
+          color: $hof-grey-warm;
           transition: $ccg-transition-all;
 
           &:hover {
@@ -226,7 +226,7 @@ footer {
           transition: $ccg-transition-all;
 
           &:hover {
-            color: $ccg-orange;
+            color: var(--interaction-accent);
           }
         }
 
@@ -238,7 +238,7 @@ footer {
             text-decoration: none;
             font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
             line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-            color: #636363;
+            color: $hof-grey-warm;
             transition: $ccg-transition-all;
 
             &:hover {
@@ -272,7 +272,7 @@ footer {
               transition: $ccg-transition-all;
 
               &:hover {
-                color: $ccg-orange;
+                color: var(--interaction-accent);
               }
             }
           }

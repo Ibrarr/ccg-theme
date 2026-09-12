@@ -43,10 +43,8 @@
 
     .splide__arrows {
       .splide__arrow {
-        background-color: #ffffff !important;
 
         &:hover {
-          background-color: $ccg-orange !important;
 
           @include media-breakpoint-down(md) {
             svg path {
@@ -57,7 +55,6 @@
 
 
         &.splide__arrow--next:disabled {
-          background-color: #808080 !important;
           cursor: auto;
 
           @include media-breakpoint-down(md) {
@@ -74,7 +71,6 @@
         }
 
         @include media-breakpoint-up(md) {
-          background-color: $ccg-dark-green !important;
         }
       }
     }
@@ -99,6 +95,9 @@
             .heading {
               word-spacing: 1000px;
               font-family: $font-circular-medium;
+              // Navy: this slide sits on the warm grey card ground, not on a
+              // photograph like its neighbours.
+              color: $hof-navy !important;
               overflow-wrap: break-word;
               font-size: clamp(2.25rem, -0.6389rem + 6.0185vw, 3.875rem);
               line-height: clamp(2.375rem, -0.5139rem + 6.0185vw, 4rem);
@@ -114,7 +113,9 @@
             }
 
             .global-button {
-              @include short-button($hof-white, $hof-acid, $hof-navy, $hof-navy, $hof-acid);
+              @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
+              width: fit-content;
+              padding: 10px 26px;
             }
           }
 
