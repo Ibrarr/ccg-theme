@@ -95,9 +95,9 @@
             .heading {
               word-spacing: 1000px;
               font-family: $font-circular-medium;
-              // Navy: this slide sits on the warm grey card ground, not on a
-              // photograph like its neighbours.
-              color: $hof-navy !important;
+              // White: this slide sits on the dark photograph the section
+              // paints in its ::before, so navy disappeared into it.
+              color: $hof-white !important;
               overflow-wrap: break-word;
               font-size: clamp(2.25rem, -0.6389rem + 6.0185vw, 3.875rem);
               line-height: clamp(2.375rem, -0.5139rem + 6.0185vw, 4rem);
@@ -113,7 +113,10 @@
             }
 
             .global-button {
-              @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
+              // Secondary on dark, per section 2: transparent with a 1.5px
+              // white keyline and a white label, inverting on hover.
+              @include short-button(transparent, $hof-white, $hof-white, $hof-navy, $hof-acid);
+              border: 1.5px solid $hof-white;
               width: fit-content;
               padding: 10px 26px;
             }

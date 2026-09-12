@@ -38,7 +38,7 @@
         cursor: pointer;
 
         &:hover {
-          color: $ccg-dark-green;
+          color: var(--interaction-accent);
         }
 
         &.active {
@@ -77,14 +77,17 @@
           color: $ccg-dark-green;
         }
 
+        // Navy: these two cards front on the grey and salmon swatches, so warm
+        // grey copy had almost no contrast once the artwork was recoloured.
         .description {
-          color: $ccg-off-white !important;
+          color: $hof-navy !important;
         }
       }
 
       & > div:nth-child(5) {
+        // Navy: this card now fronts on acid.
         .heading {
-          color: $ccg-off-white;
+          color: $hof-navy;
         }
 
         .description {

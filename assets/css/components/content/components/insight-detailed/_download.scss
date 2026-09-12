@@ -74,7 +74,7 @@
     // own custom properties from an ID scoped block. Overriding the properties
     // is more reliable than fighting that specificity, and an !important custom
     // property beats its plain declaration.
-    --gf-ctrl-border-color-focus: #{$rd-coral} !important;
+    --gf-ctrl-border-color-focus: #{$hof-acid} !important;
     --gf-ctrl-shadow: none !important;
 
     .gform_heading,
@@ -127,7 +127,7 @@
     }
 
     .gfield_required {
-      color: $rd-coral;
+      color: $hof-acid;
     }
 
     input[type="text"],
@@ -162,7 +162,7 @@
       &:focus,
       &:focus-visible {
         outline: none;
-        border-color: $rd-coral !important;
+        border-color: $hof-acid !important;
       }
     }
 
@@ -171,7 +171,7 @@
     .gfield_error input[type="email"],
     .gfield_error textarea,
     .gfield_error select {
-      box-shadow: inset 0 0 0 2px $rd-coral;
+      box-shadow: inset 0 0 0 2px $hof-acid;
     }
 
     textarea {
@@ -192,7 +192,7 @@
       width: 100% !important;
       border: none !important;
       // The one filled-acid button in the system, reserved for a conversion
-      // action on a navy ground (handover T3). $rd-coral resolves to deep
+      // action on a navy ground (handover T3). $hof-acid resolves to deep
       // violet, which is the accent role on light grounds, so this is scoped
       // to acid here rather than taking the token.
       background-color: $hof-acid !important;
@@ -271,7 +271,7 @@
     .gform_footer:has(input[type="submit"]:where(:hover, :focus-visible)) .gform-loader,
     .gform_footer:has(button[type="submit"]:where(:hover, :focus-visible)) .gform-loader {
       border-color: rgba(240, 137, 116, 0.35);
-      border-top-color: $rd-coral;
+      border-top-color: $hof-acid;
     }
 
     // Gravity Forms' default error red is close to illegible on the dark green
@@ -283,7 +283,7 @@
       font-family: $font-circular-regular;
       font-size: 13px;
       line-height: 18px;
-      color: $rd-coral;
+      color: $hof-acid;
       background: none;
       border: none;
       padding: 0;
@@ -304,7 +304,7 @@
         font-family: $font-circular-medium !important;
         font-size: 13px !important;
         line-height: 19px !important;
-        color: $rd-coral !important;
+        color: $hof-acid !important;
         background: none !important;
         border: none !important;
         box-shadow: none !important;
@@ -354,7 +354,7 @@
       width: 100%;
       height: 44px;
       border-radius: 22px;
-      background-color: $rd-coral;
+      background-color: $hof-acid;
       color: #ffffff;
       font-family: $font-circular-medium;
       font-size: 15px;

@@ -213,7 +213,8 @@
 
             .count {
               width: 100%;
-              @include body-text($ccg-orange);
+              // Acid: this sits on a navy card, where orange resolved to navy.
+              @include body-text($hof-acid);
 
               @include media-breakpoint-up(md) {
                 margin-top: auto;

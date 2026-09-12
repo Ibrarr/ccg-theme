@@ -21,8 +21,11 @@ $rd-body: $hof-navy;                    // was #26312E
 $rd-heading: $hof-navy;                 // was #14201E
 // Navy-derived greys, keeping the original light/dark relationship between the
 // two. Section 1a establishes these solid tints in place of neutral greys.
-$rd-muted: $hof-navy-60;                // was #8A8A8A
-$rd-muted-strong: $hof-navy-70;         // was #5F5F5F
+// Section 1a sets the navy 70% tint as the resting grey precisely because the
+// 60% tint falls short on white. Muted therefore takes 70% and the stronger
+// one takes full navy.
+$rd-muted: $hof-navy-70;                // was #8A8A8A
+$rd-muted-strong: $hof-navy;            // was #5F5F5F
 $rd-answer: $hof-navy;                  // was #4A5450
 $rd-cream: $hof-white;                  // was #EFEFEC, 7.3 direct content reads on white
 $rd-download-sub: $hof-grey-warm;       // was #AFC6C0, warm grey on navy (section 1)
