@@ -1,6 +1,45 @@
+// Hoffman brand tokens
+//
+// Values come from the signed-off client handover (sections 1 and 7.2). These are
+// roles, not shades: read 7.2 before changing one. The $ccg-* tokens further down
+// are re-pointed at these, so the theme's existing colour declarations migrate
+// without editing 500+ call sites.
+$hof-navy: #182D43;        // primary ground; headings and body on light
+$hof-white: #FFFFFF;
+$hof-grey-warm: #E5E4E0;   // card-ground neutral: sections holding white cards or tiles
+$hof-acid: #D2EB00;        // accent. Text only on navy or dark image grounds
+$hof-violet-deep: #6103B9; // statement-band ground; passes AA for small labels on white
+$hof-violet: #CB65FF;      // reserved: fails AA on white, graphic use only
+$hof-cyan: #86FFF1;        // reserved
+$hof-teal: #145F7B;        // utility-index grounds; display numerals on light
+$hof-navy-70: #5D6C7B;     // solid tints, never rgba: stacked cards must not ghost through
+$hof-navy-60: #74818E;
+$hof-hairline: rgba(24, 45, 67, 0.15);
+
 // Boostrap Override
 :root {
-  --bs-body-bg: #EFEFEC;
+  // White per 7.3: direct-content sections read on clean white, not the old cream.
+  --bs-body-bg: #{$hof-white};
+
+  --hof-navy: #{$hof-navy};
+  --hof-white: #{$hof-white};
+  --hof-grey-warm: #{$hof-grey-warm};
+  --hof-acid: #{$hof-acid};
+  --hof-violet-deep: #{$hof-violet-deep};
+  --hof-violet: #{$hof-violet};
+  --hof-cyan: #{$hof-cyan};
+  --hof-teal: #{$hof-teal};
+  --hof-navy-70: #{$hof-navy-70};
+  --hof-navy-60: #{$hof-navy-60};
+  --hairline: #{$hof-hairline};
+
+  // Replaces the CCG full pills.
+  --radius-btn: 8px;
+
+  // In-copy link underline sweep. Deep violet is the default because most body
+  // copy sits on light grounds, where section 1 bars acid text. Dark-ground
+  // sections override this property to acid rather than carrying a second mixin.
+  --link-underline: #{$hof-violet-deep};
 }
 
 // Typography
@@ -18,15 +57,24 @@ $ccg-body-size: clamp(0.875rem, 0.4306rem + 0.9259vw, 1.125rem);
 $ccg-body-line-height: clamp(1.0625rem, 0.5069rem + 1.1574vw, 1.375rem);
 
 // Colors
-$ccg-body-bg: #EFEFEC;
-$ccg-off-white: #E5E4E0;
-$ccg-related-content-bg: #FCF2E4;
-$ccg-pink: #F08974;
-$ccg-orange: #EAAC4D;
-$ccg-green: #0A433D;
-$ccg-dark-green: #002C38;
-$ccg-blue: #02657E;
-$ccg-text: #2B2B2B;
+//
+// Re-pointed to the Hoffman roles above. The old value stays in each comment so
+// the mapping is readable and reversible.
+//
+// $ccg-orange carried 168 uses across 83 files and the new design splits that one
+// token three ways (7.2: quote bands to deep violet, impact bands to acid, closing
+// CTAs to acid) under a restraint rule of roughly one violet and one acid band per
+// template. Navy is therefore the quiet baseline the design asks for, and the
+// specific bands get promoted per template. Do not point this at acid wholesale.
+$ccg-body-bg: $hof-white;                // was #EFEFEC
+$ccg-off-white: $hof-grey-warm;          // was #E5E4E0, same value, now the card-ground neutral
+$ccg-related-content-bg: $hof-grey-warm; // was #FCF2E4, 7.2 folds cream into one light neutral
+$ccg-pink: #F08974;                      // salmon survives: it is the CCG_ underscore's own colour (7.6)
+$ccg-orange: $hof-navy;                  // was #EAAC4D, quiet baseline, see note above
+$ccg-green: $hof-navy;                   // was #0A433D
+$ccg-dark-green: $hof-navy;              // was #002C38
+$ccg-blue: $hof-navy;                    // was #02657E, arrows are the navy/acid pair (section 2)
+$ccg-text: $hof-navy;                    // was #2B2B2B, section 1: body on light is navy
 
 //Other
 $ccg-img-border-radius: 10px;

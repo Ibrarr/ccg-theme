@@ -18,7 +18,7 @@
   }
 
   .global-button {
-    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+    @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
   }
 
   .benefits-perks {
@@ -71,7 +71,7 @@
     }
 
     .global-button-benefit {
-      @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+      @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
       margin-top: 60px;
       position: relative;
     }

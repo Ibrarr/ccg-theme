@@ -9,13 +9,18 @@
   p {
     font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
     font-family: $font-circular-regular;
-    color: $ccg-orange;
+    color: $hof-white;
     margin-bottom: 40px;
     text-align:center;
     line-height: 48px;
 
+    // The highlighted phrase keeps its emphasis, now as the acid accent.
+    span {
+      color: $hof-acid;
+    }
+
     a {
-      color: $ccg-orange;
+      color: $hof-acid;
     }
 
     @include media-breakpoint-down(md) {

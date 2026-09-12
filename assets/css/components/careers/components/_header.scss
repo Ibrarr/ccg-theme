@@ -31,7 +31,7 @@
 
       a {
         color: $ccg-dark-green;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        background: linear-gradient(0deg, var(--link-underline), var(--link-underline)) no-repeat right bottom / 0;
         transition: background-size 350ms;
 
         &:where(:hover, :focus-visible) {
@@ -48,16 +48,24 @@
       font-size: 12px;
       text-align: center;
       text-decoration: none;
-      display: block;
-      color: $ccg-dark-green;
-      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      color: $hof-navy;
+      border-radius: var(--radius-btn);
       transition: $ccg-transition-all;
       width: fit-content;
       padding: 10px 50px;
 
       &:hover {
-        background-color: $ccg-orange;
-        color: #ffffff;
+        background-color: $hof-acid;
+        color: $hof-navy;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $hof-navy;
+        outline-offset: 2px;
       }
 
       @include media-breakpoint-up(lg) {

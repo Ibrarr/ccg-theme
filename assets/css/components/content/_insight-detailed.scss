@@ -2,25 +2,36 @@
 // Tokens are taken directly from the approved Figma (BUILD NOTES frame) rather
 // than the site-wide palette, which uses slightly different greens and greys.
 
-$rd-dark-green: #0B433C;
+$rd-dark-green: $hof-navy;              // was #0B433C
 // Table header band on the dark methodology panel, confirmed by the client as
-// part of the approved set in the July 2026 methodology spec.
-$rd-dark-green-deep: #083530;
-$rd-coral: #F08974;
-$rd-coral-dark: #C25A40;
-$rd-amber: #EAAC4D;
-$rd-body: #26312E;
-$rd-heading: #14201E;
-$rd-muted: #8A8A8A;
-$rd-muted-strong: #5F5F5F;
-$rd-answer: #4A5450;
-$rd-cream: #EFEFEC;
-$rd-download-sub: #AFC6C0;
-$rd-placeholder: #9AA6A3;
-$rd-stripe: #F4F7F6;
-$rd-table-border: #E0E0E0;
-$rd-hairline: rgba(11, 67, 60, 0.35);
-$rd-divider: rgba(239, 239, 236, 0.25);
+// part of the approved set in the July 2026 methodology spec. The handover does
+// not give a navy equivalent, so this keeps the original relationship: one step
+// darker than the panel it sits on.
+$rd-dark-green-deep: darken($hof-navy, 6%); // was #083530
+// Accent bars and small labels. Both sit on white here (takeaways panel, pull
+// quote), where section 1 bars acid text and calls for deep violet. The one
+// exception is the filled download CTA on the navy card, which takes the acid
+// fill / navy label recipe and is scoped in _download.scss.
+$rd-coral: $hof-violet-deep;            // was #F08974
+$rd-coral-dark: $hof-violet-deep;       // was #C25A40
+// The in-copy link underline sweep for this template. Acid reads on the dark
+// methodology panel; light-ground sections override --link-underline instead.
+$rd-amber: $hof-acid;                   // was #EAAC4D
+$rd-body: $hof-navy;                    // was #26312E
+$rd-heading: $hof-navy;                 // was #14201E
+// Navy-derived greys, keeping the original light/dark relationship between the
+// two. Section 1a establishes these solid tints in place of neutral greys.
+$rd-muted: $hof-navy-60;                // was #8A8A8A
+$rd-muted-strong: $hof-navy-70;         // was #5F5F5F
+$rd-answer: $hof-navy;                  // was #4A5450
+$rd-cream: $hof-white;                  // was #EFEFEC, 7.3 direct content reads on white
+$rd-download-sub: $hof-grey-warm;       // was #AFC6C0, warm grey on navy (section 1)
+// Dimmed so a placeholder still reads as unfilled against the sub-text above it.
+$rd-placeholder: rgba(229, 228, 224, 0.65); // was #9AA6A3
+$rd-stripe: rgba(24, 45, 67, 0.04);     // was #F4F7F6, navy tint, same construction as --hairline
+$rd-table-border: $hof-hairline;        // was #E0E0E0, section 1 names table row rules as a --hairline use
+$rd-hairline: $hof-hairline;            // was rgba(11, 67, 60, 0.35)
+$rd-divider: rgba(255, 255, 255, 0.25); // was rgba(239, 239, 236, 0.25), light divider on dark panels
 
 $rd-radius: 8px;
 $rd-radius-sm: 6px;

@@ -55,23 +55,31 @@
   }
 
   .global-button {
-    background-color: $ccg-orange;
+    background-color: $hof-navy;
     font-family: $font-circular-medium;
     cursor: pointer;
     font-size: 12px;
     text-align: center;
     text-decoration: none;
-    display: block;
-    color: $ccg-dark-green;
-    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    color: $hof-acid;
+    border-radius: var(--radius-btn);
     transition: $ccg-transition-all;
     width: fit-content;
     margin: auto;
     padding: 10px 30px;
 
     &:hover {
-      background-color: $ccg-dark-green;
-      color: #ffffff;
+      background-color: $hof-acid;
+      color: $hof-navy;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $hof-navy;
+      outline-offset: 2px;
     }
 
     @include media-breakpoint-up(lg) {

@@ -1,7 +1,7 @@
 .featured-slider {
   padding-top: 45px;
   margin-top: -5px;
-  background: linear-gradient(180deg, rgb(0, 32, 41) 0%, rgb(0, 32, 41) 50%, $ccg-off-white 50%);
+  background: linear-gradient(180deg, #{$hof-navy} 0%, #{$hof-navy} 50%, $ccg-off-white 50%);
   position: relative;
 
   .parallax-bars {
@@ -40,7 +40,7 @@
     .splide__arrows {
       .splide__arrow {
         &:hover {
-          background-color: $ccg-orange !important;
+          background-color: $hof-acid !important;
         }
       }
     }
@@ -73,7 +73,7 @@
         justify-content: center;
 
         .term {
-          @include term($ccg-orange);
+          @include term($hof-acid);
         }
 
         .title {
@@ -93,7 +93,7 @@
         }
 
         .global-button {
-          @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
+          @include short-button($hof-white, $hof-acid, $hof-navy, $hof-navy, $hof-acid);
         }
       }
     }

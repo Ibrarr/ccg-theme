@@ -71,7 +71,7 @@
             }
 
             .global-button {
-              @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
+              @include short-button($hof-white, $hof-acid, $hof-navy, $hof-navy, $hof-acid);
             }
           }
 
