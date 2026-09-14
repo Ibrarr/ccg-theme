@@ -32,12 +32,11 @@ html.notice-dismissed .notification-bar {
   display: none;
 }
 
-// The open menu takes the whole viewport, so the bar steps aside rather than
-// floating over the panel. Hidden rather than removed, so the header and logo
-// offsets do not move while the menu is open.
-body.no-scroll .notification-bar {
-  visibility: hidden;
-}
+// The bar stays put while the menu is open. It used to hide itself so the
+// overlay could own the whole viewport, but its height stays reserved either
+// way, so hiding it left a blank white strip across the top of the panel. It
+// sits at z-index 200, above the overlay, so it simply stays on top and the
+// notice stays readable.
 
 .notification-bar {
   position: fixed;

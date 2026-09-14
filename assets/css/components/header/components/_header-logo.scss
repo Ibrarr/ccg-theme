@@ -21,21 +21,27 @@
       width: 100%;
       height: auto;
       // Fluid below md for the same reason as the lg-to-xxl rule below: a flat
-      // 240px cleared the hamburger at 480 but ran into it at 400, and 52vw
-      // still ran into it at 320.
-      max-width: min(240px, 46vw);
+      // 240px cleared the hamburger at 480 but ran into it at 400. Below md the
+      // hamburger IS right-aligned to the viewport, so a vw is right here.
+      max-width: min(240px, 43vw);
 
       @include media-breakpoint-up(md) {
         max-width: 401px;
       }
 
-      // Clearance limits, not taste. The nav pill sits beside the lockup and the
-      // gap between them closes as the viewport narrows, so between lg and xxl
-      // the width is tied to the viewport rather than pinned: at a flat 401px
-      // it ran 29px into the pill at 1280, and at a flat 300px it ran 66px into
-      // it at 1024.
-      @media only screen and (min-width: 992px) and (max-width: 1399.98px) {
-        max-width: min(401px, 21vw);
+      // Clearance limits, measured rather than guessed. The nav pill sits inside
+      // a Bootstrap container, so the space left of it steps with the
+      // container's max-width and does NOT scale with the viewport: it is a
+      // flat 214px from 992 to 1199, 352px from 1200 to 1399 and 412px above
+      // that. Every vw value tried here collided somewhere in the middle of a
+      // step for exactly that reason, at 1120 and 1160. These are the measured
+      // widths less a 20px gap.
+      @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+        max-width: 214px;
+      }
+
+      @media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+        max-width: 352px;
       }
 
       path, rect {
