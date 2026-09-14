@@ -15,10 +15,12 @@
       font-family: $font-circular-medium;
       text-transform: uppercase;
       font-size: 14px;
-      line-height: 12px;
+      // Matches the trigger above it: 1.45 leading, --radius-btn instead of
+      // the old 22px pill.
+      line-height: 1.45;
       display: block;
-      padding: 15px 40px 15px 30px;
-      border-radius: 22px;
+      padding: 12px 40px 12px 30px;
+      border-radius: var(--radius-btn);
       width: fit-content;
       cursor: pointer;
       position: relative;
@@ -46,8 +48,8 @@
 
       .selected-term {
         font-size: 10px;
-        padding: 10px 33px 10px 25px;
-        line-height: 10px;
+        padding: 9px 33px 9px 25px;
+        line-height: 1.45;
 
         &:after {
           width: 6px;
@@ -63,46 +65,64 @@
     margin-bottom: 10px;
 
     .term-selector {
-      background-color: #ffffff;
-      color: $ccg-dark-green;
+      // T2 quiet utility: white field, 1px navy hairline, --radius-btn. The
+      // hairline is the whole point. Without it this was a white pill on a
+      // white listing ground, 1.00:1, with no box at all.
+      background-color: $hof-white;
+      color: $hof-navy;
+      border: 1px solid $hof-navy;
       font-family: $font-circular-medium;
       text-transform: uppercase;
       font-size: 14px;
-      line-height: 12px;
+      line-height: 1.3;
       width: 200px;
-      padding: 15px 30px;
-      border-radius: 22px;
+      padding: 13px 30px;
+      border-radius: var(--radius-btn);
       cursor: pointer;
       position: relative;
       transition: $ccg-transition-all;
 
+      // Navy fill on hover, not --interaction-accent: that resolves to deep
+      // violet on light grounds, and the navy label on violet is 2.5:1.
       &:hover {
-        background-color: var(--interaction-accent);
+        background-color: $hof-navy;
+        color: $hof-white;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $hof-navy;
+        outline-offset: 2px;
       }
 
       &.dropdown-open {
         background-color: #ffffff !important;
       }
 
+      // A 12x8 chevron in a 12x8 box. The old one put a 12.6x8.35 glyph in a
+      // 15x15 box at background-size: 100% 100%, which stretched it into a
+      // fat sideways arrow, and used a second asset for the open state.
       &:after {
         content: "";
         display: inline-block;
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 8px;
         position: absolute;
-        right: 18px;
+        right: 16px;
         top: 50%;
         transform: translateY(-50%);
-        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMi42IiBoZWlnaHQ9IjguMzUiIHZpZXdCb3g9IjAgMCAxMi42IDguMzUiPjxwYXRoIGQ9Ik0xOC42NjgsMTkuMzU2bC0xLjMzNy0xLjQ4OCw1LjM1Ny00LjgxMkwxNy4zMzIsOC4yNDRsMS4zMzctMS40ODgsNy4wMTMsNi4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTkuMzU1IC0xNy4zMzIpIHJvdGF0ZSg5MCkiIGZpbGw9IiMxODJENDMiLz48L3N2Zz4=');
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.75 6 6.25 11 1.75' stroke='%23182D43' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: center;
-        background-size: 100% 100%;
+        background-size: contain;
+        transition: transform .2s;
+      }
+
+      &:hover:after {
+        filter: brightness(0) invert(1);
       }
 
       &.dropdown-open:after {
-        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4Ljk4OCIgaGVpZ2h0PSI4Ljk4OCIgdmlld0JveD0iMCAwIDguOTg4IDguOTg4Ij4NCiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTI4NS4yMzggLTExNzMuMjkzKSI+DQogICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyODUuOTQ1IDExNzQpIj4NCiAgICAgICAgICAgIDxwYXRoIGQ9Ik0tMjE1NTguMTg5LTkyNTguOTQ0bC03LjU3NC03LjU3NCwxLjQxNC0xLjQxNCw3LjU3NCw3LjU3NFoiDQogICAgICAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMTU2NS4wNTcgOTI2Ny4yMjYpIiBmaWxsPSIjMTgyRDQzIi8+DQogICAgICAgIDwvZz4NCiAgICAgICAgPHBhdGggZD0iTS0yMTU2NC4zNDYtOTI1OC45NDRsLTEuNDE0LTEuNDE0LDcuNTc0LTcuNTc0LDEuNDE0LDEuNDE0WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjI4NTAuOTk4IDEwNDQxLjIyNikiDQogICAgICAgICAgICAgIGZpbGw9IiMxODJENDMiLz4NCiAgICA8L2c+DQo8L3N2Zz4=');
-        width: 9px;
-        height: 9px;
+        transform: translateY(-50%) rotate(180deg);
       }
     }
 
@@ -125,11 +145,11 @@
       .term-header {
         font-family: $font-circular-medium;
         color: $ccg-dark-green;
-        background-color: #F0EFED;
+        background-color: $hof-grey-warm;
         font-size: 14px;
-        line-height: 12px;
+        line-height: 1.45;
         display: block;
-        padding: 10px 15px;
+        padding: 11px 15px;
         text-decoration: none;
         text-transform: uppercase;
 
@@ -142,9 +162,11 @@
         color: $ccg-dark-green;
         font-family: $font-circular-medium;
         font-size: 14px;
-        line-height: 12px;
+        // 1.45, not 12px. The leading was tighter than the type size, which
+        // is what made a 26-item list read as a solid block.
+        line-height: 1.45;
         display: block;
-        padding: 10px 30px;
+        padding: 11px 30px;
         text-decoration: none;
         text-transform: uppercase;
         cursor: pointer;
@@ -160,16 +182,12 @@
         font-size: 10px;
         width: 150px;
         padding: 10px 30px 10px 25px;
-        line-height: 10px;
+        line-height: 1.3;
 
         &:after {
           width: 10px;
-          right: 13px;
-        }
-
-        &.term-selector-open:after {
-          width: 6px;
-          height: 6px;
+          height: 7px;
+          right: 12px;
         }
       }
 
@@ -179,13 +197,13 @@
 
         .term-header {
           font-size: 10px;
-          line-height: 10px;
+          line-height: 1.45;
           padding: 10px 12.5px;
         }
 
         .term-selector-item {
           font-size: 10px;
-          line-height: 10px;
+          line-height: 1.45;
           padding: 10px 25px;
         }
       }
