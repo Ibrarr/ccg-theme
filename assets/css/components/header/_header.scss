@@ -14,8 +14,13 @@ header {
 
 @import "components/header-logo";
 
+// Applied to html AND body by main-menu.js. html is the scrolling element, so
+// body alone locked nothing and the page kept scrolling behind the open menu.
 .no-scroll {
   overflow: hidden;
+  // Stops a flick at the end of the menu's own scroll carrying on into the page
+  // underneath it on touch.
+  overscroll-behavior: none;
 }
 
 .custom-cursor {

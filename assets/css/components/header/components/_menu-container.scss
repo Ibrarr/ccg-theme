@@ -94,6 +94,16 @@
     }
   }
 
+  // Open, the pill and the panel below it are one shape, so the pill's bottom
+  // corners square off and it drops its bottom border. Kept rounded, the 8px
+  // radius cut a notch out of each bottom corner and the page showed through
+  // either side of the join.
+  &:where(.menu-open, .search-open) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent;
+  }
+
   &.search-open {
     .cross, .search-text {
       display: block;

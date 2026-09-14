@@ -174,7 +174,10 @@ jQuery(document).ready(function ($) {
                 }
 
                 if (!$('body').hasClass('no-scroll')) {
-                    $('body').addClass('no-scroll');
+                    // html as well as body: html is the scrolling element, so
+                    // locking body on its own left the page scrolling behind
+                    // the open menu.
+                    $('body, html').addClass('no-scroll');
                 }
             }
         }
@@ -201,7 +204,7 @@ jQuery(document).ready(function ($) {
         }
 
         if (!$('body').hasClass('no-scroll')) {
-            $('body').addClass('no-scroll');
+            $('body, html').addClass('no-scroll');
         }
     });
 
@@ -214,7 +217,7 @@ jQuery(document).ready(function ($) {
         $('.mobile-menu-header-background').slideUp(500);
         $('.menu-container').removeClass('menu-open');
         $('.menu-container').removeClass('search-open');
-        $('body').removeClass('no-scroll');
+        $('body, html').removeClass('no-scroll');
 
         if (window.matchMedia('(max-width: 991px)').matches) {
             $('.header-logo').removeClass('mobile-menu-open');
@@ -239,7 +242,7 @@ jQuery(document).ready(function ($) {
                 $('.menu-container').removeClass('menu-open');
                 $('.menu-container').removeClass('search-open');
                 $('body').removeClass('custom-cursor');
-                $('body').removeClass('no-scroll');
+                $('body, html').removeClass('no-scroll');
                 $('.main-menu-container').slideUp(500);
                 $('.search-container').slideUp(500);
 

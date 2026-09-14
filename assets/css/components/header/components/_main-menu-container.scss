@@ -2,7 +2,8 @@
   position: relative;
   display: none;
   background-color: #ffffff;
-  border-radius: 0 0 4px 4px;
+  // Matches the pill's --radius-btn so the two read as one shape.
+  border-radius: 0 0 var(--radius-btn) var(--radius-btn);
   width: 100%;
   overflow: hidden auto;
   top: -4px;
@@ -33,7 +34,13 @@
     // both put the top of the menu list at the viewport top, behind the bar and
     // under the logo, so the first few links sat beneath the lockup.
     top: -50px;
-    height: calc(var(--app-height) - var(--ccg-topbar-height));
+    // The screen less the bar. --app-height defaults to 100%, which on an
+    // absolutely positioned panel resolves against its containing block and
+    // left the panel ending part way down, with the page visible below it.
+    // dvh handles the mobile address bar natively; vh is the fallback.
+    height: calc(100vh - var(--ccg-topbar-height));
+    height: calc(100dvh - var(--ccg-topbar-height));
+    overscroll-behavior: contain;
 
     .mobile-menu-header-background {
       display: none;
