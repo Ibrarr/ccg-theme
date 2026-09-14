@@ -68,3 +68,54 @@
   font-display: swap;
   src: url("../../assets/fonts/libre-baskerville-italic-vf.woff2") format("woff2");
 }
+
+// Metric-matched fallbacks, per the section 4 font plan's "define fallback
+// metrics (ascent-override / size-adjust) to minimise CLS on swap".
+//
+// The numbers are measured rather than borrowed: rendered against the real
+// faces, Arial sets 11.8% narrower than Poppins Regular, 12.9% narrower than
+// Medium and 13.7% narrower than SemiBold, and Georgia 16.1% narrower than
+// Libre Baskerville. Left alone that is a visible reflow the moment a face
+// swaps in, which is the CLS the plan is guarding against. Each face below
+// stretches its fallback to the webfont's own measure and matches its
+// ascent and descent, so the swap moves nothing.
+//
+// Several locals per face because the first one present wins and the machines
+// differ; if none resolve the face simply drops and the stack falls through to
+// the next family, so this can only help.
+
+@font-face {
+  font-family: "Poppins-Regular-fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 111.8%;
+  ascent-override: 94%;
+  descent-override: 31.3%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Poppins-Medium-fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 112.9%;
+  ascent-override: 93%;
+  descent-override: 31%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Poppins-SemiBold-fallback";
+  src: local("Arial Bold"), local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 113.7%;
+  ascent-override: 92.4%;
+  descent-override: 30.8%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Libre Baskerville-fallback";
+  src: local("Georgia"), local("Times New Roman"), local("Liberation Serif");
+  size-adjust: 116.1%;
+  ascent-override: 83.5%;
+  descent-override: 23.3%;
+  line-gap-override: 0%;
+}

@@ -313,7 +313,13 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                         $current_count = 1;
                         while ( have_rows( 'explained', $current_term ) ) : the_row();
                             ?>
-                            <div class="explain-card" style="background-color: <?php the_sub_field( 'background_color' ); ?>">
+                            <?php // T5 replaces the stored per-card colour with a stepped deck: white
+                            // front, a solid navy 60% tint behind it, solid navy at the
+                            // back. The ACF colour picker still holds the old brand cream
+                            // and mustard on 78 term rows, so emitting it here kept the
+                            // retired palette on the page. The rows are left alone; the
+                            // CSS simply governs now. ?>
+                            <div class="explain-card">
                                 <div class="explain-card-content">
                                     <h3><?php the_sub_field( 'title' ); ?></h3>
                                     <p><?php the_sub_field( 'content' ); ?></p>

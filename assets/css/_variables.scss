@@ -72,10 +72,10 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
 // (there is exactly one font-weight declaration in the whole codebase), so the
 // new faces are declared the same way and the 209 existing $font-circular-*
 // declarations migrate without edits.
-$font-sans-regular: "Poppins-Regular", "Noto Sans", system-ui, sans-serif;
-$font-sans-medium: "Poppins-Medium", "Noto Sans", system-ui, sans-serif;
-$font-sans-semibold: "Poppins-SemiBold", "Noto Sans", system-ui, sans-serif;
-$font-serif: "Libre Baskerville", Georgia, serif;
+$font-sans-regular: "Poppins-Regular", "Poppins-Regular-fallback", "Noto Sans", system-ui, sans-serif;
+$font-sans-medium: "Poppins-Medium", "Poppins-Medium-fallback", "Noto Sans", system-ui, sans-serif;
+$font-sans-semibold: "Poppins-SemiBold", "Poppins-SemiBold-fallback", "Noto Sans", system-ui, sans-serif;
+$font-serif: "Libre Baskerville", "Libre Baskerville-fallback", Georgia, serif;
 
 // Back-compat aliases. Circular Bold maps to Poppins SemiBold: the handover
 // font plan loads no Poppins 700.

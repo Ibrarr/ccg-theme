@@ -23,12 +23,16 @@ jQuery(document).ready(function ($) {
 
     aboutSlider.mount();
 
+    // Hold the pin until the last beat, then hand the scroll back to the page.
+    //
+    // Splide 4's Drag component has disable(boolean) and no enable(), so the
+    // else branch here threw a TypeError on every move: four errors across the
+    // sequence, and drag never came back once it had been turned off, so
+    // scrolling up from the last beat left the pin dead.
     aboutSlider.on('moved', () => {
-        if (aboutSlider.index === aboutSlider.length - 1) {
-            aboutSlider.Components.Drag.disable(true);
-        } else {
-            aboutSlider.Components.Drag.enable();
-        }
+        const onLastBeat = aboutSlider.index === aboutSlider.length - 1;
+
+        aboutSlider.Components.Drag.disable(onLastBeat);
     });
 
     aboutSlider.on('move', (newIndex) => {

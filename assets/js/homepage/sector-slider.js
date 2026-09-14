@@ -50,17 +50,26 @@ jQuery(document).ready(function ($) {
         );
     }
 
-    $('.next-slide').on('click', function () {
-        $('.sectors-slider .splide__arrow.splide__arrow--next').trigger('click');
+    // Both scoped to this slider. The homepage has two sliders and each has a
+    // .first-slide: the sectors one holds the intro panel, the services one
+    // holds the services accordion. Unscoped, moving the sectors slider faded
+    // the services slider's first slide out with it, which is the two sliders
+    // appearing to move together.
+    const $sectors = $('.sectors-slider');
+
+    $sectors.find('.next-slide').on('click', function () {
+        $sectors.find('.splide__arrow.splide__arrow--next').trigger('click');
     });
 
     sectorSlider.on('move', function (newIndex) {
+        const $firstSlide = $sectors.find('.first-slide');
+
         if (newIndex === 0) {
-            $('.sectors-slider').removeClass('first-slide-inactive');
-            $('.first-slide').fadeIn(1500);
+            $sectors.removeClass('first-slide-inactive');
+            $firstSlide.fadeIn(1500);
         } else {
-            $('.sectors-slider').addClass('first-slide-inactive');
-            $('.first-slide').fadeOut(1000);
+            $sectors.addClass('first-slide-inactive');
+            $firstSlide.fadeOut(1000);
         }
     });
 });

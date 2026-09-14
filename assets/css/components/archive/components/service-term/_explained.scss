@@ -128,4 +128,42 @@
   @include media-breakpoint-up(lg) {
     padding: 75px 0;
   }
+
+  // T5 stepped deck. Front card white, because the warm-grey section ground is
+  // the edge device and no keyline is wanted; behind it a SOLID 60% navy tint,
+  // not an opacity, so the card underneath cannot ghost through as the deck
+  // shuffles; solid navy at the back. White on the tint measures 3.98:1, which
+  // is the ~4:1 the spec predicts: it passes at the 42px the peeking titles
+  // render, and the spec's fallback to a 70% tint is a one-line change here if
+  // a smaller text ever sits on it.
+  .cards-container {
+    .explain-card:nth-child(3n + 1) {
+      background-color: $hof-white;
+
+      .explain-card-content {
+        h3, p, .count, .number { color: $hof-navy; }
+      }
+    }
+
+    .explain-card:nth-child(3n + 2) {
+      // T5 offers the 60% tint #74818E first and names its own fallback:
+      // "deepen the tint to 70% (#5D6C7B) if any visible text fails". It does.
+      // At 60% the peeking title cleared 3.98:1 at 42px, but the card's body
+      // copy and its "2 - 3" counter are small text needing 4.5 and sat at the
+      // same 3.98. At 70% they read 5.4:1.
+      background-color: #5D6C7B;
+
+      .explain-card-content {
+        h3, p, .count, .number { color: $hof-white; }
+      }
+    }
+
+    .explain-card:nth-child(3n + 3) {
+      background-color: $hof-navy;
+
+      .explain-card-content {
+        h3, p, .count, .number { color: $hof-white; }
+      }
+    }
+  }
 }
