@@ -80,17 +80,16 @@ $font-serif: "Libre Baskerville", Georgia, serif;
 // Back-compat aliases. Circular Bold maps to Poppins SemiBold: the handover
 // font plan loads no Poppins 700.
 $font-circular-bold: $font-sans-semibold;
-// Client decision, Sept 2026: everything that was Circular Medium sets in
-// Poppins Regular. That is 124 declarations across 70 files, so it is made once
-// here rather than edited at each call site, and it is reversible in one line.
-// It deliberately overrides the handover type scale, which asks for Poppins
-// Medium on section display headings, card titles, demoted listing H1s, service
-// H1s, stat numerals, the About masthead support copy and the Careers value
-// words. One place still uses Medium, and it sets $font-sans-medium directly:
-// the violet statement band's closing phrase, where the weight is the contrast
-// against the serif italic rather than a heading weight. Poppins-Medium is
-// therefore still loaded, for that one role.
-$font-circular-medium: $font-sans-regular;
+// The handover's type scale names Poppins Medium in roughly seventeen roles:
+// section display headings, card titles, demoted listing H1s, both lines of the
+// service H1, the stat-trio and impact-band numerals, the About masthead
+// support copy, the Careers value words, the statement band's closing phrase,
+// the "Explore" button label and in-body H2s. CCGroup asked in Sept 2026 for
+// Medium to be swapped to Regular globally, which this alias did in one line
+// and which left the Medium face loaded but never applied. The client's design
+// instructions are final, so the alias points back at Medium and all 124
+// declarations across 70 files follow it.
+$font-circular-medium: $font-sans-medium;
 $font-circular-regular: $font-sans-regular;
 // $font-circular-italic is retired. Its two call sites wanted different things:
 // the article byline is a serif micro-label (section 1, added at T3) while body

@@ -35,12 +35,26 @@
     // violet token behind navy text it measured 1.49:1 and the label vanished
     // on hover. 7.5 asks for an underline draw-in, which is also what this is
     // now. Same correction applied at all 23 call sites.
-    background: linear-gradient(0deg, var(--link-underline), var(--link-underline)) no-repeat right bottom / 0 1px;
-    transition: background-size 350ms;
+    position: relative;
+
+    // Section 5, rule 2: the underline draws in on transform, which the
+    // compositor handles, rather than on background-size, which does not
+    // animate off the paint step. Same 350ms, same look.
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: var(--link-underline);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 350ms ease-out;
+    }
 
     &:where(:hover, :focus-visible) {
-      background-size: 100% 1px;
-      background-position-x: left;
+      &::after { transform: scaleX(1); }
     }
   }
 }
@@ -54,12 +68,26 @@
   a {
     font-family: $font-circular-medium;
     color: $color;
-    background: linear-gradient(0deg, #fff, #fff) no-repeat right bottom / 0 1px;
-    transition: background-size 350ms;
+    position: relative;
 
-    &:where(:hover, :focus-visible) {
-      background-size: 100% 1px;
-      background-position-x: left;
+    // Section 5, rule 2: the underline draws in on transform, which the
+    // compositor handles, rather than on background-size, which does not
+    // animate off the paint step. Same 350ms, same look.
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: #fff;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 350ms ease-out;
+    }
+
+    &:where(:hover, :focus-visible)::after {
+      transform: scaleX(1);
     }
   }
 }

@@ -30,17 +30,17 @@
 
       // The closing phrase. The template wraps it for the approved copy, and an
       // editor can override that by wrapping their own phrase in the field.
-      // Down a step too, to Poppins Regular. The weight is in the family name
-      // in this theme, so the family is the change and font-weight follows it
-      // rather than doing the work. The contrast with the serif italic either
-      // side of it is now family and style rather than weight, which is the
-      // part of the device that was doing the work anyway.
+      // The type scale and section 2 both name this role: the statement is
+      // Libre Baskerville Italic and its closing phrase snaps to Poppins
+      // Medium. The register snap is the system's emphasis device on statement
+      // bands, so the family carries it and font-weight follows the family
+      // rather than doing the work.
       .intro-snap,
       strong,
       b {
-        font-family: $font-sans-regular;
+        font-family: $font-sans-medium;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 500;
       }
     }
   }
