@@ -163,9 +163,17 @@ jQuery(document).ready(function ($) {
 
             if (!$(event.target).hasClass('header-search')) {
                 $('.menu-container').toggleClass('menu-open');
-                $('.main-menu-container').slideDown(500);
-                $('.nav-container').slideDown(500);
-                $('.mobile-menu-header-background').slideDown(500);
+                // The panel slides; the nav inside it is shown instantly. They
+                // used to slide together, and because .nav-container is a CHILD
+                // of .main-menu-container that meant jQuery measured the
+                // panel's target height while the nav was still collapsed. The
+                // first open worked because the nav had never been hidden yet;
+                // every open after it animated to about 1px and then snapped
+                // open when jQuery released the inline height.
+                $('.nav-container').show();
+                $('.search-container').hide();
+                $('.main-menu-container').stop(true, true).slideDown(500);
+                $('.mobile-menu-header-background').stop(true, true).slideDown(500);
 
                 if (window.matchMedia('(max-width: 991px)').matches) {
                     setTimeout(function () {
@@ -192,10 +200,12 @@ jQuery(document).ready(function ($) {
 
         $('.menu-container').addClass('search-open');
         $('.menu-container').addClass('menu-open');
-        $('.main-menu-container').slideDown(500);
-        $('.search-container').slideDown(500);
-        $('.mobile-menu-header-background').slideDown(500);
-        $('.nav-container').slideUp(1000);
+        // Same reasoning as the menu handler above: the panel slides, its
+        // contents swap instantly.
+        $('.search-container').show();
+        $('.nav-container').hide();
+        $('.main-menu-container').stop(true, true).slideDown(500);
+        $('.mobile-menu-header-background').stop(true, true).slideDown(500);
 
         if (window.matchMedia('(max-width: 991px)').matches) {
             setTimeout(function () {
@@ -211,10 +221,8 @@ jQuery(document).ready(function ($) {
     $('.cross').click(function (event) {
         event.stopPropagation();
 
-        $('.main-menu-container').slideUp(500);
-        $('.search-container').slideUp(500);
-        $('.nav-container').slideUp(500);
-        $('.mobile-menu-header-background').slideUp(500);
+        $('.main-menu-container').stop(true, true).slideUp(500);
+        $('.mobile-menu-header-background').stop(true, true).slideUp(500);
         $('.menu-container').removeClass('menu-open');
         $('.menu-container').removeClass('search-open');
         $('body, html').removeClass('no-scroll');
@@ -243,8 +251,8 @@ jQuery(document).ready(function ($) {
                 $('.menu-container').removeClass('search-open');
                 $('body').removeClass('custom-cursor');
                 $('body, html').removeClass('no-scroll');
-                $('.main-menu-container').slideUp(500);
-                $('.search-container').slideUp(500);
+                $('.main-menu-container').stop(true, true).slideUp(500);
+                $('.mobile-menu-header-background').stop(true, true).slideUp(500);
 
                 if (window.matchMedia('(max-width: 991px)').matches) {
                     $('.header-logo').removeClass('mobile-menu-open');

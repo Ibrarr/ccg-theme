@@ -94,14 +94,19 @@
     }
   }
 
-  // Open, the pill and the panel below it are one shape, so the pill's bottom
-  // corners square off and it drops its bottom border. Kept rounded, the 8px
-  // radius cut a notch out of each bottom corner and the page showed through
-  // either side of the join.
-  &:where(.menu-open, .search-open) {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-color: transparent;
+  // From lg up the pill and the panel below it are one shape, so the pill's
+  // bottom corners square off and it drops its bottom border. Kept rounded,
+  // the 8px radius cut a notch out of each bottom corner and the page showed
+  // through either side of the join.
+  //
+  // Below lg there is no join to close: the panel is a full-screen overlay
+  // rather than something hanging off the pill, so the pill stays a pill.
+  @include media-breakpoint-up(lg) {
+    &:where(.menu-open, .search-open) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-color: transparent;
+    }
   }
 
   &.search-open {
