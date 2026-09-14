@@ -76,9 +76,10 @@ $font-circular-bold: $font-sans-semibold;
 // It deliberately overrides the handover type scale, which asks for Poppins
 // Medium on section display headings, card titles, demoted listing H1s, service
 // H1s, stat numerals, the About masthead support copy and the Careers value
-// words. The two places the design uses Medium as a *contrast* device still do,
-// because they set $font-sans-medium directly: the violet statement band's
-// closing phrase and the notice bar's dismiss glyph.
+// words. One place still uses Medium, and it sets $font-sans-medium directly:
+// the violet statement band's closing phrase, where the weight is the contrast
+// against the serif italic rather than a heading weight. Poppins-Medium is
+// therefore still loaded, for that one role.
 $font-circular-medium: $font-sans-regular;
 $font-circular-regular: $font-sans-regular;
 // $font-circular-italic is retired. Its two call sites wanted different things:
