@@ -29,7 +29,11 @@
           font-family: $font-circular-regular;
           font-size: clamp(1.4375rem, 0.8819rem + 1.1574vw, 1.75rem);
           line-height: 34px;
-          color: #848484;
+          // Register #15: this was #848484, a raw hex that never went through
+          // the token layer, so the reskin did not reach it and the primary
+          // navigation stayed at 3.74:1 on white. The handover names navy 70%
+          // as the resting value for exactly this reason: 5.4:1.
+          color: $hof-navy-70;
           transition: all .3s;
 
           &:hover {
@@ -59,7 +63,8 @@
 
       li.menu-item-has-children {
         > a:before {
-          color: #848484;
+          // Same token as the link it marks, per register #15.
+          color: $hof-navy-70;
           content: '+';
           margin-right: 10px;
           transition: all .3s;
