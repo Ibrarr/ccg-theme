@@ -102,6 +102,23 @@
             position: relative;
             width: 30px;
             height: 30px;
+            // It is a flex child, so without this it was squeezed to 18-20px
+            // by the service name beside it.
+            flex: 0 0 auto;
+
+            // The QA checklist wants a 44px target on every expand control.
+            // The row is only 35px tall, so the hit area is an invisible
+            // overlay centred on the glyph rather than a bigger box: the
+            // target grows, the layout does not move.
+            &::after {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 44px;
+              height: 44px;
+              transform: translate(-50%, -50%);
+            }
             @include media-breakpoint-up(lg) {
               width: 35px;
               height: 35px;
