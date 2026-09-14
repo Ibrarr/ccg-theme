@@ -24,6 +24,32 @@
 // Mixins
 @import 'mixins';
 
+// Poppins is wider than Circular, so any column previously tuned to hold a
+// long word no longer does: the footer site-map list and the case-study stat
+// columns both had a single word hanging over the column beside them. This
+// only fires when a word genuinely cannot fit on a line of its own, so it
+// changes nothing where the copy already fitted, and it stops the next long
+// word doing the same thing.
+h1, h2, h3, h4, h5, h6,
+p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
+  overflow-wrap: break-word;
+}
+
+// Gravity Forms paints the required asterisk its own red (#C02B0A). That is
+// not a colour in this palette and it fails on the grounds the forms sit on
+// (2.4:1 on navy, 2.5:1 on acid). Inheriting the label's colour makes it right
+// on every ground by construction, so no form band needs its own rule.
+// !important because the orbital theme injects a per-form <style> scoped to
+// #gform_wrapper_{id}, so it wins on ID specificity from a stylesheet. Same
+// reason the download form's button rules carry it.
+.gform_wrapper {
+  .gfield_required,
+  .gfield_required_asterisk,
+  .gform_required_legend {
+    color: inherit !important;
+  }
+}
+
 // Dark-ground containers: acid is the interaction accent here, per 7.5. Kept in
 // one place so a new navy section only has to join this list.
 footer,
