@@ -24,6 +24,9 @@
 // Mixins
 @import 'mixins';
 
+// The custom dropdown, shared by the four templates that use one.
+@import 'components/dropdown';
+
 // Poppins is wider than Circular, so any column previously tuned to hold a
 // long word no longer does: the footer site-map list and the case-study stat
 // columns both had a single word hanging over the column beside them. This
@@ -48,6 +51,24 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
   .gform_required_legend {
     color: inherit !important;
   }
+}
+
+// Tint for the decorative bars. Light by default; the dark bands below set it
+// white. Separate from --interaction-accent on purpose: a band can be dark
+// enough to need a white bar without every hover in it turning acid.
+:root {
+  --bar-tint: #EFEFEC;
+}
+
+.archive-header,
+.services-header,
+.sectors-header,
+.post-header,
+.team,
+.featured-slider,
+.holding-page,
+footer {
+  --bar-tint: #{$hof-white};
 }
 
 // Dark-ground containers: acid is the interaction accent here, per 7.5. Kept in
