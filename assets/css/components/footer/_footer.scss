@@ -98,10 +98,14 @@ footer {
     }
 
     .social-contact {
+      // 7.4 serif micro-labels: these are the small footer section labels the
+      // policy names explicitly, Libre Baskerville Italic in acid on navy.
       h4 {
-        text-transform: uppercase;
-        font-family: $font-circular-bold;
-        font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
+        font-family: $font-serif;
+        font-style: italic;
+        text-transform: none;
+        font-size: clamp(0.75rem, 0.5278rem + 0.463vw, 0.84375rem);
+        line-height: 1.3;
         color: $hof-acid;
       }
 
@@ -221,7 +225,14 @@ footer {
           }
         }
 
+        // Legal links are a serif role too: Libre Baskerville Regular 14px,
+        // warm grey on navy.
+        font-family: $font-serif;
+        font-size: 14px;
+        line-height: 1.5;
+
         a {
+          font-family: $font-serif;
           color: $ccg-off-white;
           text-decoration: none;
           transition: $ccg-transition-all;

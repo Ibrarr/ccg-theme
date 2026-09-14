@@ -83,8 +83,12 @@
   .form-body-text {
     @include body-text(#ffffff);
 
+    // The gate's lead line. It was $ccg-orange, which is navy since the
+    // reskin, and this band's ground is navy: it painted 1.00:1 and the line
+    // was simply gone. Acid is the permitted highlight on a navy ground and
+    // matches the sidebar-card label grammar (10.4:1).
     p:first-child {
-      color: $ccg-orange;
+      color: $hof-acid;
     }
   }
 }

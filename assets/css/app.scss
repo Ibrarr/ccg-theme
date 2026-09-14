@@ -53,6 +53,16 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
   }
 }
 
+// The statement-block lead voice, per 7.4 and the type scale: the opening
+// sentence of a statement passage in Libre Baskerville Italic, with the
+// remainder left in Poppins. Acid on the dark bands these passages sit on;
+// the colour is a property so a light-ground use can override it.
+.statement-lead {
+  font-family: $font-serif;
+  font-style: italic;
+  color: var(--statement-lead-colour, #{$hof-acid});
+}
+
 // Tint for the decorative bars. Light by default; the dark bands below set it
 // white. Separate from --interaction-accent on purpose: a band can be dark
 // enough to need a white bar without every hover in it turning acid.

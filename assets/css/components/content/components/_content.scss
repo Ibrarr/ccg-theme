@@ -4,6 +4,42 @@
   position: relative;
 
   .content {
+    // T3 pull quote: "Libre Baskerville Italic, deep violet, 22px, with a 3px
+    // deep-violet left rule". Body quotes arrive as WYSIWYG <blockquote>, so
+    // the role is carried here rather than by an editor-applied class.
+    blockquote {
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.125rem, 0.875rem + 0.7vw, 1.375rem);
+      line-height: 1.5;
+      color: $hof-violet-deep;
+      border-left: 3px solid $hof-violet-deep;
+      padding-left: 24px;
+      margin: 40px 0;
+
+      p {
+        font-family: inherit;
+        font-style: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // 7.5 in-body text links: deep violet on light, underline draw-in. The
+    // !important is aimed at inline style="color:…" left in older WYSIWYG
+    // copy: one post set its links #54B8DB, which read 2.27:1 on white. Only
+    // links are forced; the editorial span colours 7.2 keeps as policy (chart
+    // and figure colours) are untouched.
+    a {
+      color: $hof-violet-deep !important;
+    }
+
     ul {
       @include body-text($ccg-text);
       padding-left: 20px;

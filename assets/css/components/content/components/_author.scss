@@ -5,6 +5,15 @@
     margin: 0;
   }
 
+  // Section 1, "serif byline label": the "Written by" prefix is the serif
+  // micro-label on light; the name that follows stays in the sans, navy.
+  .byline-label {
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
+    color: $hof-violet-deep;
+  }
+
   a {
     color: $ccg-text;
     font-family: $font-serif;

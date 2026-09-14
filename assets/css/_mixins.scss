@@ -28,11 +28,18 @@
     color: $color;
     // The sweep colour comes from a custom property so a light-ground section can
     // switch it to deep violet without a second copy of this mixin.
-    background: linear-gradient(0deg, var(--link-underline), var(--link-underline)) no-repeat right bottom / 0;
+    //
+    // The size is "0 1px" growing to "100% 1px", NOT "0" growing to "100%". A
+    // gradient has no intrinsic height, so an unqualified 100% fills the whole
+    // box: under the old mustard that read as a highlight sweep, but with the
+    // violet token behind navy text it measured 1.49:1 and the label vanished
+    // on hover. 7.5 asks for an underline draw-in, which is also what this is
+    // now. Same correction applied at all 23 call sites.
+    background: linear-gradient(0deg, var(--link-underline), var(--link-underline)) no-repeat right bottom / 0 1px;
     transition: background-size 350ms;
 
     &:where(:hover, :focus-visible) {
-      background-size: 100%;
+      background-size: 100% 1px;
       background-position-x: left;
     }
   }
@@ -47,11 +54,11 @@
   a {
     font-family: $font-circular-medium;
     color: $color;
-    background: linear-gradient(0deg, #fff, #fff) no-repeat right bottom / 0;
+    background: linear-gradient(0deg, #fff, #fff) no-repeat right bottom / 0 1px;
     transition: background-size 350ms;
 
     &:where(:hover, :focus-visible) {
-      background-size: 100%;
+      background-size: 100% 1px;
       background-position-x: left;
     }
   }

@@ -50,7 +50,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                 </div>
             </section>
             <div class="author">
-                <p>Written by <?php the_author(); ?></p>
+                <p><span class="byline-label">Written by</span> <?php the_author(); ?></p>
 				<?php
 				if ( $linkedin_url ) {
 					echo '<a href="' . esc_url( $linkedin_url ) . '" target="_blank">LinkedIn</a>';

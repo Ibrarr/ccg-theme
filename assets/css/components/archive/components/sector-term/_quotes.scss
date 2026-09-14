@@ -9,7 +9,11 @@
   .quote {
     font-size: clamp(1.75rem, 0.2463rem + 1.8519vw, 2.875rem);
     line-height: clamp(1.75rem, 0.2932rem + 1.8519vw, 3.125rem);;
-    font-family: $font-circular-medium;
+    // 7.2: the quote/testimonial band is the voice band, so the quote is white
+    // Libre Baskerville Italic on the deep violet ground.
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
     color: $hof-white;
     text-align: center;
     margin: 0 auto 40px;

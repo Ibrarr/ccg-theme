@@ -13,16 +13,25 @@
   }
 
   .intro {
+    // The standfirst is Libre Baskerville Italic at class level, per the type
+    // scale: a serif voice, no per-post spans, 1.5 leading.
     h2 {
       @include sub-heading-text($ccg-green);
+      font-family: $font-serif;
+      font-style: italic;
+      font-size: clamp(1.25rem, 0.6944rem + 1.1574vw, 1.5rem);
+      line-height: 1.5;
 
+      // 7.5: standfirst links are deep violet on light with an underline
+      // draw-in. !important because editors have left inline colours on some
+      // of these links (one measured 2.27:1 against white).
       a {
-        color: $ccg-green;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        color: $hof-violet-deep !important;
+        background: linear-gradient(0deg, $hof-violet-deep, $hof-violet-deep) no-repeat right bottom / 0 1px;
         transition: background-size 350ms;
 
         &:where(:hover, :focus-visible) {
-          background-size: 100%;
+          background-size: 100% 1px;
           background-position-x: left;
         }
       }

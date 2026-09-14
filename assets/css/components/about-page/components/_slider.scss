@@ -159,7 +159,11 @@
   }
 
   .splide__slide {
-    background: radial-gradient(ellipse at center, #{$hof-navy-70} 0%, #{$hof-navy} 60%) no-repeat center;
+    // The centre stop was flat $hof-navy-70, which lifted the ground to
+    // #5D6C7B under the middle of the band. Acid measured 4.01:1 there, short
+    // of the 4.5 the 14px eyebrow and the 16px serif lead sentence need. Mixed
+    // 70/30 toward navy the vignette survives and acid reads 5.4:1.
+    background: radial-gradient(ellipse at center, #{mix($hof-navy-70, $hof-navy, 70%)} 0%, #{$hof-navy} 60%) no-repeat center;
     background-size: 100% 60%;
 
     .about-slide {
@@ -179,8 +183,11 @@
         color: #ffffff;
       }
 
+      // The masthead statement is Libre Baskerville Regular, whole element and
+      // no lead-in span, per the T7 row of the type scale.
       .sub-heading {
-        font-family: $font-circular-medium;
+        font-family: $font-serif;
+        font-weight: 400;
         font-size: clamp(2rem, 0.4444rem + 3.2407vw, 2.875rem);
         line-height: clamp(2.25rem, 0.6944rem + 3.2407vw, 3.125rem);
         color: #ffffff;
@@ -188,8 +195,14 @@
 
       // Same fault, same fix: the first half of this two-tone statement was
       // navy on the navy gradient while the span beside it was white.
+      //
+      // T7 beat 2 takes "the same pairing as beat 1": the statement is Libre
+      // Baskerville Regular, so this is the serif too. Where the copy carries a
+      // second colour the acid/white split stays as the homepage pick-out
+      // device; only the family was wrong.
       .sub-heading.two-color {
-        font-family: $font-circular-medium;
+        font-family: $font-serif;
+        font-weight: 400;
         font-size: clamp(2rem, 0.4444rem + 3.2407vw, 2.875rem);
         line-height: clamp(2.25rem, 0.6944rem + 3.2407vw, 3.125rem);
         color: $hof-acid;

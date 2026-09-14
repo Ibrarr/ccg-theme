@@ -51,6 +51,59 @@ function register_custom_page_templates() {
  * @param string $text Raw field value.
  * @return string Escaped HTML.
  */
+/**
+ * Wraps a passage's opening sentence in a span so it can carry the serif lead
+ * voice, per the type scale's statement-block role.
+ *
+ * The design sets the first sentence of these passages in Libre Baskerville
+ * Italic and the remainder in Poppins, which needs one inline element. The
+ * copy, its order and its meaning are untouched: only a span is added around
+ * text that is already there. Author markup is honoured rather than stripped,
+ * and a passage the splitter cannot read simply comes back unwrapped.
+ *
+ * @param string $text The passage.
+ * @return string      The passage with its opening sentence wrapped.
+ */
+function ccg_statement_lead_html( $text ) {
+	$text = trim( (string) $text );
+
+	if ( '' === $text ) {
+		return '';
+	}
+
+	// Already wrapped by an editor, or carrying markup we should not re-cut.
+	if ( false !== strpos( $text, 'statement-lead' ) ) {
+		return wp_kses_post( $text );
+	}
+
+	// The end of the first sentence: a full stop, question or exclamation mark
+	// followed by whitespace.
+	if ( preg_match( '/^(.+?[.?!])(\s+)(\S.*)$/su', $text, $m ) ) {
+		return '<span class="statement-lead">' . esc_html( $m[1] ) . '</span>'
+			. esc_html( $m[2] ) . esc_html( $m[3] );
+	}
+
+	// A single-sentence passage has no break to read, but the design still
+	// opens on a serif phrase: Our News runs "Keep up to date" into "with our
+	// latest news…" as one sentence. Fall back to the opening four words, the
+	// length the handover's own two examples use. Only for a passage long
+	// enough that a lead still leaves a remainder; anything shorter is the
+	// statement itself and stays whole. An editor who wants a different split
+	// wraps their own phrase in the field, which the guard above honours.
+	$words = preg_split( '/(\s+)/u', $text, -1, PREG_SPLIT_DELIM_CAPTURE );
+
+	if ( count( $words ) < 17 ) {
+		return esc_html( $text );
+	}
+
+	$lead      = implode( '', array_slice( $words, 0, 7 ) );
+	$separator = $words[7];
+	$rest      = implode( '', array_slice( $words, 8 ) );
+
+	return '<span class="statement-lead">' . esc_html( $lead ) . '</span>'
+		. esc_html( $separator ) . esc_html( $rest );
+}
+
 function ccg_statement_band_html( $text ) {
 	$text = trim( (string) $text );
 

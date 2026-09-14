@@ -52,7 +52,7 @@ $button = get_field( 'button' );
 										<?php } ?>
 
 										<?php if ( get_sub_field( 'body' ) ) { ?>
-                                            <p class="body"><?php the_sub_field( 'body' ); ?></p>
+                                            <p class="body"><?php echo ccg_statement_lead_html( get_sub_field( 'body' ) ); ?></p>
 										<?php } ?>
                                     </div>
                                 </div>

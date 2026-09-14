@@ -28,16 +28,22 @@
     }
 
     .intro {
+      // The standfirst is a serif voice here too, same class-level rule as the
+      // blog and insight header: Libre Baskerville Italic at 1.5 leading.
       h2 {
         @include sub-heading-text(#ffffff);
+        font-family: $font-serif;
+        font-style: italic;
+        font-size: clamp(1.25rem, 0.6944rem + 1.1574vw, 1.5rem);
+        line-height: 1.5;
 
         a {
           color: $ccg-green;
-          background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+          background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0 1px;
           transition: background-size 350ms;
 
           &:where(:hover, :focus-visible) {
-            background-size: 100%;
+            background-size: 100% 1px;
             background-position-x: left;
           }
         }

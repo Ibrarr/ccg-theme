@@ -5,7 +5,7 @@
         <div class="row">
             <h1 class="title"><?php the_field( 'insight_hub_heading', 'option' ); ?></h1>
             <div class="col-lg-8 col-md-10 intro">
-                <h2><?php the_field( 'insight_hub_description', 'option' ); ?></h2>
+                <h2><?php echo ccg_statement_lead_html( get_field( 'insight_hub_description', 'option' ) ); ?></h2>
             </div>
         </div>
     </div>

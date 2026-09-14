@@ -38,21 +38,24 @@
     margin: 0;
   }
 
+  // T3: "Pull quotes -> Libre Baskerville Italic, deep violet, 22px, with a
+  // 3px deep-violet left rule". The rule is already violet (see $rd-coral) and
+  // keeps the approved 4/5/6 responsive widths; only the type changes here.
   p {
-    font-family: $font-circular-regular;
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
     font-size: 17px;
-    line-height: 25px;
-    color: $rd-dark-green;
+    line-height: 1.5;
+    color: $hof-violet-deep;
     margin: 0;
 
     @include media-breakpoint-up(md) {
       font-size: 18px;
-      line-height: 27px;
     }
 
     @include media-breakpoint-up(lg) {
-      font-size: 20px;
-      line-height: 30px;
+      font-size: 22px;
     }
   }
 

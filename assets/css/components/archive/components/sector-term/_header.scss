@@ -25,16 +25,26 @@
   }
 
   .intro {
+    // T4/T5: "Opening statement = the T3 standfirst role, shared" - sector and
+    // service pages open on the same serif beat as an article, so this block
+    // matches .post-header .intro h2 line for line. Change one, change both.
     h2 {
       @include sub-heading-text($ccg-green);
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.25rem, 0.6944rem + 1.1574vw, 1.5rem);
+      line-height: 1.5;
 
       a {
-        color: $ccg-green;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+        // 7.5 light-ground link colour. The underline was $ccg-orange, which
+        // is navy now, so it drew navy on navy and the affordance vanished.
+        color: $hof-violet-deep;
+        background: linear-gradient(0deg, $hof-violet-deep, $hof-violet-deep) no-repeat right bottom / 0 1px;
         transition: background-size 350ms;
 
         &:where(:hover, :focus-visible) {
-          background-size: 100%;
+          background-size: 100% 1px;
           background-position-x: left;
         }
       }

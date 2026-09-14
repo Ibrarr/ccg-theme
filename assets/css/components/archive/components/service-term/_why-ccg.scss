@@ -57,8 +57,11 @@
     line-height: clamp(2.5rem, 1.3rem + 4vw, 4.5625rem);
     overflow-wrap: break-word;
     // 7.4: washed statement bands are a serif voice moment, in white on the
-    // navy wash. Salmon here was the old mustard-era treatment.
+    // navy wash. Salmon here was the old mustard-era treatment. T4/T5 both
+    // name the style as well as the family: Libre Baskerville *Italic*.
     font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
     color: $hof-white;
     margin-bottom: 20px;
   }

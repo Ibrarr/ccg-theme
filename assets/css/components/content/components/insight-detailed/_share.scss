@@ -1,11 +1,15 @@
 .report-share {
+  // T3: the "Share" label is the serif micro-label on light, not a caps
+  // eyebrow: Libre Baskerville Italic deep violet.
   .report-share-label {
-    font-family: $font-circular-bold;
-    font-size: 12px;
-    line-height: 14px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: $rd-muted;
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+    color: $hof-violet-deep;
     margin-bottom: 12px;
   }
 

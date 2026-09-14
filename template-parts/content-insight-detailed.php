@@ -195,7 +195,7 @@ $gform    = get_field( 'select_gform_form' );
                                 </div>
 							<?php } ?>
                             <div class="report-author-details">
-                                <p class="report-author-name">Written by <?php echo esc_html( $author['name'] ); ?></p>
+                                <p class="report-author-name"><span class="byline-label">Written by</span> <?php echo esc_html( $author['name'] ); ?></p>
 								<?php
 								$credit = array_filter( array( $author['role'], $author['organisation'] ) );
 
