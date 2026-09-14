@@ -162,60 +162,11 @@ a.screen-reader-text:focus {
   outline-offset: 2px;
 }
 
-// Section 5 motion kit. The classes below are added by motion.js and only ever
-// to elements that were below the fold at load, so nothing here can hide
-// content on a page without JavaScript, and nothing here delays the LCP.
-//
-// Everything moves on transform and opacity, per rule 2.
-
-// Masked line reveal: the heading clips, its contents travel up into it.
-// 600ms sits in the 500-700 band the section asks for.
-.motion-line {
-  overflow: hidden;
-}
-
-.motion-line-inner {
-  display: block;
-  transform: translateY(100%);
-  transition: transform 600ms cubic-bezier(.22, .61, .36, 1);
-}
-
-.is-revealed > .motion-line-inner {
-  transform: none;
-}
-
-// Fade-up: 14px, inside the 12-16 the section names.
-.motion-up {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 500ms ease-out, transform 500ms ease-out;
-}
-
-.motion-up.is-revealed {
-  opacity: 1;
-  transform: none;
-}
-
-// Rule 6. motion.js returns before it touches the DOM under reduced motion, so
-// this is the belt to that braces: if a class ever lands some other way, or a
-// reader changes the setting with the page already open, everything is
-// immediately visible and nothing transitions.
+// The link underline draws in on hover with transform: scaleX(), which is an
+// affordance rather than entrance animation, but there is no reason to move
+// under a setting that asks for stillness. !important because each call site
+// sets this transition on its own ::after, which outranks a bare selector here.
 @media (prefers-reduced-motion: reduce) {
-  .motion-line {
-    overflow: visible;
-  }
-
-  .motion-line-inner,
-  .motion-up {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  // The underline draw-in is an affordance rather than entrance animation, so
-  // rule 6 does not strictly reach it, but there is no reason to move under a
-  // setting that asks for stillness. !important because each call site sets
-  // this transition on its own ::after, which outranks a bare selector here.
   a::after {
     transition: none !important;
   }
