@@ -91,8 +91,17 @@ footer,
 .report-methodology,
 .term-selector,
 .form-section,
+.featured-slider,
 .holding-page,
-.notification-bar {
+.notification-bar,
+// The detailed report's contents menu is a navy panel, so its links were taking
+// a navy ring on navy.
+.report-contents-panel,
+// T5's stepped deck: the middle card is the navy 70% tint and the back one is
+// solid navy, so a navy focus ring on either is invisible. The front card is
+// white and keeps the navy ring.
+.explain-card:nth-child(3n + 2),
+.explain-card:nth-child(3n + 3) {
   --interaction-accent: #{$hof-acid};
   --focus-ring: #{$hof-acid};
 }
@@ -180,6 +189,69 @@ a.screen-reader-text:focus {
 // band that sets its own spacing keep winning.
 p.statement {
   margin-bottom: 0.5rem;
+}
+
+// Section 2's floor: "minimum = visible 2px focus ring (acid on dark, navy on
+// light), no removal of outline", and section 6 asks for a focus state on every
+// interactive element. The theme only ever styled the named controls, so 704 of
+// 862 focusable elements across eleven templates fell back to Chrome's own ring:
+// visible, but not the brand's, and weak on a navy ground.
+//
+// :where() gives this zero specificity, so it beats the user-agent sheet (author
+// styles always do) while losing to every component rule that sets its own focus
+// state. One rule, nothing to maintain per template.
+:where(
+  a[href],
+  button,
+  input:not([type='hidden']),
+  select,
+  textarea,
+  summary,
+  [tabindex]:not([tabindex='-1'])
+):focus-visible {
+  outline: 2px solid var(--focus-ring, #{$hof-navy});
+  outline-offset: 3px;
+}
+
+// Splide's own stylesheet carries `.splide__arrow:focus-visible` with a 3px
+// ring of its own, which outranks the zero-specificity guard above and rendered
+// black on the navy bands at 1.50:1. Same weight, imported later, so this wins.
+// Splide's sheet is enqueued after app.css and carries its own arrow focus
+// ring. Matching its weight is not enough, and the shorthand was resolving to
+// the initial 3px currentColor (black, 1.50:1 on navy) whichever rule won, so
+// set the longhands explicitly and take the priority.
+button.splide__arrow:focus-visible {
+  outline-width: 2px !important;
+  outline-style: solid !important;
+  outline-color: var(--focus-ring, #{$hof-navy}) !important;
+  outline-offset: 3px;
+}
+
+// The detailed report's contents menu is a navy panel with navy links, so its
+// focus ring was navy on navy. Its component uses the $rd-* token block rather
+// than --focus-ring, hence the explicit rule.
+.report-contents a:focus-visible {
+  outline-color: #{$hof-acid} !important;
+}
+
+// Gravity Forms removes the outline on its own fields from the orbital theme's
+// framework sheet, which the rule above deliberately cannot out-rank. T11 names
+// the replacement, so take it, scoped to the form and no wider.
+.gform_wrapper,
+.contact-gform-form,
+.insight-reports-form,
+.newsletter-popup-form_wrapper {
+  input:not([type='hidden']):focus,
+  input:not([type='hidden']):focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible,
+  button:focus,
+  button:focus-visible {
+    outline: 2px solid var(--focus-ring, #{$hof-navy}) !important;
+    outline-offset: 2px !important;
+  }
 }
 
 // Controls promoted to keyboard operability at runtime by
