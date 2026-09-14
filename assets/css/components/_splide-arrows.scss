@@ -15,12 +15,19 @@
     opacity: 1;
     cursor: pointer;
     border: 0;
-    // Splide offsets its arrows with left/right. On a relatively positioned
-    // arrow those shift it visually without changing layout, so they were
-    // silently eating 32px of the gap. Neutralised so the gap above is the
-    // gap that renders.
+    // Splide positions its arrows for an overlay carousel: left/right offsets
+    // and top: 50% with a translateY(-50%). On these relatively positioned
+    // arrows those shift the button without changing layout, so they ate 32px
+    // of the horizontal gap and pulled the pair 24px back up against the
+    // carousel, leaving 1px under it instead of the 25px the wrapper sets.
+    // All four are neutralised, so the gap and the margin above are the ones
+    // that render. The prev arrow mirrors on its svg, not the button, so
+    // clearing the button transform costs nothing.
+    top: auto;
+    bottom: auto;
     left: auto;
     right: auto;
+    transform: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
