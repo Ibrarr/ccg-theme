@@ -37,13 +37,6 @@
   .splide {
     @import "../../../splide-arrows";
 
-    .splide__arrows {
-      .splide__arrow {
-        &:hover {
-          background-color: $hof-acid !important;
-        }
-      }
-    }
 
     .splide__track {
       border-radius: 8px;

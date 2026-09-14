@@ -41,36 +41,13 @@
     z-index: 1;
     @import "../../splide-arrows";
 
+    // The mobile overrides that used to live here forced a navy glyph onto both
+    // arrows below md, which left the navy prev arrow with no glyph at all.
+    // The base pair already handles every ground.
     .splide__arrows {
       .splide__arrow {
-
-        &:hover {
-
-          @include media-breakpoint-down(md) {
-            svg path {
-              fill: #ffffff !important;
-            }
-          }
-        }
-
-
         &.splide__arrow--next:disabled {
           cursor: auto;
-
-          @include media-breakpoint-down(md) {
-            svg path {
-              fill: $ccg-dark-green !important;
-            }
-          }
-        }
-
-        svg path {
-          @include media-breakpoint-down(md) {
-            fill: $ccg-dark-green !important;
-          }
-        }
-
-        @include media-breakpoint-up(md) {
         }
       }
     }
@@ -101,7 +78,6 @@
               overflow-wrap: break-word;
               font-size: clamp(2.25rem, -0.6389rem + 6.0185vw, 3.875rem);
               line-height: clamp(2.375rem, -0.5139rem + 6.0185vw, 4rem);
-              color: #ffffff;
             }
 
             .sub-heading {
