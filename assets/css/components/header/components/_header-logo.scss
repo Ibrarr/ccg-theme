@@ -20,10 +20,13 @@
     svg {
       width: 100%;
       height: auto;
-      // Fluid below md for the same reason as the lg-to-xxl rule below: a flat
-      // 240px cleared the hamburger at 480 but ran into it at 400. Below md the
-      // hamburger IS right-aligned to the viewport, so a vw is right here.
-      max-width: min(240px, 43vw);
+      // Below md the search-and-burger pill is right-aligned to the viewport and
+      // sits a flat 139px from its right edge, with the logo starting at 24px,
+      // so the space between them is the viewport less 163px. Sized against
+      // that measurement plus a 22px gutter rather than a vw fraction: a single
+      // vw has to be set for the worst case at 320, which then leaves the mark
+      // far smaller than it needs to be on every larger phone.
+      max-width: min(340px, calc(100vw - 185px));
 
       @include media-breakpoint-up(md) {
         max-width: 401px;

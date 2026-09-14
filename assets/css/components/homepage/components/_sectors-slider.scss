@@ -86,6 +86,14 @@
               font-size: clamp(1.5rem, 0.1667rem + 2.7778vw, 2.25rem);
               line-height: clamp(1.625rem, 0.2917rem + 2.7778vw, 2.375rem);
               color: #ffffff;
+
+              // Below lg the slide is only 360px tall and the stacked heading
+              // takes about 150px of it, so the statement is set smaller here
+              // to fit rather than be clipped.
+              @include media-breakpoint-down(lg) {
+                font-size: 17px;
+                line-height: 22px;
+              }
             }
 
             .global-button {
@@ -98,6 +106,12 @@
             }
           }
 
+          // The statement slide's width, and it has to be wide enough for the
+          // copy to fit the slide's FIXED height: Splide sets 530px, or 360px
+          // below 800, and .splide__slide is overflow: hidden with the content
+          // bottom-aligned, so anything too tall is cut off the TOP rather than
+          // spilling visibly. At the old 250px and 155px the statement ran to
+          // roughly 600px in a 360px box and lost its first four lines.
           @include media-breakpoint-up(xl) {
             width: 600px !important;
           }
@@ -107,11 +121,11 @@
           }
 
           @include media-breakpoint-only(md) {
-            width: 250px !important;
+            width: 400px !important;
           }
 
           @include media-breakpoint-down(md) {
-            width: 155px !important;
+            width: min(320px, 82vw) !important;
             padding-right: 0 !important;
           }
         }
