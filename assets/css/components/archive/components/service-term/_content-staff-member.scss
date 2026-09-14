@@ -112,7 +112,7 @@
 
           &.linkedin-icon:hover, &.x-icon:hover {
             svg {
-              fill: $ccg-orange;
+              fill: var(--interaction-accent);
             }
           }
 
@@ -191,6 +191,6 @@
   }
 
   .global-button {
-    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+    @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
   }
 }

@@ -121,10 +121,23 @@ if ( $related_ids ) {
 		echo '<h3>Related content</h3>';
 		echo '<div class="row mb-3">';
 
+		// article-card.php prints $term_name, so it has to be each card's own
+		// term rather than the host page's. Inheriting the host's value labelled
+		// every related card with the host page's term: register #11, where two
+		// case studies showed the sector of the page they were listed on. The
+		// host value is restored afterwards because the "See More" link below
+		// still needs it. This is the same per-post idiom the listing loops in
+		// ajax-calls.php and front-page.php already use.
+		$host_term_name = $term_name;
+
 		while ( $related_posts->have_posts() ) {
 			$related_posts->the_post();
+			$card_terms = get_the_terms( get_the_ID(), $taxonomy );
+			$term_name  = ( $card_terms && ! is_wp_error( $card_terms ) ) ? $card_terms[0]->name : '';
 			require( 'article-card.php' );
 		}
+
+		$term_name = $host_term_name;
 
 		echo '</div>';
 		echo '<div class="row"><a class="global-button" href="/insight-hub' . ( $term_name ? '?types=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';

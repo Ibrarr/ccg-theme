@@ -2,7 +2,9 @@ header {
   width: 100%;
   position: fixed;
   z-index: 99;
-  top: 50px;
+  // 50px visual inset from whatever is above it: the viewport top, or the
+  // notification bar when one is showing.
+  top: calc(50px + var(--ccg-topbar-height));
   transition: $ccg-transition-all;
 
   @import "components/menu-container";
@@ -12,8 +14,13 @@ header {
 
 @import "components/header-logo";
 
+// Applied to html AND body by main-menu.js. html is the scrolling element, so
+// body alone locked nothing and the page kept scrolling behind the open menu.
 .no-scroll {
   overflow: hidden;
+  // Stops a flick at the end of the menu's own scroll carrying on into the page
+  // underneath it on touch.
+  overscroll-behavior: none;
 }
 
 .custom-cursor {

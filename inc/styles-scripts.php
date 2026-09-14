@@ -116,3 +116,28 @@ function add_custom_scripts() {
 		wp_enqueue_script( 'contact', CCG_TEMPLATE_URI . '/dist/js/contact.js', [ 'jquery' ], filemtime( CCG_TEMPLATE_DIR . '/dist/js/contact.js' ), true );
 	}
 }
+/**
+ * Preload the two Libre Baskerville variable files.
+ *
+ * The serif carries the hero headline, so it is on the critical path on every
+ * template with a statement masthead. The three Poppins faces are deliberately
+ * not preloaded: preloading all five competes with the hero image for bandwidth
+ * and Poppins is only needed slightly later, once body copy paints.
+ *
+ * Priority 1 puts these ahead of the stylesheet in the head, which is the point:
+ * the browser starts the font fetch without waiting for CSS to be parsed.
+ */
+add_action( 'wp_head', 'ccg_preload_fonts', 1 );
+function ccg_preload_fonts() {
+	$fonts = [
+		'libre-baskerville-vf.woff2',
+		'libre-baskerville-italic-vf.woff2',
+	];
+
+	foreach ( $fonts as $font ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+			esc_url( CCG_TEMPLATE_URI . '/assets/fonts/' . $font )
+		);
+	}
+}

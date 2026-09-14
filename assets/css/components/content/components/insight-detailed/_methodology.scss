@@ -1,7 +1,7 @@
 .report-methodology {
   background-color: $rd-dark-green;
   // Unlike the takeaways panel, this accent bar stays 6px at every size.
-  border-left: $rd-accent solid $rd-coral;
+  border-left: $rd-accent solid $hof-acid;
   border-radius: $rd-radius;
   padding: 16px 18px;
   scroll-margin-top: var(--rd-anchor-offset);
@@ -23,7 +23,7 @@
     line-height: 1.2;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: $rd-coral;
+    color: $hof-acid;
     margin: 0 0 8px;
     scroll-margin-top: var(--rd-anchor-offset);
 
@@ -91,6 +91,6 @@
   }
 
   ul li::marker {
-    color: $rd-coral;
+    color: $hof-acid;
   }
 }

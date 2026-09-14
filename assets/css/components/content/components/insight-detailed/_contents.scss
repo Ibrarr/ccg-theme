@@ -15,7 +15,7 @@
     line-height: 14px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: $rd-coral;
+    color: $hof-acid;
     margin-bottom: 14px;
   }
 
@@ -39,13 +39,13 @@
     transition: color .3s;
 
     &:where(:hover, :focus-visible) {
-      color: $rd-coral;
+      color: $hof-acid;
     }
   }
 
   li.is-active a {
     font-family: $font-circular-medium;
-    color: $rd-coral;
+    color: $hof-acid;
   }
 }
 
@@ -175,7 +175,7 @@
       font-family: $font-circular-medium;
       font-size: 15px;
       line-height: 22px;
-      color: $rd-coral;
+      color: $hof-acid;
 
       @include media-breakpoint-up(md) {
         font-size: 16px;
@@ -189,7 +189,7 @@
       font-family: $font-circular-regular;
       font-size: 18px;
       line-height: 1;
-      color: $rd-coral;
+      color: $hof-acid;
 
       @include media-breakpoint-up(md) {
         font-size: 20px;
@@ -227,12 +227,12 @@
     display: block;
 
     &:where(:hover, :focus-visible) {
-      color: $rd-coral;
+      color: $hof-acid;
     }
   }
 
   li.is-active a {
     font-family: $font-circular-medium;
-    color: $rd-coral;
+    color: $hof-acid;
   }
 }

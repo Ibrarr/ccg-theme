@@ -20,7 +20,7 @@
 
         a {
           color: $ccg-off-white;
-          background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
+          background: linear-gradient(0deg, $hof-acid, $hof-acid) no-repeat right bottom / 0;
           transition: background-size 350ms;
 
           &:where(:hover, :focus-visible) {
@@ -32,7 +32,8 @@
     }
   }
 
-  .bottom-cta {
-    background-color: $ccg-orange;
-  }
+  // No .bottom-cta override. It used to force $ccg-orange, which is now navy,
+  // so the CTA band and the navy footer below it merged into a single block.
+  // The base band is acid, which is the rhythm T10/T11 ask for: navy header ->
+  // acid CTA -> navy footer.
 }

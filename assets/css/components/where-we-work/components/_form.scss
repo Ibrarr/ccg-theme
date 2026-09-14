@@ -1,12 +1,16 @@
 .contact-form {
-  background-color: $ccg-orange;
+  // T11: mustard -> acid. This is each page's one loud band, and it is what
+  // separates the form from the navy footer directly beneath it. Do not point
+  // it back at $ccg-orange: that token is navy, and navy-on-navy erases the
+  // boundary between the section and the footer.
+  background-color: $hof-acid;
   position: relative;
   z-index: 3;
   padding: 65px 0;
   border-radius: 0 0 25px 25px;
 
   h3 {
-    @include title-text(#ffffff);
+    @include title-text($hof-navy);
   }
 
   .contact-gform-form {
@@ -24,13 +28,17 @@
     }
 
     label {
-      @include body-text(#ffffff);
+      @include body-text($hof-navy);
     }
 
     input[type="text"], input[type="email"], input[type="tel"] {
-      border-radius: 8px;
+      border-radius: var(--radius-btn);
       border: none;
       height: 40px;
+
+      @include media-breakpoint-down(md) {
+        font-size: 16px;
+      }
 
       @include media-breakpoint-up(lg) {
         height: 50px;
@@ -42,15 +50,25 @@
     }
 
     textarea {
-      border-radius: 8px;
+      border-radius: var(--radius-btn);
       border: none;
       min-block-size: 10rem !important;
+
+      @include media-breakpoint-down(md) {
+        font-size: 16px;
+      }
+    }
+
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid $hof-navy;
+      outline-offset: 2px;
     }
 
     .contact-us-form_wrapper input[type="submit"].gform_button.button {
       margin-top: 25px;
       height: 32px;
-      @include long-button($ccg-dark-green, #ffffff, #ffffff, $ccg-dark-green);
+      @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
 
       @include media-breakpoint-up(lg) {
         height: 44px;

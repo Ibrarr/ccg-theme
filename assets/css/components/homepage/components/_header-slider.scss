@@ -59,6 +59,9 @@
   }
 
   .splide__slide {
+    // The Hoffman wash: navy at 70% over the existing photograph, replacing the
+    // old black scrim. CSS only, so the image element, its src, dimensions and
+    // alt text are untouched.
     &:after {
       content: '';
       position: absolute;
@@ -66,35 +69,83 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(24, 45, 67, 0.7);
     }
 
     .header-slide {
       z-index: 1;
-      margin-bottom: 45px;
+      // The frame leaves about 97px below the CTA, roughly 80px at 1440.
+      margin-bottom: clamp(45px, 8vh, 80px);
+
+      // The wrapper is the heading on slide one and a paragraph elsewhere, so
+      // it must add nothing of its own: the two spans inside carry all the
+      // type. Without this the browser's default h1 margin and size would
+      // change the slide's rhythm on slide one only.
+      .header-statement {
+        margin: 0;
+        font-weight: inherit;
+        font-size: inherit;
+      }
+
+      // The design sets the brand phrase and the standfirst as one flowing
+      // serif sentence: the phrase in acid italic, the remainder in white
+      // roman. Both strings are untouched.
+      .heading,
+      .sub-heading {
+        display: inline;
+        font-family: $font-serif;
+        font-size: clamp(1.75rem, 1rem + 2.5vw, 3.4375rem);
+        // The frame sets roughly 66px on 75px, so 1.14 rather than 1.2.
+        line-height: 1.15;
+        margin: 0;
+      }
 
       .heading {
-        font-size: clamp(3.4375rem, -0.8036rem + 13.5714vw, 9.375rem);
-        line-height: clamp(2.82825rem, -0.659432rem + 11.145108vw, 7.6875rem);
-        font-family: $font-circular-bold;
-        color: $ccg-off-white;
-
-        @media (min-width: 1400px) {
-          font-size: 193px;
-          line-height: 160px;
-        }
+        font-style: italic;
+        font-weight: 400;
+        color: $hof-acid;
       }
 
       .sub-heading {
-        @include sub-heading-text($ccg-off-white);
+        color: $hof-white;
+
+        // The separator the design draws between the two halves. A pseudo
+        // element on the standfirst rather than the heading, so the H1's own
+        // accessible name stays exactly as authored.
+        &:before {
+          content: '- ';
+        }
       }
 
       .hero-button {
-        @include short-button($ccg-off-white, $ccg-dark-green, $ccg-dark-green, $ccg-off-white);
+        // Primary on dark, per section 2: transparent with a 2px acid border
+        // and an acid label, inverting to an acid fill on hover. Sentence case,
+        // not the caps of the 7.5 outlined box.
+        @include short-button(transparent, $hof-acid, $hof-acid, $hof-navy, $hof-acid);
+        border: 2px solid $hof-acid;
+        font-family: $font-sans-semibold;
+        // fit-content, not auto: the mixin's display: flex is block-level, so
+        // auto would stretch the button across the whole hero column.
+        width: fit-content;
+        padding: 10px 26px;
+        margin-top: 28px;
+
+        @include media-breakpoint-up(lg) {
+          width: fit-content;
+          // The frame's CTA is 223px wide for this label, about 183px at 1440.
+          padding: 12px 46px;
+          // The frame leaves about 193px between the statement and the CTA,
+          // roughly 158px at a 1440 viewport. Tied to viewport height so it
+          // does not crowd a short window.
+          margin-top: clamp(2rem, 17vh, 11rem);
+        }
       }
 
       @include media-breakpoint-up(lg) {
-        width: 60%;
+        // Lands on the design's 1238 of its 1759px frame, which is about
+        // 1013px at a 1440 viewport. The percentage resolves against the
+        // padded container, hence 84 rather than 70.
+        width: 84%;
       }
     }
   }

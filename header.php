@@ -7,6 +7,29 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<?php if ( $ccg_notice = ccg_notification_bar() ) : ?>
+    <aside class="notification-bar" aria-label="Announcement">
+        <div class="container px-4">
+            <span class="notification-bar-icon" aria-hidden="true"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/eye.svg' ); ?></span>
+            <p class="notification-bar-text">
+                <?php if ( '' !== $ccg_notice['lead'] ) : ?>
+                    <span class="notification-bar-lead"><?php echo esc_html( $ccg_notice['lead'] ); ?></span>
+                <?php endif; ?>
+                <?php if ( '' !== $ccg_notice['kicker'] ) : ?>
+                    <span class="notification-bar-kicker"><?php echo esc_html( $ccg_notice['kicker'] ); ?></span>
+                <?php endif; ?>
+                <?php if ( ! empty( $ccg_notice['link']['url'] ) ) : ?>
+                    <a class="notification-bar-message" href="<?php echo esc_url( $ccg_notice['link']['url'] ); ?>"<?php if ( ! empty( $ccg_notice['link']['target'] ) ) : ?> target="<?php echo esc_attr( $ccg_notice['link']['target'] ); ?>" rel="noopener"<?php endif; ?>><?php echo esc_html( $ccg_notice['message'] ); ?></a>
+                <?php else : ?>
+                    <span class="notification-bar-message"><?php echo esc_html( $ccg_notice['message'] ); ?></span>
+                <?php endif; ?>
+            </p>
+            <button type="button" class="notification-bar-dismiss" aria-label="Dismiss announcement">
+                <?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/menu-close.svg' ); ?>
+            </button>
+        </div>
+    </aside>
+<?php endif; ?>
 <div id="wrapper" class="hfeed">
     <header id="header" role="banner">
         <div class="container px-4">

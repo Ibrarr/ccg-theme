@@ -1,7 +1,7 @@
 .other-info {
   position: relative;
   z-index: 1;
-  background-color: $ccg-pink;
+  background-color: $hof-grey-warm;
   margin-top: -25px;
   padding: 80px 0;
   border-radius: 0 0 25px 25px;
@@ -18,7 +18,7 @@
   }
 
   .global-button {
-    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+    @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
   }
 
   .benefits-perks {
@@ -71,7 +71,7 @@
     }
 
     .global-button-benefit {
-      @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
+      @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
       margin-top: 60px;
       position: relative;
     }

@@ -1,0 +1,199 @@
+// Site-wide notification bar.
+//
+// The bar's height IS --ccg-topbar-height, so the space reserved for it and the
+// space it actually occupies cannot drift apart. That property is set on the
+// body class PHP adds, because only the server knows whether the bar rendered,
+// and body sits above every element that reads it (#wrapper's padding, the
+// fixed header's inset, the logo's inset, the Insight anchor offsets).
+
+body.has-notification-bar {
+  // Three lines on mobile, two at md, one at lg. These are tied to the
+  // -webkit-line-clamp values below: change one and change the other, or the
+  // bar reserves a height it does not fill.
+  --ccg-topbar-height: 84px;
+
+  @include media-breakpoint-up(md) {
+    --ccg-topbar-height: 64px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    --ccg-topbar-height: 48px;
+  }
+}
+
+// The pre-paint script flags <html> before the first frame. Written as a
+// descendant selector so it outranks the body rule above, which sets the same
+// property on the same element.
+html.notice-dismissed body.has-notification-bar {
+  --ccg-topbar-height: 0px;
+}
+
+html.notice-dismissed .notification-bar {
+  display: none;
+}
+
+// The bar stays put while the menu is open. It used to hide itself so the
+// overlay could own the whole viewport, but its height stays reserved either
+// way, so hiding it left a blank white strip across the top of the panel. It
+// sits at z-index 200, above the overlay, so it simply stays on top and the
+// notice stays readable.
+
+.notification-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  // Above the header (99) and the logo (100), which is a separately positioned
+  // sibling that would otherwise scroll up over the bar.
+  z-index: 200;
+  height: var(--ccg-topbar-height);
+  background-color: $hof-acid;
+  // Clips rather than spills if an editor pastes copy longer than the field
+  // guidance allows. QA checks scrollHeight against clientHeight on the real
+  // copy; the fix is shorter copy, not a taller bar.
+  overflow: hidden;
+
+  // One centre line for the icon, the sentence and the dismiss control.
+  .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  // The eye from the design. currentColor so it tracks the bar's text colour
+  // rather than carrying its own navy literal.
+  .notification-bar-icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    color: $hof-navy;
+
+    svg {
+      display: block;
+      width: 22px;
+      height: auto;
+
+      @include media-breakpoint-up(lg) {
+        width: 26px;
+      }
+    }
+  }
+
+  // A real paragraph, not a flex row: the boxed label sits INSIDE the sentence,
+  // so the line has to wrap as prose. As flex items the clauses could only wrap
+  // between each other, which left the long clause overflowing at 375.
+  .notification-bar-text {
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    color: $hof-navy;
+    // Hard guard: the bar's height is --ccg-topbar-height and nothing else may
+    // change it, so copy longer than the reserved lines ellipses rather than
+    // being sliced mid-line. If this ever trims, the fix is shorter copy.
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+
+    @include media-breakpoint-up(md) {
+      -webkit-line-clamp: 2;
+    }
+
+    @include media-breakpoint-up(lg) {
+      -webkit-line-clamp: 1;
+    }
+  }
+
+  // Libre Baskerville Italic navy, per the approved design. The lead clause and
+  // the message are the same voice either side of the boxed label.
+  .notification-bar-lead,
+  .notification-bar-message {
+    font-family: $font-serif;
+    font-style: italic;
+    font-size: 12.5px;
+    // Tall enough to contain the boxed label inline. At 1.45 the label's lower
+    // border fell outside the line box and the clamp sliced it off.
+    line-height: 1.9;
+    color: $hof-navy;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 13.5px;
+    }
+  }
+
+  // The boxed caps label from the design: navy keyline, square corners, set in
+  // the sans so it reads as a tag rather than part of the sentence.
+  .notification-bar-kicker {
+    font-family: $font-sans-semibold;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-block;
+    border: 2.5px solid $hof-navy;
+    padding: 4px 7px;
+    // Centred on the sentence's x-height rather than sitting on its baseline,
+    // so the box and the italic either side of it share a centre line.
+    vertical-align: middle;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      padding: 5px 9px;
+    }
+  }
+
+  a.notification-bar-message {
+    text-decoration: none;
+    background: linear-gradient(0deg, $hof-navy, $hof-navy) no-repeat right bottom / 0 1px;
+    transition: background-size 350ms;
+
+    &:where(:hover, :focus-visible) {
+      background-size: 100% 1px;
+      background-position-x: left;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $hof-navy;
+      outline-offset: 3px;
+    }
+  }
+
+  .notification-bar-dismiss {
+    flex: 0 0 auto;
+    appearance: none;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: $hof-navy;
+    line-height: 0;
+    padding: 0;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      display: block;
+
+      rect,
+      path {
+        fill: $hof-navy;
+      }
+    }
+    // A 44px target, per the handover QA checklist, without forcing the bar
+    // taller: the negative margin pulls the oversized hit area back so the
+    // glyph still lines up with the container gutter.
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -14px;
+
+    &:focus-visible {
+      outline: 2px solid $hof-navy;
+      outline-offset: -2px;
+    }
+  }
+}

@@ -41,40 +41,13 @@
     z-index: 1;
     @import "../../splide-arrows";
 
+    // The mobile overrides that used to live here forced a navy glyph onto both
+    // arrows below md, which left the navy prev arrow with no glyph at all.
+    // The base pair already handles every ground.
     .splide__arrows {
       .splide__arrow {
-        background-color: #ffffff !important;
-
-        &:hover {
-          background-color: $ccg-orange !important;
-
-          @include media-breakpoint-down(md) {
-            svg path {
-              fill: #ffffff !important;
-            }
-          }
-        }
-
-
         &.splide__arrow--next:disabled {
-          background-color: #808080 !important;
           cursor: auto;
-
-          @include media-breakpoint-down(md) {
-            svg path {
-              fill: $ccg-dark-green !important;
-            }
-          }
-        }
-
-        svg path {
-          @include media-breakpoint-down(md) {
-            fill: $ccg-dark-green !important;
-          }
-        }
-
-        @include media-breakpoint-up(md) {
-          background-color: $ccg-dark-green !important;
         }
       }
     }
@@ -99,23 +72,46 @@
             .heading {
               word-spacing: 1000px;
               font-family: $font-circular-medium;
+              // White: this slide sits on the dark photograph the section
+              // paints in its ::before, so navy disappeared into it.
+              color: $hof-white !important;
+              overflow-wrap: break-word;
               font-size: clamp(2.25rem, -0.6389rem + 6.0185vw, 3.875rem);
               line-height: clamp(2.375rem, -0.5139rem + 6.0185vw, 4rem);
-              color: #ffffff;
             }
 
             .sub-heading {
               font-family: $font-circular-medium;
+              overflow-wrap: break-word;
               font-size: clamp(1.5rem, 0.1667rem + 2.7778vw, 2.25rem);
               line-height: clamp(1.625rem, 0.2917rem + 2.7778vw, 2.375rem);
               color: #ffffff;
+
+              // Below lg the slide is only 360px tall and the stacked heading
+              // takes about 150px of it, so the statement is set smaller here
+              // to fit rather than be clipped.
+              @include media-breakpoint-down(lg) {
+                font-size: 17px;
+                line-height: 22px;
+              }
             }
 
             .global-button {
-              @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
+              // Secondary on dark, per section 2: transparent with a 1.5px
+              // white keyline and a white label, inverting on hover.
+              @include short-button(transparent, $hof-white, $hof-white, $hof-navy, $hof-acid);
+              border: 1.5px solid $hof-white;
+              width: fit-content;
+              padding: 10px 26px;
             }
           }
 
+          // The statement slide's width, and it has to be wide enough for the
+          // copy to fit the slide's FIXED height: Splide sets 530px, or 360px
+          // below 800, and .splide__slide is overflow: hidden with the content
+          // bottom-aligned, so anything too tall is cut off the TOP rather than
+          // spilling visibly. At the old 250px and 155px the statement ran to
+          // roughly 600px in a 360px box and lost its first four lines.
           @include media-breakpoint-up(xl) {
             width: 600px !important;
           }
@@ -125,11 +121,11 @@
           }
 
           @include media-breakpoint-only(md) {
-            width: 250px !important;
+            width: 400px !important;
           }
 
           @include media-breakpoint-down(md) {
-            width: 155px !important;
+            width: min(320px, 82vw) !important;
             padding-right: 0 !important;
           }
         }
@@ -161,8 +157,13 @@
 
             .heading {
               font-family: $font-circular-medium;
-              font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.875rem);
-              line-height: clamp(2.125rem, 0.5694rem + 3.2407vw, 3rem);
+              // Capped at 38px, down from 46px: Poppins is wider than Circular
+              // at the same size, and the longest sector name ("Cybersecurity")
+              // is a single unbreakable word that overflowed the 280px card.
+              // break-word is a safety net for any longer name added later.
+              font-size: clamp(1.75rem, 0.4167rem + 2.7778vw, 2.375rem);
+              line-height: clamp(2.125rem, 1.0139rem + 2.3148vw, 2.625rem);
+              overflow-wrap: break-word;
               color: #ffffff;
             }
 

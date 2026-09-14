@@ -1,6 +1,12 @@
+// The salmon bar is white now, per the client. Taken literally that erased it
+// from the nine light sections it also crosses, because white on white is
+// 1.00:1, so it takes its tint from the band instead: white on dark grounds,
+// and on light grounds the #EFEFEC the theme's own light-grey.svg bar already
+// uses. Only pink.svg reads this; the other bar assets keep their own fills.
 .parallax-bars {
   will-change: transform;
   position: absolute;
+  color: var(--bar-tint);
 
   svg rect {
     @include media-breakpoint-down(lg) {

@@ -8,12 +8,13 @@ footer {
   .footer-logo {
     svg {
       width: 100%;
+      height: auto;
       max-width: 250px;
 
       @include media-breakpoint-up(md) {
-        width: 100%;
-        max-width: 347px;
-        height: 72px;
+        // No fixed height: the lockup is 7.43:1, so a 72px box letterboxed it
+        // with 25px of dead space under the artwork.
+        max-width: 401px;
       }
 
       @include media-breakpoint-down(lg) {
@@ -42,7 +43,7 @@ footer {
       text-decoration: none;
       font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
       line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-      color: #636363;
+      color: $hof-grey-warm;
       transition: $ccg-transition-all;
 
       &:hover {
@@ -79,11 +80,11 @@ footer {
           text-decoration: none;
           font-family: $font-circular-bold;
           font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-          color: $ccg-pink;
+          color: $hof-grey-warm;
           transition: $ccg-transition-all;
 
           &:hover {
-            color: $ccg-orange;
+            color: var(--interaction-accent);
           }
         }
       }
@@ -92,7 +93,7 @@ footer {
         margin-top: 20px;
         padding-bottom: 30px;
         margin-bottom: 30px;
-        border-bottom: 1px solid #264b55;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
 
@@ -101,7 +102,7 @@ footer {
         text-transform: uppercase;
         font-family: $font-circular-bold;
         font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-        color: $ccg-pink;
+        color: $hof-acid;
       }
 
       p {
@@ -123,7 +124,7 @@ footer {
         transition: $ccg-transition-all;
 
         &:hover {
-          color: $ccg-orange;
+          color: var(--interaction-accent);
         }
       }
 
@@ -144,7 +145,7 @@ footer {
       @include media-breakpoint-down(md) {
         padding-bottom: 30px;
         margin-bottom: 30px;
-        border-bottom: 1px solid #264b55;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
 
@@ -163,7 +164,7 @@ footer {
           text-decoration: none;
           font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
           line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-          color: #636363;
+          color: $hof-grey-warm;
           transition: $ccg-transition-all;
 
           &:hover {
@@ -226,7 +227,7 @@ footer {
           transition: $ccg-transition-all;
 
           &:hover {
-            color: $ccg-orange;
+            color: var(--interaction-accent);
           }
         }
 
@@ -238,7 +239,7 @@ footer {
             text-decoration: none;
             font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
             line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-            color: #636363;
+            color: $hof-grey-warm;
             transition: $ccg-transition-all;
 
             &:hover {
@@ -272,7 +273,7 @@ footer {
               transition: $ccg-transition-all;
 
               &:hover {
-                color: $ccg-orange;
+                color: var(--interaction-accent);
               }
             }
           }

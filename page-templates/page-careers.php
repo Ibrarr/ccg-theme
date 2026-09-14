@@ -56,8 +56,14 @@ $talent_link   = get_field( 'talent_manager_button' );
 							if ( have_rows( 'values_values' ) ):
 								while ( have_rows( 'values_values' ) ) : the_row();
 									$heading             = get_sub_field( 'heading' );
-									$heading_lowercase   = strtolower( $heading );
-									$heading_with_dashes = str_replace( ' ', '-', $heading_lowercase );
+									// sanitize_title(), not str_replace(): cards.js builds a jQuery
+									// selector from this class, so a value name containing an
+									// ampersand produced ".care-&-authenticity", which throws and
+									// kills every rollover after it. That is the fault logged as
+									// register #14 in the handover. The five current values are
+									// single words so it does not bite today; this stops it
+									// returning the moment anyone renames one.
+									$heading_with_dashes = sanitize_title( $heading );
 									?>
                                     <h4 class="<?php echo $heading_with_dashes ?>"><?php the_sub_field( 'heading' ); ?></h4>
 								<?php
@@ -73,8 +79,14 @@ $talent_link   = get_field( 'talent_manager_button' );
 								while ( have_rows( 'values_values' ) ) :
 									the_row();
 									$heading             = get_sub_field( 'heading' );
-									$heading_lowercase   = strtolower( $heading );
-									$heading_with_dashes = str_replace( ' ', '-', $heading_lowercase );
+									// sanitize_title(), not str_replace(): cards.js builds a jQuery
+									// selector from this class, so a value name containing an
+									// ampersand produced ".care-&-authenticity", which throws and
+									// kills every rollover after it. That is the fault logged as
+									// register #14 in the handover. The five current values are
+									// single words so it does not bite today; this stops it
+									// returning the moment anyone renames one.
+									$heading_with_dashes = sanitize_title( $heading );
 
 									if ( $index === 1 ) {
 										$card_image = CCG_TEMPLATE_DIR . '/assets/images/cards/green-card.svg';

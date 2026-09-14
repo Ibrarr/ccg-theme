@@ -62,7 +62,8 @@
   }
 
   em, i {
-    font-family: $font-circular-italic;
+    font-family: $font-sans-regular;
+    font-style: italic;
   }
 
   // The site-wide link rollover from the body-text mixin: an amber block that

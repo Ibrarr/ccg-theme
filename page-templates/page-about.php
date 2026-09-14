@@ -19,7 +19,15 @@ $button = get_field( 'button' );
                 <ul class="splide__list">
 					<?php
 					if ( have_rows( 'slider' ) ):
+						// Every slide rendered its own <h1>, so the page had four. The
+						// statement on the first slide is the page's heading, per the
+						// client, so it takes the rank and the display words below it
+						// become paragraphs. Classes and copy are untouched: only the
+						// tag changes, so nothing about the slider moves.
+						$ccg_about_index = 0;
 						while ( have_rows( 'slider' ) ) : the_row();
+							$ccg_about_index ++;
+							$ccg_is_first = ( 1 === $ccg_about_index );
 							?>
                             <li class="splide__slide">
                                 <div class="container px-4 h-100 d-flex align-items-center justify-content-center">
@@ -29,16 +37,18 @@ $button = get_field( 'button' );
 										<?php } ?>
 
 										<?php if ( get_sub_field( 'header' ) ) { ?>
-                                            <h1 class="heading"><?php the_sub_field( 'header' ); ?></h1>
+                                            <p class="heading"><?php the_sub_field( 'header' ); ?></p>
 										<?php } ?>
 
-										<?php if ( get_sub_field( 'sub_heading' ) && get_sub_field( 'sub_heading_2nd_colour' ) ) { ?>
-                                            <h2 class="sub-heading two-color"><?php the_sub_field( 'sub_heading' ); ?>
-                                                <span><?php the_sub_field( 'sub_heading_2nd_colour' ); ?></span></h2>
+										<?php
+										$ccg_statement_tag = $ccg_is_first ? 'h1' : 'h2';
+										if ( get_sub_field( 'sub_heading' ) && get_sub_field( 'sub_heading_2nd_colour' ) ) { ?>
+                                            <<?php echo $ccg_statement_tag; ?> class="sub-heading two-color"><?php the_sub_field( 'sub_heading' ); ?>
+                                                <span><?php the_sub_field( 'sub_heading_2nd_colour' ); ?></span></<?php echo $ccg_statement_tag; ?>>
 										<?php } ?>
 
 										<?php if ( get_sub_field( 'sub_heading' ) && ! get_sub_field( 'sub_heading_2nd_colour' ) ) { ?>
-                                            <h2 class="sub-heading"><?php the_sub_field( 'sub_heading' ); ?></h2>
+                                            <<?php echo $ccg_statement_tag; ?> class="sub-heading"><?php the_sub_field( 'sub_heading' ); ?></<?php echo $ccg_statement_tag; ?>>
 										<?php } ?>
 
 										<?php if ( get_sub_field( 'body' ) ) { ?>

@@ -5,8 +5,11 @@
   float: right;
   padding: 17px 20px;
   //max-width: 825px;
-  border-radius: 4px;
+  border-radius: var(--radius-btn);
   background-color: #ffffff;
+  // The white pill loses its edge against a light page ground, so it carries
+  // the site-wide hairline. One value, defined in _variables.scss.
+  border: 1px solid var(--hairline);
   transition: all .3s;
   cursor: pointer;
 
@@ -14,7 +17,7 @@
     font-family: $font-circular-regular;
     line-height: 16px;
     font-size: 14px;
-    color: $ccg-dark-green;
+    color: $hof-navy;
     margin: 0;
     display: block;
     transition: $ccg-transition-all;
@@ -26,6 +29,11 @@
     @include media-breakpoint-down(lg) {
       display: none !important;
     }
+  }
+
+  .main-menu-text {
+    font-family: $font-serif;
+    font-style: italic;
   }
 
   .menu-text, .search-text {
@@ -83,6 +91,21 @@
           height: 15px;
         }
       }
+    }
+  }
+
+  // From lg up the pill and the panel below it are one shape, so the pill's
+  // bottom corners square off and it drops its bottom border. Kept rounded,
+  // the 8px radius cut a notch out of each bottom corner and the page showed
+  // through either side of the join.
+  //
+  // Below lg there is no join to close: the panel is a full-screen overlay
+  // rather than something hanging off the pill, so the pill stays a pill.
+  @include media-breakpoint-up(lg) {
+    &:where(.menu-open, .search-open) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-color: transparent;
     }
   }
 

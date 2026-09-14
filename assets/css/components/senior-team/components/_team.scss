@@ -84,6 +84,7 @@
             @include body-text($ccg-dark-green);
             margin-bottom: 0;
             width: 80%;
+            overflow-wrap: break-word;
           }
 
           .job-title {
@@ -91,6 +92,7 @@
             font-family: $font-circular-medium;
             margin-bottom: 0;
             width: 80%;
+            overflow-wrap: break-word;
           }
         }
 
@@ -177,7 +179,7 @@
 
               &.linkedin-icon:hover, &.x-icon:hover {
                 svg {
-                  fill: $ccg-orange;
+                  fill: var(--interaction-accent);
                 }
               }
 
@@ -245,7 +247,7 @@
           &:hover svg g {
 
             > path {
-              fill: $ccg-orange;
+              fill: var(--interaction-accent);
             }
 
             g path {

@@ -1,5 +1,5 @@
 .about-slider {
-  background: rgba(0, 44, 56, 1);
+  background: $hof-navy;
   margin-bottom: 50px;
   text-align: center;
   overflow: hidden;
@@ -159,13 +159,17 @@
   }
 
   .splide__slide {
-    background: radial-gradient(ellipse at center, rgb(9, 75, 92) 0%, rgb(0, 44, 56) 60%) no-repeat center;
+    background: radial-gradient(ellipse at center, #{$hof-navy-70} 0%, #{$hof-navy} 60%) no-repeat center;
     background-size: 100% 60%;
 
     .about-slide {
 
+      // Acid, not $ccg-orange. That token is navy, and this band's ground is a
+      // navy radial gradient, so the label was painting navy on navy. Acid is
+      // the dark-ground accent (section 1) and clears 3:1 against the lightest
+      // point of the gradient, the navy 70% tint at its centre.
       .tag {
-        @include term($ccg-orange);
+        @include term($hof-acid);
         margin-bottom: 20px;
       }
 
@@ -182,11 +186,13 @@
         color: #ffffff;
       }
 
+      // Same fault, same fix: the first half of this two-tone statement was
+      // navy on the navy gradient while the span beside it was white.
       .sub-heading.two-color {
         font-family: $font-circular-medium;
         font-size: clamp(2rem, 0.4444rem + 3.2407vw, 2.875rem);
         line-height: clamp(2.25rem, 0.6944rem + 3.2407vw, 3.125rem);
-        color: $ccg-orange;
+        color: $hof-acid;
 
         span {
           color: #ffffff;

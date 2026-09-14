@@ -1,7 +1,9 @@
 .culture {
   position: relative;
   z-index: 2;
-  background-color: $ccg-off-white;
+  // T10: light grey -> white (7.3 direct content). It also ends the run of
+  // three consecutive warm grey bands, which had no visible seam between them.
+  background-color: $hof-white;
   margin-top: -25px;
   padding: 80px 0;
   border-radius: 0 0 25px 25px;
@@ -10,8 +12,10 @@
     @include title-text($ccg-orange);
   }
 
+  // T10: the standfirst takes the T5 category-line role rather than staying a
+  // second navy paragraph, so the section still has one accent on a white band.
   .intro {
-    @include sub-heading-text($ccg-orange);
+    @include sub-heading-text($hof-violet-deep);
     margin-bottom: 30px;
   }
 
