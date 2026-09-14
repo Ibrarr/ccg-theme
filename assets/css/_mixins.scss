@@ -17,6 +17,25 @@
   color: $color;
 }
 
+// 7.4's H1-demotion device, for the dark-header listing pages: the H1 steps
+// back to a restrained Poppins Medium and the intro paragraph below it carries
+// the page as the statement. T2 sets the figures; T6 says to take them verbatim
+// and T8 and T9 repeat them. Include AFTER title-text(), which sets a size of
+// its own.
+@mixin demoted-listing-h1() {
+  font-size: clamp(1.75rem, 2.2vw, 2rem);
+  line-height: 1.2;
+}
+
+// T2's statement-block role, referenced by T6, T8 and T9 and listed in section
+// 1's type scale as 22-24px on a 60ch measure, white on navy, with the serif
+// lead phrase in acid. Include AFTER sub-heading-text().
+@mixin listing-statement() {
+  font-size: clamp(1.375rem, 1.8vw, 1.5rem);
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
 @mixin body-text($color) {
   font-family: $font-circular-regular;
   font-size: $ccg-body-size;

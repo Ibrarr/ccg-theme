@@ -22,16 +22,18 @@
   }
 
   h1.title {
-    @include title-text($ccg-off-white);
+    @include title-text($hof-white);
+    @include demoted-listing-h1();
   }
 
   .intro {
     h2,
     p.statement {
-      @include sub-heading-text($ccg-off-white);
+      @include sub-heading-text($hof-white);
+      @include listing-statement();
 
       a {
-        color: $ccg-off-white;
+        color: $hof-white;
         position: relative;
 
         // Section 5, rule 2: the underline draws in on transform, which the
@@ -44,7 +46,10 @@
           right: 0;
           bottom: 0;
           height: 1px;
-          background-color: $ccg-orange;
+          // Acid. $ccg-orange is navy since the reskin, so this underline was
+          // navy on the navy masthead: invisible. Seventh instance of that
+          // trap, and the dark-ground interaction accent is acid.
+          background-color: $hof-acid;
           transform: scaleX(0);
           transform-origin: left center;
           transition: transform 350ms ease-out;
