@@ -176,7 +176,7 @@ if ( $related_ids ) {
 		}
 
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/insight-hub?types=' . $term_slug . '">See More</a></div>';
+		echo '<div class="row"><a class="global-button global-button--index" href="/insight-hub?types=' . $term_slug . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}

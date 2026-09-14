@@ -27,7 +27,7 @@ $term_name_text = single_term_title( '', false );
             <div class="row" id="posts-container" data-term-slug="<?php echo get_queried_object()->slug; ?>">
                 <!-- Posts will be loaded here -->
             </div>
-            <div class="global-button" id="load-more-posts">See More</div>
+            <div class="global-button global-button--index" id="load-more-posts">See More</div>
             <div id="loading-indicator">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>

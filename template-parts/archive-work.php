@@ -51,7 +51,7 @@
         <div class="row" id="posts-container">
             <!-- Posts will be loaded here -->
         </div>
-        <div class="global-button" id="load-more-posts">See More</div>
+        <div class="global-button global-button--index" id="load-more-posts">See More</div>
         <div id="loading-indicator">
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>

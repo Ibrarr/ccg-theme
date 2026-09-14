@@ -292,7 +292,7 @@
 				?>
             </div>
             <div class="row">
-                <a class="global-button" href="/insight-hub">See More</a>
+                <a class="global-button global-button--index" href="/insight-hub">See More</a>
             </div>
         </div>
     </section>
@@ -454,7 +454,7 @@
 				?>
             </div>
             <div class="row">
-                <a class="global-button" href="/our-work">See More</a>
+                <a class="global-button global-button--index" href="/our-work">See More</a>
             </div>
         </div>
     </section>

@@ -333,7 +333,7 @@ if ( $related_ids ) {
 		$term_name = $host_term_name;
 
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/our-work' . ( $term_name ? '?sectors=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
+		echo '<div class="row"><a class="global-button global-button--index" href="/our-work' . ( $term_name ? '?sectors=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}

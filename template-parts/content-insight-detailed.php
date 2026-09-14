@@ -350,7 +350,7 @@ if ( $related_ids ) {
 		$term_name = $host_term_name;
 
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/insight-hub' . ( $term_name ? '?types=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
+		echo '<div class="row"><a class="global-button global-button--index" href="/insight-hub' . ( $term_name ? '?types=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}

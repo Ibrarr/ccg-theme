@@ -52,7 +52,7 @@
                                 <div class="header-search-input"><input type="text" placeholder="Search"></div>
                                 <p id="header-search-count"><!-- Search results number will be loaded here --></p>
                                 <div id="header-search-container"><!-- Posts will be loaded here --></div>
-                                <div class="global-button" id="load-more-search-results">See More</div>
+                                <div class="global-button global-button--index" id="load-more-search-results">See More</div>
                                 <div id="search-loading-indicator">
                                     <div class="spinner-border" role="status">
                                         <span class="visually-hidden">Loading...</span>

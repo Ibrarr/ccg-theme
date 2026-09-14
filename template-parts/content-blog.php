@@ -141,7 +141,7 @@ if ( $related_ids ) {
 		$term_name = $host_term_name;
 
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/our-blog' . ( $term_name ? '?categories=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
+		echo '<div class="row"><a class="global-button global-button--index" href="/our-blog' . ( $term_name ? '?categories=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}

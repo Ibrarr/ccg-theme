@@ -358,7 +358,7 @@ $term_name_text = single_term_title( '', false );
                     }
                     ?>
                 </div>
-                <div class="row"><a class="global-button" href="/our-work">See More</a></div>
+                <div class="row"><a class="global-button global-button--index" href="/our-work">See More</a></div>
             </div>
         </section>
     <?php } ?>

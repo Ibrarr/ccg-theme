@@ -104,6 +104,10 @@ footer,
 .explain-card:nth-child(3n + 3) {
   --interaction-accent: #{$hof-acid};
   --focus-ring: #{$hof-acid};
+  // 7.5 gives the index action a white border and label on dark grounds and
+  // navy on light. Acid is the interaction accent, but not this control.
+  --index-action: #{$hof-white};
+  --index-action-label: #{$hof-navy};
 }
 
 // With the faces above answering for any weight, <strong> and <b> would render
@@ -216,6 +220,29 @@ p.statement {
 // Splide's own stylesheet carries `.splide__arrow:focus-visible` with a 3px
 // ring of its own, which outranks the zero-specificity guard above and rendered
 // black on the navy bands at 1.50:1. Same weight, imported later, so this wins.
+// 7.5's loudness hierarchy: caps-arrow link < outlined box < filled button,
+// with "See More / index actions: outlined box (1.5px border, caps label)
+// replacing the current navy pills". Every one of the 19 was still a navy fill,
+// which put the quietest action in the loudest form. The filled recipe stays
+// where section 2 puts it: hero CTAs and the closing band's Contact button.
+// !important for the same reason T4's counter suppression needs it: every
+// template scopes .global-button several levels deep off its own body class, so
+// one modifier written once cannot out-specify them all without repeating each
+// chain. Scoped to this modifier and these four properties only.
+.global-button.global-button--index {
+  background-color: transparent !important;
+  border: 1.5px solid var(--index-action, #{$hof-navy}) !important;
+  color: var(--index-action, #{$hof-navy}) !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+
+  &:where(:hover, :focus-visible) {
+    background-color: var(--index-action, #{$hof-navy}) !important;
+    color: var(--index-action-label, #{$hof-white}) !important;
+    border-color: var(--index-action, #{$hof-navy}) !important;
+  }
+}
+
 // Splide's sheet is enqueued after app.css and carries its own arrow focus
 // ring. Matching its weight is not enough, and the shorthand was resolving to
 // the initial 3px currentColor (black, 1.50:1 on navy) whichever rule won, so

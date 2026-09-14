@@ -373,7 +373,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                     }
                     ?>
                 </div>
-                <div class="row"><a class="global-button" href="/our-work">See More</a></div>
+                <div class="row"><a class="global-button global-button--index" href="/our-work">See More</a></div>
             </div>
         </section>
     <?php } ?>
