@@ -20,21 +20,14 @@ jQuery(document).ready(function ($) {
         prevScrollpos = currentScrollPos;
     }
 
+    // CSS owns the panel's height. This used to write it inline, which beat the
+    // stylesheet, so the mobile panel was always a full viewport tall and ran
+    // past the bottom of the screen once the notification bar took its share of
+    // the top. The desktop branch also computed `'100%' - 50`, which is NaN, so
+    // that half never applied anything. Same resolution as the header's `top`:
+    // clear the property and let the stylesheet decide.
     function setMaxHeight() {
-        if ($(window).width() > 960) {
-            var maxHeight = $(window).height() * 0.85;
-            var windowHeight = $(window).height();
-            var menuHeight = $('.main-menu-container').height();
-
-            if (menuHeight > windowHeight) {
-                $('.main-menu-container').css('height', maxHeight + 'px');
-            } else {
-                $('.main-menu-container').css('height', '100%' - 50);
-            }
-
-        } else {
-            $('.main-menu-container').css('height', 'var(--app-height)');
-        }
+        $('.main-menu-container').css('height', '');
     }
 
     setMaxHeight();
