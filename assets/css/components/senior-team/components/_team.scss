@@ -130,8 +130,12 @@
           flex-direction: column;
           justify-content: flex-end;
 
+          // The expanded panel's ground is navy, and $ccg-orange is navy since
+          // the reskin, so the person's name was painting 1.00:1 on it: the
+          // one line on the card you actually need. Acid is the permitted
+          // highlight on a navy ground (10.5:1).
           .name {
-            @include body-text($ccg-orange);
+            @include body-text($hof-acid);
             font-family: $font-circular-medium;
             margin-bottom: 0;
           }
@@ -146,7 +150,9 @@
             margin-top: 20px;
             width: fit-content;
 
-            background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0 1px;
+            // Same ground, same reason: a navy underline on a navy panel draws
+            // nothing at all.
+            background: linear-gradient(0deg, $hof-acid, $hof-acid) no-repeat right bottom / 0 1px;
             transition: background-size 350ms;
 
             &:where(:hover, :focus-visible) {
