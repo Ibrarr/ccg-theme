@@ -15,8 +15,9 @@
       line-height: 1.5;
       color: $hof-violet-deep;
       border-left: 3px solid $hof-violet-deep;
-      padding-left: 24px;
-      margin: 40px 0;
+      // 1.25rem and 2rem, the values the T3 scoped CSS gives for this rule.
+      padding-left: 20px;
+      margin: 32px 0;
 
       p {
         font-family: inherit;
