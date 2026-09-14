@@ -70,7 +70,16 @@ $font-serif: "Libre Baskerville", Georgia, serif;
 // Back-compat aliases. Circular Bold maps to Poppins SemiBold: the handover
 // font plan loads no Poppins 700.
 $font-circular-bold: $font-sans-semibold;
-$font-circular-medium: $font-sans-medium;
+// Client decision, Sept 2026: everything that was Circular Medium sets in
+// Poppins Regular. That is 124 declarations across 70 files, so it is made once
+// here rather than edited at each call site, and it is reversible in one line.
+// It deliberately overrides the handover type scale, which asks for Poppins
+// Medium on section display headings, card titles, demoted listing H1s, service
+// H1s, stat numerals, the About masthead support copy and the Careers value
+// words. The two places the design uses Medium as a *contrast* device still do,
+// because they set $font-sans-medium directly: the violet statement band's
+// closing phrase and the notice bar's dismiss glyph.
+$font-circular-medium: $font-sans-regular;
 $font-circular-regular: $font-sans-regular;
 // $font-circular-italic is retired. Its two call sites wanted different things:
 // the article byline is a serif micro-label (section 1, added at T3) while body
