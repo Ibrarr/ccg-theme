@@ -16,7 +16,7 @@ $term_name_text = single_term_title( '', false );
             <div class="row">
                 <h1 class="title"><?php echo $term_name_text ?></h1>
                 <div class="col-lg-8 col-md-10 intro">
-                    <h2><?php echo strip_tags( term_description(), '<a>' ); ?></h2>
+                    <p class="statement"><?php echo ccg_editor_html( term_description() ); ?></p>
                 </div>
             </div>
         </div>

@@ -25,7 +25,8 @@
   }
 
   .intro {
-    h2 {
+    h2,
+    p.statement {
       @include sub-heading-text($ccg-dark-green);
       margin-bottom: 30px;
 

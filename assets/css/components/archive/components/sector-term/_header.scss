@@ -28,7 +28,8 @@
     // T4/T5: "Opening statement = the T3 standfirst role, shared" - sector and
     // service pages open on the same serif beat as an article, so this block
     // matches .post-header .intro h2 line for line. Change one, change both.
-    h2 {
+    h2,
+    p.statement {
       @include sub-heading-text($ccg-green);
       font-family: $font-serif;
       font-style: italic;

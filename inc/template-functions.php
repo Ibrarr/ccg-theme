@@ -64,6 +64,47 @@ function register_custom_page_templates() {
  * @param string $text The passage.
  * @return string      The passage with its opening sentence wrapped.
  */
+/**
+ * Sanitises an editor field for display in a styled band.
+ *
+ * `strip_tags()` was throwing the editor's line breaks away, so paragraphs ran
+ * together. `wp_kses_post()` keeps them, but it also keeps `style` attributes,
+ * and these fields carry colours pasted out of Word: on the Insight Hub that
+ * put near-white text on the navy masthead at 1.10:1, invisible. So the tags
+ * that carry structure are allowed and every attribute that could repaint them
+ * is not. The band's own CSS then owns colour, which is the point of a design
+ * system.
+ *
+ * @param string $text Raw field value.
+ * @return string      Safe HTML, structure intact, colour stripped.
+ */
+function ccg_editor_html( $text ) {
+	$text = (string) $text;
+
+	// These fields render inside a <p>, and ACF's wpautop wraps their content in
+	// <p> too. A <p> inside a <p> is invalid, so the browser closes the outer one
+	// and the copy ends up OUTSIDE the styled element: on the Insight Hub and the
+	// services header that dropped it out of the band's white and onto Bootstrap's
+	// default dark grey, over navy, at 1.10:1. Turn the paragraph boundaries into
+	// the break they were standing for, then drop <p> from the allowlist below so
+	// none can come back.
+	$text = preg_replace( '#</p>\s*<p[^>]*>#i', '<br><br>', $text );
+	$text = preg_replace( '#</?p[^>]*>#i', '', $text );
+
+	return trim( wp_kses( $text, array(
+		'br'     => array(),
+		'strong' => array(),
+		'b'      => array(),
+		'em'     => array(),
+		'i'      => array(),
+		'span'   => array(),
+		'ul'     => array(),
+		'ol'     => array(),
+		'li'     => array(),
+		'a'      => array( 'href' => array(), 'target' => array(), 'rel' => array(), 'title' => array() ),
+	) ) );
+}
+
 function ccg_statement_lead_html( $text ) {
 	$text = trim( (string) $text );
 
@@ -71,16 +112,24 @@ function ccg_statement_lead_html( $text ) {
 		return '';
 	}
 
-	// Already wrapped by an editor, or carrying markup we should not re-cut.
+	// These fields are WYSIWYG, so they arrive carrying markup: an editor's
+	// line breaks, the odd <strong>. Sanitise once here and never escape
+	// again below, or the tags print as text on the page, which is what
+	// esc_html() was doing to every <br /> on the Insight Hub.
+	$text = ccg_editor_html( $text );
+
+	// Already wrapped by an editor: their split wins.
 	if ( false !== strpos( $text, 'statement-lead' ) ) {
-		return wp_kses_post( $text );
+		return $text;
 	}
 
-	// The end of the first sentence: a full stop, question or exclamation mark
-	// followed by whitespace.
-	if ( preg_match( '/^(.+?[.?!])(\s+)(\S.*)$/su', $text, $m ) ) {
-		return '<span class="statement-lead">' . esc_html( $m[1] ) . '</span>'
-			. esc_html( $m[2] ) . esc_html( $m[3] );
+	// The end of the first sentence, counted outside tags. A bare /(.+?[.?!])/
+	// would stop at the first full stop inside an href or a class name, so the
+	// alternation steps over any whole tag before it looks for a terminator.
+	$sentence = '/^((?:[^<.?!]|<[^>]*>)+?[.?!])(\s+)(.*)$/su';
+
+	if ( preg_match( $sentence, $text, $m ) ) {
+		return '<span class="statement-lead">' . $m[1] . '</span>' . $m[2] . $m[3];
 	}
 
 	// A single-sentence passage has no break to read, but the design still
@@ -88,20 +137,23 @@ function ccg_statement_lead_html( $text ) {
 	// latest news…" as one sentence. Fall back to the opening four words, the
 	// length the handover's own two examples use. Only for a passage long
 	// enough that a lead still leaves a remainder; anything shorter is the
-	// statement itself and stays whole. An editor who wants a different split
-	// wraps their own phrase in the field, which the guard above honours.
+	// statement itself and stays whole.
 	$words = preg_split( '/(\s+)/u', $text, -1, PREG_SPLIT_DELIM_CAPTURE );
 
 	if ( count( $words ) < 17 ) {
-		return esc_html( $text );
+		return $text;
 	}
 
-	$lead      = implode( '', array_slice( $words, 0, 7 ) );
-	$separator = $words[7];
-	$rest      = implode( '', array_slice( $words, 8 ) );
+	// Never cut inside a tag: if the opening four words carry an unclosed tag,
+	// leave the passage whole rather than produce broken markup.
+	$lead = implode( '', array_slice( $words, 0, 7 ) );
 
-	return '<span class="statement-lead">' . esc_html( $lead ) . '</span>'
-		. esc_html( $separator ) . esc_html( $rest );
+	if ( substr_count( $lead, '<' ) !== substr_count( $lead, '>' ) ) {
+		return $text;
+	}
+
+	return '<span class="statement-lead">' . $lead . '</span>'
+		. $words[7] . implode( '', array_slice( $words, 8 ) );
 }
 
 function ccg_statement_band_html( $text ) {
@@ -116,14 +168,17 @@ function ccg_statement_band_html( $text ) {
 		return wp_kses_post( $text );
 	}
 
+	// Sanitise once, then never escape: these are WYSIWYG fields and their own
+	// line breaks have to render rather than print.
+	$text  = ccg_editor_html( $text );
 	$split = mb_strrpos( $text, ' and ' );
 
 	if ( false === $split ) {
-		return esc_html( $text );
+		return $text;
 	}
 
-	return esc_html( mb_substr( $text, 0, $split + 1 ) )
-		. '<span class="intro-snap">' . esc_html( mb_substr( $text, $split + 1 ) ) . '</span>';
+	return mb_substr( $text, 0, $split + 1 )
+		. '<span class="intro-snap">' . mb_substr( $text, $split + 1 ) . '</span>';
 }
 
 /**

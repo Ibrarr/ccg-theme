@@ -106,6 +106,62 @@ b {
   font-family: $font-sans-semibold;
 }
 
+// T4, and register #7: a "1 - 1" counter is a redundant control on a carousel
+// that holds one slide. The :has() guard means one rule serves both cases with
+// no per-page work, which is what the section asks for: a multi-slide carousel
+// keeps its counter, a single-slide one loses it. It hides a UI control, not
+// content, and it takes the spoken "Item 1 of 1" with it, which is noise.
+// !important because the component rules that show the counter are deeply
+// nested off a body class, e.g. .archive.tax-sector .services-slider .splide
+// .splide__track .splide__slide:not(:first-child) .service-slide .count, and a
+// suppression written once for every carousel cannot out-specify each of them
+// without repeating the whole chain per template, which is the per-page work
+// the section says to avoid.
+.splide__list:not(:has(> .splide__slide:nth-child(2))) .count {
+  display: none !important;
+}
+
+// Visually hidden, still spoken. The class was already in the markup on the
+// skip link and is now used to give the repeated "Find out more here" anchors
+// and the bare "1 - 5" carousel counters a distinct name, but nothing in the
+// theme ever defined it, so the text it wraps was simply on the page.
+//
+// clip-path rather than the old clip, and no display:none or visibility:hidden,
+// because either of those takes the text out of the accessibility tree too and
+// the point is that a screen reader still reads it.
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// The skip link is the one that has to come back on focus.
+a.screen-reader-text:focus {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100000;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 12px 20px;
+  clip-path: none;
+  background-color: $hof-white;
+  color: $hof-navy;
+  font-family: $font-sans-semibold;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: var(--radius-btn);
+  outline: 2px solid $hof-navy;
+  outline-offset: 2px;
+}
+
 // Section 5 motion kit. The classes below are added by motion.js and only ever
 // to elements that were below the fold at load, so nothing here can hide
 // content on a page without JavaScript, and nothing here delays the LCP.

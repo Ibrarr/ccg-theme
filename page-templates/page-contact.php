@@ -10,7 +10,7 @@ get_header();
         <div class="container px-4">
             <h1 class="title"><?php the_title(); ?></h1>
             <div class="row">
-                <div class="col-lg-8 intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                <div class="col-lg-8 intro"><p class="statement"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p></div>
             </div>
         </div>
     </section>

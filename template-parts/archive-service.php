@@ -24,7 +24,7 @@ $term_name_text = single_term_title( '', false );
 						echo '<h1 class="title">' . $term_name_text . '</h1>';
 					}
 					?>
-                    <div class="intro"><h2><?php echo strip_tags( term_description(), '<a>' ); ?></h2></div>
+                    <div class="intro"><p class="statement"><?php echo ccg_editor_html( term_description() ); ?></p></div>
                     <?php if ( get_field( 'smaller_into_text', $current_term ) ) { ?>
                         <div class="smaller-intro"><h3><?php the_field( 'smaller_into_text', $current_term ); ?></h3></div>
                     <?php } ?>
@@ -143,7 +143,7 @@ $term_name_text = single_term_title( '', false );
                                         <div class="service-slide">
                                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
                                             <p class="description"><?php the_sub_field( 'description' ); ?></p>
-                                            <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                            <span class="count"><span aria-hidden="true"><?php echo $current_count; ?> — <?php echo $total_count ?></span><span class="screen-reader-text">Item <?php echo $current_count; ?> of <?php echo $total_count ?></span></span>
                                         </div>
                                     </li>
                                     <?php
@@ -181,7 +181,7 @@ $term_name_text = single_term_title( '', false );
             <div class="row content">
                 <div class="col-12"><h2 class="kicker"><?php the_field( 'why_choose_ccgroup_1st_title', 'option' ) ?></h2></div>
                 <div class="col-md-6">
-                    <h2><?php the_field( 'why_choose_ccgroup_2nd_title', 'option' ) ?></h2>
+                    <p class="statement"><?php the_field( 'why_choose_ccgroup_2nd_title', 'option' ) ?></p>
                     <h3><?php the_field( 'why_choose_ccgroup_3rd_title', 'option' ) ?></h3>
                 </div>
                 <div class="col-md-6">
@@ -226,7 +226,7 @@ $term_name_text = single_term_title( '', false );
                                                        target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
                                                 </p>
                                             <?php } ?>
-                                            <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                            <span class="count"><span aria-hidden="true"><?php echo $current_count; ?> — <?php echo $total_count ?></span><span class="screen-reader-text">Item <?php echo $current_count; ?> of <?php echo $total_count ?></span></span>
                                         </div>
                                     </li>
                                     <?php
@@ -308,7 +308,7 @@ $term_name_text = single_term_title( '', false );
                                 <div class="explain-card-content">
                                     <h3><?php the_sub_field( 'title' ); ?></h3>
                                     <p><?php the_sub_field( 'content' ); ?></p>
-                                    <span class="count"><span class="number"><?php echo $current_count; ?> — <?php echo $total_count ?></span> <span class="right-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/right-arrow.svg' ) ?></span></span>
+                                    <span class="count"><span class="number" aria-hidden="true"><?php echo $current_count; ?> — <?php echo $total_count ?></span><span class="screen-reader-text">Card <?php echo $current_count; ?> of <?php echo $total_count ?></span> <span class="right-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/right-arrow.svg' ) ?></span></span>
                                 </div>
                             </div>
                             <?php

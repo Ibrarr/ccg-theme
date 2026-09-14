@@ -24,7 +24,7 @@ $post_thumbnail_url = wp_get_attachment_image_src( $post_thumbnail_id, 'header-i
                 <div class="col-md-8 header-content">
                     <p class="term">Webinar</p>
                     <h1 class="title"><?php the_title(); ?></h1>
-                    <div class="intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                    <div class="intro"><p class="statement"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p></div>
                 </div>
             </div>
         </div>

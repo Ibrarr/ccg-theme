@@ -12,7 +12,11 @@
         <p class="term"><?php echo $term_name; ?></p>
         <p class="title"><strong><?php the_title(); ?></strong></p>
         <p class="intro"><?php echo $intro ?></p>
-        <p class="find-out-more"><a href="<?php the_permalink(); ?>">Find out more here</a></p>
+        <?php // Register #6: every card carried the same "Find out more here", which
+        // is a weak anchor for a reader on links alone and for a crawler. The
+        // visible label is the design, so the card's own title is appended out
+        // of sight instead: the anchor reads distinctly, the page looks the same. ?>
+        <p class="find-out-more"><a href="<?php the_permalink(); ?>">Find out more here<span class="screen-reader-text"> about <?php the_title(); ?></span></a></p>
         <p></p>
     </a>
 </div>

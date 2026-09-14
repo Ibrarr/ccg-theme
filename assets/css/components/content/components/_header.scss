@@ -15,7 +15,8 @@
   .intro {
     // The standfirst is Libre Baskerville Italic at class level, per the type
     // scale: a serif voice, no per-post spans, 1.5 leading.
-    h2 {
+    h2,
+    p.statement {
       @include sub-heading-text($ccg-green);
       font-family: $font-serif;
       font-style: italic;

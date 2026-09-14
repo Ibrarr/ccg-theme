@@ -15,7 +15,8 @@
     padding: 65px 0;
     background-color: $hof-violet-deep;
 
-    h2 {
+    h2,
+    p.statement {
       font-family: $font-serif;
       font-style: italic;
       // 400, down a step. Libre Baskerville is a variable face covering 400 to

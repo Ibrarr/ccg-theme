@@ -32,7 +32,8 @@
   }
 
   .intro {
-    h2 {
+    h2,
+    p.statement {
       @include sub-heading-text($ccg-off-white);
 
       a {

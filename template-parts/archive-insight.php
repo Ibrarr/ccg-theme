@@ -5,7 +5,7 @@
         <div class="row">
             <h1 class="title"><?php the_field( 'insight_hub_heading', 'option' ); ?></h1>
             <div class="col-lg-8 col-md-10 intro">
-                <h2><?php echo ccg_statement_lead_html( get_field( 'insight_hub_description', 'option' ) ); ?></h2>
+                <p class="statement"><?php echo ccg_statement_lead_html( get_field( 'insight_hub_description', 'option' ) ); ?></p>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                                                     <div class="featured-content">
                                                         <p class="term"><?php echo $term; ?></p>
                                                         <h3 class="title"><?php the_title(); ?></h3>
-                                                        <p class="intro"><?php echo strip_tags( get_field( 'intro' ) ); ?></p>
+                                                        <p class="intro"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p>
                                                         <a class="global-button" href="<?php the_permalink(); ?>">Learn
                                                             more</a>
                                                     </div>
@@ -99,7 +99,7 @@
                                                         <div class="featured-content">
                                                             <p class="term"><?php echo $term; ?></p>
                                                             <h3 class="title"><?php the_title(); ?></h3>
-                                                            <p class="intro"><?php echo strip_tags( get_field( 'intro' ) ); ?></p>
+                                                            <p class="intro"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p>
                                                             <a class="global-button" href="<?php the_permalink(); ?>">Learn
                                                                 more</a>
                                                         </div>

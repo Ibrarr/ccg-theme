@@ -25,7 +25,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                 <p class="term"><?php echo $term_name; ?></p>
                 <h1 class="title"><?php the_title(); ?></h1>
                 <div class="row">
-                    <div class="col-lg-8 intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                    <div class="col-lg-8 intro"><p class="statement"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p></div>
                 </div>
             </section>
             <section class="post-content">

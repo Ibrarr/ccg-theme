@@ -30,7 +30,8 @@
     .intro {
       // The standfirst is a serif voice here too, same class-level rule as the
       // blog and insight header: Libre Baskerville Italic at 1.5 leading.
-      h2 {
+      h2,
+      p.statement {
         @include sub-heading-text(#ffffff);
         font-family: $font-serif;
         font-style: italic;
