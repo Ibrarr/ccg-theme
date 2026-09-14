@@ -12,20 +12,30 @@
     position: relative;
     z-index: 100;
 
+    // The co-brand lockup is 401x54, a 7.43:1 ratio against the old mark's
+    // 4.77:1, so the widths are retuned: the same max-width would have drawn it
+    // a third shorter. height: auto matters as much, because the asset carries
+    // height="54" and without it the box kept that height and letterboxed the
+    // artwork inside it.
     svg {
-      max-width: 195px;
+      width: 100%;
+      height: auto;
+      // Fluid below md for the same reason as the lg-to-xxl rule below: a flat
+      // 240px cleared the hamburger at 480 but ran into it at 400, and 52vw
+      // still ran into it at 320.
+      max-width: min(240px, 46vw);
 
       @include media-breakpoint-up(md) {
-        width: 100%;
-        max-width: 296px;
+        max-width: 401px;
       }
 
-      @include media-breakpoint-between(lg, xl) {
-        max-width: 200px;
-      }
-
-      @media only screen and (max-width: 380px) {
-        width: 40vw;
+      // Clearance limits, not taste. The nav pill sits beside the lockup and the
+      // gap between them closes as the viewport narrows, so between lg and xxl
+      // the width is tied to the viewport rather than pinned: at a flat 401px
+      // it ran 29px into the pill at 1280, and at a flat 300px it ran 66px into
+      // it at 1024.
+      @media only screen and (min-width: 992px) and (max-width: 1399.98px) {
+        max-width: min(401px, 21vw);
       }
 
       path, rect {
@@ -39,13 +49,11 @@
     z-index: 99;
 
     a {
-      svg rect,
-      svg path {
+      // Light template: the mark ships white, so everything but the underscore
+      // is repainted navy. Selected by class, not by position: the old rule
+      // read path:nth-child(25), which the new vector does not share.
+      svg path:not(.logo-underscore) {
         fill: $ccg-dark-green !important;
-      }
-
-      svg g g path:nth-child(25) {
-        fill: $ccg-pink !important;
       }
     }
   }

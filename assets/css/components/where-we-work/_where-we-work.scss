@@ -1,12 +1,10 @@
 .page-template-page-where-we-work {
   .header-logo a {
-    svg rect,
-    svg path {
+    // Light template: the mark ships white, so everything but the underscore
+    // is repainted navy. Selected by class, not by position: the old rule
+    // read path:nth-child(25), which the new vector does not share.
+    svg path:not(.logo-underscore) {
       fill: $ccg-dark-green !important;
-    }
-
-    svg g g path:nth-child(25) {
-      fill: $ccg-pink !important;
     }
   }
 

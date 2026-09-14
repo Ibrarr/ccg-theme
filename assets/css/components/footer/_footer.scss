@@ -8,12 +8,13 @@ footer {
   .footer-logo {
     svg {
       width: 100%;
+      height: auto;
       max-width: 250px;
 
       @include media-breakpoint-up(md) {
-        width: 100%;
-        max-width: 347px;
-        height: 72px;
+        // No fixed height: the lockup is 7.43:1, so a 72px box letterboxed it
+        // with 25px of dead space under the artwork.
+        max-width: 401px;
       }
 
       @include media-breakpoint-down(lg) {
