@@ -77,10 +77,19 @@
       // The frame leaves about 97px below the CTA, roughly 80px at 1440.
       margin-bottom: clamp(45px, 8vh, 80px);
 
-      // The design sets the H1 and the standfirst as one flowing serif
-      // sentence: the brand phrase in acid italic, the remainder in white
-      // roman. They stay two separate elements, set inline, so the heading
-      // outline and both strings are untouched.
+      // The wrapper is the heading on slide one and a paragraph elsewhere, so
+      // it must add nothing of its own: the two spans inside carry all the
+      // type. Without this the browser's default h1 margin and size would
+      // change the slide's rhythm on slide one only.
+      .header-statement {
+        margin: 0;
+        font-weight: inherit;
+        font-size: inherit;
+      }
+
+      // The design sets the brand phrase and the standfirst as one flowing
+      // serif sentence: the phrase in acid italic, the remainder in white
+      // roman. Both strings are untouched.
       .heading,
       .sub-heading {
         display: inline;

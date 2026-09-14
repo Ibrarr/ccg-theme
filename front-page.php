@@ -17,14 +17,27 @@
                 <ul class="splide__list">
 					<?php
 					if ( have_rows( 'header_slider' ) ):
+						// Every slide used to render its own <h1>, which gave the page three,
+						// and Splide's loop clones took that to seven. Only the first slide
+						// carries the heading rank now; the rest render the identical markup
+						// in a <p>. The design sets the title and the body as one flowing
+						// serif sentence, so the heading is the whole block rather than the
+						// two-word phrase on its own, which is also what the handover's
+						// markup flag asks for: one element, an inline span for the acid
+						// italic lead-in.
+						$ccg_slide_index = 0;
 						while ( have_rows( 'header_slider' ) ) : the_row();
+							$ccg_slide_index ++;
+							$ccg_statement_tag = 1 === $ccg_slide_index ? 'h1' : 'p';
 							?>
                             <li class="splide__slide">
                                 <img src="<?php echo wp_get_attachment_image_src( get_sub_field( 'image' ), 'header-image' )[0] ?>">
                                 <div class="container px-4 h-100 d-flex align-items-end">
                                     <div class="header-slide">
-                                        <h1 class="heading"><?php the_sub_field( 'title' ); ?></h1>
-                                        <p class="sub-heading"><?php the_sub_field( 'body' ); ?></p>
+                                        <<?php echo $ccg_statement_tag; ?> class="header-statement">
+                                            <span class="heading"><?php the_sub_field( 'title' ); ?></span>
+                                            <span class="sub-heading"><?php the_sub_field( 'body' ); ?></span>
+                                        </<?php echo $ccg_statement_tag; ?>>
 	                                    <?php if ($button = get_sub_field('button')) : ?>
                                             <a class="hero-button" href="<?php echo esc_url($button['url']); ?>">
 			                                    <?php echo esc_html($button['title']); ?>
