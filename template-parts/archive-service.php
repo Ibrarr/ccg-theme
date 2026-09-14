@@ -252,7 +252,7 @@ $term_name_text = single_term_title( '', false );
                                 $case_study = get_sub_field('case_study');
                                 $post = $case_study;
                                 $intro = get_sub_field('intro');
-                                $term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+                                $term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
                                 require( 'article-card-longer.php' );
                             endwhile;
                             wp_reset_postdata();

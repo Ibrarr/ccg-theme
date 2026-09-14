@@ -80,7 +80,7 @@
 				if ( $pinned_posts->have_posts() ) {
 					while ( $pinned_posts->have_posts() ) {
 						$pinned_posts->the_post();
-						$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+						$term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
 						?>
                         <div class="col-md-6 recent-post-container"
                              style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">
@@ -111,7 +111,7 @@
 					if ( $query->have_posts() ) {
 						while ( $query->have_posts() ) {
 							$query->the_post();
-							$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+							$term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
 							?>
                             <div class="col-md-6 recent-post-container"
                                  style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">
@@ -145,7 +145,7 @@
 				if ( $pinned_posts->have_posts() ) {
 					while ( $pinned_posts->have_posts() ) {
 						$pinned_posts->the_post();
-						$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+						$term_name = ccg_term_eyebrow( get_the_ID(), 'type' );
 						?>
                         <div class="col-md-6 recent-post-container"
                              style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">
@@ -176,7 +176,7 @@
 					if ( $query->have_posts() ) {
 						while ( $query->have_posts() ) {
 							$query->the_post();
-							$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+							$term_name = ccg_term_eyebrow( get_the_ID(), 'type' );
 							?>
                             <div class="col-md-6 recent-post-container"
                                  style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">

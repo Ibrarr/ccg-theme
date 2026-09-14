@@ -207,3 +207,58 @@ function ccg_light_header_body_class( $classes ) {
 }
 
 add_filter( 'body_class', 'ccg_light_header_body_class' );
+
+/**
+ * The first term name for a card eyebrow, or an empty string.
+ *
+ * Twenty-one call sites read `get_the_terms( …, $tax )[0]->name` straight. When
+ * a post carries no term in that taxonomy get_the_terms() returns false, and
+ * `false[0]->name` is two warnings and a null: "Trying to access array offset
+ * on false", then "Attempt to read property on null". Not a fatal, so the page
+ * still renders, which is exactly why it went unnoticed: the label simply comes
+ * out blank and the log fills up. Turn WP_DEBUG_DISPLAY on and the warnings
+ * print into the markup instead.
+ *
+ * Worth guarding before anyone tidies the sector taxonomy, because deleting a
+ * term detaches it from every post it held in a single action, and this is what
+ * those posts' eyebrows read.
+ */
+function ccg_term_eyebrow( $post_id, $taxonomy ) {
+	$terms = get_the_terms( $post_id, $taxonomy );
+
+	if ( empty( $terms ) || is_wp_error( $terms ) ) {
+		return '';
+	}
+
+	$first = reset( $terms );
+
+	return isset( $first->name ) ? $first->name : '';
+}
+
+/**
+ * The eyebrow a card should carry, chosen by post type.
+ *
+ * The theme's own convention, written out longhand in
+ * ccg_load_search_results_page(): an insight shows its type, a case study its
+ * sector, a news item its source, and anything else the word Blog.
+ *
+ * The header's two "Recent News & Views" sliders query insight, post and work
+ * together but read `type` for all three, and only an insight has one. So every
+ * pinned case study and blog post in the search panel carried a blank label, on
+ * every page of the site.
+ */
+function ccg_card_eyebrow( $post_id ) {
+	switch ( get_post_type( $post_id ) ) {
+		case 'insight':
+			return ccg_term_eyebrow( $post_id, 'type' );
+
+		case 'work':
+			return ccg_term_eyebrow( $post_id, 'sector' );
+
+		case 'news':
+			return ccg_term_eyebrow( $post_id, 'source' );
+
+		default:
+			return 'Blog';
+	}
+}

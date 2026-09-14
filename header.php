@@ -79,7 +79,7 @@
 												if ( $featured_posts->have_posts() ) {
 													while ( $featured_posts->have_posts() ) {
 														$featured_posts->the_post();
-														$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+														$term_name = ccg_card_eyebrow( get_the_ID() );
 														echo '<li class="splide__slide">';
 														require( 'template-parts/article-card-slider.php' );
 														echo '</li>';
@@ -106,7 +106,7 @@
 														while ( $recent_posts->have_posts() ) {
 															$recent_posts->the_post();
 															$post_type = get_post_type();
-															$term_name = $post_type === 'insight' ? get_the_terms( get_the_ID(), 'type' )[0]->name : 'Blog';
+															$term_name = $post_type === 'insight' ? ccg_term_eyebrow( get_the_ID(), 'type' ) : 'Blog';
 															echo '<li class="splide__slide">';
 															require( 'template-parts/article-card-slider.php' );
 															echo '</li>';
@@ -157,7 +157,7 @@
 												if ( $recent_news->have_posts() ) {
 													while ( $recent_news->have_posts() ) {
 														$recent_news->the_post();
-														$term_name = get_the_terms( get_the_ID(), 'source' )[0]->name;
+														$term_name = ccg_term_eyebrow( get_the_ID(), 'source' );
 														echo '<li class="splide__slide">';
 														require( 'template-parts/article-card-slider-news.php' );
 														echo '</li>';
@@ -235,7 +235,7 @@
 												if ( $featured_posts->have_posts() ) {
 													while ( $featured_posts->have_posts() ) {
 														$featured_posts->the_post();
-														$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+														$term_name = ccg_card_eyebrow( get_the_ID() );
 														echo '<li class="splide__slide">';
 														require( 'template-parts/article-card-slider.php' );
 														echo '</li>';
@@ -262,7 +262,7 @@
 														while ( $recent_posts->have_posts() ) {
 															$recent_posts->the_post();
 															$post_type = get_post_type();
-															$term_name = $post_type === 'insight' ? get_the_terms( get_the_ID(), 'type' )[0]->name : 'Blog';
+															$term_name = $post_type === 'insight' ? ccg_term_eyebrow( get_the_ID(), 'type' ) : 'Blog';
 															echo '<li class="splide__slide">';
 															require( 'template-parts/article-card-slider.php' );
 															echo '</li>';
