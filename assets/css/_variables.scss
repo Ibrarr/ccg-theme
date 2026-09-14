@@ -49,11 +49,17 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
   // sections override this property to acid rather than carrying a second mixin.
   --link-underline: #{$hof-violet-deep};
 
-  // Hover, focus and active accent, per 7.5: acid on dark grounds, deep violet
-  // on light. Same reasoning as above, so light is the default and dark-ground
-  // containers set it to acid. Every interaction state that used to resolve to
-  // mustard now points here, so none of them can quietly go navy-on-navy.
-  --interaction-accent: #{$hof-violet-deep};
+  // Hover, focus and active accent. Acid on dark grounds, teal on light.
+  //
+  // Client decision, Sept 2026: navy items should hover green, not purple.
+  // Acid itself cannot do it on a light ground, at 1.34:1 on white and 1.06:1
+  // on warm grey, which is the caveat the client attached to the request. Teal
+  // is the palette's green-leaning colour, it measures 7.11:1 on white and
+  // 5.59:1 on warm grey, and the type scale already sanctions it on light
+  // ground for the stat trio. This overrides 7.5, which specifies deep violet
+  // on light; violet is still the drawn link underline, which was not part of
+  // the request. Dark-ground containers still set acid.
+  --interaction-accent: #{$hof-teal};
 }
 
 // Typography
