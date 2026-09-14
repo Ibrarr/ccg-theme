@@ -70,8 +70,9 @@
           transition: all .3s;
         }
 
+        // T1a: the marker moves with its label, both to deep violet.
         &:hover > a:before {
-          color: $ccg-dark-green;
+          color: $hof-violet-deep;
         }
 
         &.active {
@@ -90,7 +91,7 @@
             top: 50%;
             transform: translateY(-50%);
             margin-right: 0;
-            border-bottom: 2px solid $ccg-dark-green;
+            border-bottom: 2px solid $hof-violet-deep;
             transition: all .3s;
           }
 
@@ -158,8 +159,11 @@
     margin-right: 20px;
     @include body-text($ccg-green);
 
+    // T1a: two-tone construction. "Recent" navy Regular, "News & Views" deep
+    // violet SemiBold, per the 7.2 labels-on-light rule.
     span {
-      font-family: $font-circular-medium;
+      font-family: $font-sans-semibold;
+      color: $hof-violet-deep;
     }
   }
 

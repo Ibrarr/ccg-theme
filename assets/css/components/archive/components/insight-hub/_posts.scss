@@ -17,7 +17,7 @@
   }
 
   .global-button {
-    @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
+    @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
     display: none;
     margin: auto;
   }

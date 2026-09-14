@@ -97,6 +97,15 @@ footer,
   --focus-ring: #{$hof-acid};
 }
 
+// With the faces above answering for any weight, <strong> and <b> would render
+// at the face they inherit, so editorial bold would stop looking bold. Give
+// them the real SemiBold face instead, which is what 7.2 asks for anyway
+// ("bold lead-ins: Poppins SemiBold navy").
+strong,
+b {
+  font-family: $font-sans-semibold;
+}
+
 // Controls promoted to keyboard operability at runtime by
 // keyboard-controls.js. The theme builds its controls from <div>, so until
 // that script runs they cannot hold focus and no focus rule can fire for

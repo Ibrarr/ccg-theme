@@ -14,7 +14,12 @@
 @font-face {
   font-family: "Poppins-Regular";
   font-style: normal;
-  font-weight: 400;
+  // Weight is encoded in the family name in this theme, so this family holds
+  // exactly one face (Regular, 400). Bootstrap's reboot asks h1-h6 for 500 and
+  // <strong>/<b> for 700, and a request bolder than the only face present makes
+  // the browser synthesise a fake one. Declaring the range says this face answers
+  // for the whole family, so no weight is ever faked.
+  font-weight: 100 900;
   font-display: swap;
   src: url("../../assets/fonts/Poppins-Regular.woff2") format("woff2");
 }
@@ -22,7 +27,12 @@
 @font-face {
   font-family: "Poppins-Medium";
   font-style: normal;
-  font-weight: 500;
+  // Weight is encoded in the family name in this theme, so this family holds
+  // exactly one face (Medium, 500). Bootstrap's reboot asks h1-h6 for 500 and
+  // <strong>/<b> for 700, and a request bolder than the only face present makes
+  // the browser synthesise a fake one. Declaring the range says this face answers
+  // for the whole family, so no weight is ever faked.
+  font-weight: 100 900;
   font-display: swap;
   src: url("../../assets/fonts/Poppins-Medium.woff2") format("woff2");
 }
@@ -30,7 +40,12 @@
 @font-face {
   font-family: "Poppins-SemiBold";
   font-style: normal;
-  font-weight: 600;
+  // Weight is encoded in the family name in this theme, so this family holds
+  // exactly one face (SemiBold, 600). Bootstrap's reboot asks h1-h6 for 500 and
+  // <strong>/<b> for 700, and a request bolder than the only face present makes
+  // the browser synthesise a fake one. Declaring the range says this face answers
+  // for the whole family, so no weight is ever faked.
+  font-weight: 100 900;
   font-display: swap;
   src: url("../../assets/fonts/Poppins-SemiBold.woff2") format("woff2");
 }

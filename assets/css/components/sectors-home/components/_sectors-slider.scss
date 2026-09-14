@@ -68,7 +68,7 @@
             }
 
             .global-button {
-              @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
+              @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
               width: fit-content;
               padding: 10px 26px;
             }
@@ -102,7 +102,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(24, 45, 67, 0.7);   // the Hoffman wash, hero recipe
           }
 
           .sector-slide {
@@ -136,7 +136,7 @@
 
           &:hover {
             &:after {
-              background-color: rgba(0, 0, 0, 0.50);
+              background-color: rgba(24, 45, 67, 0.85);
             }
           }
 

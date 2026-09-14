@@ -125,3 +125,30 @@ function ccg_statement_band_html( $text ) {
 	return esc_html( mb_substr( $text, 0, $split + 1 ) )
 		. '<span class="intro-snap">' . esc_html( mb_substr( $text, $split + 1 ) ) . '</span>';
 }
+
+/**
+ * Flags the templates whose header sits on a light ground.
+ *
+ * Section 2 names `has-light-header` as the hook for the nav keyline on
+ * templates where the section below the header is white and the white nav
+ * would otherwise lose its edge: the insight article, the blog post, the
+ * sector and service pages and the case study. The dark mastheads (homepage,
+ * the listing pages, About) never carry it.
+ *
+ * On this theme the keyline itself is already delivered by the nav pill, which
+ * carries a full `--hairline` border on all four sides rather than a single
+ * bottom rule, so this class is the documented hook rather than the mechanism.
+ * Anything scoped to it must not add a second edge.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function ccg_light_header_body_class( $classes ) {
+	if ( is_singular( array( 'post', 'insight', 'work' ) ) || is_tax( array( 'sector', 'service' ) ) ) {
+		$classes[] = 'has-light-header';
+	}
+
+	return $classes;
+}
+
+add_filter( 'body_class', 'ccg_light_header_body_class' );

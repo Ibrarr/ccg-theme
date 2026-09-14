@@ -23,15 +23,10 @@
   overflow: hidden;
   border-radius: 0 0 25px 25px;
 
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.25);
-  }
+  // Section 2: "exactly the section 2 hero spec - one wash recipe site-wide, no
+  // variants". This band used to stack a further 25% black on top of the navy
+  // 70%, which made it the one place darker than the recipe.
+
 
   .content {
     z-index: 1;

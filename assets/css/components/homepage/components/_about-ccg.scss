@@ -14,9 +14,15 @@
     text-align:center;
     line-height: 48px;
 
-    // The highlighted phrase keeps its emphasis, now as the acid accent.
+    // The T2 statement-block device, on the existing author highlight span:
+    // Libre Baskerville Italic acid running into white Poppins. T7 sets the
+    // precedent of restyling the highlight span in place rather than adding
+    // markup, so the editor keeps control of where the lead-in ends.
     span {
       color: $hof-acid;
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
     }
 
     a {

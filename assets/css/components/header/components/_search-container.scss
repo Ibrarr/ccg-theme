@@ -28,9 +28,18 @@
     }
 
     input {
-      background: #DEDEDE;
-      border: 0;
+      // T1a: "search field per the section 2 spec (white, 1px navy hairline,
+      // pill radius)". It was a borderless #DEDEDE slab.
+      background: $hof-white;
+      border: 1px solid $hof-navy;
       border-radius: 25px;
+
+      &::placeholder {
+        // The menu's resting grey, so the placeholder reads as a prompt rather
+        // than as entered text.
+        color: $hof-navy-70;
+        opacity: 1;
+      }
       padding: 12px 25px;
       width: 360px;
       position: relative;
@@ -98,7 +107,7 @@
   }
 
   .global-button {
-    @include long-button($hof-navy, $hof-acid, $hof-acid, $hof-navy);
+    @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
     display: none;
     margin: auto;
   }
@@ -116,8 +125,11 @@
     margin-right: 20px;
     @include body-text($ccg-green);
 
+    // T1a: two-tone construction. "Recent" navy Regular, "News & Views" deep
+    // violet SemiBold, per the 7.2 labels-on-light rule.
     span {
-      font-family: $font-circular-medium;
+      font-family: $font-sans-semibold;
+      color: $hof-violet-deep;
     }
   }
 

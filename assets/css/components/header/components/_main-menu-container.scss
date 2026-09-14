@@ -1,4 +1,9 @@
 .main-menu-container {
+  // T1a: inside the menu the resting state quietens to grey and deep violet
+  // carries the wayfinding, a deliberate menu-only deviation from the
+  // light-ground teal this property holds everywhere else.
+  --interaction-accent: #{$hof-violet-deep};
+
   position: relative;
   display: none;
   background-color: #ffffff;
