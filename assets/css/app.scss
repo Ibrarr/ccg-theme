@@ -88,13 +88,35 @@ footer,
 .quotes-slider,
 .challenges-opportunities,
 .other-services,
-.report-takeaways,
 .report-methodology,
 .term-selector,
 .form-section,
 .holding-page,
 .notification-bar {
   --interaction-accent: #{$hof-acid};
+  --focus-ring: #{$hof-acid};
+}
+
+// Controls promoted to keyboard operability at runtime by
+// keyboard-controls.js. The theme builds its controls from <div>, so until
+// that script runs they cannot hold focus and no focus rule can fire for
+// them; these two selectors are the promoted states. 2px ring per section 2.
+[data-ccg-keyboard]:focus-visible,
+.ccg-kb-trigger:focus-visible {
+  outline: 2px solid var(--focus-ring, #{$hof-navy});
+  outline-offset: 3px;
+}
+
+// The heading-led disclosures (Awards years, Careers vacancies) have their
+// heading contents wrapped in a real button so the heading keeps its rank.
+// all: unset lets every inherited type property fall through from the heading
+// exactly as before; only the box needs restoring.
+.ccg-kb-trigger {
+  all: unset;
+  display: block;
+  width: 100%;
+  text-align: inherit;
+  cursor: pointer;
 }
 
 

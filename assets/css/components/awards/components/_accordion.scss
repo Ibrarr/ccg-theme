@@ -59,9 +59,14 @@
       margin: 0;
     }
 
+    // T9: "Winning Awards" / "Shortlisted" take the deep violet caps eyebrow
+    // role, because they sit between the year heading and the award names and
+    // navy would flatten that hierarchy. They were $ccg-orange, which is navy
+    // since the reskin, so they were doing exactly that. Violet reads 9.5:1 on
+    // the white year panel.
     h5 {
-      @include sub-heading-text($ccg-orange);
-      font-family: $font-circular-medium;
+      @include term($hof-violet-deep);
+      letter-spacing: 1.5px;
       margin-top: 10px;
       margin-bottom: 40px;
     }

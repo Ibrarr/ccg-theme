@@ -60,6 +60,10 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
   // on light; violet is still the drawn link underline, which was not part of
   // the request. Dark-ground containers still set acid.
   --interaction-accent: #{$hof-teal};
+  // Section 2: "minimum = visible 2px focus ring (acid on dark, navy on
+  // light)". Navy is the light-ground default; the dark-ground list in
+  // app.scss switches it to acid alongside --interaction-accent.
+  --focus-ring: #{$hof-navy};
 }
 
 // Typography
