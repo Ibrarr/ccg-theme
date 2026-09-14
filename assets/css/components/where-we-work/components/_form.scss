@@ -32,8 +32,13 @@
     }
 
     input[type="text"], input[type="email"], input[type="tel"] {
+      // 1.4.11 wants 3:1 on a control's boundary. A white field's only edge was
+      // its own fill, which reads 1.34:1 against the acid band, so the field
+      // had no boundary a low-vision reader could find. Navy reads 10.5:1 on
+      // acid, and it is the system's own device: section 2 gives the nav search
+      // field a 1px navy hairline and T3 gives the gated form's field the same.
       border-radius: var(--radius-btn);
-      border: none;
+      border: 1px solid $hof-navy;
       height: 40px;
 
       @include media-breakpoint-down(md) {
@@ -50,8 +55,9 @@
     }
 
     textarea {
+      // Same boundary rule as the inputs above.
       border-radius: var(--radius-btn);
-      border: none;
+      border: 1px solid $hof-navy;
       min-block-size: 10rem !important;
 
       @include media-breakpoint-down(md) {
