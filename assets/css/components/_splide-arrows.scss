@@ -2,6 +2,10 @@
   margin-top: 25px;
   display: flex;
   justify-content: flex-end;
+  // Measured off the D3 board: the discs sit about a third of a disc width
+  // apart. Set here as one explicit value rather than left to fall out of a
+  // margin fighting Splide's own offsets, which is what produced the old 18px.
+  gap: 16px;
 
   .splide__arrow {
     position: relative;
@@ -11,6 +15,12 @@
     opacity: 1;
     cursor: pointer;
     border: 0;
+    // Splide offsets its arrows with left/right. On a relatively positioned
+    // arrow those shift it visually without changing layout, so they were
+    // silently eating 32px of the gap. Neutralised so the gap above is the
+    // gap that renders.
+    left: auto;
+    right: auto;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -85,8 +95,6 @@
     }
 
     &.splide__arrow--prev {
-      margin-right: 50px;
-
       svg {
         transform: scaleX(-1);
       }

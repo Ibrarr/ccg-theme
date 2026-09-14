@@ -38,14 +38,18 @@
     position: relative;
   }
 
-  h1 {
+  // Register #8: this label used to be an <h1>, which gave every service and
+  // sector page two H1s. It is the smallest of the three headings in the band,
+  // so it was never a page heading. Demoted to h2.kicker; the styling is
+  // unchanged and the big serif statement below is scoped off it.
+  .kicker {
     font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
     font-family: $font-circular-medium;
     color: #fff;
     margin-bottom: 20px;
   }
 
-  h2 {
+  h2:not(.kicker) {
     // Floor lowered from 58px to 36px: at 375px the old floor made a single
     // unbreakable word ("Communication") wider than its column. The desktop
     // cap is unchanged, so the design reads as before from md up.
