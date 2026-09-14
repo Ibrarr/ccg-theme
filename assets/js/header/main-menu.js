@@ -45,10 +45,26 @@ jQuery(document).ready(function ($) {
     $(window).on('resize', appHeight);
 
     function clickHandler(event) {
+        const $item = $(this);
+        const $ownSubMenu = $item.children('.sub-menu');
+
+        // A click that started inside this item's OWN sub-menu belongs to that
+        // sub-menu: either a nested toggle, which has its own handler, or an
+        // ordinary link, which has to be allowed to navigate.
+        //
+        // The handler is bound to the <li>, not to its anchor, so without this
+        // guard every click on a child link bubbled up to the parent item and
+        // hit preventDefault(): the link never followed and toggleClass closed
+        // the panel the reader had just opened. Returning before
+        // stopPropagation() also lets the event carry on to any ancestor item,
+        // which reaches the same conclusion and likewise stands aside.
+        if ($ownSubMenu.length
+            && ($ownSubMenu.is(event.target) || $ownSubMenu.has(event.target).length)) {
+            return;
+        }
+
         event.stopPropagation();
         event.preventDefault();
-
-        const $item = $(this);
 
         // Close siblings at the same level only, and reset any items they had open inside.
         $item.siblings('.menu-item-has-children.active')
