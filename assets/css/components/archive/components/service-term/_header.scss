@@ -31,8 +31,10 @@
   }
 
   .child-term {
+    // Medium, like the parent service H1 beside it. Section 1's "Service H1,
+    // service name" role is Poppins Medium; this one override made the child
+    // pages Regular.
     @include title-text($ccg-green);
-    font-family: $font-circular-regular;
   }
 
   .title {

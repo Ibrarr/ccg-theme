@@ -47,7 +47,10 @@
     .headings {
       h4 {
         font-family: $font-circular-medium;
-        font-size: 20px;
+        // "Careers value words": 32-44px clamp. The stepped sizes below ran
+        // 20/31/56, so the deck was under the floor on mobile and well over the
+        // cap at desktop.
+        font-size: clamp(2rem, 1.15rem + 1.85vw, 2.75rem);
         color: $hof-white;
         transition: $ccg-transition-all;
         margin-bottom: 10px !important;
@@ -60,13 +63,6 @@
           color: $hof-acid;
         }
 
-        @include media-breakpoint-up(lg) {
-          font-size: 56px;
-        }
-
-        @include media-breakpoint-only(md) {
-          font-size: 31px;
-        }
       }
 
       // The names are the deck's control below lg (cards.js switches on click

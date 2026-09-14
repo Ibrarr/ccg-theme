@@ -32,15 +32,13 @@
       // The closing phrase. The template wraps it for the approved copy, and an
       // editor can override that by wrapping their own phrase in the field.
       // The statement is Libre Baskerville Italic and its closing phrase snaps
-      // out of it into the sans. The type scale gives that closing phrase
-      // Poppins Medium; CCGroup asked for Regular here specifically, so this
-      // one band is a local exception and the rest of the Medium roles stand.
-      // The register snap still reads, because the device is the change of
-      // family and style rather than the weight.
+      // out of it into the sans. Section 1 gives that phrase Poppins Medium;
+      // CCGroup asked for Regular during QA, and the client's later decision
+      // that the handover stands puts it back.
       .intro-snap,
       strong,
       b {
-        font-family: $font-sans-regular;
+        font-family: $font-sans-medium;
         font-style: normal;
         font-weight: 400;
       }

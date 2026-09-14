@@ -117,6 +117,10 @@
               // Acid: this is the "1 - 5" numbering on a navy card, so navy
               // painted it navy-on-navy. Type scale calls it acid on navy cards.
               @include body-text($hof-acid);
+              // "Service-card numbering": Poppins SemiBold, 14-16px. body-text()
+              // gives Regular at the body clamp, which ran to 18px at desktop.
+              font-family: $font-sans-semibold;
+              font-size: clamp(0.875rem, 0.7rem + 0.19vw, 1rem);
             }
           }
 

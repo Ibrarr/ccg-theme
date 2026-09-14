@@ -200,6 +200,16 @@ footer {
         color: #E5E4E0;
       }
 
+      // Section 1's "Legal links" role: Libre Baskerville Regular 14px, warm
+      // grey. Roman, not italic, per the serif audit's three roman exceptions.
+      .company-name,
+      .credit-text,
+      .credit-text a {
+        font-family: $font-serif;
+        font-style: normal;
+        font-size: 0.875rem;
+      }
+
       .company-name {
         display: flex;
         margin: 0;
