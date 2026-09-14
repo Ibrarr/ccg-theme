@@ -72,6 +72,11 @@
 
   .second-row {
     h3 {
+      // The rule set family, size and margin but never colour, so Bootstrap's
+      // own h1-h6 rule won and the heading painted #212529 while the paragraph
+      // beside it was navy. T9 and T11 both say navy; this band is the loudest
+      // on the site and it appears on 20 templates.
+      color: $hof-navy;
       font-size: clamp(1.625rem, 0.5139rem + 2.3148vw, 2.25rem);
       line-height: clamp(1.75rem, 0.6389rem + 2.3148vw, 2.375rem);
       font-family: $font-circular-regular;

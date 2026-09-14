@@ -199,7 +199,16 @@ function ccg_statement_band_html( $text ) {
  * @return string[]
  */
 function ccg_light_header_body_class( $classes ) {
-	if ( is_singular( array( 'post', 'insight', 'work' ) ) || is_tax( array( 'sector', 'service' ) ) ) {
+	// T11 asks for the class on Contact and Where We Work too: both are
+	// light-headed, and the hook is what a light header hangs anything off.
+	$light_templates = array(
+		'page-templates/page-contact.php',
+		'page-templates/page-where-we-work.php',
+	);
+
+	if ( is_singular( array( 'post', 'insight', 'work' ) )
+		|| is_tax( array( 'sector', 'service' ) )
+		|| ( is_page() && in_array( get_page_template_slug(), $light_templates, true ) ) ) {
 		$classes[] = 'has-light-header';
 	}
 
