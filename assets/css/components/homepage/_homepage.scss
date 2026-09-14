@@ -18,7 +18,9 @@
     h2 {
       font-family: $font-serif;
       font-style: italic;
-      font-weight: 500;
+      // 400, down a step. Libre Baskerville is a variable face covering 400 to
+      // 700, so this really does render lighter.
+      font-weight: 400;
       font-size: clamp(1.375rem, 0.5rem + 2.9167vw, 2.4375rem);
       line-height: clamp(2rem, 0.75rem + 4.1667vw, 3.5rem);
       color: $hof-white;
@@ -28,12 +30,17 @@
 
       // The closing phrase. The template wraps it for the approved copy, and an
       // editor can override that by wrapping their own phrase in the field.
+      // Down a step too, to Poppins Regular. The weight is in the family name
+      // in this theme, so the family is the change and font-weight follows it
+      // rather than doing the work. The contrast with the serif italic either
+      // side of it is now family and style rather than weight, which is the
+      // part of the device that was doing the work anyway.
       .intro-snap,
       strong,
       b {
-        font-family: $font-sans-medium;
+        font-family: $font-sans-regular;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 400;
       }
     }
   }

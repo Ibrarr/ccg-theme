@@ -29,10 +29,14 @@
     text-align: center;
   }
 
+  // White, not navy. This band's ground is deep violet, so navy rested at
+  // 1.49:1. The mixin's rollover sweep is already white, which is the tell that
+  // the component was built for a dark ground and only its resting colour was
+  // left behind.
   .link {
     text-decoration: underline;
     display: block;
-    @include body-text-white-rollover($ccg-dark-green);
+    @include body-text-white-rollover($hof-white);
     text-align: center;
   }
 
