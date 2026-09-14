@@ -172,6 +172,16 @@ a.screen-reader-text:focus {
   }
 }
 
+// Register #2 and #4 turned 21 statement bands from <h2> into <p class="statement">.
+// Bootstrap's reboot gives a paragraph a 1rem bottom margin where a heading gets
+// 0.5rem, so every one of those bands silently grew 8px taller. Match the heading
+// the paragraph replaced. This sits above the component imports deliberately: it
+// has the same specificity as a component's own rule, so source order lets any
+// band that sets its own spacing keep winning.
+p.statement {
+  margin-bottom: 0.5rem;
+}
+
 // Controls promoted to keyboard operability at runtime by
 // keyboard-controls.js. The theme builds its controls from <div>, so until
 // that script runs they cannot hold focus and no focus rule can fire for

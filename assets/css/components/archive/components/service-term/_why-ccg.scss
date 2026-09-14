@@ -44,7 +44,8 @@
     margin-bottom: 20px;
   }
 
-  h2:not(.kicker) {
+  h2:not(.kicker),
+  p.statement {
     // Floor lowered from 58px to 36px: at 375px the old floor made a single
     // unbreakable word ("Communication") wider than its column. The desktop
     // cap is unchanged, so the design reads as before from md up.
