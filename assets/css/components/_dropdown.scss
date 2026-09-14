@@ -17,12 +17,14 @@
     position: relative;
 
     .#{$name} {
-      // Navy fill, so the control always differs from the band behind it: three
-      // of the four sit on white and one on warm grey, and a white fill read as
-      // no control at all. The keyline carries it on a dark ground too.
-      background-color: $hof-navy;
-      color: $hof-white;
-      border: 1.5px solid $hof-navy;
+      // The fill has to differ from the band behind it, and the bands differ:
+      // most of these sit on white or warm grey, but the three post archives
+      // put theirs inside the navy top of a hard-stop gradient, where a navy
+      // fill was invisible. Driven by properties so the band sets the pair
+      // rather than each template restating the component.
+      background-color: var(--dropdown-fill, #{$hof-navy});
+      color: var(--dropdown-label, #{$hof-white});
+      border: 1.5px solid var(--dropdown-fill, #{$hof-navy});
       font-family: $font-circular-medium;
       text-transform: uppercase;
       font-size: 14px;
@@ -36,13 +38,13 @@
       transition: $ccg-transition-all;
 
       &:where(:hover, :focus-visible) {
-        background-color: $hof-acid;
-        color: $hof-navy;
-        border-color: $hof-navy;
+        background-color: var(--dropdown-fill-hover, #{$hof-acid});
+        color: var(--dropdown-label-hover, #{$hof-navy});
+        border-color: var(--dropdown-fill-hover, #{$hof-acid});
       }
 
       &:focus-visible {
-        outline: 2px solid $hof-navy;
+        outline: 2px solid var(--dropdown-ring, #{$hof-navy});
         outline-offset: 2px;
       }
 

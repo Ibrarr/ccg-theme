@@ -4,6 +4,18 @@
   margin-top: -5px;
   background: linear-gradient($ccg-green 200px, $ccg-off-white 10px);
 
+  // The filter sits about 54px into the navy top of that hard stop, so the
+  // component's default navy fill had nothing to read against. Acid ground,
+  // navy label, per section 1. Declared here rather than on the bare class
+  // because the Insight Hub uses the same class over a flat warm grey, where
+  // acid would sit at 1.06:1. Hover goes to white, not navy, so the control
+  // cannot vanish into the band on the way.
+  --dropdown-fill: #{$hof-acid};
+  --dropdown-label: #{$hof-navy};
+  --dropdown-fill-hover: #{$hof-white};
+  --dropdown-label-hover: #{$hof-navy};
+  --dropdown-ring: #{$hof-white};
+
   @import "term-selector";
   @import "../../../article-card";
 
