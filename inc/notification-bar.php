@@ -17,7 +17,7 @@
 /**
  * The bar's content, or null when it should not render.
  *
- * @return array{kicker:string,message:string,link:array|false}|null
+ * @return array{lead:string,kicker:string,message:string,link:array|false}|null
  */
 function ccg_notification_bar() {
 	if ( ! function_exists( 'get_field' ) || ! get_field( 'enable_notification_bar', 'option' ) ) {
@@ -32,6 +32,11 @@ function ccg_notification_bar() {
 	}
 
 	return [
+		// The design sets the boxed label inside the sentence ("You may notice
+		// [SOME UPDATES] that move ..."), so the copy either side of it is two
+		// fields rather than one. Both are optional: with the lead empty the
+		// label simply opens the line, which is the earlier arrangement.
+		'lead'    => trim( (string) get_field( 'notification_bar_lead', 'option' ) ),
 		'kicker'  => trim( (string) get_field( 'notification_bar_kicker', 'option' ) ),
 		'message' => $message,
 		'link'    => get_field( 'notification_bar_link', 'option' ),

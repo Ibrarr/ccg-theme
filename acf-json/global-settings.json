@@ -174,7 +174,7 @@
                 "37": "Webinar: How To Influence Telco Operators Through Industry Analysts",
                 "31": "Webinar: Influencing Buyers Through Telecoms Analysts",
                 "44": "Webinar: Integrated marketing communications: key principles, methods and outcomes",
-                "33": "Webinar: Mind The Gap: What AR Delivers, And What It\u2019s Asked For",
+                "33": "Webinar: Mind The Gap: What AR Delivers, And What It’s Asked For",
                 "35": "Webinar: Navigating Telco Turbulence: Lessons For Vendor Marketing",
                 "38": "Webinar: Security Marketing Strategies: Influencing Contemporary Purchasing Behaviour",
                 "34": "Webinar: Tech: How Firms And Investors Can Attract The Right Fit?",
@@ -251,12 +251,12 @@
             "ui": 1
         },
         {
-            "key": "field_68c4a1b2c3d03",
-            "label": "Kicker",
-            "name": "notification_bar_kicker",
+            "key": "field_68c4a1b2c3d06",
+            "label": "Lead-in text",
+            "name": "notification_bar_lead",
             "aria-label": "",
             "type": "text",
-            "instructions": "Short label at the start of the bar, shown in capitals. Two or three words.",
+            "instructions": "The words before the boxed label, e.g. \"You may notice\". Leave empty to open the line with the label.",
             "required": 0,
             "conditional_logic": [
                 [
@@ -274,7 +274,35 @@
             },
             "default_value": "",
             "maxlength": 40,
-            "placeholder": "",
+            "placeholder": "You may notice",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_68c4a1b2c3d03",
+            "label": "Boxed label",
+            "name": "notification_bar_kicker",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The short caps label inside the box, e.g. \"Some updates\". Keep it to two or three words.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68c4a1b2c3d02",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 40,
+            "placeholder": "Some updates",
             "prepend": "",
             "append": ""
         },
@@ -284,7 +312,7 @@
             "name": "notification_bar_message",
             "aria-label": "",
             "type": "text",
-            "instructions": "The message itself. Keep it to one line on desktop, around 120 characters.",
+            "instructions": "The rest of the sentence, following the boxed label. One line at desktop, so keep it short.",
             "required": 0,
             "conditional_logic": [
                 [
@@ -801,5 +829,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1789230273
+    "modified": 1789300000
 }
