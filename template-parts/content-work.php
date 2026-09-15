@@ -94,14 +94,16 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                                 </div>
                                 <div class="col-lg-12 col-md-6">
                                     <p><?php the_field( 'image_text' ); ?></p>
+									<?php get_template_part( 'template-parts/components/share' ); ?>
                                 </div>
                             </div>
                         </div>
 					<?php } else { ?>
-                        <div class="col-lg-5 image">
+                        <div class="col-lg-5 image social">
                             <img src="<?php the_post_thumbnail_url() ?>" alt="<?php the_title(); ?>"
                                  srcset="<?php echo esc_attr( $image_srcset ); ?>"
                                  sizes="(min-width: 391px) 1024px, 100vw">
+							<?php get_template_part( 'template-parts/components/share' ); ?>
                         </div>
 					<?php } ?>
                 </div>

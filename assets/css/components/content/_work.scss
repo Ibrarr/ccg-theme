@@ -42,6 +42,9 @@
     }
 
     @import "components/header";
+    // A3: Our Work is a showcase context, so its in-body headings take deep
+    // violet rather than the editorial teal the component defaults to.
+    --body-heading: #{$hof-violet-deep};
     @import "components/content";
 
     @import "components/work-dropdown";

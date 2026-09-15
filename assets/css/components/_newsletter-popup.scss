@@ -68,7 +68,6 @@
       margin-top: 25px;
       height: 32px;
       margin-bottom: 20px;
-      @include long-button($ccg-dark-green, #ffffff, #ffffff, $ccg-dark-green);
       max-width: 148px;
 
       @include media-breakpoint-up(lg) {

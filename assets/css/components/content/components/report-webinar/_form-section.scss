@@ -72,11 +72,8 @@
 
     input[type="submit"].gform_button.button {
       margin-top: 25px;
-      height: 32px;
-      @include long-button($hof-acid, $hof-white, $hof-navy, $hof-navy, $hof-acid);
 
       @include media-breakpoint-up(lg) {
-        height: 44px;
         margin-top: 40px;
       }
     }

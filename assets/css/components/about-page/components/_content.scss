@@ -66,38 +66,6 @@
   }
 
   .global-button {
-    background-color: $hof-navy;
-    font-family: $font-circular-medium;
-    cursor: pointer;
-    font-size: 12px;
-    text-align: center;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    // White, not acid. T7 casts this as the filled-on-light recipe, and the
-    // September decision is explicit: acid fills and acid labels are reserved
-    // for navy grounds. This button sits on the white editorial section.
-    color: $hof-white;
-    border-radius: var(--radius-btn);
-    transition: $ccg-transition-all;
-    width: fit-content;
-    margin: auto;
-    padding: 10px 30px;
-
-    &:hover {
-      background-color: $hof-acid;
-      color: $hof-navy;
-    }
-
-    &:focus-visible {
-      outline: 2px solid $hof-navy;
-      outline-offset: 2px;
-    }
-
-    @include media-breakpoint-up(lg) {
-      font-size: 18px;
-    }
+    margin-top: 30px;
   }
 }

@@ -10,6 +10,7 @@
 
   h3 {
     @include title-text($ccg-orange);
+    @include section-title-44();
   }
 
   // T10: the standfirst takes the T5 category-line role rather than staying a

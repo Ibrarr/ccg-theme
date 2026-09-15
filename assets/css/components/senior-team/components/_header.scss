@@ -29,6 +29,11 @@
     h2,
     p.statement {
       @include sub-heading-text($ccg-off-white);
+      // B4 (v0.12): the whole intro sentence is the serif voice here, not just
+      // its opening phrase, because the passage is one sentence long. Colour is
+      // untouched: the client asked for the face, not a recast.
+      font-family: $font-serif;
+      font-style: italic;
 
       a {
         color: $ccg-off-white;

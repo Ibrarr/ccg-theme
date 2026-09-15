@@ -1,4 +1,7 @@
 .header {
+  // The serif statement lead defaults to acid, which is a dark-ground
+  // colour. This masthead sits on white, so it takes the light-ground accent.
+  --statement-lead-colour: #{$hof-violet-deep};
   padding-top: $ccg-top-page-padding;
   padding-bottom: 60px;
   position: relative;

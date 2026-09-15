@@ -478,7 +478,7 @@
                     endif;
                     ?>
                 </div>
-                <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+                <div class="row"><a class="global-button global-button--primary" href="/contact-us">Get in touch</a></div>
             </div>
         </section>
 	<?php } ?>

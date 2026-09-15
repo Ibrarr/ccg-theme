@@ -83,10 +83,17 @@
       font-family: $font-circular-bold;
     }
 
+    // A3 (v0.12): headings inside a long run of navy body copy on a light
+    // ground take a differentiating colour, and which one depends on the
+    // context: teal in editorial (blog, articles, sectors), deep violet in
+    // showcase and people (Our Work, careers panels). Teal is the default
+    // because the editorial templates are the majority; _work.scss sets the
+    // violet. H2 display headings and anything on a dark ground are unaffected,
+    // which is why this is scoped to `.post-content .content`.
     h1, h2, h3, h4, h5, h6 {
       font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
       font-family: $font-circular-medium;
-      color: $ccg-orange;
+      color: var(--body-heading, #{$hof-teal});
     }
   }
 
@@ -119,67 +126,62 @@
     }
   }
 
-  .social {
+  // A8 (v0.12): the share block, on standard blog posts and every Our Work
+  // page as well as the insight templates. Same grammar as the detailed
+  // report's `.report-share`: a Libre Baskerville Italic deep violet label over
+  // navy glyphs.
+  //
+  // The glyphs carry no colour of their own except the mail icon, which ships
+  // stroked acid (a dark-ground colour) and was therefore invisible here.
+  .post-share {
+    margin-top: 30px;
+
+    .post-share-label {
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: none;
+      color: $hof-violet-deep;
+      margin-bottom: 12px;
+    }
+
     .social-icons {
       display: flex;
       align-items: center;
-      margin-top: 30px;
+      gap: 20px;
 
       a {
-        margin-right: 20px;
+        display: inline-flex;
+        align-items: center;
 
         svg {
           overflow: visible;
+          fill: $hof-navy;
 
           path {
             transition: $ccg-transition-all;
           }
         }
 
-        &.linkedin-icon:hover, &.x-icon:hover {
-          svg {
-            fill: var(--interaction-accent);
-          }
+        &.mail-icon svg path {
+          stroke: $hof-navy;
         }
 
-        &.mail-icon:hover {
-          svg path {
-            stroke: $ccg-text;
-          }
+        &:where(.linkedin-icon, .x-icon):where(:hover, :focus-visible) svg {
+          fill: var(--interaction-accent);
         }
 
-        @include media-breakpoint-only(md) {
-          &.linkedin-icon, &.mail-icon {
-            svg {
-              width: 21px;
-              height: 21px;
-            }
-          }
-
-          &.x-icon {
-            svg {
-              width: 17px;
-              height: 17px;
-            }
-          }
-        }
-
-        @include media-breakpoint-down(md) {
-          &.linkedin-icon, &.mail-icon {
-            svg {
-              width: 19px;
-              height: 19px;
-            }
-          }
-
-          &.x-icon {
-            svg {
-              width: 15px;
-              height: 15px;
-            }
-          }
+        &.mail-icon:where(:hover, :focus-visible) svg path {
+          stroke: var(--interaction-accent);
         }
       }
+
+      .mail-icon svg { width: 22px; height: 17px; }
+      .linkedin-icon svg { width: 21px; height: 21px; }
+      .x-icon svg { width: 18px; height: 18px; }
     }
   }
 }

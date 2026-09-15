@@ -100,37 +100,6 @@
 
     .global-button {
       margin-top: 35px;
-      background-color: $ccg-dark-green;
-      font-family: $font-circular-medium;
-      cursor: pointer;
-      font-size: 12px;
-      text-align: center;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      color: #ffffff;
-      padding: 7px;
-      border-radius: var(--radius-btn);
-      transition: $ccg-transition-all;
-      width: 100px;
-
-      &:hover {
-        background-color: $hof-white;
-        color: $hof-navy;
-      }
-
-      &:focus-visible {
-        outline: 2px solid $hof-navy;
-        outline-offset: 2px;
-      }
-
-      @include media-breakpoint-up(lg) {
-        font-size: 14px;
-        padding: 11px;
-        width: 135px;
-      }
     }
 
     @include media-breakpoint-down(md) {

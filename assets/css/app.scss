@@ -63,6 +63,67 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
   color: var(--statement-lead-colour, #{$hof-acid});
 }
 
+// B6 (v0.12): the closing paragraph of a masthead statement, in the same serif
+// voice as the opening lead. Shares --statement-lead-colour so a band only ever
+// declares one accent for both ends of the passage.
+.statement-closer {
+  font-family: $font-serif;
+  font-style: italic;
+  color: var(--statement-lead-colour, #{$hof-acid});
+}
+
+// B1 (v0.12): the "Get in touch" heading. The phrase is the serif voice; the
+// rest of the line stays in Poppins. cta-motion.js adds .cta-motion to the
+// heading and .is-in once it scrolls into view, so with no JavaScript both
+// halves are simply typography and the finished heading is the first frame.
+.cta-phrase {
+  font-family: $font-serif;
+  font-style: italic;
+}
+
+.cta-motion {
+  .cta-phrase,
+  .cta-rest {
+    display: inline-block;
+    will-change: transform, opacity;
+    opacity: 0;
+  }
+
+  // Transform and opacity only, so the whole sequence stays on the compositor
+  // and neither half reflows the other: the phrase glides across its own box
+  // while the remainder already occupies its final position.
+  .cta-phrase {
+    transform: translate3d(-28px, 0, 0);
+    transition: transform 620ms cubic-bezier(.22, 1, .36, 1), opacity 420ms ease-out;
+  }
+
+  // "just before Get in touch reaches its end position": the phrase's 620ms is
+  // most of the way home at 430ms, which is where this starts.
+  .cta-rest {
+    transform: translate3d(-14px, 0, 0);
+    transition: transform 520ms cubic-bezier(.22, 1, .36, 1) 430ms, opacity 360ms ease-out 430ms;
+  }
+
+  &.is-in {
+    .cta-phrase,
+    .cta-rest {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-motion {
+    .cta-phrase,
+    .cta-rest {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
 // Tint for the decorative bars. Light by default; the dark bands below set it
 // white. Separate from --interaction-accent on purpose: a band can be dark
 // enough to need a white bar without every hover in it turning acid.
@@ -104,10 +165,12 @@ footer,
 .explain-card:nth-child(3n + 3) {
   --interaction-accent: #{$hof-acid};
   --focus-ring: #{$hof-acid};
-  // 7.5 gives the index action a white border and label on dark grounds and
-  // navy on light. Acid is the interaction accent, but not this control.
-  --index-action: #{$hof-white};
-  --index-action-label: #{$hof-navy};
+  // A1: "acid keyline/acid label on navy", and the solid primary inverts to an
+  // acid fill with a navy label on the same grounds.
+  --btn-ink: #{$hof-acid};
+  --btn-ground: #{$hof-navy};
+  --btn-primary-fill: #{$hof-acid};
+  --btn-primary-label: #{$hof-navy};
 }
 
 // With the faces above answering for any weight, <strong> and <b> would render
@@ -220,27 +283,40 @@ p.statement {
 // Splide's own stylesheet carries `.splide__arrow:focus-visible` with a 3px
 // ring of its own, which outranks the zero-specificity guard above and rendered
 // black on the navy bands at 1.50:1. Same weight, imported later, so this wins.
-// 7.5's loudness hierarchy: caps-arrow link < outlined box < filled button,
-// with "See More / index actions: outlined box (1.5px border, caps label)
-// replacing the current navy pills". Every one of the 19 was still a navy fill,
-// which put the quietest action in the loudest form. The filled recipe stays
-// where section 2 puts it: hero CTAs and the closing band's Contact button.
-// !important for the same reason T4's counter suppression needs it: every
-// template scopes .global-button several levels deep off its own body class, so
-// one modifier written once cannot out-specify them all without repeating each
-// chain. Scoped to this modifier and these four properties only.
-.global-button.global-button--index {
-  background-color: transparent !important;
-  border: 1.5px solid var(--index-action, #{$hof-navy}) !important;
-  color: var(--index-action, #{$hof-navy}) !important;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
+// A1 (v0.12): one button system, two variants, nothing else survives.
+//
+// The keyline box is now the DEFAULT, not a modifier, so it is defined on the
+// bare class and the 24 per-template colour rules that used to set a navy fill
+// are gone rather than overridden. The `--index` modifier stays valid in the
+// markup and simply means the same thing as the base class now.
+//
+// .global-button covers every index action, card CTA, load-more and slider
+// action. .global-button--primary is reserved for the major CTAs the section
+// names: the pre-footer "Get in touch", the contact Send and the gated
+// Download.
+.global-button,
+.global-button-benefit,
+.hero-button {
+  @include button-keyline();
+}
 
-  &:where(:hover, :focus-visible) {
-    background-color: var(--index-action, #{$hof-navy}) !important;
-    color: var(--index-action-label, #{$hof-white}) !important;
-    border-color: var(--index-action, #{$hof-navy}) !important;
-  }
+.global-button.global-button--primary {
+  @include button-primary();
+}
+
+// Washed photography: A1 casts the keyline white here, where navy would sink
+// into the wash and acid is barred below display sizes on a photograph.
+.header-slider,
+.sectors-slider {
+  --btn-ink: #{$hof-white};
+  --btn-ground: #{$hof-navy};
+}
+
+// The homepage sectors carousel sits on a washed photograph; the /sectors/
+// page carousel sits on flat warm grey, so it keeps the navy default.
+.sectors-home .sectors-slider {
+  --btn-ink: #{$hof-navy};
+  --btn-ground: #{$hof-grey-warm};
 }
 
 // Splide's sheet is enqueued after app.css and carries its own arrow focus
@@ -261,23 +337,93 @@ button.splide__arrow:focus-visible {
   outline-color: #{$hof-acid} !important;
 }
 
-// Gravity Forms removes the outline on its own fields from the orbital theme's
-// framework sheet, which the rule above deliberately cannot out-rank. T11 names
-// the replacement, so take it, scoped to the form and no wider.
+// A2 (v0.12): form controls take the brand, and the focus story is explicit.
+//
+// Three rules, in this order:
+//  1. Nothing is added on a mouse interaction. Bootstrap's reboot and Gravity
+//     Forms both paint their own blue ring on :focus, and A2 asks for the field
+//     to keep its resting look under a pointer. :focus:not(:focus-visible) is
+//     the pointer case exactly.
+//  2. Keyboard focus takes a 1.5px navy ring, so WCAG 2.4.7 is satisfied
+//     without a pointer user ever seeing a change.
+//  3. The submit button is the solid primary variant.
+//
+// !important throughout: the orbital theme injects a per-form <style> block
+// scoped to #gform_wrapper_{id}, which outranks any stylesheet selector.
 .gform_wrapper,
 .contact-gform-form,
 .insight-reports-form,
 .newsletter-popup-form_wrapper {
-  input:not([type='hidden']):focus,
+  input:not([type='hidden']):focus:not(:focus-visible),
+  select:focus:not(:focus-visible),
+  textarea:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
   input:not([type='hidden']):focus-visible,
-  select:focus,
   select:focus-visible,
-  textarea:focus,
   textarea:focus-visible,
-  button:focus,
   button:focus-visible {
-    outline: 2px solid var(--focus-ring, #{$hof-navy}) !important;
+    outline: 1.5px solid #{$hof-navy} !important;
     outline-offset: 2px !important;
+    box-shadow: none !important;
+  }
+}
+
+// The Send and Download buttons. Same recipe as .global-button--primary, but
+// written out rather than @included: these are plugin-rendered <input> and
+// <button> elements that need every property forced past the injected sheet,
+// and an @include cannot carry !important through.
+.gform_wrapper,
+.contact-gform-form,
+.insight-reports-form,
+.newsletter-popup-form_wrapper {
+  input[type='submit'].gform_button,
+  button.gform_button,
+  .gform_footer input[type='submit'],
+  .gform_footer button[type='submit'] {
+    appearance: none;
+    background-color: var(--btn-primary-fill, #{$hof-navy}) !important;
+    border: 1.5px solid var(--btn-primary-fill, #{$hof-navy}) !important;
+    color: var(--btn-primary-label, #{$hof-acid}) !important;
+    font-family: $font-circular-medium !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 12px !important;
+    line-height: 20px;
+    padding: 12px 20px !important;
+    min-height: 44px;
+    border-radius: var(--radius-btn) !important;
+    cursor: pointer;
+    transition: $ccg-transition-all;
+
+    &:where(:hover, :focus-visible) {
+      background-color: var(--btn-primary-label, #{$hof-acid}) !important;
+      color: var(--btn-primary-fill, #{$hof-navy}) !important;
+    }
+
+    // Gravity Forms draws its blue focus outline from
+    // --gf-ctrl-outline-color-focus, declared on its own theme container rather
+    // than on this wrapper, so the property cannot be reached from here.
+    // Setting the outline on the button itself is deterministic.
+    &:focus:not(:focus-visible) {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    &:focus-visible {
+      outline: 1.5px solid var(--btn-primary-fill, #{$hof-navy}) !important;
+      outline-offset: 3px !important;
+      box-shadow: none !important;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 14px !important;
+      letter-spacing: 2px;
+      line-height: 22px;
+      padding: 11px 28px !important;
+    }
   }
 }
 

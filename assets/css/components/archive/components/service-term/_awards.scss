@@ -9,7 +9,7 @@
   h3 {
     font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
     font-family: $font-circular-medium;
-    color: $ccg-orange;
+    color: $hof-teal;
     margin-bottom: 40px;
 
     @include media-breakpoint-up(lg) {
@@ -35,7 +35,6 @@
   }
 
   .global-button {
-    @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
     margin: auto;
   }
 

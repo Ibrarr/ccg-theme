@@ -5,6 +5,7 @@
 
   h3 {
     @include title-text($ccg-dark-green);
+    @include section-title-44();
     margin-bottom: 40px !important;
   }
 

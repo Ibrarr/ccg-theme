@@ -39,7 +39,9 @@ footer {
     }
 
     a {
-      font-family: $font-circular-regular;
+      // B7: the credit matches the copyright line.
+      font-family: $font-serif;
+      font-style: normal;
       text-decoration: none;
       font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
       line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
@@ -164,7 +166,11 @@ footer {
         align-items: flex-end;
 
         a {
-          font-family: $font-circular-regular;
+          // B7 (v0.12): the credit matches the copyright line exactly, which is
+          // Libre Baskerville Regular 14px.
+          font-family: $font-serif;
+          font-style: normal;
+          font-size: 0.875rem;
           text-decoration: none;
           font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
           line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
@@ -256,9 +262,11 @@ footer {
           display: block;
 
           a {
-            font-family: $font-circular-regular;
+            // B7: same as the copyright line beside it.
+            font-family: $font-serif;
+            font-style: normal;
             text-decoration: none;
-            font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+            font-size: 0.875rem;
             line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
             color: $hof-grey-warm;
             transition: $ccg-transition-all;
@@ -287,8 +295,10 @@ footer {
 
             a {
               text-decoration: none;
-              font-family: $font-circular-regular;
-              font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+              // B7: Site Map / Privacy Policy / Cookie Policy are Libre
+              // Baskerville, in the footer and in the menu overlay alike.
+              font-family: $font-serif;
+              font-size: 0.875rem;
               line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
               color: #E5E4E0;
               transition: $ccg-transition-all;

@@ -104,19 +104,10 @@
       }
     }
 
-    input:focus-visible,
-    textarea:focus-visible {
-      outline: 2px solid $hof-navy;
-      outline-offset: 2px;
-    }
-
-    .contact-us-form_wrapper input[type="submit"].gform_button.button {
+    input[type="submit"].gform_button.button {
       margin-top: 25px;
-      height: 32px;
-      @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
 
       @include media-breakpoint-up(lg) {
-        height: 44px;
         margin-top: 40px;
       }
     }

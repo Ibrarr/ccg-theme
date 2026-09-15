@@ -12,14 +12,19 @@
     margin-bottom: 30px;
   }
 
+  // A3/C4 (v0.12): the two panels that carry long runs of navy body copy take
+  // the showcase/people differentiator. The awards panel beside them is a logo
+  // grid with no body copy, so A3's rule does not reach it and it stays navy.
+  .benefits-perks .heading,
+  .talent .heading {
+    color: $hof-violet-deep;
+  }
+
   .content {
     @include body-text($ccg-dark-green);
     margin-bottom: 40px;
   }
 
-  .global-button {
-    @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
-  }
 
   .benefits-perks {
     background-color: #ffffff;
@@ -71,7 +76,6 @@
     }
 
     .global-button-benefit {
-      @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
       margin-top: 60px;
       position: relative;
     }

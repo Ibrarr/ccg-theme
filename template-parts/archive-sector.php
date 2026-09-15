@@ -122,7 +122,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
 			<?php } ?>
             <div class="row">
                 <div class="col-md-3 col-6 contact-container">
-                    <a href="/contact-us" class="global-button">Get in touch</a>
+                    <a href="/contact-us" class="global-button global-button--primary">Get in touch</a>
                 </div>
             </div>
             <div class="newsletter-popup-container <?php echo ( ! get_field( 'enable_newsletter_popup', $current_term ) ) ? 'disabled' : ''; ?>">
@@ -297,7 +297,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                     endif;
                     ?>
                 </div>
-                <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+                <div class="row"><a class="global-button global-button--primary" href="/contact-us">Get in touch</a></div>
             </div>
         </section>
     <?php } ?>

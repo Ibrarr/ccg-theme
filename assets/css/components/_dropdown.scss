@@ -15,6 +15,15 @@
 @mixin custom-dropdown($name, $header: null) {
   .#{$name}-container {
     position: relative;
+    // The trigger used to carry a hard 210px width, so a two-word label
+    // ("Sector / Service") wrapped to two lines inside the box. The width now
+    // lives on the container as a floor rather than a fixed size: max-content
+    // lets a longer label push the box out, min-width keeps every shorter
+    // trigger at the size it has always been, and both children take 100% so
+    // the menu stays exactly as wide as the control that opens it. The menu is
+    // absolutely positioned, so it contributes nothing to max-content.
+    width: max-content;
+    min-width: 210px;
 
     .#{$name} {
       // The fill has to differ from the band behind it, and the bands differ:
@@ -30,7 +39,8 @@
       font-size: 14px;
       line-height: 1.3;
       letter-spacing: 0.08em;
-      width: 210px;
+      width: 100%;
+      white-space: nowrap;
       padding: 13px 44px 13px 24px;
       border-radius: var(--radius-btn);
       cursor: pointer;
@@ -76,7 +86,7 @@
       top: 56px;
       border-radius: var(--radius-btn);
       background-color: $hof-white;
-      width: 210px;
+      width: 100%;
       z-index: 4;
       overflow: hidden;
       border: 1px solid var(--hairline);
@@ -133,9 +143,10 @@
     }
 
     @include media-breakpoint-down(lg) {
+      min-width: 168px;
+
       .#{$name} {
         font-size: 11px;
-        width: 168px;
         padding: 11px 36px 11px 18px;
 
         &:after {
@@ -146,7 +157,6 @@
       }
 
       .#{$name}-menu-container {
-        width: 168px;
         top: 46px;
 
         @if $header {

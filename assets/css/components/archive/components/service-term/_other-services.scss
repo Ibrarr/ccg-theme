@@ -2,10 +2,10 @@
   position: relative;
   z-index: 3;
   margin-top: -25px;
-  // 7.2: "Services indexes -> Teal #145F7B ground ... Teal's system role =
-  // utility index." It was navy, which is the quiet baseline every other
-  // band already uses, so the index had nothing of its own.
-  background-color: $hof-teal;
+  // C2 (v0.12): navy. 7.2 gave this band the teal utility-index ground, but
+  // the client has since moved teal to "Challenges and opportunities" above and
+  // put this one back to navy. The newer instruction wins.
+  background-color: $hof-navy;
   padding: 55px 0;
   border-radius: 0 0 25px 25px;
 

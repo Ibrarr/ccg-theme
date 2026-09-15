@@ -6,7 +6,6 @@
   h1.title {
     position: relative;
     @include title-text($hof-white);
-    @include demoted-listing-h1();
   }
 
   .intro {
@@ -16,7 +15,6 @@
     h2,
     p.statement {
       @include sub-heading-text($hof-white);
-      @include listing-statement();
     }
   }
 }

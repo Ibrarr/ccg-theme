@@ -97,12 +97,7 @@
             }
 
             .global-button {
-              // Secondary on dark, per section 2: transparent with a 1.5px
-              // white keyline and a white label, inverting on hover.
-              @include short-button(transparent, $hof-white, $hof-white, $hof-navy, $hof-acid);
-              border: 1.5px solid $hof-white;
-              width: fit-content;
-              padding: 10px 26px;
+              margin-top: 8px;
             }
           }
 

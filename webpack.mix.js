@@ -6,6 +6,7 @@ mix.js([
     'assets/js/header/load-search-results.js',
     'assets/js/header/announce-popup.js',
     'assets/js/header/notification-bar.js',
+    'assets/js/header/cta-motion.js',
     'assets/js/header/keyboard-controls.js'
 ], 'js/header.js');
 

@@ -61,7 +61,7 @@
     h1, h2, h3, h4, h5, h6 {
       font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
       font-family: $font-circular-medium;
-      color: $ccg-orange;
+      color: $hof-teal;
     }
   }
 
@@ -190,7 +190,4 @@
     }
   }
 
-  .global-button {
-    @include long-button($hof-navy, $hof-white, $hof-white, $hof-navy);
-  }
 }

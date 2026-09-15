@@ -105,6 +105,128 @@ function ccg_editor_html( $text ) {
 	) ) );
 }
 
+/**
+ * B3 (v0.12): the opening CLAUSE as the serif lead, not the opening sentence.
+ *
+ * Where We Work opens "With offices across Europe, North America, and
+ * Asia-Pacific, we have the global reach…", and the phrase the client casts in
+ * Libre Baskerville Italic ends at the last comma of that opening clause, part
+ * way through the first sentence. ccg_statement_lead_html() splits on a
+ * sentence terminator, so it cannot reach it.
+ *
+ * The split is the last comma BEFORE the first sentence terminator: the phrase
+ * itself contains commas ("Europe, North America, and Asia-Pacific"), so the
+ * first comma is the wrong one. Falls back to the sentence helper when the
+ * passage has no such clause, so a copy change can never leave the band
+ * unstyled.
+ */
+function ccg_statement_clause_html( $text ) {
+	$text = trim( (string) $text );
+
+	if ( '' === $text ) {
+		return '';
+	}
+
+	$html = ccg_editor_html( $text );
+
+	if ( false !== strpos( $html, 'statement-lead' ) ) {
+		return $html;
+	}
+
+	// The first sentence, counted outside tags, exactly as the sentence helper
+	// does: a bare /[.?!]/ would stop inside an href.
+	if ( preg_match( '/^((?:[^<.?!]|<[^>]*>)+?[.?!])(\s+)(.*)$/su', $html, $m ) ) {
+		$first     = $m[1];
+		$remainder = $m[2] . $m[3];
+	} else {
+		$first     = $html;
+		$remainder = '';
+	}
+
+	$cut = strrpos( $first, ',' );
+
+	// A clause that is the whole sentence is not a lead-in, and one shorter
+	// than a few words is a stray comma rather than an opening phrase.
+	if ( false === $cut || $cut >= strlen( $first ) - 2 || substr_count( substr( $first, 0, $cut ), ' ' ) < 2 ) {
+		return ccg_statement_lead_html( $text );
+	}
+
+	$lead = substr( $first, 0, $cut + 1 );
+
+	// Never cut inside a tag.
+	if ( substr_count( $lead, '<' ) !== substr_count( $lead, '>' ) ) {
+		return ccg_statement_lead_html( $text );
+	}
+
+	return '<span class="statement-lead">' . $lead . '</span>' . substr( $first, $cut + 1 ) . $remainder;
+}
+
+/**
+ * B6 (v0.12): the closing paragraph of a masthead statement in Libre
+ * Baskerville Italic.
+ *
+ * Takes HTML that has already been through ccg_statement_lead_html(), so the
+ * two roles compose: the opening sentence is the serif lead and the last
+ * paragraph is the serif closer, with the Poppins body between them.
+ *
+ * ccg_editor_html() turns every paragraph boundary into a <br><br> pair, so
+ * that pair is what a paragraph break looks like by the time it reaches here.
+ * It only fires at three paragraphs or more, which is the "bottom (third)" the
+ * client describes: a two-paragraph statement would otherwise have its whole
+ * second half in italic.
+ */
+function ccg_statement_closer_html( $html ) {
+	$html = (string) $html;
+
+	if ( '' === trim( $html ) || false !== strpos( $html, 'statement-closer' ) ) {
+		return $html;
+	}
+
+	$blocks = preg_split( '#(?:\s*<br\s*/?>\s*){2,}#i', $html );
+
+	if ( count( $blocks ) < 3 ) {
+		return $html;
+	}
+
+	$last = array_pop( $blocks );
+
+	if ( '' === trim( $last ) || substr_count( $last, '<' ) !== substr_count( $last, '>' ) ) {
+		return $html;
+	}
+
+	// Rebuild with the same separator the helper split on, so the rendered
+	// spacing is unchanged.
+	return implode( '<br><br>', $blocks ) . '<br><br><span class="statement-closer">' . $last . '</span>';
+}
+
+/**
+ * B1 (v0.12): wrap a named opening phrase so it can carry the serif voice and
+ * the glide-in, with the rest of the line following it.
+ *
+ * The phrase is matched only at the START of the passage and only outside
+ * tags, so an editor who rewrites the heading simply gets the plain string
+ * back rather than a span in the middle of a sentence. `cta-motion.js` reads
+ * these two classes; with no JavaScript they are type roles and nothing else.
+ */
+function ccg_cta_phrase_html( $text, $phrase = 'Get in touch' ) {
+	$text = trim( (string) $text );
+
+	if ( '' === $text ) {
+		return '';
+	}
+
+	$html = ccg_editor_html( $text );
+
+	if ( 0 !== stripos( $html, $phrase ) ) {
+		return $html;
+	}
+
+	$rest = substr( $html, strlen( $phrase ) );
+
+	return '<span class="cta-phrase">' . substr( $html, 0, strlen( $phrase ) ) . '</span>'
+		. ( '' === trim( $rest ) ? '' : '<span class="cta-rest">' . $rest . '</span>' );
+}
+
 function ccg_statement_lead_html( $text ) {
 	$text = trim( (string) $text );
 

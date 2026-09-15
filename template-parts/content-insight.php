@@ -34,18 +34,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                     <div class="col-lg-5 image social">
                         <img src="<?php the_post_thumbnail_url() ?>" alt="<?php the_title(); ?>"
                              srcset="<?php echo esc_attr( $image_srcset ); ?>" sizes="(min-width: 391px) 1024px, 100vw">
-                        <div class="social-icons">
-                            <a class="mail-icon"
-                               href="mailto:?subject=<?php echo rawurlencode( get_the_title() ); ?>&body=Check out this insight from CCGroup <?php echo rawurlencode( get_permalink() ); ?>"
-                               target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/mail-icon.svg' ) ?></a>
-                            <a class="linkedin-icon" rel="nofollow"
-                               href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo rawurlencode( get_permalink() ); ?>&title=<?php echo rawurlencode( get_the_title() ); ?>"
-                               target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/linkedin-icon.svg' ) ?></a>
-                            <a class="x-icon" rel="nofollow"
-                               href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode( get_permalink() ); ?>/&text='<?php echo rawurlencode( get_the_title() ); ?>'&via=<?php the_field( 'xtwitter_username', 'option' ); ?>"
-                               title="Tweet this insight"
-                               target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/x-icon.svg' ) ?></a>
-                        </div>
+                        <?php get_template_part( 'template-parts/components/share' ); ?>
                     </div>
                 </div>
             </section>

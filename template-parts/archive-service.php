@@ -114,7 +114,7 @@ $term_name_text = single_term_title( '', false );
 			<?php } ?>
 <!--            <div class="row">-->
 <!--                <div class="col-md-3 col-6 contact-container">-->
-<!--                    <a href="/contact-us" class="global-button">Get in touch</a>-->
+<!--                    <a href="/contact-us" class="global-button global-button--primary">Get in touch</a>-->
 <!--                </div>-->
 <!--            </div>-->
         </div>
@@ -282,7 +282,7 @@ $term_name_text = single_term_title( '', false );
                     endif;
                     ?>
                 </div>
-                <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+                <div class="row"><a class="global-button global-button--primary" href="/contact-us">Get in touch</a></div>
             </div>
         </section>
     <?php } ?>

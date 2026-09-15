@@ -15,7 +15,7 @@ $talent_link   = get_field( 'talent_manager_button' );
             <h1 class="title"><?php the_title(); ?></h1>
             <div class="row">
                 <div class="col-lg-8 intro">
-                    <p class="statement"><?php the_field( 'intro' ); ?></p>
+                    <p class="statement"><?php echo ccg_statement_lead_html( get_field( 'intro' ) ); ?></p>
                     <a class="global-button" href="<?php echo $header_button['url']; ?>"
                        target="<?php echo $header_button['target']; ?>"><?php echo $header_button['title']; ?></a>
                 </div>

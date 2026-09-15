@@ -34,8 +34,11 @@
       grid-template-columns: repeat(2, 1fr);
 
       a {
-        font-family: $font-circular-regular;
-        font-size: $ccg-body-size;
+        // B7 (v0.12): the legal links are Libre Baskerville in the overlay as
+        // well as the footer. !important because `.header-footer a` above sets
+        // the sans face with !important of its own.
+        font-family: $font-serif !important;
+        font-size: 0.875rem;
         line-height: $ccg-body-line-height;
         color: $ccg-dark-green;
         position: relative;

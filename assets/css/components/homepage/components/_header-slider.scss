@@ -118,22 +118,9 @@
       }
 
       .hero-button {
-        // Primary on dark, per section 2: transparent with a 2px acid border
-        // and an acid label, inverting to an acid fill on hover. Sentence case,
-        // not the caps of the 7.5 outlined box.
-        @include short-button(transparent, $hof-acid, $hof-acid, $hof-navy, $hof-acid);
-        border: 2px solid $hof-acid;
-        font-family: $font-sans-semibold;
-        // fit-content, not auto: the mixin's display: flex is block-level, so
-        // auto would stretch the button across the whole hero column.
-        width: fit-content;
-        padding: 10px 26px;
         margin-top: 28px;
 
         @include media-breakpoint-up(lg) {
-          width: fit-content;
-          // The frame's CTA is 223px wide for this label, about 183px at 1440.
-          padding: 12px 46px;
           // The frame leaves about 193px between the statement and the CTA,
           // roughly 158px at a 1440 viewport. Tied to viewport height so it
           // does not crowd a short window.

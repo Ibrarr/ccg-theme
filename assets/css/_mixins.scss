@@ -17,23 +17,12 @@
   color: $color;
 }
 
-// 7.4's H1-demotion device, for the dark-header listing pages: the H1 steps
-// back to a restrained Poppins Medium and the intro paragraph below it carries
-// the page as the statement. T2 sets the figures; T6 says to take them verbatim
-// and T8 and T9 repeat them. Include AFTER title-text(), which sets a size of
-// its own.
-@mixin demoted-listing-h1() {
-  font-size: clamp(1.75rem, 2.2vw, 2rem);
-  line-height: 1.2;
-}
-
-// T2's statement-block role, referenced by T6, T8 and T9 and listed in section
-// 1's type scale as 22-24px on a 60ch measure, white on navy, with the serif
-// lead phrase in acid. Include AFTER sub-heading-text().
-@mixin listing-statement() {
-  font-size: clamp(1.375rem, 1.8vw, 1.5rem);
-  line-height: 1.55;
-  max-width: 60ch;
+// C4 (v0.12): the careers concertina section titles come down from 56px to
+// 44px. Same ramp as title-text(), capped lower, so the mobile end of the scale
+// is untouched and only the desktop value moves. Include AFTER title-text().
+@mixin section-title-44() {
+  font-size: clamp(2.375rem, 0.375rem + 4.1667vw, 2.75rem);
+  line-height: clamp(2.625rem, -0.375rem + 6.25vw, 3.375rem);
 }
 
 @mixin body-text($color) {
@@ -127,91 +116,74 @@
 //
 // min-height meets the 44px tap target the handover QA checklist asks for. The old
 // padding-only sizing came out at roughly 27px on mobile.
-@mixin button-base($focus-ring) {
+// A1 (v0.12): one button system, two variants, and nothing else survives.
+//
+// Colour is not baked in. --btn-ink is the keyline and the label; --btn-ground
+// is what the label becomes when the box fills on hover, so a band sets the
+// pair once and every button inside it follows. Navy ink on light and warm
+// grey (the default), acid on navy, white on washed photography.
+@mixin button-shell() {
   font-family: $font-circular-medium;
-  cursor: pointer;
+  // A1: every label uppercase, sitewide, both variants.
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
   font-size: 12px;
+  // Padding and leading add to exactly 44px rather than leaning on min-height:
+  // jQuery's .show() writes an inline display: block over the flex value on
+  // every load-more button, and a block box does not centre its own line.
+  line-height: 20px;
+  padding: 12px 20px;
+  min-height: 44px;
+  display: block;
+  width: fit-content;
   text-align: center;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 7px;
+  cursor: pointer;
   border-radius: var(--radius-btn);
   transition: $ccg-transition-all;
-  width: 112px;
 
-  // Section 2: a visible 2px ring, never a removed outline. The ring colour is an
-  // argument because the mixin cannot know whether it sits on a dark or light
-  // ground; it defaults to navy and on-dark call sites pass acid.
   &:focus-visible {
-    outline: 2px solid $focus-ring;
-    outline-offset: 2px;
+    outline: 2px solid var(--btn-ink, #{$hof-navy});
+    outline-offset: 3px;
   }
 
   @include media-breakpoint-up(lg) {
     font-size: 14px;
-    padding: 11px;
-  }
-}
-
-@mixin long-button($background-color, $hover-background-color, $color, $hover-color, $focus-ring: $hof-navy) {
-  @include button-base($focus-ring);
-  border: none;
-  background-color: $background-color;
-  color: $color;
-
-  &:hover {
-    background-color: $hover-background-color;
-    color: $hover-color;
-  }
-
-  @include media-breakpoint-up(lg) {
-    width: 195px;
-  }
-}
-
-@mixin short-button($background-color, $hover-background-color, $color, $hover-color, $focus-ring: $hof-navy) {
-  @include button-base($focus-ring);
-  background-color: $background-color;
-  color: $color;
-
-  &:hover {
-    background-color: $hover-background-color;
-    color: $hover-color;
-  }
-
-  @include media-breakpoint-up(lg) {
-    width: 125px;
-  }
-}
-
-// Section 7.5 loudness hierarchy: caps-arrow link < outlined box < filled button.
-// The two quieter tiers have no equivalent in the old pill-only system, so they
-// are new rather than retuned.
-//
-// Outlined box: replaces the navy pills on "See More" and index actions.
-@mixin outlined-button($color, $border-width: 1.5px, $focus-ring: $hof-navy) {
-  @include button-base($focus-ring);
-  background-color: transparent;
-  border: $border-width solid $color;
-  color: $color;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  width: auto;
-  padding: 7px 20px;
-
-  &:hover {
-    background-color: $color;
-    // Reading the ground back off the border colour keeps the pair in step: the
-    // label takes whatever the box was sitting on.
-    color: var(--outlined-button-hover-label, #{$hof-navy});
-  }
-
-  @include media-breakpoint-up(lg) {
     letter-spacing: 2px;
+    line-height: 22px;
     padding: 11px 28px;
+  }
+}
+
+// The default variant. Everything that is not a major CTA takes this.
+@mixin button-keyline() {
+  @include button-shell();
+  background-color: transparent;
+  border: 1.5px solid var(--btn-ink, #{$hof-navy});
+  color: var(--btn-ink, #{$hof-navy});
+
+  &:where(:hover, :focus-visible) {
+    background-color: var(--btn-ink, #{$hof-navy});
+    color: var(--btn-ground, #{$hof-white});
+  }
+}
+
+// Reserved for major CTAs: the pre-footer "Get in touch", the contact Send and
+// the gated report Download. Navy fill with an acid label; on navy grounds the
+// pair inverts to an acid fill with a navy label.
+@mixin button-primary() {
+  @include button-shell();
+  background-color: var(--btn-primary-fill, #{$hof-navy});
+  border: 1.5px solid var(--btn-primary-fill, #{$hof-navy});
+  color: var(--btn-primary-label, #{$hof-acid});
+
+  &:where(:hover, :focus-visible) {
+    background-color: var(--btn-primary-label, #{$hof-acid});
+    color: var(--btn-primary-fill, #{$hof-navy});
+  }
+
+  &:focus-visible {
+    outline-color: var(--btn-primary-fill, #{$hof-navy});
   }
 }
 
