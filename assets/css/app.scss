@@ -312,9 +312,12 @@ p.statement {
   --btn-ground: #{$hof-navy};
 }
 
-// The homepage sectors carousel sits on a washed photograph; the /sectors/
-// page carousel sits on flat warm grey, so it keeps the navy default.
-.sectors-home .sectors-slider {
+// Both the homepage and the /sectors/ page use `section.sectors-slider`, but
+// only the homepage one sits on a washed photograph; the /sectors/ page's sits
+// on flat warm grey, where white reads 1.27:1. The scope is the page-template
+// body class, because `.sectors-home` is a stylesheet folder name and never
+// appears in the markup.
+.page-template-page-sectors .sectors-slider {
   --btn-ink: #{$hof-navy};
   --btn-ground: #{$hof-grey-warm};
 }
