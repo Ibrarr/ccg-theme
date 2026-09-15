@@ -89,19 +89,30 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
     opacity: 0;
   }
 
-  // Transform and opacity only, so the whole sequence stays on the compositor
-  // and neither half reflows the other: the phrase glides across its own box
-  // while the remainder already occupies its final position.
+  // E3.4, and the reference for the serif glide. Transform and opacity only,
+  // so the whole sequence stays on the compositor and neither half reflows the
+  // other: the phrase travels across its own box while the remainder already
+  // occupies its final position.
+  //
+  // The distance, duration and curve are the shared tokens, so this transition
+  // and the GSAP tween on the homepage hero travel identically. Do not write
+  // literals here.
   .cta-phrase {
-    transform: translate3d(-28px, 0, 0);
-    transition: transform 620ms cubic-bezier(.22, 1, .36, 1), opacity 420ms ease-out;
+    transform: translate3d(calc(var(--text-glide-distance) * -1), 0, 0);
+    transition:
+      transform var(--text-glide-duration) var(--text-glide-ease),
+      opacity var(--text-glide-duration) var(--text-glide-ease);
   }
 
-  // "just before Get in touch reaches its end position": the phrase's 620ms is
-  // most of the way home at 430ms, which is where this starts.
+  // "the rest of the paragraph slides in just before 'Get in touch' reaches its
+  // end position". The phrase is visually home around 300ms into its 500ms
+  // travel on this curve, so that is where this starts. Deliberately later than
+  // the hero's 180ms, where E3.1 asks for half a beat instead.
   .cta-rest {
-    transform: translate3d(-14px, 0, 0);
-    transition: transform 520ms cubic-bezier(.22, 1, .36, 1) 430ms, opacity 360ms ease-out 430ms;
+    transform: translate3d(calc(var(--text-glide-distance) * -1), 0, 0);
+    transition:
+      transform var(--text-glide-duration) var(--text-glide-ease) 300ms,
+      opacity var(--text-glide-duration) var(--text-glide-ease) 300ms;
   }
 
   &.is-in {

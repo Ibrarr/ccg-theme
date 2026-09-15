@@ -1,4 +1,13 @@
 /*!
+ * CSSPlugin 3.13.0
+ * https://gsap.com
+ *
+ * Copyright 2008-2025, GreenSock. All rights reserved.
+ * Subject to the terms at https://gsap.com/standard-license
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
+/*!
  * GSAP 3.13.0
  * https://gsap.com
  *
@@ -30,4 +39,12 @@
  * Version  : 4.1.4
  * License  : MIT
  * Copyright: 2022 Naotoshi Fujita
+ */
+
+/*!
+ * SplitText 3.13.0
+ * https://gsap.com
+ *
+ * @license Copyright 2025, GreenSock. All rights reserved. Subject to the terms at https://gsap.com/standard-license.
+ * @author: Jack Doyle
  */
