@@ -374,6 +374,137 @@ button.splide__arrow:focus-visible {
   }
 }
 
+// A2, "and any other native controls". Gravity Forms renders none of these on
+// the three live forms today, so nothing on the site is wrong now; the moment an
+// editor adds a dropdown, a checkbox set or an upload field it would arrive as a
+// raw browser default. Measured across the three engines, those defaults differ
+// in size as well as look: a select is 68px wide in Chromium, 75.6 in Firefox
+// and 82 in WebKit, a checkbox 13 / 14 / 12, and none of them take the navy
+// hairline or the 8px radius the fields beside them carry.
+//
+// appearance: none is what removes the engine's own widget. Everything after it
+// rebuilds the control from the same three values the text fields use: a white
+// fill, a 1px navy hairline and --radius-btn.
+.gform_wrapper,
+.contact-gform-form,
+.insight-reports-form,
+.newsletter-popup-form_wrapper {
+  select {
+    appearance: none;
+    background-color: $hof-white;
+    color: $hof-navy;
+    border: 1px solid $hof-navy;
+    border-radius: var(--radius-btn);
+    font-family: $font-circular-regular;
+    height: 40px;
+    padding: 0 40px 0 14px;
+    width: 100%;
+    cursor: pointer;
+
+    // The chevron the engine no longer draws. Inline so it needs no asset and
+    // no extra request, and navy so it matches the hairline around it.
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23182D43' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px 8px;
+
+    // iOS zooms the page when it focuses a control under 16px.
+    @include media-breakpoint-down(md) {
+      font-size: 16px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      height: 50px;
+    }
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    appearance: none;
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 0 0;
+    background-color: $hof-white;
+    border: 1px solid $hof-navy;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    transition: $ccg-transition-all;
+  }
+
+  input[type='radio'] {
+    border-radius: 50%;
+  }
+
+  // Checked reuses the primary button's pair, so it inverts with the ground the
+  // same way that button does: navy box with an acid mark on light and on the
+  // acid form band, acid box with a navy mark on the navy gated card. A flat
+  // acid fill would have matched the acid band it sits on and left the border
+  // doing all the work.
+  input[type='checkbox']:checked,
+  input[type='radio']:checked {
+    background-color: var(--btn-primary-fill, #{$hof-navy});
+    border-color: var(--btn-primary-fill, #{$hof-navy});
+  }
+
+  input[type='checkbox']:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--btn-primary-label, #{$hof-acid});
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  input[type='radio']:checked::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background-color: var(--btn-primary-label, #{$hof-acid});
+  }
+
+  // The upload control. The engines disagree on the button's label as well as
+  // its size ("Choose File" against "Browse..."), so the button is restyled and
+  // the label left to the engine: it is the one string here the CSS must not
+  // invent, because it describes the platform's own file picker.
+  input[type='file'] {
+    font-family: $font-circular-regular;
+    color: $hof-navy;
+    max-width: 100%;
+
+    @include media-breakpoint-down(md) {
+      font-size: 16px;
+    }
+  }
+
+  input[type='file']::file-selector-button {
+    appearance: none;
+    background-color: transparent;
+    border: 1.5px solid $hof-navy;
+    color: $hof-navy;
+    border-radius: var(--radius-btn);
+    font-family: $font-circular-medium;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 12px;
+    padding: 10px 18px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: $ccg-transition-all;
+
+    &:where(:hover, :focus-visible) {
+      background-color: $hof-navy;
+      color: $hof-white;
+    }
+  }
+}
+
 // The Send and Download buttons. Same recipe as .global-button--primary, but
 // written out rather than @included: these are plugin-rendered <input> and
 // <button> elements that need every property forced past the injected sheet,
