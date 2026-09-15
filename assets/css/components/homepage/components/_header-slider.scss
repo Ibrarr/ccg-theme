@@ -1,6 +1,30 @@
 .header-slider {
   position: relative;
 
+  // Reserve the carousel's height from the first frame.
+  //
+  // Splide is given `height: '85vh'` in its config and applies it as an inline
+  // style on each slide AT MOUNT. Until then the three slides are a plain
+  // stacked list, so the hero measured 474px before the images loaded, 1530px
+  // once they had, and 765px when Splide finally mounted at about 1.3s. Every
+  // section below it moved twice, which is the homepage's whole 0.13 CLS: the
+  // layout-shift entries name `section.intro` and the parallax bars, not
+  // anything in the hero itself.
+  //
+  // min-height holds the space from the first paint; the cap and the clip keep
+  // the unmounted stack inside it. Nothing is hidden and no display is changed,
+  // so Splide still measures three real slides when it mounts.
+  //
+  // 85vh is Splide's own option value. If that config changes, change this.
+  .splide__track {
+    min-height: 85vh;
+  }
+
+  .splide:not(.is-initialized) .splide__track {
+    max-height: 85vh;
+    overflow: hidden;
+  }
+
   .parallax-bars {
     &#bar-one {
       top: 25px;
