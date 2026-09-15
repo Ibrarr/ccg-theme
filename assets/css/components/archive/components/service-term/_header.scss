@@ -27,6 +27,12 @@
 
   .parent-term {
     @include title-text($ccg-green);
+    // A7/T5: "Service H1, category line — Poppins Medium, 24-30px, deep violet
+    // on white". It was taking title-text()'s full 56px in navy, identical to
+    // the service name below it, so the two lines read as one heading twice.
+    font-size: clamp(1.25rem, 0.6rem + 1.1vw, 1.875rem);
+    line-height: 1.25;
+    color: $hof-violet-deep;
     margin-bottom: 0 !important;
   }
 
@@ -35,6 +41,9 @@
     // service name" role is Poppins Medium; this one override made the child
     // pages Regular.
     @include title-text($ccg-green);
+    // A7: the role's cap is 55px and title-text() runs to 56, so the H1 sat a
+    // pixel over it. Logged as a divergence until now; the sweep closes it.
+    font-size: clamp(2.375rem, 0.375rem + 4.1667vw, 3.4375rem);
   }
 
   .title {

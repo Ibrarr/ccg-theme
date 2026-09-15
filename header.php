@@ -324,7 +324,10 @@
     </header>
     <div class="container px-4">
         <div class="header-logo">
-            <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-new.svg' ) ?></a>
+            <a href="/">
+                <span class="lockup lockup--wide"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-new.svg' ) ?></span>
+                <span class="lockup lockup--stacked"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-stacked.svg' ) ?></span>
+            </a>
         </div>
     </div>
 

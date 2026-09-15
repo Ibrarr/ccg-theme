@@ -11,6 +11,8 @@
     font-family: $font-serif;
     font-style: italic;
     font-weight: 400;
+    // A7: section 1 puts this role at 14px; it was inheriting the 16px body.
+    font-size: 14px;
     color: $hof-violet-deep;
   }
 

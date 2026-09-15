@@ -28,6 +28,9 @@
 
     .description {
       @include body-text($ccg-text);
+      // A7: section 1 puts the impact-band labels at 15-16px, a step below the
+      // body clamp they were taking.
+      font-size: clamp(0.875rem, 0.7rem + 0.25vw, 1rem);
     }
   }
 

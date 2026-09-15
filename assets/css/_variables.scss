@@ -33,6 +33,7 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
   --hof-navy-60: #{$hof-navy-60};
   --hairline: #{$hof-hairline};
 
+
   // Replaces the CCG full pills.
   --radius-btn: 8px;
 
@@ -76,6 +77,16 @@ $font-sans-regular: "Poppins-Regular", "Poppins-Regular-fallback", "Noto Sans", 
 $font-sans-medium: "Poppins-Medium", "Poppins-Medium-fallback", "Noto Sans", system-ui, sans-serif;
 $font-sans-semibold: "Poppins-SemiBold", "Poppins-SemiBold-fallback", "Noto Sans", system-ui, sans-serif;
 $font-serif: "Libre Baskerville", "Libre Baskerville-fallback", Georgia, serif;
+
+// A6 (v0.12): section 1's :root block names these two alongside the colours.
+// The theme resolves families through Sass variables, so nothing rendered
+// differently, but a rule written against the document's own CSS could not
+// resolve them. Declared here rather than in the block above because the
+// families they read are declared on the lines above this one.
+:root {
+  --font-sans: #{$font-sans-regular};
+  --font-serif: #{$font-serif};
+}
 
 // Back-compat aliases. Circular Bold maps to Poppins SemiBold: the handover
 // font plan loads no Poppins 700.

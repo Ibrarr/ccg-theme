@@ -127,7 +127,10 @@
   // A1: every label uppercase, sitewide, both variants.
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  font-size: 12px;
+  // A7: section 1's type scale puts button labels at 17px. Both the old pill
+  // system and the outlined-box recipe ran 12/14, short of the scale at every
+  // width.
+  font-size: 14px;
   // Padding and leading add to exactly 44px rather than leaning on min-height:
   // jQuery's .show() writes an inline display: block over the flex value on
   // every load-more button, and a block box does not centre its own line.
@@ -148,7 +151,7 @@
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 14px;
+    font-size: 17px;
     letter-spacing: 2px;
     line-height: 22px;
     padding: 11px 28px;

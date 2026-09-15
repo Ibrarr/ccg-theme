@@ -390,7 +390,7 @@ button.splide__arrow:focus-visible {
     font-family: $font-circular-medium !important;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-size: 12px !important;
+    font-size: 14px !important;
     line-height: 20px;
     padding: 12px 20px !important;
     min-height: 44px;
@@ -419,7 +419,7 @@ button.splide__arrow:focus-visible {
     }
 
     @include media-breakpoint-up(lg) {
-      font-size: 14px !important;
+      font-size: 17px !important;
       letter-spacing: 2px;
       line-height: 22px;
       padding: 11px 28px !important;
