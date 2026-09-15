@@ -180,22 +180,21 @@ html.notice-dismissed .notification-bar {
     white-space: nowrap;
     display: inline-block;
     border: 1px solid $hof-navy;
-    padding: 2px 6px;
+    // 1px of vertical padding, not 2. At 2px the box stood 14px against a
+    // 12.6px line and its lower border crossed into the line beneath, which is
+    // what the client photographed: the label looked like it was sitting on the
+    // next line rather than inside its own. At 1px the box is 12px and lives
+    // entirely within its line.
+    padding: 1px 6px;
     // Centred on the sentence's x-height rather than sitting on its baseline,
     // so the box and the italic either side of it share a centre line.
     vertical-align: middle;
-    // The box is 14px against a 12.6px line, so left alone it would push its
-    // own line taller than the other two and the three-line block would no
-    // longer fit the 58px bar. The negative block margin hands those 1.4px
-    // back; the box still paints at full height because it is inline-block.
-    margin-block: -1px;
 
     @include media-breakpoint-up(md) {
       font-size: 10px;
       letter-spacing: 1px;
       border-width: 2.5px;
       padding: 4px 7px;
-      margin-block: 0;
     }
 
     @include media-breakpoint-up(lg) {
