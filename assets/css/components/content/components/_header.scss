@@ -5,7 +5,9 @@
   position: relative;
 
   p.term {
-    @include term($ccg-orange);
+    // A9 (v0.12): eyebrows on light grounds are deep violet. This one was
+    // navy, which matched the H1 under it rather than setting it off.
+    @include term($hof-violet-deep);
   }
 
   h1.title {

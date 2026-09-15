@@ -53,6 +53,17 @@
     }
   }
 
+  // A5 (v0.12): the light header runs off the body class and nothing else.
+  // The mark ships white, so on a light ground everything but the underscore is
+  // repainted navy. Eight templates carried their own copy of this rule; they
+  // now all read `has-light-header`, which `ccg_light_header_body_class()` sets.
+  //
+  // Selected by class, not by position: the old rule read path:nth-child(25),
+  // which the current vector does not share.
+  .has-light-header & a svg path:not(.logo-underscore) {
+    fill: $hof-navy !important;
+  }
+
   &.mobile-menu-open {
     position: fixed;
     z-index: 99;

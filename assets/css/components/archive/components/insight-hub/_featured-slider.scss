@@ -57,7 +57,9 @@
       }
 
       .featured-content {
-        background-color: $ccg-blue;
+        // C1 (v0.12): deep violet. The card was navy inside the navy half of the
+        // band behind it, so it merged into the ground and had no edge at all.
+        background-color: $hof-violet-deep;
         height: 100%;
         padding: 40px;
         display: flex;

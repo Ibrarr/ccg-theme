@@ -43,18 +43,6 @@ $rd-accent: 6px;
 $rd-gutter: 48px;
 
 .single-insight.detailed {
-  // The logo SVG ships white for dark heroes. This template sits on the
-  // off-white page, so it needs the dark treatment used by the single blog and
-  // work templates.
-  .header-logo a {
-    // Light template: the mark ships white, so everything but the underscore
-    // is repainted navy. Selected by class, not by position: the old rule
-    // read path:nth-child(25), which the new vector does not share.
-    svg path:not(.logo-underscore) {
-      fill: $ccg-dark-green !important;
-    }
-  }
-
   // #wrapper uses overflow-x: hidden globally, which turns it into a scroll
   // container and stops position: sticky working. clip does the same job
   // without creating one. This template has no parallax bars to contain.

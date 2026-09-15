@@ -1,15 +1,47 @@
 .single-insight.report {
-  .header-logo a svg g g {
-    path:nth-child(1), path:nth-child(2), path:nth-child(3) {
-      fill: #ffffff;
-    }
-  }
-
   .leadinModal {
     display: none !important;
   }
 
   @import "components/report-webinar/header";
+
+  // C6: the light-ground masthead. The photograph and its 50% black scrim go,
+  // and the three roles take their article colours: a deep violet eyebrow (it
+  // was navy on a dark photograph, so it simply did not read), a navy H1 and a
+  // navy serif standfirst.
+  .post-header {
+    background-image: none !important;
+    padding-bottom: 60px;
+
+    &:after {
+      content: none;
+    }
+
+    .header-content {
+      p.term {
+        color: $hof-violet-deep;
+      }
+
+      h1.title {
+        color: $hof-navy;
+      }
+
+      .intro {
+        h2,
+        p.statement {
+          color: $hof-navy;
+
+          a {
+            color: $hof-violet-deep;
+
+            &::after {
+              background-color: $hof-violet-deep;
+            }
+          }
+        }
+      }
+    }
+  }
   @import "components/report-webinar/form-section";
 
   article {

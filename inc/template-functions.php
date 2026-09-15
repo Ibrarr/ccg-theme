@@ -321,12 +321,25 @@ function ccg_statement_band_html( $text ) {
  * @return string[]
  */
 function ccg_light_header_body_class( $classes ) {
-	// T11 asks for the class on Contact and Where We Work too: both are
-	// light-headed, and the hook is what a light header hangs anything off.
+	// A5 (v0.12): this class is now the ONLY mechanism the light header runs
+	// off, so the eight per-template copies of the logo-inversion rule are gone
+	// and this list has to be exactly right. See `.has-light-header` in
+	// `_header-logo.scss`.
+	//
+	// T11 asks for the class on Contact and Where We Work; Careers is light
+	// too and had the CSS without the class.
 	$light_templates = array(
 		'page-templates/page-contact.php',
 		'page-templates/page-where-we-work.php',
+		'page-templates/page-careers.php',
 	);
+
+	// The webinar variant is the one insight that keeps the dark photographic
+	// masthead, so it is not a light header. The gated report was the other,
+	// until C6 moved it to the article grammar.
+	if ( is_singular( 'insight' ) && has_term( 'webinars', 'type', get_the_ID() ) ) {
+		return $classes;
+	}
 
 	if ( is_singular( array( 'post', 'insight', 'work' ) )
 		|| is_tax( array( 'sector', 'service' ) )
