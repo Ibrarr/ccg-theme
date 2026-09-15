@@ -1,5 +1,16 @@
 // Site-wide notification bar.
 //
+// The one-line desktop bar does not start at lg. The message needs two lines at
+// 13.5px until the viewport is about 1400 wide: swept in 20px steps, the bar
+// clipped its second line from 992 all the way to 1392 and was first clear at
+// 1412, so every common laptop width was slicing it. The single-line treatment
+// therefore starts here instead, and md's two-line treatment runs up to it.
+//
+// This is measured against the CURRENT message. If an editor lengthens it,
+// re-sweep: the QA check is that `bar.scrollHeight` never exceeds
+// `bar.clientHeight` at any width.
+$notification-bar-single-line: 1420px;
+
 // The bar's height IS --ccg-topbar-height, so the space reserved for it and the
 // space it actually occupies cannot drift apart. That property is set on the
 // body class PHP adds, because only the server knows whether the bar rendered,
@@ -20,7 +31,7 @@ body.has-notification-bar {
     --ccg-topbar-height: 64px;
   }
 
-  @include media-breakpoint-up(lg) {
+  @media (min-width: #{$notification-bar-single-line}) {
     --ccg-topbar-height: 48px;
   }
 }
@@ -93,7 +104,7 @@ html.notice-dismissed .notification-bar {
         width: 22px;
       }
 
-      @include media-breakpoint-up(lg) {
+      @media (min-width: #{$notification-bar-single-line}) {
         width: 26px;
       }
     }
@@ -162,7 +173,7 @@ html.notice-dismissed .notification-bar {
       line-height: 1.9;
     }
 
-    @include media-breakpoint-up(lg) {
+    @media (min-width: #{$notification-bar-single-line}) {
       font-size: 13.5px;
     }
   }
@@ -197,7 +208,7 @@ html.notice-dismissed .notification-bar {
       padding: 4px 7px;
     }
 
-    @include media-breakpoint-up(lg) {
+    @media (min-width: #{$notification-bar-single-line}) {
       font-size: 11px;
       letter-spacing: 1.2px;
       padding: 5px 9px;
