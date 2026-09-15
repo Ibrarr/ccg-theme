@@ -106,6 +106,183 @@ function ccg_editor_html( $text ) {
 }
 
 /**
+ * D3 (v0.12): promote a legacy pull quote to a <blockquote> so the T3 rule sees it.
+ *
+ * Editors wrote pull quotes as italic paragraphs rather than blockquotes, so the
+ * template's pull-quote rule — which is scoped to `blockquote` — never fired on
+ * any of them. The catch is here rather than in the content, so nothing is
+ * rewritten in the database and removing this function restores the old output
+ * exactly.
+ *
+ * The test is NOT "the paragraph is italic". An audit of every field on this
+ * install holding italic markup (78 fields, 1,352 paragraphs) found 47 wholly
+ * italic paragraphs, of which only 8 are quotes. The other 39 are sub-headings
+ * ("Client Commitment", "Do's in analyst presentations:"), standfirsts and
+ * parenthetical asides, and promoting those would be worse than promoting none.
+ *
+ * The signal that separates them is the opening quotation mark, so all three of
+ * these have to hold:
+ *
+ *   1. the paragraph's entire content is one <em> or <i>;
+ *   2. its text opens with a quotation mark, straight or curly, in any of the
+ *      forms the editors have actually used;
+ *   3. it runs to at least eight words, so a short quoted aside stays inline.
+ *
+ * A genuine pull quote that opens without a quotation mark is left alone on
+ * purpose: nothing in the markup distinguishes it from an aside, and that call
+ * belongs to an editor re-marking it as a blockquote.
+ *
+ * DOM rather than a regex because the paragraph has to be checked for a
+ * blockquote ancestor: an editor who did mark a quote up properly has <p>
+ * inside it, and promoting that would nest one blockquote inside another.
+ */
+function ccg_pull_quote_html( $html ) {
+	$html = (string) $html;
+
+	if ( '' === trim( $html ) || false === stripos( $html, '<p' ) ) {
+		return $html;
+	}
+
+	// Cheap guard: no italic markup, nothing to promote.
+	if ( false === stripos( $html, '<em' ) && ! preg_match( '#<i[\s>]#i', $html ) ) {
+		return $html;
+	}
+
+	if ( ! class_exists( 'DOMDocument' ) ) {
+		return $html;
+	}
+
+	$doc = new DOMDocument();
+
+	// The meta charset is how DOMDocument is told this is UTF-8; without it
+	// libxml assumes ISO-8859-1 and every curly quote in the copy — which is
+	// the very character this function tests for — arrives as mojibake.
+	$previous = libxml_use_internal_errors( true );
+	$loaded   = $doc->loadHTML(
+		'<?xml encoding="UTF-8"?><div id="ccg-pq-root">' . $html . '</div>',
+		LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+	);
+	libxml_clear_errors();
+	libxml_use_internal_errors( $previous );
+
+	if ( ! $loaded ) {
+		return $html;
+	}
+
+	$root = $doc->getElementById( 'ccg-pq-root' );
+
+	if ( ! $root ) {
+		return $html;
+	}
+
+	$promoted = 0;
+
+	// Collected first: replacing a node while iterating a live DOMNodeList
+	// skips the element after it.
+	$paragraphs = iterator_to_array( $doc->getElementsByTagName( 'p' ) );
+
+	foreach ( $paragraphs as $paragraph ) {
+		if ( ! ccg_is_legacy_pull_quote( $paragraph ) ) {
+			continue;
+		}
+
+		$quote = $doc->createElement( 'blockquote' );
+		$inner = $doc->createElement( 'p' );
+
+		// The <em> is unwrapped: the blockquote rule sets the italic itself, and
+		// an <em> inside it would ask the browser for a second level of emphasis
+		// that Libre Baskerville Italic has no face for.
+		$italic = ccg_pull_quote_wrapper( $paragraph );
+
+		while ( $italic->firstChild ) {
+			$inner->appendChild( $italic->firstChild );
+		}
+
+		$quote->appendChild( $inner );
+		$paragraph->parentNode->replaceChild( $quote, $paragraph );
+		$promoted ++;
+	}
+
+	if ( ! $promoted ) {
+		return $html;
+	}
+
+	$out = '';
+
+	foreach ( $root->childNodes as $child ) {
+		$out .= $doc->saveHTML( $child );
+	}
+
+	return $out;
+}
+
+/**
+ * The single <em>/<i> a paragraph wraps, or null if it wraps anything else.
+ *
+ * Whitespace-only text nodes are ignored, because the editor's markup is
+ * pretty-printed and `<p>\n  <em>…</em>\n</p>` is the common shape.
+ */
+function ccg_pull_quote_wrapper( DOMElement $paragraph ) {
+	$element = null;
+
+	foreach ( $paragraph->childNodes as $child ) {
+		if ( XML_TEXT_NODE === $child->nodeType ) {
+			if ( '' !== trim( $child->textContent ) ) {
+				return null;
+			}
+			continue;
+		}
+
+		if ( XML_ELEMENT_NODE !== $child->nodeType || null !== $element ) {
+			return null;
+		}
+
+		if ( ! in_array( strtolower( $child->nodeName ), array( 'em', 'i' ), true ) ) {
+			return null;
+		}
+
+		$element = $child;
+	}
+
+	return $element;
+}
+
+/**
+ * Whether a paragraph is a pull quote an editor wrote as italic body copy.
+ */
+function ccg_is_legacy_pull_quote( DOMElement $paragraph ) {
+	// Already inside a quote: an editor marked this one up properly.
+	for ( $parent = $paragraph->parentNode; $parent instanceof DOMElement; $parent = $parent->parentNode ) {
+		if ( 'blockquote' === strtolower( $parent->nodeName ) ) {
+			return false;
+		}
+	}
+
+	if ( ! ccg_pull_quote_wrapper( $paragraph ) ) {
+		return false;
+	}
+
+	// textContent has already resolved entities, so &ldquo; is a real curly
+	// quote by the time it is read here.
+	$text = trim( preg_replace( '/^[\s\x{00A0}\x{200B}\x{FEFF}]+/u', '', $paragraph->textContent ) );
+
+	if ( '' === $text ) {
+		return false;
+	}
+
+	$opening = array( '"', "'", "\xE2\x80\x9C", "\xE2\x80\x9D", "\xE2\x80\x98", "\xE2\x80\x99", '«', '„', '“', '‘' );
+
+	if ( ! in_array( mb_substr( $text, 0, 1 ), $opening, true ) ) {
+		return false;
+	}
+
+	// Eight words, so a short quoted aside inside a sentence stays inline.
+	// str_word_count() is not multibyte safe and this copy carries curly
+	// punctuation and accented names, so count whitespace runs instead.
+	return count( preg_split( '/\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY ) ) >= 8;
+}
+
+/**
  * B3 (v0.12): the opening CLAUSE as the serif lead, not the opening sentence.
  *
  * Where We Work opens "With offices across Europe, North America, and

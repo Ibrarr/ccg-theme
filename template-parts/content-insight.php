@@ -30,7 +30,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
             </section>
             <section class="post-content">
                 <div class="row gx-5">
-                    <div class="col-lg-7 content"><?php the_field( 'body' ); ?></div>
+                    <div class="col-lg-7 content"><?php echo ccg_pull_quote_html( get_field( 'body' ) ); ?></div>
                     <div class="col-lg-5 image social">
                         <img src="<?php the_post_thumbnail_url() ?>" alt="<?php the_title(); ?>"
                              srcset="<?php echo esc_attr( $image_srcset ); ?>" sizes="(min-width: 391px) 1024px, 100vw">
