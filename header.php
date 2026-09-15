@@ -11,7 +11,7 @@
     <aside class="notification-bar" aria-label="Announcement">
         <div class="container px-4">
             <span class="notification-bar-icon" aria-hidden="true"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/eye.svg' ); ?></span>
-            <p class="notification-bar-text">
+            <p class="notification-bar-text"><span class="notification-bar-clamp">
                 <?php if ( '' !== $ccg_notice['lead'] ) : ?>
                     <span class="notification-bar-lead"><?php echo esc_html( $ccg_notice['lead'] ); ?></span>
                 <?php endif; ?>
@@ -23,7 +23,7 @@
                 <?php else : ?>
                     <span class="notification-bar-message"><?php echo esc_html( $ccg_notice['message'] ); ?></span>
                 <?php endif; ?>
-            </p>
+            </span></p>
             <button type="button" class="notification-bar-dismiss" aria-label="Dismiss announcement">
                 <?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/menu-close.svg' ); ?>
             </button>
