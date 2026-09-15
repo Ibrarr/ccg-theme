@@ -102,13 +102,34 @@
       margin-bottom: clamp(45px, 8vh, 80px);
 
       // The wrapper is the heading on slide one and a paragraph elsewhere, so
-      // it must add nothing of its own: the two spans inside carry all the
-      // type. Without this the browser's default h1 margin and size would
-      // change the slide's rhythm on slide one only.
+      // it must render identically either way: the browser's own h1 margin,
+      // size and leading would otherwise change the slide's rhythm on slide
+      // one only.
+      //
+      // The type sits HERE rather than only on the two spans inside. They are
+      // both `display: inline`, so it is this element's own font-size and
+      // line-height that set the strut of every line box the sentence makes,
+      // and at the inherited 16px that strut was 19.2px under an h1 and 24px
+      // under a paragraph, against 32-63px of inline content. Nothing rendered
+      // differently, because the inline content is taller either way and so
+      // drives the line box: heights measured to the pixel before and after,
+      // 160.9 / 121.4 / 143.5 / 179.4 at 375 / 768 / 1024 / 1440. It is a
+      // latent inconsistency rather than a live fault, but slide one and the
+      // other two had different leading for no reason, and a sentence whose
+      // parts are inline should carry its type on the element that owns the
+      // line boxes.
+      //
+      // This was tried as the fix for E3.1's line split, which was grouping two
+      // visual lines into one piece, and it is NOT that fix: the split was
+      // wrong for an unrelated reason and is now built differently. See the
+      // note at the top of header-slider.js.
       .header-statement {
         margin: 0;
         font-weight: inherit;
-        font-size: inherit;
+        font-family: $font-serif;
+        font-size: clamp(1.75rem, 1rem + 2.5vw, 3.4375rem);
+        // The frame sets roughly 66px on 75px, so 1.14 rather than 1.2.
+        line-height: 1.15;
       }
 
       // The design sets the brand phrase and the standfirst as one flowing
@@ -117,10 +138,9 @@
       .heading,
       .sub-heading {
         display: inline;
-        font-family: $font-serif;
-        font-size: clamp(1.75rem, 1rem + 2.5vw, 3.4375rem);
-        // The frame sets roughly 66px on 75px, so 1.14 rather than 1.2.
-        line-height: 1.15;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
         margin: 0;
       }
 
@@ -135,10 +155,20 @@
 
         // The separator the design draws between the two halves. A pseudo
         // element on the standfirst rather than the heading, so the H1's own
-        // accessible name stays exactly as authored.
+        // accessible name stays exactly as authored, and CSS rather than
+        // markup so it is drawn whether or not JavaScript runs.
         &:before {
           content: '- ';
         }
+      }
+
+      // E3.1 promotes the separator above from a pseudo-element to a real one,
+      // because a pseudo cannot be tweened and a hyphen left at full opacity
+      // while its line glides in behind it is a seam. header-slider.js adds
+      // `has-motion` and inserts `.header-sep` in the same breath, so the glyph
+      // is never drawn twice and never missing.
+      .header-statement.has-motion .sub-heading:before {
+        content: none;
       }
 
       .hero-button {

@@ -49,14 +49,17 @@ export const DURATION = token( '--text-glide-duration', 500 ) / 1000;
 // inside the 30-80ms band that keeps a cascade from reading as slow.
 export const STAGGER = token( '--text-build-stagger', 70 ) / 1000;
 
-// Entering elements take an ease-out so the movement is fastest at the moment
-// the eye arrives. power3.out IS the cubic ease-out that
-// --text-glide-ease spells as a bezier, so a tween and a transition using the
-// tokens travel identically.
-export const EASE = 'power3.out';
+// Hoffman leave the ease unspecified, so their reveal runs on GSAP's default.
+// Naming it here keeps it explicit and keeps it in step with the bezier on
+// :root, which is the same quadratic curve.
+export const EASE = 'power1.out';
 
-// Words rather than lines cascade faster, so the gap has to come down or a
-// twelve-word statement runs past a second on its own.
+// Hoffman hold every reveal back by a tenth of a second.
+export const DELAY = token( '--text-glide-delay', 100 ) / 1000;
+
+// Hoffman split by LINES and nothing else: their `type: "lines"` is the whole
+// of their text system, and a word cascade reads visibly busier than the site
+// this is meant to match. Kept only for a caller that genuinely needs it.
 export const WORD_STAGGER = 0.035;
 
 export function reducedMotion() {

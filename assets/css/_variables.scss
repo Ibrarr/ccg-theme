@@ -63,18 +63,28 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
   --interaction-accent: #{$hof-teal};
   // Section E's two movements, as tokens, so the CSS implementation and the
   // GSAP one cannot drift apart. E2 asks for these to be defined once and
-  // reused everywhere; text-motion.js reads these same three values off :root
-  // at runtime rather than carrying its own copy.
+  // reused everywhere; text-motion.js reads these same values off :root at
+  // runtime rather than carrying its own copy.
   //
-  // E2: "about 50px to the left of its final position". E6.2: "roughly a third
-  // to half a second". The curve is a cubic ease-out, which is GSAP's
-  // power3.out expressed as a bezier, so a tween and a transition using these
-  // tokens travel identically.
+  // These are HOFFMAN'S OWN NUMBERS, read out of their `all.min.js`, because E1
+  // asks for their move rather than an interpretation of it:
+  //
+  //   new SplitText(t, { type: "lines" });
+  //   gsap.from(e.lines, { duration: .5, opacity: 0, x: -50,
+  //                        force3D: true, stagger: .15, delay: .1 });
+  //
+  // The ease is unspecified in their code, so it is GSAP's default, power1.out
+  // — a quadratic ease-out. The bezier below is that same curve, so a tween and
+  // a CSS transition using these tokens travel identically. An earlier version
+  // used power3.out in the tween against a cubic bezier here, which was both
+  // snappier than Hoffman and not actually the same curve in the two languages.
   --text-glide-distance: 50px;
   --text-glide-duration: 500ms;
-  --text-glide-ease: cubic-bezier(0.33, 1, 0.68, 1);
-  // E6.2: "the gap between lines in a build is a small fraction of that".
-  --text-build-stagger: 70ms;
+  --text-glide-ease: cubic-bezier(0.5, 1, 0.89, 1);
+  // Hoffman's stagger, four times the gap the first build used. Theirs reads
+  // as lines arriving in turn; a 35ms gap reads as one blurred movement.
+  --text-build-stagger: 150ms;
+  --text-glide-delay: 100ms;
 
   // Section 2: "minimum = visible 2px focus ring (acid on dark, navy on
   // light)". Navy is the light-ground default; the dark-ground list in
