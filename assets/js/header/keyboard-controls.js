@@ -70,6 +70,15 @@ const CONTROLS = [
 const HEADING_TRIGGERS = [
 	{ selector: '.award-year > h4', panel: siblingPanel },
 	{ selector: '.vacancy > h4', panel: siblingPanel },
+	// B5: the senior team rows. The heading is nested inside the summary rather
+	// than a direct sibling of the panel, so it needs its own resolver.
+	{
+		selector: '.person-summary h2.name',
+		panel: ( heading ) => {
+			const person = heading.closest( '.person' );
+			return person ? person.querySelector( '.person-details' ) : null;
+		},
+	},
 ];
 
 let panelId = 0;
