@@ -108,13 +108,25 @@ function enter( targets, { delay = 0, stagger = 0 } = {} ) {
 	);
 }
 
-// Every slide's text waits in the from-state, so a slide arriving mid-carousel
-// never shows its finished sentence for the second the transition takes and
-// then snaps back to animate it.
+// The slide the reader is actually looking at. With `updateOnMove: true` this
+// class lands on the DESTINATION at the start of a move, which is what lets the
+// incoming slide be hidden before it arrives and animated once it lands.
+//
+// Never fall back to slides[0]: in loop mode the DOM order is
+// [clone, clone, real, real, real, clone, clone], so slides[0] is a CLONE. An
+// earlier version fell back to it when `is-active` had not landed yet at mount,
+// animated the clone, and left the real H1 sitting at opacity 0 for the whole
+// visit.
+function activeSlide() {
+	return document.querySelector( '.header-slider .splide__slide.is-active' );
+}
+
+// Hide a slide's words so it can arrive blank rather than showing its finished
+// sentence for the second the transition takes and then snapping back.
 function prime( slide ) {
 	const parts = heroParts( slide );
 
-	if ( ! parts ) {
+	if ( ! parts || reducedMotion() ) {
 		return;
 	}
 
@@ -139,25 +151,60 @@ function playSlide( slide ) {
 	enter( wordsOf( parts.rest ), { delay: HERO_LEAD_OFFSET, stagger: WORD_STAGGER } );
 }
 
+// Nothing may be left invisible, whatever happens above. If the slide on screen
+// still has hidden words once the sequence should long since have finished,
+// show them. A missed animation is a small loss; a hero with no heading is not.
+function failsafe() {
+	const parts = heroParts( activeSlide() );
+
+	if ( ! parts ) {
+		return;
+	}
+
+	[ wordsOf( parts.lead ), wordsOf( parts.rest ) ].forEach( ( words ) => {
+		if ( ! words || ! words.length ) {
+			return;
+		}
+
+		const hidden = words.some( ( w ) => parseFloat( getComputedStyle( w ).opacity ) < 0.9 );
+
+		if ( hidden ) {
+			gsap.set( words, { opacity: 1, x: 0 } );
+		}
+	} );
+}
+
 headerSlider.on( 'mounted', () => {
-	const slides = document.querySelectorAll( '.header-slider .splide__slide' );
+	// Splide sets is-active during mount. If it has not landed on this tick,
+	// wait a frame rather than guessing at a slide.
+	const start = () => {
+		const active = activeSlide();
 
-	slides.forEach( prime );
+		if ( ! active ) {
+			requestAnimationFrame( start );
 
-	// E6.5: the hero must not sit empty. This runs the moment the carousel
-	// mounts rather than waiting on a scroll or a font.
-	const active = document.querySelector( '.header-slider .splide__slide.is-active' ) || slides[ 0 ];
+			return;
+		}
 
-	playSlide( active );
+		// E6.5: the hero must not sit empty. This runs the moment the carousel
+		// mounts rather than waiting on a scroll or a font.
+		playSlide( active );
+		setTimeout( failsafe, 2500 );
+	};
+
+	start();
+} );
+
+// updateOnMove puts is-active on the destination as the move BEGINS, so this
+// hides the incoming slide before the reader sees it.
+headerSlider.on( 'move', () => {
+	prime( activeSlide() );
 } );
 
 // Client decision, Sept 2026: every slide change replays it.
 headerSlider.on( 'moved', () => {
-	const active = document.querySelector( '.header-slider .splide__slide.is-active' );
-
-	if ( active ) {
-		playSlide( active );
-	}
+	playSlide( activeSlide() );
+	setTimeout( failsafe, 2500 );
 } );
 
 headerSlider.mount();
