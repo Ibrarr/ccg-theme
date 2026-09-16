@@ -74,8 +74,11 @@
     // own custom properties from an ID scoped block. Overriding the properties
     // is more reliable than fighting that specificity, and an !important custom
     // property beats its plain declaration.
-    --gf-ctrl-border-color-focus: #{$hof-acid} !important;
     --gf-ctrl-shadow: none !important;
+    // The inputs have no visible border (a transparent 2px one holds the 42px
+    // box), so focus must not colour it in. The A2 rule reads this instead of
+    // its navy default.
+    --field-focus-border: transparent;
 
     .gform_heading,
     .gfield_description:not(.validation_message) {
@@ -157,13 +160,11 @@
         color: $rd-placeholder;
       }
 
-      // The design gives the inputs no border, so they need an explicit focus
-      // ring to stay keyboard accessible on the dark card.
-      &:focus,
-      &:focus-visible {
-        outline: none;
-        border-color: $hof-acid !important;
-      }
+      // Focus follows the sitewide A2 recipe in app.scss: nothing changes under
+      // a pointer, and the keyboard gets the 1.5px ring, acid here because the
+      // card is on the dark-ground list. The acid border this block used to set
+      // was being overridden by that recipe's navy, which drew a navy border on
+      // click and left no visible keyboard state on the navy card.
     }
 
     // Validation state. Gravity Forms marks the field, not the input.

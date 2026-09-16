@@ -37,6 +37,12 @@
   .splide {
     @import "../../../splide-arrows";
 
+    // The band is on the dark-ground list for its navy top half, but the arrows
+    // sit in the warm grey half below the cards, where the acid ring that list
+    // hands down read about 1.06:1. Section 2's ring on light is navy.
+    .splide__arrows {
+      --focus-ring: #{$hof-navy};
+    }
 
     .splide__track {
       border-radius: 8px;

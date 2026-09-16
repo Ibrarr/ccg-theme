@@ -272,6 +272,10 @@ footer,
 // The detailed report's contents menu is a navy panel, so its links were taking
 // a navy ring on navy.
 .report-contents-panel,
+// The detailed report's download card is navy too. Off this list its Download
+// PDF button resolved to a navy box on the navy card, leaving only the acid
+// label, and both fields took a navy keyboard ring nobody could see.
+.report-download,
 // T5's stepped deck: the middle card is the navy 70% tint and the back one is
 // solid navy, so a navy focus ring on either is invisible. The front card is
 // white and keeps the navy ring.
@@ -485,14 +489,17 @@ button.splide__arrow:focus-visible {
   // colour as well as an outline or shadow, so the field keeps its resting
   // navy hairline on focus too, and the plugin's own focus colours are pointed
   // at navy in case anything else reads them.
+  // A form whose fields have no visible border at rest sets
+  // --field-focus-border to transparent, so focus leaves it alone as well: the
+  // detailed report's download card is the one today.
   --gf-ctrl-outline-color-focus: #{$hof-navy} !important;
-  --gf-ctrl-border-color-focus: #{$hof-navy} !important;
+  --gf-ctrl-border-color-focus: var(--field-focus-border, #{$hof-navy}) !important;
   --gf-ctrl-shadow-focus: none !important;
 
   input:not([type='hidden']):not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='file']):focus,
   select:focus,
   textarea:focus {
-    border-color: $hof-navy !important;
+    border-color: var(--field-focus-border, #{$hof-navy}) !important;
   }
 
   // F4 (v0.13): placeholder text is navy. Gravity Forms paints it warm grey
@@ -501,6 +508,15 @@ button.splide__arrow:focus-visible {
   textarea::placeholder {
     color: $hof-navy !important;
     opacity: 1 !important;
+  }
+
+  // Typed text is navy too. The detailed report's download form already set it;
+  // the Contact, Where We Work and gated report forms fell through to the orbital
+  // theme's own control colour, #112337, a near-navy that is not in the palette.
+  // Every field here is a white field, so navy reads on all of them.
+  input:not([type='hidden']):not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='file']),
+  textarea {
+    color: $hof-navy !important;
   }
 
   // The ring takes --focus-ring, not a literal navy. The gated report's form
