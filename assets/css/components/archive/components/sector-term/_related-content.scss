@@ -26,8 +26,14 @@
     }
 
     .find-out-more {
-      @include body-text($ccg-text);
-      text-decoration: underline;
+      margin-top: 10px;
+
+      // A1 sweeps card CTAs, and 7.5 / T4 give this one its recipe: the
+      // caps-and-arrow in-copy CTA, deep violet on light with a violet draw-in.
+      // It was navy sentence case with a plain underline.
+      a {
+        @include caps-arrow-link($hof-violet-deep);
+      }
     }
 
     @include media-breakpoint-up(lg) {

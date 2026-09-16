@@ -211,6 +211,14 @@
               margin-bottom: 0;
             }
 
+            // A1 / 7.5: the "Read more" that closes each description is a card
+            // CTA, so it takes the caps-and-arrow recipe, acid on the navy card.
+            // ccg_more_link_html() marks it; other links in the field are not.
+            p .more-link {
+              @include caps-arrow-link($hof-acid);
+              margin-top: 14px;
+            }
+
             .count {
               width: 100%;
               // Acid: this sits on a navy card, where orange resolved to navy.

@@ -404,6 +404,36 @@ function ccg_cta_phrase_html( $text, $phrase = 'Get in touch' ) {
 		. ( '' === trim( $rest ) ? '' : '<span class="cta-rest">' . $rest . '</span>' );
 }
 
+/**
+ * A1 (v0.12) sweeps card CTAs into 7.5's caps-and-arrow recipe. Where that CTA
+ * is an editor's link inside a WYSIWYG field (the homepage services cards end
+ * their description with one), it cannot be targeted by position without also
+ * catching an ordinary in-copy link. So the link is marked by what it says:
+ * only an anchor whose whole label is "Read more" or "Find out more" gets the
+ * class, and every other link in the field is left exactly as written.
+ */
+function ccg_more_link_html( $html ) {
+	if ( ! is_string( $html ) || false === stripos( $html, '<a' ) ) {
+		return $html;
+	}
+
+	return preg_replace_callback(
+		'#<a\b([^>]*)>(\s*(?:read more|find out more)(?:\s+here)?\s*)</a>#i',
+		function ( $match ) {
+			$attributes = $match[1];
+
+			if ( preg_match( '#\bclass=(["\'])(.*?)\1#i', $attributes, $class ) ) {
+				$attributes = str_replace( $class[0], 'class=' . $class[1] . trim( $class[2] . ' more-link' ) . $class[1], $attributes );
+			} else {
+				$attributes .= ' class="more-link"';
+			}
+
+			return '<a' . $attributes . '>' . $match[2] . '</a>';
+		},
+		$html
+	);
+}
+
 function ccg_statement_lead_html( $text ) {
 	$text = trim( (string) $text );
 

@@ -316,7 +316,7 @@
                     <li class="splide__slide first-set">
                         <div class="sector-slide">
                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-                            <?php the_sub_field( 'description' ); ?>
+                            <?php echo ccg_more_link_html( get_sub_field( 'description' ) ); ?>
                             <span class="count"><?php the_field( 'first_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
                         </div>
                     </li>
@@ -332,7 +332,7 @@
                     <li class="splide__slide second-set">
                         <div class="sector-slide">
                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-                            <?php the_sub_field( 'description' ); ?>
+                            <?php echo ccg_more_link_html( get_sub_field( 'description' ) ); ?>
                             <span class="count"><?php the_field( 'second_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
                         </div>
                     </li>
@@ -348,7 +348,7 @@
                     <li class="splide__slide third-set">
                         <div class="sector-slide">
                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-                            <?php the_sub_field( 'description' ); ?>
+                            <?php echo ccg_more_link_html( get_sub_field( 'description' ) ); ?>
                             <span class="count"><?php the_field( 'third_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
                         </div>
                     </li>

@@ -561,10 +561,13 @@ button.splide__arrow:focus-visible {
     border: 1.5px solid var(--btn-primary-fill, #{$hof-navy}) !important;
     color: var(--btn-primary-label, #{$hof-acid}) !important;
     font-family: $font-circular-medium !important;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    // A1: uppercase like every other button. Without !important, Gravity
+    // Forms' injected per-form sheet won at ID specificity and the labels
+    // rendered "Send Message" and "Download".
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
     font-size: 14px !important;
-    line-height: 20px;
+    line-height: 20px !important;
     padding: 12px 20px !important;
     min-height: 44px;
     border-radius: var(--radius-btn) !important;
@@ -593,8 +596,8 @@ button.splide__arrow:focus-visible {
 
     @include media-breakpoint-up(lg) {
       font-size: 17px !important;
-      letter-spacing: 2px;
-      line-height: 22px;
+      letter-spacing: 2px !important;
+      line-height: 22px !important;
       padding: 11px 28px !important;
     }
   }
