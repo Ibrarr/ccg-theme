@@ -690,11 +690,19 @@ export function cascade( steps, { delay = 0 } = {} ) {
  * nothing can show and then vanish. This takes them over: they stay hidden
  * until they reach the reveal line, and play once, the first time they do.
  *
- * The decision waits for the page to finish loading. Measured at parse time,
- * the Our News "Get in touch" heading sat at 719px, on a 900px screen, because
- * the news tiles above it had not loaded; at load it sat at 2494px. Deciding
- * early played it off screen before anyone scrolled to it. The wait is capped,
- * so a slow image cannot hold text back for long.
+ * The decision waits for the page to settle, which is `load` and then any archive
+ * grid still arriving: see whenSettled(). Measured at parse time, the Our News
+ * "Get in touch" heading sat at 719px, on a 900px screen, because the news tiles
+ * above it had not loaded; once they had, it sat at 2494px. Deciding early
+ * played it off screen before anyone scrolled to it. The wait is capped, so a
+ * slow request cannot hold text back for long.
+ *
+ * ScrollTrigger measures where each start line is when the trigger is created,
+ * and re-measures by itself only on load and resize. Anything that lands above
+ * a trigger afterwards (card images finishing, a Load more click, a filter)
+ * leaves that line too high, and the footer lockup played mid-grid, out of
+ * sight. So while anything is still waiting, a change in the page's height
+ * re-measures.
  *
  * ScrollTrigger is passed in by the caller so this module does not register the
  * plugin twice in bundles that already do.
@@ -728,6 +736,13 @@ export function onReveal( ScrollTrigger, trigger, targets, play, { line = 0.85 }
 		}
 
 		played = true;
+		waiting.delete( go );
+
+		if ( ! waiting.size && heightWatch ) {
+			heightWatch.disconnect();
+			heightWatch = null;
+		}
+
 		play();
 	};
 
@@ -752,14 +767,61 @@ export function onReveal( ScrollTrigger, trigger, targets, play, { line = 0.85 }
 			once: true,
 			onEnter: go,
 		} );
+
+		if ( ! played ) {
+			waiting.add( go );
+			watchHeight( ScrollTrigger );
+		}
 	};
 
 	whenSettled( decide );
 }
 
-// Runs `callback` once the page has loaded, or after 2.5s, whichever is first.
+// Reveals created but not yet played, across every onReveal() in this bundle.
+const waiting = new Set();
+let heightWatch = null;
+
+// Re-measure this bundle's triggers whenever the page changes height, a moment
+// after it stops changing, until nothing is left waiting.
+function watchHeight( ScrollTrigger ) {
+	if ( heightWatch || typeof ResizeObserver === 'undefined' ) {
+		return;
+	}
+
+	let height = document.documentElement.scrollHeight;
+	let timer = null;
+
+	heightWatch = new ResizeObserver( () => {
+		const now = document.documentElement.scrollHeight;
+
+		if ( now === height ) {
+			return;
+		}
+
+		height = now;
+		clearTimeout( timer );
+		timer = setTimeout( () => ScrollTrigger.refresh(), 150 );
+	} );
+
+	heightWatch.observe( document.body );
+}
+
+// Runs `callback` once the page has settled: loaded (or 2.5s on), and then no
+// archive grid still on its way.
+//
+// Eight templates fill #posts-container by jQuery AJAX on DOM ready: the
+// Insight Hub, Our Work, Our News, Our Blog, the type, source and category
+// archives and the search page. Locally the posts arrive before `load`; on
+// staging admin-ajax answers about a second after it, so everything below the
+// grid measured a screen or two higher than it would sit. Decided then, the
+// "Get in touch" heading and the footer lockup played while nobody could see
+// them. jQuery counts its own requests in flight and fires `ajaxStop` once the
+// last one's success handler has run, which is after the posts are in the page.
+// Two frames later they are laid out. Capped, so a hung request cannot keep
+// text hidden.
 export function whenSettled( callback ) {
 	let done = false;
+	let checked = false;
 
 	const run = () => {
 		if ( ! done ) {
@@ -768,12 +830,31 @@ export function whenSettled( callback ) {
 		}
 	};
 
+	const afterRequests = () => {
+		if ( checked ) {
+			return;
+		}
+
+		checked = true;
+
+		const $ = window.jQuery;
+
+		if ( ! $ || ! $.active ) {
+			run();
+
+			return;
+		}
+
+		$( document ).one( 'ajaxStop', () => requestAnimationFrame( () => requestAnimationFrame( run ) ) );
+		setTimeout( run, 4000 );
+	};
+
 	if ( document.readyState === 'complete' ) {
-		run();
+		afterRequests();
 
 		return;
 	}
 
-	window.addEventListener( 'load', run, { once: true } );
-	setTimeout( run, 2500 );
+	window.addEventListener( 'load', afterRequests, { once: true } );
+	setTimeout( afterRequests, 2500 );
 }

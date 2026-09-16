@@ -12,12 +12,12 @@
  *     first paint only when the head has armed motion (`tm-armed`, which reduced
  *     motion and no-JS never get), and the stylesheet shows them after three
  *     seconds if this script never runs.
- *  2. The decision waits for the page to load. Our News measured the heading at
- *     719px on a 900px screen at parse time, because the tiles above it had not
- *     loaded, and at 2494px once they had. Deciding at parse time called it
- *     "already on screen", left it finished, and it never animated. A heading
- *     that really is on screen at load plays at once; the rest play when they
- *     scroll into view.
+ *  2. The decision waits for the page to settle: `load`, then any archive grid
+ *     still arriving by AJAX. Our News measured the heading at 719px on a 900px
+ *     screen before its tiles were in, and at 2494px once they were. Deciding
+ *     early called it "already on screen", left it finished, and it never
+ *     animated. A heading that really is on screen once the page has settled
+ *     plays at once; the rest play when they scroll into view.
  *  3. prefers-reduced-motion stands the whole thing down before it touches the
  *     DOM, with a CSS block behind it for anyone who changes the setting later.
  *
@@ -117,11 +117,43 @@
             });
         }
 
+        // Wait for the archive grid too. Eight templates fill #posts-container
+        // by jQuery AJAX on DOM ready, and on staging the posts arrive about a
+        // second after `load`, so until then the band sits a screen or two
+        // higher than it will. Decided at `load`, the heading played there and
+        // was finished before anyone scrolled down to it. jQuery fires ajaxStop
+        // once the last request's success handler has put the posts in; two
+        // frames later they are laid out. Capped, so a hung request cannot keep
+        // the heading hidden. The observer itself reads live geometry, so
+        // nothing after the decision can leave it stale.
+        var checked = false;
+
+        function afterRequests() {
+            if (checked) {
+                return;
+            }
+            checked = true;
+
+            var $ = window.jQuery;
+
+            if (!$ || !$.active) {
+                decide();
+                return;
+            }
+
+            $(document).one('ajaxStop', function () {
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(decide);
+                });
+            });
+            setTimeout(decide, 4000);
+        }
+
         if (document.readyState === 'complete') {
-            decide();
+            afterRequests();
         } else {
-            window.addEventListener('load', decide, { once: true });
-            setTimeout(decide, 2500);
+            window.addEventListener('load', afterRequests, { once: true });
+            setTimeout(afterRequests, 2500);
         }
     }
 
