@@ -19,9 +19,12 @@
     transition: $ccg-transition-all;
   }
 
+  // A2 (v0.13): the search page field takes the section 2 search recipe the
+  // header's already has, white with a 1px navy hairline and a pill radius, in
+  // place of the borderless #DEDEDE slab.
   input {
-    background: #DEDEDE;
-    border: 0;
+    background: $hof-white;
+    border: 1px solid $hof-navy;
     border-radius: 25px;
     padding: 12px 25px;
     width: 100%;
@@ -31,9 +34,7 @@
     line-height: 16px;
     height: 50px;
 
-    &:focus {
-      outline: none;
-    }
+    @include field-focus();
   }
 
   ::placeholder {

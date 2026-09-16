@@ -51,9 +51,7 @@
         width: 300px;
       }
 
-      &:focus {
-        outline: none;
-      }
+      @include field-focus();
     }
 
     ::placeholder {

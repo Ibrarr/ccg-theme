@@ -104,8 +104,11 @@
         top: unset;
       }
 
+      // F7 (v0.13): an opened vacancy's title takes the same 44px role C4 gave
+      // the section titles. title-text() alone ran it to 56px on opening.
       h4 {
         @include title-text($ccg-dark-green);
+        @include section-title-44();
       }
     }
   }

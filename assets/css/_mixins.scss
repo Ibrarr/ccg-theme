@@ -127,9 +127,8 @@
   // A1: every label uppercase, sitewide, both variants.
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  // A7: section 1's type scale puts button labels at 17px. Both the old pill
-  // system and the outlined-box recipe ran 12/14, short of the scale at every
-  // width.
+  // F1 (v0.13): labels are 14px at every width, both variants. This amends the
+  // 17px the section 1 scale gave them; uppercase and letter-spacing stand.
   font-size: 14px;
   // Padding and leading add to exactly 44px rather than leaning on min-height:
   // jQuery's .show() writes an inline display: block over the flex value on
@@ -150,11 +149,67 @@
     outline-offset: 3px;
   }
 
+  // The leading and padding still add to 44px, so the box does not move.
   @include media-breakpoint-up(lg) {
-    font-size: 17px;
     letter-spacing: 2px;
     line-height: 22px;
     padding: 11px 28px;
+  }
+}
+
+// A2 (v0.13): a text field outside Gravity Forms keeps the same focus recipe as
+// the form fields. Nothing is added under a pointer (field-focus.js flags
+// <html>), and keyboard focus takes the 1.5px ring. These fields used to set
+// outline: none on every focus, so a keyboard user could not see them at all.
+@mixin field-focus() {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 1.5px solid var(--focus-ring, #{$hof-navy});
+    outline-offset: 2px;
+  }
+
+  html.pointer-focus &:focus-visible {
+    outline: none;
+  }
+}
+
+// F5 (v0.13): one share icon set everywhere, sized and coloured as the Our Work
+// pages already were. Each glyph is centred in the same 22px square, so the
+// three read as one optical size rather than three drawings at their own
+// scales, and all three are navy at rest.
+@mixin share-icons() {
+  .social-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+
+      svg {
+        overflow: visible;
+        fill: $hof-navy;
+
+        path {
+          transition: $ccg-transition-all;
+        }
+      }
+
+      &.mail-icon svg path {
+        stroke: $hof-navy;
+      }
+    }
+
+    .mail-icon svg { width: 22px; height: 17px; }
+    .linkedin-icon svg { width: 21px; height: 21px; }
+    .x-icon svg { width: 18px; height: 18px; }
   }
 }
 

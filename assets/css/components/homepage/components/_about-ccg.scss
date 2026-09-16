@@ -6,13 +6,15 @@
   padding: 55px 0;
   border-radius: 0 0 25px 25px;
 
+  // A7 (v0.13): this statement carries the T2 statement-block device, the acid
+  // serif lead-in running into white Poppins (round 2 named it), so it takes
+  // that role's size and measure rather than its own 42px. The size is the 28px
+  // C1 set for every other statement block, and the measure is the role's 60ch.
   p {
-    font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
-    font-family: $font-circular-regular;
-    color: $hof-white;
-    margin-bottom: 40px;
-    text-align:center;
-    line-height: 48px;
+    @include sub-heading-text($hof-white);
+    max-width: 60ch;
+    margin: 0 auto 40px;
+    text-align: center;
 
     // The T2 statement-block device, on the existing author highlight span:
     // Libre Baskerville Italic acid running into white Poppins. T7 sets the
@@ -27,10 +29,6 @@
 
     a {
       color: $hof-acid;
-    }
-
-    @include media-breakpoint-down(md) {
-      line-height: 32px;
     }
   }
 

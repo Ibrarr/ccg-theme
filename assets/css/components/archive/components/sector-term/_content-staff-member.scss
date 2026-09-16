@@ -69,14 +69,17 @@
     }
   }
 
+  // F6 (v0.13): the card takes the warm grey ground, like the insight hub index
+  // cards. White on the white page, it had only a hairline to find it by. The
+  // headshots are transparent cut-outs, so the grey runs behind them too.
   .staff-member {
     overflow: hidden;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: $hof-grey-warm;
     margin-bottom: 40px;
 
     .content {
-      background: #ffffff;
+      background: $hof-grey-warm;
       padding-top: 35px;
       padding-left: 30px;
       padding-bottom: 20px;
@@ -163,7 +166,7 @@
 
     .headshot-container {
       border-radius: 0 8px 8px 0;
-      background: white;
+      background: $hof-grey-warm;
       overflow: hidden;
 
       .headshot {
@@ -190,7 +193,7 @@
     }
 
     @include media-breakpoint-up(lg) {
-      background-color: $ccg-orange;
+      background-color: $hof-grey-warm;
     }
   }
 

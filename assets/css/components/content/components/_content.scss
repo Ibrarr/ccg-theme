@@ -148,28 +148,10 @@
       margin-bottom: 12px;
     }
 
+    @include share-icons();
+
     .social-icons {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-
       a {
-        display: inline-flex;
-        align-items: center;
-
-        svg {
-          overflow: visible;
-          fill: $hof-navy;
-
-          path {
-            transition: $ccg-transition-all;
-          }
-        }
-
-        &.mail-icon svg path {
-          stroke: $hof-navy;
-        }
-
         &:where(.linkedin-icon, .x-icon):where(:hover, :focus-visible) svg {
           fill: var(--interaction-accent);
         }
@@ -178,10 +160,6 @@
           stroke: var(--interaction-accent);
         }
       }
-
-      .mail-icon svg { width: 22px; height: 17px; }
-      .linkedin-icon svg { width: 21px; height: 21px; }
-      .x-icon svg { width: 18px; height: 18px; }
     }
   }
 }

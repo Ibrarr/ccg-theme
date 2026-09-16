@@ -164,6 +164,14 @@ footer {
         display: flex;
         margin: 0;
         align-items: flex-end;
+        // B7 (v0.13): the paragraph carries the copyright's type as well as the
+        // link inside it. Unset, it computed as the browser's system-ui 16px in
+        // near-black, which is what a computed-style check on the credit reads.
+        font-family: $font-serif;
+        font-style: normal;
+        font-size: 0.875rem;
+        line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
+        color: $hof-grey-warm;
 
         a {
           // B7 (v0.12): the credit matches the copyright line exactly, which is
@@ -211,7 +219,9 @@ footer {
       // grey. Roman, not italic, per the serif audit's three roman exceptions.
       .company-name,
       .credit-text,
-      .credit-text a {
+      .credit-text a,
+      .credit,
+      .credit a {
         font-family: $font-serif;
         font-style: normal;
         font-size: 0.875rem;

@@ -64,12 +64,14 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
 }
 
 // B6 (v0.12): the closing paragraph of a masthead statement, in the same serif
-// voice as the opening lead. Shares --statement-lead-colour so a band only ever
-// declares one accent for both ends of the passage.
+// voice as the opening lead.
+//
+// F3 (v0.13): the closer is white. Acid stays for the short lead-in phrases,
+// which are impact moments; a whole paragraph in acid is not.
 .statement-closer {
   font-family: $font-serif;
   font-style: italic;
-  color: var(--statement-lead-colour, #{$hof-acid});
+  color: var(--statement-closer-colour, #{$hof-white});
 }
 
 // Section E's line wrappers. Movement 2 in text-motion.js cuts a statement into
@@ -403,6 +405,29 @@ button.splide__arrow:focus-visible {
     box-shadow: none !important;
   }
 
+  // A2 (v0.13): the blue keyline must not appear on any form, whichever Gravity
+  // Forms style a form was saved with. Its themes can draw focus as a border
+  // colour as well as an outline or shadow, so the field keeps its resting
+  // navy hairline on focus too, and the plugin's own focus colours are pointed
+  // at navy in case anything else reads them.
+  --gf-ctrl-outline-color-focus: #{$hof-navy} !important;
+  --gf-ctrl-border-color-focus: #{$hof-navy} !important;
+  --gf-ctrl-shadow-focus: none !important;
+
+  input:not([type='hidden']):not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='file']):focus,
+  select:focus,
+  textarea:focus {
+    border-color: $hof-navy !important;
+  }
+
+  // F4 (v0.13): placeholder text is navy. Gravity Forms paints it warm grey
+  // at 65% opacity, which read as light grey on the white field.
+  input::placeholder,
+  textarea::placeholder {
+    color: $hof-navy !important;
+    opacity: 1 !important;
+  }
+
   // The ring takes --focus-ring, not a literal navy. The gated report's form
   // sits on the navy gate band, where a navy ring round the white field could
   // not be seen at all; that band is on the dark-ground list, so it gets acid,
@@ -612,8 +637,8 @@ button.splide__arrow:focus-visible {
       box-shadow: none !important;
     }
 
+    // F1 (v0.13): 14px at every width, like every other button label.
     @include media-breakpoint-up(lg) {
-      font-size: 17px !important;
       letter-spacing: 2px !important;
       line-height: 22px !important;
       padding: 11px 28px !important;
