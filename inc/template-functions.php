@@ -311,8 +311,9 @@ function ccg_statement_clause_html( $text ) {
 	}
 
 	// The first sentence, counted outside tags, exactly as the sentence helper
-	// does: a bare /[.?!]/ would stop inside an href.
-	if ( preg_match( '/^((?:[^<.?!]|<[^>]*>)+?[.?!])(\s+)(.*)$/su', $html, $m ) ) {
+	// does: a bare /[.?!]/ would stop inside an href. A line break after the
+	// terminator ends the sentence too, as it does there.
+	if ( preg_match( '/^((?:[^<.?!]|<[^>]*>)+?[.?!])((?:\s|<br\s*\/?>)+)(.*)$/su', $html, $m ) ) {
 		$first     = $m[1];
 		$remainder = $m[2] . $m[3];
 	} else {
@@ -434,6 +435,74 @@ function ccg_more_link_html( $html ) {
 	);
 }
 
+/**
+ * T7: one About masthead beat, cast by what it holds rather than by field name.
+ *
+ * The slider's fields have been filled two ways. The July content puts each
+ * statement in sub_heading and each ethos passage in body. The copy now on live,
+ * which is what the T7 captures show, puts the statement in header with a
+ * supporting paragraph in sub_heading, and each ethos lead sentence in
+ * sub_heading with its continuation in the second-colour field. Keyed to field
+ * names, live's copy came out with its statement as a 72px display word and its
+ * support as the serif statement.
+ *
+ * - A header of four words or more is a statement. Anything shorter is a
+ *   display word ("Connection").
+ * - A statement is Libre Baskerville Regular, and the first beat's is the
+ *   page's one H1. A sub_heading beneath a header statement is the Poppins
+ *   Medium support; with no header, the sub_heading is the statement itself.
+ * - Beneath a display word, sub_heading and its continuation are the ethos lead
+ *   sentence, rendered exactly as body copy already is: serif lead, Poppins
+ *   remainder.
+ *
+ * The July content renders exactly as it did (same elements, classes, text and
+ * layout; only whitespace between tags differs), so this is safe whichever copy
+ * an install holds.
+ */
+function ccg_about_beat_html( $beat, $is_first ) {
+	$field  = function ( $name ) use ( $beat ) {
+		return trim( (string) ( $beat[ $name ] ?? '' ) );
+	};
+	$tag    = $field( 'tag' );
+	$header = $field( 'header' );
+	$sub    = $field( 'sub_heading' );
+	$second = $field( 'sub_heading_2nd_colour' );
+	$body   = $field( 'body' );
+	$rank   = $is_first ? 'h1' : 'h2';
+	$html   = '';
+
+	$header_words = count( preg_split( '/\s+/u', trim( strip_tags( $header ) ), -1, PREG_SPLIT_NO_EMPTY ) );
+	$statement    = '' !== $header && $header_words >= 4;
+
+	if ( '' !== $tag ) {
+		$html .= '<p class="tag">' . $tag . '</p>';
+	}
+
+	if ( $statement ) {
+		$html .= '<' . $rank . ' class="sub-heading">' . $header . '</' . $rank . '>';
+
+		if ( '' !== $sub ) {
+			$html .= '<p class="support">' . trim( $sub . ' ' . $second ) . '</p>';
+		}
+	} elseif ( '' !== $header ) {
+		$html .= '<p class="heading">' . $header . '</p>';
+
+		if ( '' !== $sub ) {
+			$html .= '<h2 class="body"><span class="statement-lead">' . $sub . '</span>' . ( '' !== $second ? ' ' . $second : '' ) . '</h2>';
+		}
+	} elseif ( '' !== $sub && '' !== $second ) {
+		$html .= '<' . $rank . ' class="sub-heading two-color">' . $sub . ' <span>' . $second . '</span></' . $rank . '>';
+	} elseif ( '' !== $sub ) {
+		$html .= '<' . $rank . ' class="sub-heading">' . $sub . '</' . $rank . '>';
+	}
+
+	if ( '' !== $body ) {
+		$html .= '<p class="body">' . ccg_statement_lead_html( $body ) . '</p>';
+	}
+
+	return $html;
+}
+
 function ccg_statement_lead_html( $text ) {
 	$text = trim( (string) $text );
 
@@ -455,7 +524,12 @@ function ccg_statement_lead_html( $text ) {
 	// The end of the first sentence, counted outside tags. A bare /(.+?[.?!])/
 	// would stop at the first full stop inside an href or a class name, so the
 	// alternation steps over any whole tag before it looks for a terminator.
-	$sentence = '/^((?:[^<.?!]|<[^>]*>)+?[.?!])(\s+)(.*)$/su';
+	//
+	// A sentence can end its paragraph, so a line break counts as the gap after
+	// it, not only a space. Live's Careers intro is exactly that: one sentence,
+	// then a new paragraph. Needing a space sent it to the four-word fallback
+	// below, so only "Join one of the" took the serif B2 asks for.
+	$sentence = '/^((?:[^<.?!]|<[^>]*>)+?[.?!])((?:\s|<br\s*\/?>)+)(.*)$/su';
 
 	if ( preg_match( $sentence, $text, $m ) ) {
 		return '<span class="statement-lead">' . $m[1] . '</span>' . $m[2] . $m[3];

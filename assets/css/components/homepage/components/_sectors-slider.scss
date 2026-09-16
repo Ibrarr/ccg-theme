@@ -80,8 +80,11 @@
               line-height: clamp(2.375rem, -0.5139rem + 6.0185vw, 4rem);
             }
 
+            // A7: section 1's "Sub-statement", the 36px line under the 62px
+            // section display, is Poppins Regular. The size was right; the
+            // weight had come across from Circular Medium.
             .sub-heading {
-              font-family: $font-circular-medium;
+              font-family: $font-circular-regular;
               overflow-wrap: break-word;
               font-size: clamp(1.5rem, 0.1667rem + 2.7778vw, 2.25rem);
               line-height: clamp(1.625rem, 0.2917rem + 2.7778vw, 2.375rem);

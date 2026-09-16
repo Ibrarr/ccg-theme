@@ -384,10 +384,10 @@ button.splide__arrow:focus-visible {
 // Three rules, in this order:
 //  1. Nothing is added on a mouse interaction. Bootstrap's reboot and Gravity
 //     Forms both paint their own blue ring on :focus, and A2 asks for the field
-//     to keep its resting look under a pointer. :focus:not(:focus-visible) is
-//     the pointer case exactly.
-//  2. Keyboard focus takes a 1.5px navy ring, so WCAG 2.4.7 is satisfied
-//     without a pointer user ever seeing a change.
+//     to keep its resting look under a pointer. :focus:not(:focus-visible)
+//     covers buttons; text fields need the pointer flag at the end of the block.
+//  2. Keyboard focus takes a 1.5px ring, so WCAG 2.4.7 is satisfied without a
+//     pointer user ever seeing a change.
 //  3. The submit button is the solid primary variant.
 //
 // !important throughout: the orbital theme injects a per-form <style> block
@@ -403,13 +403,31 @@ button.splide__arrow:focus-visible {
     box-shadow: none !important;
   }
 
+  // The ring takes --focus-ring, not a literal navy. The gated report's form
+  // sits on the navy gate band, where a navy ring round the white field could
+  // not be seen at all; that band is on the dark-ground list, so it gets acid,
+  // section 2's ring on dark. The acid contact bands keep navy.
   input:not([type='hidden']):focus-visible,
   select:focus-visible,
   textarea:focus-visible,
   button:focus-visible {
-    outline: 1.5px solid #{$hof-navy} !important;
+    outline: 1.5px solid var(--focus-ring, #{$hof-navy}) !important;
     outline-offset: 2px !important;
     box-shadow: none !important;
+  }
+
+  // Rule 1 alone does not cover a text field. Browsers match :focus-visible on
+  // ANY focus of a control that takes typing, a click included, so the ring
+  // above appeared as soon as anyone clicked into a form. field-focus.js flags
+  // <html> on a pointer press and clears it on Tab, so under the flag the field
+  // keeps its resting look and keyboard focus still gets the ring.
+  html.pointer-focus & {
+    input:not([type='hidden']):focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: none !important;
+      box-shadow: none !important;
+    }
   }
 }
 

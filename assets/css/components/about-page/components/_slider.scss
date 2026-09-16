@@ -185,11 +185,16 @@
 
       // The masthead statement is Libre Baskerville Regular, whole element and
       // no lead-in span, per the T7 row of the type scale.
+      //
+      // A7: that row gives 44-55px, and the clamp ran 32-46, stopping 9px short
+      // at desktop. The ramp is the service name's, the other 44-55 role, with
+      // this band's 32px floor and 36px leading kept so phones do not move.
+      // The tallest beat fills 246px of a 720px pinned panel at 1280x720.
       .sub-heading {
         font-family: $font-serif;
         font-weight: 400;
-        font-size: clamp(2rem, 0.4444rem + 3.2407vw, 2.875rem);
-        line-height: clamp(2.25rem, 0.6944rem + 3.2407vw, 3.125rem);
+        font-size: clamp(2rem, 0.375rem + 4.1667vw, 3.4375rem);
+        line-height: max(2.25rem, 1.1em);
         color: #ffffff;
       }
 
@@ -203,8 +208,8 @@
       .sub-heading.two-color {
         font-family: $font-serif;
         font-weight: 400;
-        font-size: clamp(2rem, 0.4444rem + 3.2407vw, 2.875rem);
-        line-height: clamp(2.25rem, 0.6944rem + 3.2407vw, 3.125rem);
+        font-size: clamp(2rem, 0.375rem + 4.1667vw, 3.4375rem);
+        line-height: max(2.25rem, 1.1em);
         color: $hof-acid;
 
         span {
@@ -214,6 +219,17 @@
 
       .body {
         @include sub-heading-text(#ffffff);
+      }
+
+      // T7 beats 1-2: the supporting paragraph under a statement, Poppins
+      // Medium 30-36px. Only live's current copy has one (a header statement
+      // with a sub_heading beneath it); see ccg_about_beat_html().
+      .support {
+        font-family: $font-circular-medium;
+        font-size: clamp(1.25rem, 0.5795rem + 2.2727vw, 2.25rem);
+        line-height: 1.25;
+        color: $hof-white;
+        margin-bottom: 0;
       }
 
       @include media-breakpoint-up(lg) {
