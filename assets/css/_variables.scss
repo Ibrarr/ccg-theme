@@ -67,11 +67,15 @@ $hof-hairline: rgba(24, 45, 67, 0.15);
   // runtime rather than carrying its own copy.
   //
   // These are HOFFMAN'S OWN NUMBERS, read out of their `all.min.js`, because E1
-  // asks for their move rather than an interpretation of it:
+  // asks for their move rather than an interpretation of it. Their homepage
+  // hero runs
   //
-  //   new SplitText(t, { type: "lines" });
-  //   gsap.from(e.lines, { duration: .5, opacity: 0, x: -50,
-  //                        force3D: true, stagger: .15, delay: .1 });
+  //   gsap.timeline().from(".home-intro-header .main-header",
+  //     { duration: .5, opacity: 0, x: -50, force3D: true, stagger: .15 });
+  //
+  // and their section headings run the same move a tenth of a second later,
+  // on scroll, as `.split-lines-fade`. The delay token is that tenth; the
+  // hero does not use it.
   //
   // The ease is unspecified in their code, so it is GSAP's default, power1.out
   // — a quadratic ease-out. The bezier below is that same curve, so a tween and

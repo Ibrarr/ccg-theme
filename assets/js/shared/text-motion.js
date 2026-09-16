@@ -4,28 +4,32 @@
  *
  * E2 gives two movements and no others:
  *
- *   glide  - the whole phrase slides in ~50px from the left while fading up.
+ *   glide  - the whole phrase slides in 50px from the left while fading up.
  *            One piece, one motion. Every Libre Baskerville italic phrase.
- *   build  - the heading is split and each piece glides in turn, top first, so
- *            the statement assembles rather than appearing at once.
+ *   build  - the text is broken into its rendered lines and each line glides in
+ *            turn, top first, so the statement assembles rather than appearing.
+ *
+ * Both are Hoffman's own move, from their all.min.js. Their homepage hero is
+ *
+ *   gsap.timeline().from(".home-intro-header .main-header",
+ *     { duration: .5, opacity: 0, x: -50, force3D: !0, stagger: .15 });
+ *
+ * and every number in it lives on :root, read below, so the GSAP tweens and the
+ * CSS transitions that use the same tokens cannot drift apart.
  *
  * E6 sets the craft rules these implement:
- *   1. once per visit        - callers pass `once` to their own trigger
- *   2. quick and confident   - a movement is 0.5s, the gap between pieces 0.07s
- *   4. no layout shift       - transform and opacity only, never a layout prop
- *   6. reduced motion        - movement is dropped, a short fade remains
- *   7. whole sentences       - SplitText's `aria: "auto"` keeps the element's
- *                              accessible name intact and hides the pieces
+ *   1. once per visit        - callers decide when to call, and only once
+ *   2. quick and confident   - a movement is 0.5s, lines 0.15s apart
+ *   4. no layout shift       - transform and opacity only, and the lines are
+ *                              cut exactly where the browser already broke them
+ *   6. reduced motion        - the travel is dropped, a short fade remains
+ *   7. whole sentences       - the text stays in the element, in order, and the
+ *                              markup is restored untouched once the lines land
  */
 import { gsap } from 'gsap';
-import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin( SplitText );
-
-// The three numbers come off :root, not out of this file, so the CSS
-// implementation of the glide and this one read the SAME source. E2 asks for
-// the movements to be defined once; two copies of "50px, 500ms" in two
-// languages is how they drift.
+// The numbers come off :root, not out of this file, so the CSS implementation
+// of the glide and this one read the SAME source.
 function token( name, fallback ) {
 	if ( typeof window === 'undefined' ) {
 		return fallback;
@@ -37,30 +41,23 @@ function token( name, fallback ) {
 	return Number.isFinite( value ) ? value : fallback;
 }
 
-// E2: "about 50px to the left of its final position, then slides right into
-// place while fading in" - Hoffman's own house move, taken from their build.
+// E2: "about 50px to the left of its final position". Hoffman's x: -50.
 export const DISTANCE = token( '--text-glide-distance', 50 );
 
-// E6.2: "roughly a third to half a second". Milliseconds in the token, seconds
-// here, because that is the unit each language wants.
+// Hoffman's duration: .5. Milliseconds in the token, seconds here.
 export const DURATION = token( '--text-glide-duration', 500 ) / 1000;
 
-// E6.2: "the gap between lines in a build is a small fraction of that". 70ms is
-// inside the 30-80ms band that keeps a cascade from reading as slow.
-export const STAGGER = token( '--text-build-stagger', 70 ) / 1000;
+// Hoffman's stagger: .15, the gap between one line starting and the next.
+export const STAGGER = token( '--text-build-stagger', 150 ) / 1000;
 
 // Hoffman leave the ease unspecified, so their reveal runs on GSAP's default.
-// Naming it here keeps it explicit and keeps it in step with the bezier on
-// :root, which is the same quadratic curve.
+// Named here to keep it explicit, and in step with the bezier on :root, which
+// is the same quadratic curve.
 export const EASE = 'power1.out';
 
-// Hoffman hold every reveal back by a tenth of a second.
+// The tenth of a second Hoffman's SCROLL reveals wait (`.split-lines-fade`, on
+// their section headings). Their homepage hero does not wait at all.
 export const DELAY = token( '--text-glide-delay', 100 ) / 1000;
-
-// Hoffman split by LINES and nothing else: their `type: "lines"` is the whole
-// of their text system, and a word cascade reads visibly busier than the site
-// this is meant to match. Kept only for a caller that genuinely needs it.
-export const WORD_STAGGER = 0.035;
 
 export function reducedMotion() {
 	return typeof window !== 'undefined'
@@ -70,6 +67,11 @@ export function reducedMotion() {
 
 /**
  * Movement 1. Returns the tween so a caller can place it on a timeline.
+ *
+ * The target must not be display: inline. A CSS transform does nothing to a
+ * non-replaced inline box, so an inline target fades and never travels while
+ * getComputedStyle reports the travel as if it happened. The CTA glide works
+ * because its halves are inline-block.
  */
 export function glide( targets, vars = {} ) {
 	if ( ! targets || ( targets.length === 0 ) ) {
@@ -101,60 +103,239 @@ export function glide( targets, vars = {} ) {
 	);
 }
 
-/**
- * Movement 2. Splits `element` and glides the pieces in turn.
+/*
+ * Movement 2 needs the element's rendered lines, and it cannot get them from
+ * SplitText, for two reasons measured on this theme's markup (GSAP 3.13.0).
  *
- * `type` is "lines" for a display headline and "words" for the homepage hero,
- * which E2 allows explicitly: the hero's remainder shares its first line box
- * with the acid lead-in beside it, so a line split would have to turn that one
- * flowing sentence into stacked blocks and move the layout underneath it.
+ * SplitText's line grouping walks the split element's top-level children and
+ * starts a line where one sits both lower and further left than the last. That
+ * is exact when those children are words. Statements here are coloured spans,
+ * and with two of them it merges pieces of the second: the homepage hero came
+ * out as two line wrappers for three rendered lines.
  *
- * The animation is created inside onSplit and returned from it, which is what
- * lets autoSplit re-split on a font load or a width change without stranding a
- * half-finished tween on elements that no longer exist.
+ * And splitting into words instead does not rescue it. A transform does nothing
+ * to an inline box and 3.13 creates inline spans, so the words have to become
+ * inline-block to move, and an inline-block word loses its kerning against the
+ * spaces either side. The drift builds along the line, about 0.6px a word and
+ * more at glyphs like "A" and "&", and across a 320-1920px sweep in 10px steps
+ * it changed where 9 of 483 statement-widths broke, adding a whole line at 750,
+ * 890 and 960px.
+ *
+ * So the lines are cut where the browser already broke them. Each word's range
+ * reports where it landed; a word lower than the line before starts a new line;
+ * and Range.extractContents() lifts each line out whole. A coloured span that
+ * straddles a line boundary is cloned into both halves by the DOM itself, which
+ * is the slicing SplitText calls deepSlice, and a line that sits wholly inside
+ * one span gets that span rebuilt around it. Each line goes into a block
+ * wrapper, `.tm-line`, so it can move. The text inside a line is still ordinary
+ * inline text, shaped and kerned as it was, which is why nothing shifts.
+ *
+ * A block line cannot reflow, so the lines only exist while they are moving.
+ * When the last line lands, the element's original markup goes back, byte for
+ * byte, and the sentence is free to wrap again on a resize or a late font.
  */
-export function build( element, { type = 'lines', delay = 0, stagger, onDone } = {} ) {
+
+// Original markup, per element, captured before the first cut.
+const pristine = new WeakMap();
+
+// The tween currently moving an element's lines, so a second build can stop it
+// cleanly rather than have its onComplete tear down the new lines mid-flight.
+const running = new WeakMap();
+
+function lineStarts( element ) {
+	const leading = parseFloat( getComputedStyle( element ).lineHeight );
+	// Two words share a line if their tops are within half a line of each
+	// other. Generous against sub-pixel noise and against an italic face and a
+	// roman one sitting side by side, and nowhere near a whole line.
+	const tolerance = Number.isFinite( leading ) ? leading / 2 : 8;
+	const walker = document.createTreeWalker( element, NodeFilter.SHOW_TEXT );
+	const range = document.createRange();
+	const starts = [];
+	let lastTop = null;
+	let node;
+
+	while ( ( node = walker.nextNode() ) ) {
+		const word = /\S+/g;
+		let match;
+
+		while ( ( match = word.exec( node.textContent ) ) ) {
+			range.setStart( node, match.index );
+			range.setEnd( node, match.index + match[ 0 ].length );
+
+			// A word's first box is where it starts, even in the rare case a
+			// very long one has been broken across two lines.
+			const box = range.getClientRects()[ 0 ];
+
+			if ( ! box ) {
+				continue;
+			}
+
+			if ( lastTop === null || ( box.top - lastTop ) > tolerance ) {
+				starts.push( { node, offset: match.index } );
+				lastTop = box.top;
+			}
+		}
+	}
+
+	return starts;
+}
+
+function restore( element ) {
+	const tween = running.get( element );
+
+	if ( tween ) {
+		tween.kill();
+		running.delete( element );
+	}
+
+	if ( pristine.has( element ) && element.querySelector( ':scope > .tm-line' ) ) {
+		element.innerHTML = pristine.get( element );
+	}
+}
+
+// Cut `element` into its rendered lines. Returns the line wrappers.
+function cutLines( element ) {
+	restore( element );
+
+	if ( ! pristine.has( element ) ) {
+		pristine.set( element, element.innerHTML );
+	}
+
+	const starts = lineStarts( element );
+
+	if ( ! starts.length ) {
+		return [];
+	}
+
+	// Lift the lines out last first, so each boundary still names the same
+	// place in the text when its turn comes. The first line takes everything
+	// from the very start of the element, leading whitespace included, and the
+	// last runs to the very end; a block line collapses both.
+	const fragments = [];
+
+	for ( let i = starts.length - 1; i >= 0; i-- ) {
+		const range = document.createRange();
+
+		if ( i === 0 ) {
+			range.setStart( element, 0 );
+		} else {
+			range.setStart( starts[ i ].node, starts[ i ].offset );
+		}
+
+		if ( i === starts.length - 1 ) {
+			range.setEnd( element, element.childNodes.length );
+		} else {
+			range.setEnd( starts[ i + 1 ].node, starts[ i + 1 ].offset );
+		}
+
+		// extractContents() clones the elements a range CROSSES, but not the
+		// ones it sits entirely inside. A middle line of the hero starts and
+		// ends in the same text node, so it came out as bare text with no
+		// `.sub-heading` around it, lost that span's white, took the
+		// statement's navy, and vanished against the navy wash while every
+		// geometry check passed. So rebuild each enclosing element below the
+		// statement, innermost first, around the extracted text.
+		let enclosing = range.commonAncestorContainer;
+
+		if ( enclosing.nodeType !== Node.ELEMENT_NODE ) {
+			enclosing = enclosing.parentNode;
+		}
+
+		let piece = range.extractContents();
+
+		for ( let node = enclosing; node && node !== element; node = node.parentNode ) {
+			const shell = node.cloneNode( false );
+
+			shell.appendChild( piece );
+			piece = shell;
+		}
+
+		fragments.unshift( piece );
+	}
+
+	// What is left is only the emptied shells of spans that were cloned into
+	// the lines.
+	element.textContent = '';
+
+	return fragments.map( ( fragment ) => {
+		const line = document.createElement( 'span' );
+
+		line.className = 'tm-line';
+		line.appendChild( fragment );
+		element.appendChild( line );
+
+		return line;
+	} );
+}
+
+/**
+ * Put an element straight into its finished state, whatever it was doing.
+ * For failsafes: a missed entrance is a small loss, invisible text is not.
+ */
+export function settle( element ) {
+	if ( ! element ) {
+		return;
+	}
+
+	restore( element );
+	gsap.set( element, { opacity: 1 } );
+}
+
+/**
+ * Movement 2. Cuts `element` into its rendered lines and glides them in turn.
+ *
+ * A caller may hide the element beforehand (opacity 0) so it arrives blank;
+ * the build brings it back to 1 in the same frame the lines take their start
+ * positions, so nothing flashes. Descendants are restored from their original
+ * markup when the build lands, so anything holding a reference to a node inside
+ * the element, or a listener bound directly to one, will not survive it. Links
+ * and delegated handlers are unaffected.
+ */
+export function build( element, { delay = 0, stagger = STAGGER, onComplete } = {} ) {
 	if ( ! element ) {
 		return null;
 	}
 
 	if ( reducedMotion() ) {
+		restore( element );
+
 		return gsap.fromTo( element, { opacity: 0 }, {
-			opacity: 1, duration: 0.2, ease: 'none', delay, onComplete: onDone,
+			opacity: 1, duration: 0.2, ease: 'none', delay, onComplete,
 		} );
 	}
 
-	const gap = stagger || ( type === 'words' ? WORD_STAGGER : STAGGER );
+	const lines = cutLines( element );
 
-	return SplitText.create( element, {
-		type,
-		// Spans, not divs: the pieces sit inside a sentence that is still
-		// flowing inline, and a div would break it onto its own line.
-		tag: 'span',
-		// E6.7. "auto" puts the full sentence on the element as an aria-label
-		// and hides the pieces, so the split is visual only and a screen reader
-		// still reads one heading.
-		aria: 'auto',
-		// Libre Baskerville loads async, so a split taken before it arrives
-		// measures the fallback's line breaks. autoSplit re-splits on the font
-		// load and on any width change.
-		autoSplit: true,
-		onSplit( self ) {
-			const pieces = type === 'words' ? self.words : self.lines;
+	if ( ! lines.length ) {
+		settle( element );
 
-			return gsap.fromTo( pieces,
-				{ x: -DISTANCE, opacity: 0 },
-				{
-					x: 0,
-					opacity: 1,
-					duration: DURATION,
-					ease: EASE,
-					force3D: true,
-					stagger: gap,
-					delay,
-					onComplete: onDone,
+		return null;
+	}
+
+	gsap.set( element, { opacity: 1 } );
+
+	const tween = gsap.fromTo( lines,
+		{ x: -DISTANCE, opacity: 0 },
+		{
+			x: 0,
+			opacity: 1,
+			duration: DURATION,
+			ease: EASE,
+			force3D: true,
+			stagger,
+			delay,
+			onComplete() {
+				running.delete( element );
+				restore( element );
+
+				if ( onComplete ) {
+					onComplete();
 				}
-			);
-		},
-	} );
+			},
+		}
+	);
+
+	running.set( element, tween );
+
+	return tween;
 }

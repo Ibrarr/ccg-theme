@@ -40,11 +40,3 @@
  * License  : MIT
  * Copyright: 2022 Naotoshi Fujita
  */
-
-/*!
- * SplitText 3.13.0
- * https://gsap.com
- *
- * @license Copyright 2025, GreenSock. All rights reserved. Subject to the terms at https://gsap.com/standard-license.
- * @author: Jack Doyle
- */

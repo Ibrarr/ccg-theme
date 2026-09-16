@@ -72,6 +72,25 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
   color: var(--statement-lead-colour, #{$hof-acid});
 }
 
+// Section E's line wrappers. Movement 2 in text-motion.js cuts a statement into
+// its rendered lines while they move, and a line has to be a block for two
+// reasons: a transform does nothing to an inline box, and a block line holds
+// exactly the text the browser had already put on that line. The text inside
+// stays ordinary inline text, so it is shaped and kerned exactly as it was.
+// The class only exists mid-entrance, so a page with no JavaScript, and every
+// page at rest, is untouched.
+//
+// nowrap because a line that exactly filled its width in the flowing sentence
+// can measure a fraction of a pixel wider once it is lifted out on its own, and
+// would then break onto a second line mid-flight. Measured on the homepage hero
+// at 890px: 132px of statement became 175.9px. The wrapper holds exactly the
+// words the browser already put on that line, so it must never re-break them;
+// any sub-pixel overhang is invisible and gone when the markup is restored.
+.tm-line {
+  display: block;
+  white-space: nowrap;
+}
+
 // B1 (v0.12): the "Get in touch" heading. The phrase is the serif voice; the
 // rest of the line stays in Poppins. cta-motion.js adds .cta-motion to the
 // heading and .is-in once it scrolls into view, so with no JavaScript both
@@ -106,8 +125,7 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
 
   // "the rest of the paragraph slides in just before 'Get in touch' reaches its
   // end position". The phrase is visually home around 300ms into its 500ms
-  // travel on this curve, so that is where this starts. Deliberately later than
-  // the hero's 180ms, where E3.1 asks for half a beat instead.
+  // travel on this curve, so that is where this starts.
   .cta-rest {
     transform: translate3d(calc(var(--text-glide-distance) * -1), 0, 0);
     transition:

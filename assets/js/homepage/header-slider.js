@@ -1,7 +1,6 @@
 import Splide from '@splidejs/splide';
 import { gsap } from 'gsap';
-import { SplitText } from 'gsap/SplitText';
-import { reducedMotion, DISTANCE, DURATION, EASE, STAGGER, DELAY } from '../shared/text-motion';
+import { build, settle } from '../shared/text-motion';
 
 const headerSlider = new Splide('.header-slider .splide', {
     type: 'loop',
@@ -34,70 +33,42 @@ headerSlider.on('mounted', () => {
 });
 
 /**
- * E3.1, the reference implementation, built to match hoffman.com rather than to
- * interpret it. Their own source, from `all.min.js`:
+ * E3.1, built to match hoffman.com's own hero rather than an interpretation of
+ * it. Their homepage H1 is animated by exactly this, from their all.min.js:
  *
- *   document.querySelectorAll(".split-lines-fade").forEach(t => {
- *     gsap.set(t, { opacity: 1 });
- *     var e = new SplitText(t, { type: "lines" });
- *     gsap.from(e.lines, { duration: .5, opacity: 0, x: -50,
- *                          force3D: !0, stagger: .15, delay: .1 });
- *   });
+ *   gsap.set(".home-intro-header", { opacity: 1 });
+ *   gsap.timeline().from(".home-intro-header .main-header",
+ *     { duration: .5, opacity: 0, x: -50, force3D: !0, stagger: .15 });
  *
- * Every number above now lives on :root and is read through text-motion.js, so
- * this file holds none of its own. The ease is unspecified in their code, which
- * means GSAP's default, power1.out. An earlier build ran a 35ms word cascade on
- * a quartic ease, four times their pace on pieces a quarter the size: it read
- * as a ripple where theirs reads as a cascade, and that is what this corrects.
+ * Each `.main-header` is one line, so each line glides in from 50px to the
+ * left, 0.15s after the one above, on GSAP's default ease, with no delay. That
+ * is movement 2 in text-motion.js, and this file only decides when it runs.
  *
- * The unit of movement is the LINE, as theirs is. It is assembled differently,
- * and for two reasons.
+ * Two earlier builds got this wrong, and both passed their own checks.
  *
- * SplitText's own line wrappers are wrong on this markup. Its line grouping
- * walks the statement's top-level children and starts a new line where one sits
- * both lower and further left than the last. That is exact when the children
- * are words, and this statement's children are two coloured spans: deepSlice
- * cuts `.sub-heading` at the right places, but the grouping then merges two of
- * the pieces into one wrapper, so a "line" holds two visual lines. Measured at
- * 1440: three rendered lines, two wrappers, the first of them 119.6px against a
- * 59.8px leading. A plain-text statement and a statement with ONE nested span
- * both split correctly; the second span is what tips it over.
+ * The first matched Hoffman's `.split-lines-fade` scroll reveal instead of
+ * their hero, so it waited a tenth of a second their hero never waits, and it
+ * split the statement into inline word spans. A transform does nothing to an
+ * inline box: every line faded in on time and not one of them moved. The check
+ * read getComputedStyle, which reports what the tween asked for rather than
+ * what was drawn, so it counted 56 positions while the rendered left edge never
+ * left 84px. Measure movement with getBoundingClientRect or pixels.
  *
- * And a line wrapper is a block, so introducing one restructures a sentence
- * that is currently two inline spans. Splitting into WORDS restructures nothing
- * at all: a word was already an unbreakable unit between two spaces, so the
- * sentence wraps exactly where it did. Measured at 1068, 760 and 420px, the
- * statement's height is identical to the pixel before and after the split.
+ * The second made those words inline-block so they would move, and that cost
+ * their kerning against the spaces either side, which moved where the sentence
+ * broke at 9 of 483 widths. The lines are now cut where the browser already
+ * broke them and put back afterwards; see text-motion.js.
  *
- * So the words are grouped into lines by where they actually landed, and each
- * line's words move together on one beat. Visually that is Hoffman's movement
- * exactly; mechanically it is the same idea done against the rendered result
- * rather than against a guess at it. It also never goes stale: the word spans
- * do not depend on the width or on which face is loaded, so a resize or a late
- * font only changes which line a word is grouped into, and that is recomputed
- * on every play.
- *
- * One consequence to flag, and it is a real divergence from E3.1's wording
- * rather than an oversight. E3.1 asks for the acid italic lead-in to glide in
- * on its own first, with the remainder following half a beat later. Hoffman get
- * that for free because their accent phrase is its own line: their H1 is a stack
- * of `.main-header` divs and the yellow span is the whole of the first one. Our
- * approved hero runs the lead-in and the remainder as ONE flowing serif
- * sentence, per the Figma, so line 1 carries the lead-in and the opening words
- * of the remainder together and the lead-in cannot arrive alone. Matching their
- * move and keeping our layout are mutually exclusive.
+ * One divergence from E3.1's wording, flagged rather than hidden. E3.1 asks for
+ * the acid lead-in to glide in on its own first. Hoffman get that free because
+ * their accent phrase is the whole of their first line. Our approved hero runs
+ * the lead-in inline with the remainder, per the Figma, so line one carries
+ * both and the lead-in does not arrive alone.
  *
  * Client decision, Sept 2026: it replays on every slide change. E6.1's "once
  * per visit" governs a ScrollTrigger re-firing on scroll, not a carousel that
  * is already moving on its own.
  */
-
-// Two words are on the same line if their tops are within this. Generous
-// enough to absorb sub-pixel rounding, far inside the smallest leading the
-// statement ever renders at (32.2px at 375).
-const LINE_TOLERANCE = 6;
-
-const splits = new WeakMap();
 
 function statementOf( slide ) {
 	return slide ? slide.querySelector( '.header-statement' ) : null;
@@ -105,20 +76,24 @@ function statementOf( slide ) {
 
 // The design's separator between the two halves is drawn by CSS, as
 // `.sub-heading:before`, so that it is there whether or not this script runs.
-// A pseudo-element cannot be tweened, though, and a hyphen sitting at full
-// opacity while the line glides in behind it is exactly the seam this is meant
-// to avoid. Once the script is running it becomes a real element instead and
-// travels with its line; `has-motion` stands the pseudo down so the glyph is
-// never drawn twice. It is aria-hidden, and the split has already taken the
-// statement's accessible name off the authored text, so the name never sees it.
-function promoteSeparator( statement ) {
-	const sub = statement.querySelector( '.sub-heading' );
-
-	if ( ! sub ) {
-		return null;
+// Cutting the sentence into lines clones `.sub-heading` into every line it
+// spans, and every clone would draw its own hyphen. So once the script runs the
+// separator becomes one real element and `has-motion` stands the pseudo down.
+// Same characters, same place, still inside the span, so it is shaped exactly
+// as the pseudo was. aria-hidden keeps it out of the heading's accessible name,
+// which reads the authored text.
+function prepare( statement ) {
+	if ( statement.classList.contains( 'has-motion' ) ) {
+		return;
 	}
 
+	const sub = statement.querySelector( '.sub-heading' );
+
 	statement.classList.add( 'has-motion' );
+
+	if ( ! sub ) {
+		return;
+	}
 
 	const separator = document.createElement( 'span' );
 
@@ -126,179 +101,99 @@ function promoteSeparator( statement ) {
 	separator.setAttribute( 'aria-hidden', 'true' );
 	separator.textContent = '- ';
 	sub.insertBefore( separator, sub.firstChild );
-
-	return separator;
 }
 
-function piecesOf( statement ) {
-	if ( ! statement ) {
-		return null;
-	}
-
-	let record = splits.get( statement );
-
-	if ( ! record ) {
-		const split = new SplitText( statement, {
-			type: 'words',
-			// Spans, not SplitText's default div: the statement is an <h1> on
-			// the first slide and a <p> on the rest, and the words sit inside a
-			// sentence that is still flowing inline.
-			tag: 'span',
-			// E6.7: "auto" puts the whole sentence on the element as an
-			// aria-label and hides the pieces, so the split is visual only and
-			// a screen reader still reads one heading. Taken here, before the
-			// separator is promoted, so the name stays exactly as authored.
-			aria: 'auto',
-		} );
-
-		const separator = promoteSeparator( statement );
-
-		record = {
-			split,
-			targets: separator ? [ separator, ...split.words ] : split.words.slice(),
-		};
-
-		splits.set( statement, record );
-	}
-
-	return record.targets;
-}
-
-// Which line each piece ended up on, read off the rendered boxes. Recomputed
-// every time rather than cached, because the answer changes with the width and
-// with which face is loaded, and neither is worth tracking when reading it
-// costs one pass.
-function lineOf( targets ) {
-	const tops = targets.map( ( t ) => t.getBoundingClientRect().top );
-	const bands = [];
-
-	[ ...tops ].sort( ( a, b ) => a - b ).forEach( ( top ) => {
-		if ( ! bands.length || ( top - bands[ bands.length - 1 ] > LINE_TOLERANCE ) ) {
-			bands.push( top );
-		}
-	} );
-
-	return tops.map( ( top ) => {
-		let line = 0;
-
-		bands.forEach( ( band, index ) => {
-			if ( top >= ( band - LINE_TOLERANCE / 2 ) ) {
-				line = index;
-			}
-		} );
-
-		return line;
-	} );
-}
-
-function enter( targets ) {
-	if ( ! targets || ! targets.length ) {
-		return;
-	}
-
-	// E6.6: reduced motion keeps the fade, which still says something arrived,
-	// and drops the travel, which is the part that causes sickness.
-	if ( reducedMotion() ) {
-		gsap.fromTo( targets, { opacity: 0 },
-			{ opacity: 1, duration: 0.2, ease: 'none', delay: DELAY } );
-
-		return;
-	}
-
-	const lines = lineOf( targets );
-
-	gsap.fromTo( targets,
-		{ x: -DISTANCE, opacity: 0 },
-		{
-			x: 0,
-			opacity: 1,
-			duration: DURATION,
-			ease: EASE,
-			force3D: true,
-			delay: DELAY,
-			// A whole line moves on one beat, and the beat is Hoffman's 0.15s.
-			stagger: ( index ) => lines[ index ] * STAGGER,
-		}
-	);
-}
-
-// The slide the reader is actually looking at. With `updateOnMove: true` this
-// class lands on the DESTINATION at the start of a move, which is what lets the
-// incoming slide be hidden before it arrives and animated once it lands.
+// Slides are found by Splide's own index, never by the `is-active` class.
 //
-// Never fall back to slides[0]: in loop mode the DOM order is
-// [clone, clone, real, real, real, clone, clone], so slides[0] is a CLONE. An
-// earlier version fell back to it when `is-active` had not landed yet at mount,
-// animated the clone, and left the real H1 sitting at opacity 0 for the visit.
-function activeSlide() {
-	return document.querySelector( '.header-slider .splide__slide.is-active' );
+// In loop mode a slide and its clones are ALL marked is-active, and the DOM
+// order is [clone, clone, real, real, real, clone, clone], so querySelector
+// returns whichever copy comes first. For slides two and three that is a
+// leading clone, off-screen: the entrance played to nobody while the real slide
+// slid in with its sentence sitting still. And at `move` this handler runs
+// before Splide has moved the class at all, so "the active slide" was still the
+// OUTGOING one, and hiding it blanked the old sentence the instant the carousel
+// started to move. Only slide one ever animated, because its real slide happens
+// to precede its clone. Splide hands both events the new index; use it.
+function slideAt( index ) {
+	const component = headerSlider.Components.Slides.getAt( index );
+
+	return component ? component.slide : null;
 }
 
-// Hide the incoming slide's words so it arrives blank rather than showing its
+// Every copy of a slide: the real one and any loop clone of it. A clone carries
+// the index of the slide it copies as `slideIndex`.
+function copiesOf( index ) {
+	return headerSlider.Components.Slides.get()
+		.filter( ( component ) => component.index === index || component.slideIndex === index )
+		.map( ( component ) => component.slide );
+}
+
+// Hide the incoming statement so it arrives blank rather than showing its
 // finished sentence for the second the transition takes and then snapping back.
+// The build brings it back to full opacity in the frame its lines take their
+// start positions.
 function prime( slide ) {
-	if ( reducedMotion() ) {
-		return;
-	}
+	const statement = statementOf( slide );
 
-	const targets = piecesOf( statementOf( slide ) );
-
-	if ( targets && targets.length ) {
-		gsap.set( targets, { opacity: 0 } );
+	if ( statement ) {
+		prepare( statement );
+		gsap.set( statement, { opacity: 0 } );
 	}
 }
 
 function playSlide( slide ) {
-	enter( piecesOf( statementOf( slide ) ) );
+	const statement = statementOf( slide );
+
+	if ( statement ) {
+		prepare( statement );
+		build( statement );
+	}
 }
 
-// Nothing may be left invisible, whatever happens above. If the slide on screen
-// still has hidden words once the sequence should long since have finished,
-// show them. A missed animation is a small loss; a hero with no heading is not.
+// Nothing may be left invisible, whatever happens above. If the statement on
+// screen, or any line of it, is still hidden once the sequence should long
+// since have finished, put it straight into its finished state.
 function failsafe() {
-	const targets = piecesOf( statementOf( activeSlide() ) );
+	const statement = statementOf( slideAt( headerSlider.index ) );
 
-	if ( ! targets || ! targets.length ) {
+	if ( ! statement ) {
 		return;
 	}
 
-	const hidden = targets.some( ( t ) => parseFloat( getComputedStyle( t ).opacity ) < 0.9 );
+	const pieces = [ statement, ...statement.querySelectorAll( '.tm-line' ) ];
 
-	if ( hidden ) {
-		gsap.set( targets, { opacity: 1, x: 0 } );
+	if ( pieces.some( ( piece ) => parseFloat( getComputedStyle( piece ).opacity ) < 0.9 ) ) {
+		settle( statement );
 	}
 }
 
 headerSlider.on( 'mounted', () => {
-	// Splide sets is-active during mount. If it has not landed on this tick,
-	// wait a frame rather than guessing at a slide.
-	const start = () => {
-		const active = activeSlide();
+	// E6.5: the hero must not sit empty. This runs the moment the carousel
+	// mounts rather than waiting on a scroll or a font.
+	playSlide( slideAt( headerSlider.index ) );
+	setTimeout( failsafe, 2500 );
+} );
 
-		if ( ! active ) {
-			requestAnimationFrame( start );
+// Every copy of the incoming slide is hidden, because which copy the carousel
+// actually brings on screen depends on whether it has to wrap. The outgoing
+// slide is not touched, so its sentence stays put as it leaves.
+headerSlider.on( 'move', ( index ) => {
+	copiesOf( index ).forEach( prime );
+} );
 
-			return;
+// Client decision, Sept 2026: every slide change replays it. Once the move has
+// landed the real slide is the one on screen, so that is the one that builds,
+// and its clones go straight back to visible so no copy is left hidden.
+headerSlider.on( 'moved', ( index ) => {
+	const real = slideAt( index );
+
+	copiesOf( index ).forEach( ( slide ) => {
+		if ( slide !== real ) {
+			settle( statementOf( slide ) );
 		}
+	} );
 
-		// E6.5: the hero must not sit empty. This runs the moment the carousel
-		// mounts rather than waiting on a scroll or a font.
-		playSlide( active );
-		setTimeout( failsafe, 2500 );
-	};
-
-	start();
-} );
-
-// updateOnMove puts is-active on the destination as the move BEGINS, so this
-// hides the incoming slide before the reader sees it.
-headerSlider.on( 'move', () => {
-	prime( activeSlide() );
-} );
-
-// Client decision, Sept 2026: every slide change replays it.
-headerSlider.on( 'moved', () => {
-	playSlide( activeSlide() );
+	playSlide( real );
 	setTimeout( failsafe, 2500 );
 } );
 

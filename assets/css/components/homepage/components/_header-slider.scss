@@ -162,11 +162,12 @@
         }
       }
 
-      // E3.1 promotes the separator above from a pseudo-element to a real one,
-      // because a pseudo cannot be tweened and a hyphen left at full opacity
-      // while its line glides in behind it is a seam. header-slider.js adds
-      // `has-motion` and inserts `.header-sep` in the same breath, so the glyph
-      // is never drawn twice and never missing.
+      // E3.1 promotes the separator above from a pseudo-element to a real one.
+      // The entrance cuts the sentence into its lines, which clones
+      // `.sub-heading` into every line it spans, and each clone would draw its
+      // own hyphen. header-slider.js adds `has-motion` and inserts `.header-sep`
+      // in the same breath, so the glyph is never drawn twice and never
+      // missing. Measured 0px drift against the pseudo it replaces.
       .header-statement.has-motion .sub-heading:before {
         content: none;
       }
