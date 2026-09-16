@@ -127,7 +127,8 @@ html.tm-armed {
   :is(.tax-sector, .tax-service) .why-ccg .statement:not(.tm-owned),
   :is(.tax-sector, .tax-service) .quotes-slider :is(.quote, .author):not(.tm-owned),
   footer .footer-logo svg:not(.tm-owned),
-  :is(.bottom-cta, .contact-form) h3:not(.cta-motion) :is(.cta-phrase, .cta-rest) {
+  :is(.bottom-cta, .contact-form) h3:not(.cta-motion) :is(.cta-phrase, .cta-rest),
+  .bottom-cta .second-row h3:not(.cta-motion):not(:has(.cta-phrase)) {
     opacity: 0;
     animation: tm-failsafe 0s 3s forwards;
   }
@@ -200,6 +201,26 @@ html.tm-armed {
   }
 }
 
+// E4.6: a closing band whose title has no serif phrase ("Contact us" on sixteen
+// service pages) still takes its single glide, as one piece.
+.cta-motion.cta-motion--whole {
+  opacity: 0;
+  transform: translate3d(calc(var(--text-glide-distance) * -1), 0, 0);
+  will-change: transform, opacity;
+  transition:
+    transform var(--text-glide-duration) var(--text-glide-ease),
+    opacity var(--text-glide-duration) var(--text-glide-ease);
+
+  &.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  &.is-settled {
+    will-change: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cta-motion {
     .cta-phrase,
@@ -208,6 +229,12 @@ html.tm-armed {
       transform: none;
       transition: none;
     }
+  }
+
+  .cta-motion.cta-motion--whole {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
@@ -444,11 +471,13 @@ button.splide__arrow:focus-visible {
 .contact-gform-form,
 .insight-reports-form,
 .newsletter-popup-form_wrapper {
+  // The field keeps Gravity Forms' own faint resting shadow on focus rather than
+  // losing it, so a click changes nothing at all. Forms without it get none.
   input:not([type='hidden']):focus:not(:focus-visible),
   select:focus:not(:focus-visible),
   textarea:focus:not(:focus-visible) {
     outline: none !important;
-    box-shadow: none !important;
+    box-shadow: var(--gf-ctrl-shadow, none) !important;
   }
 
   // A2 (v0.13): the blue keyline must not appear on any form, whichever Gravity
@@ -484,7 +513,7 @@ button.splide__arrow:focus-visible {
   button:focus-visible {
     outline: 1.5px solid var(--focus-ring, #{$hof-navy}) !important;
     outline-offset: 2px !important;
-    box-shadow: none !important;
+    box-shadow: var(--gf-ctrl-shadow, none) !important;
   }
 
   // Rule 1 alone does not cover a text field. Browsers match :focus-visible on
@@ -497,7 +526,7 @@ button.splide__arrow:focus-visible {
     select:focus-visible,
     textarea:focus-visible {
       outline: none !important;
-      box-shadow: none !important;
+      box-shadow: var(--gf-ctrl-shadow, none) !important;
     }
   }
 }

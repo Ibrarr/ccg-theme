@@ -70,25 +70,23 @@
     }
 
     function start() {
-        var headings = document.querySelectorAll('.bottom-cta h3:has(.cta-phrase), .contact-form h3:has(.cta-phrase)');
-
-        // :has() is well supported now, but a miss here would silently animate
-        // nothing, so fall back to finding the phrase and walking up one level.
-        if (!headings.length) {
-            var phrases = document.querySelectorAll('.cta-phrase');
-            headings = Array.prototype.map.call(phrases, function (el) {
-                return el.parentElement;
+        // Every closing band's title (E3.4, E4.6), and the contact page's "Get
+        // in touch" heading. A title that opens with the serif phrase moves in
+        // two parts; one without it, like the service pages' "Contact us",
+        // glides as one piece.
+        var headings = Array.prototype.slice.call(document.querySelectorAll('.bottom-cta .second-row h3, .contact-form h3'))
+            .filter(function (heading) {
+                return heading.querySelector('.cta-phrase') || heading.closest('.bottom-cta');
             });
-        }
-
-        headings = Array.prototype.filter.call(headings, function (heading) {
-            return heading && heading.querySelector('.cta-phrase');
-        });
 
         // Take the headings over straight away. .cta-motion is the hidden state,
         // so this replaces the stylesheet's pre-paint hiding without a flash.
         headings.forEach(function (heading) {
             heading.classList.add('cta-motion');
+
+            if (!heading.querySelector('.cta-phrase')) {
+                heading.classList.add('cta-motion--whole');
+            }
         });
 
         var decided = false;

@@ -205,6 +205,15 @@
       &.mail-icon svg path {
         stroke: $hof-navy;
       }
+
+      // The same hover everywhere too: the light-ground interaction accent.
+      &:where(:hover, :focus-visible) svg {
+        fill: var(--interaction-accent, #{$hof-teal});
+      }
+
+      &.mail-icon:where(:hover, :focus-visible) svg path {
+        stroke: var(--interaction-accent, #{$hof-teal});
+      }
     }
 
     .mail-icon svg { width: 22px; height: 17px; }

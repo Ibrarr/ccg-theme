@@ -149,17 +149,5 @@
     }
 
     @include share-icons();
-
-    .social-icons {
-      a {
-        &:where(.linkedin-icon, .x-icon):where(:hover, :focus-visible) svg {
-          fill: var(--interaction-accent);
-        }
-
-        &.mail-icon:where(:hover, :focus-visible) svg path {
-          stroke: var(--interaction-accent);
-        }
-      }
-    }
   }
 }

@@ -13,19 +13,8 @@
     margin-bottom: 12px;
   }
 
-  // F5 (v0.13): the same icon set, size and colour as every other share block.
-  // These were 22x27, 25x25 and 20x20, black, with the mail glyph stroked acid.
+  // F5 (v0.13): the same icon set, size and colour as every other share block,
+  // hover included. These were 22x27, 25x25 and 20x20, black, with the mail
+  // glyph stroked acid, and a violet hover the other blocks did not share.
   @include share-icons();
-
-  .social-icons {
-    a {
-      &:where(.linkedin-icon, .x-icon):where(:hover, :focus-visible) svg {
-        fill: $rd-coral;
-      }
-
-      &.mail-icon:where(:hover, :focus-visible) svg path {
-        stroke: $rd-coral;
-      }
-    }
-  }
 }
