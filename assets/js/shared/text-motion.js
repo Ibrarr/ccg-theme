@@ -211,6 +211,13 @@ const pristine = new WeakMap();
 // cleanly rather than have its onComplete tear down the new lines mid-flight.
 const running = new WeakMap();
 
+// An element's own inline width, held while its lines are cut. A passage that
+// sizes its container (a flex item, like the About page's beats) measures as
+// narrower once its lines cannot wrap, and the container re-centred sideways
+// for the length of the entrance: a layout shift of 0.017 at 375px. Holding the
+// element at the width it already had keeps everything around it still.
+const heldWidth = new WeakMap();
+
 function lineStarts( element ) {
 	const leading = parseFloat( getComputedStyle( element ).lineHeight );
 	// Two words share a line if their tops are within half a line of each
@@ -231,9 +238,9 @@ function lineStarts( element ) {
 			range.setStart( node, match.index );
 			range.setEnd( node, match.index + match[ 0 ].length );
 
-			// A word's first box is where it starts, even in the rare case a
-			// very long one has been broken across two lines.
-			const box = range.getClientRects()[ 0 ];
+			// A word's first box is where it starts.
+			const boxes = range.getClientRects();
+			const box = boxes[ 0 ];
 
 			if ( ! box ) {
 				continue;
@@ -242,6 +249,25 @@ function lineStarts( element ) {
 			if ( lastTop === null || ( box.top - lastTop ) > tolerance ) {
 				starts.push( { node, offset: match.index } );
 				lastTop = box.top;
+			}
+
+			// But a word can itself be broken across lines: "ultra-competitive"
+			// wraps after its hyphen, and overflow-wrap splits anything too long for
+			// its column. Missing that merged two lines into one wrapper, and a
+			// nowrap line holding two lines' worth of text overflowed its box. So
+			// find the character the next line starts on, and start a line there.
+			if ( boxes.length > 1 && ( boxes[ boxes.length - 1 ].top - box.top ) > tolerance ) {
+				for ( let i = match.index + 1; i < match.index + match[ 0 ].length; i++ ) {
+					range.setStart( node, i );
+					range.setEnd( node, i + 1 );
+
+					const glyph = range.getClientRects()[ 0 ];
+
+					if ( glyph && ( glyph.top - lastTop ) > tolerance ) {
+						starts.push( { node, offset: i } );
+						lastTop = glyph.top;
+					}
+				}
 			}
 		}
 	}
@@ -260,6 +286,11 @@ function restore( element ) {
 	if ( pristine.has( element ) && element.querySelector( ':scope > .tm-line' ) ) {
 		element.innerHTML = pristine.get( element );
 	}
+
+	if ( heldWidth.has( element ) ) {
+		element.style.width = heldWidth.get( element );
+		heldWidth.delete( element );
+	}
 }
 
 // Cut `element` into its rendered lines. Returns the line wrappers.
@@ -275,6 +306,9 @@ function cutLines( element ) {
 	if ( ! starts.length ) {
 		return [];
 	}
+
+	heldWidth.set( element, element.style.width );
+	element.style.width = `${ element.getBoundingClientRect().width }px`;
 
 	// Lift the lines out last first, so each boundary still names the same
 	// place in the text when its turn comes. The first line takes everything
@@ -326,10 +360,19 @@ function cutLines( element ) {
 	// the lines.
 	element.textContent = '';
 
-	return fragments.map( ( fragment ) => {
-		const line = document.createElement( 'span' );
+	// A centred line that measures a fraction wider on its own than it did in the
+	// flow cannot stay centred: an overflowing line starts at the left edge, so
+	// at 375px a whole line of the homepage About statement jumped 20px left.
+	// Centred lines are given room either side, which keeps their centre.
+	const centred = getComputedStyle( element ).textAlign === 'center';
 
-		line.className = 'tm-line';
+	return fragments.map( ( fragment ) => {
+		// A custom element rather than a span: editor bands style their own spans
+		// (the homepage About statement paints every span acid serif), and a span
+		// wrapper would take that styling and reflow the passage mid-flight.
+		const line = document.createElement( 'tm-line' );
+
+		line.className = centred ? 'tm-line tm-line--centred' : 'tm-line';
 		line.appendChild( fragment );
 		element.appendChild( line );
 
@@ -407,4 +450,330 @@ export function build( element, { delay = 0, stagger = STAGGER, onComplete } = {
 	running.set( element, tween );
 
 	return tween;
+}
+
+/*
+ * The addendum's choreographies are all this one shape: a passage cut into its
+ * rendered lines, with a serif phrase inside it that moves as one piece, either
+ * before the rest (E3.1's lead-in, E4.1's lead phrase) or after it (E3.2's
+ * closing phrase, E3.5's third paragraph). E6.3 is the reason the phrase is
+ * held together: serif phrases always glide whole.
+ */
+
+// Half a beat: the lead-in is halfway home when the rest of the sentence sets
+// off, so it is plainly first without the sentence waiting on it (E3.1).
+export const HALF_BEAT = DURATION / 2;
+
+// A beat: a follower sets off as the piece before it lands (E4.3's attribution).
+export const BEAT = DURATION;
+
+// Split a cut line into the phrase and the rest. A line that is all phrase or
+// all rest moves as itself. Only a line holding both is divided, into
+// inline-blocks, because an inline box cannot be transformed; the spaces and
+// breaks between the pieces stay outside them, so the words sit where they did.
+function partsOf( line, phrase ) {
+	const isPhrase = ( node ) => node.nodeType === Node.ELEMENT_NODE && node.matches( phrase );
+	// Cutting leaves the emptied shell of any span a line boundary fell inside:
+	// a paragraph that opens with the phrase leaves an empty copy of the phrase's
+	// span at the end of the line before. A shell holds nothing to move, and
+	// wrapped in an inline-block it would open a line of its own, so shells stay
+	// where they are, like breaks.
+	const holdsText = ( node ) => node.textContent.trim() !== '';
+	const nodes = [ ...line.childNodes ];
+	const meaningful = nodes.filter( ( node ) => (
+		node.nodeType === Node.ELEMENT_NODE ? node.tagName !== 'BR' && holdsText( node ) : holdsText( node )
+	) );
+	const phraseCount = meaningful.filter( isPhrase ).length;
+
+	if ( phraseCount === 0 ) {
+		return [ { el: line, phrase: false } ];
+	}
+
+	if ( phraseCount === meaningful.length ) {
+		return [ { el: line, phrase: true } ];
+	}
+
+	const pieces = [];
+	let current = null;
+
+	const open = ( isPhrasePiece, before ) => {
+		const el = document.createElement( 'tm-part' );
+
+		el.className = 'tm-part';
+		line.insertBefore( el, before );
+		current = { el, phrase: isPhrasePiece };
+		pieces.push( current );
+	};
+
+	nodes.forEach( ( node ) => {
+		if ( node.nodeType === Node.TEXT_NODE ) {
+			const [ , lead, core, trail ] = node.textContent.match( /^(\s*)([\s\S]*?)(\s*)$/ );
+
+			if ( core === '' ) {
+				current = null;
+				return;
+			}
+
+			if ( lead ) {
+				line.insertBefore( document.createTextNode( lead ), node );
+				current = null;
+			}
+
+			if ( ! current || current.phrase ) {
+				open( false, node );
+			}
+
+			current.el.appendChild( document.createTextNode( core ) );
+
+			if ( trail ) {
+				line.insertBefore( document.createTextNode( trail ), node );
+				current = null;
+			}
+
+			node.remove();
+			return;
+		}
+
+		// A break stays in the line itself. Inside an inline-block its empty line
+		// would become the block's baseline and lift the text a whole line.
+		if ( node.nodeType !== Node.ELEMENT_NODE || node.tagName === 'BR' || ! holdsText( node ) ) {
+			current = null;
+			return;
+		}
+
+		const isPhrasePiece = isPhrase( node );
+
+		if ( ! current || current.phrase !== isPhrasePiece ) {
+			open( isPhrasePiece, node );
+		}
+
+		current.el.appendChild( node );
+	} );
+
+	return pieces;
+}
+
+/**
+ * Movement 2 with a voice change. Returns { timeline, lastStart }, lastStart
+ * being when the final piece sets off, so a caller can cascade the next element
+ * from it.
+ *
+ *   phrase  selector for the serif phrase that moves whole. Optional.
+ *   order   'first': the phrase glides, the rest follows half a beat later.
+ *           'last':  the rest arrives, then the phrase lands a stagger behind.
+ *   rest    'build': the rest arrives line by line.
+ *           'glide': the rest arrives as one piece.
+ */
+export function sequence( element, { phrase = null, order = 'first', rest = 'build', delay = 0, onComplete } = {} ) {
+	if ( ! element ) {
+		return null;
+	}
+
+	if ( reducedMotion() ) {
+		restore( element );
+
+		const timeline = gsap.fromTo( element, { opacity: 0 }, {
+			opacity: 1, duration: FADE_DURATION, ease: FADE_EASE, delay, onComplete,
+		} );
+
+		return { timeline, lastStart: delay };
+	}
+
+	const hasPhrase = Boolean( phrase && element.querySelector( phrase ) );
+
+	// Nothing to hold back and nothing to build: the passage is one piece, and a
+	// block can simply glide.
+	if ( ! hasPhrase && rest === 'glide' && getComputedStyle( element ).display !== 'inline' ) {
+		restore( element );
+		gsap.set( element, { opacity: 1 } );
+
+		return { timeline: glide( element, { delay, onComplete } ), lastStart: delay };
+	}
+
+	const lines = cutLines( element );
+
+	if ( ! lines.length ) {
+		settle( element );
+
+		return null;
+	}
+
+	const phrasePieces = [];
+	const restLines = [];
+
+	lines.forEach( ( line ) => {
+		const parts = hasPhrase ? partsOf( line, phrase ) : [ { el: line, phrase: false } ];
+		const restHere = parts.filter( ( part ) => ! part.phrase ).map( ( part ) => part.el );
+
+		parts.filter( ( part ) => part.phrase ).forEach( ( part ) => phrasePieces.push( part.el ) );
+
+		if ( restHere.length ) {
+			restLines.push( restHere );
+		}
+	} );
+
+	const hidden = { x: -DISTANCE, opacity: 0 };
+	const home = { x: 0, opacity: 1, duration: DURATION, ease: EASE, force3D: true };
+
+	// The pieces take their start positions in the same frame the element comes
+	// back to full opacity, so nothing flashes.
+	gsap.set( [ ...phrasePieces, ...restLines.flat() ], hidden );
+	gsap.set( element, { opacity: 1 } );
+
+	const timeline = gsap.timeline( {
+		delay,
+		onComplete() {
+			running.delete( element );
+			restore( element );
+
+			if ( onComplete ) {
+				onComplete();
+			}
+		},
+	} );
+
+	const phraseFirst = phrasePieces.length && order === 'first';
+	const restStart = phraseFirst ? HALF_BEAT : 0;
+	let lastStart = 0;
+
+	if ( phraseFirst ) {
+		timeline.to( phrasePieces, home, 0 );
+	}
+
+	restLines.forEach( ( pieces, index ) => {
+		const at = restStart + ( rest === 'build' ? index * STAGGER : 0 );
+
+		timeline.to( pieces, home, at );
+		lastStart = Math.max( lastStart, at );
+	} );
+
+	if ( phrasePieces.length && ! phraseFirst ) {
+		const at = restLines.length ? lastStart + STAGGER : 0;
+
+		timeline.to( phrasePieces, home, at );
+		lastStart = Math.max( lastStart, at );
+	}
+
+	running.set( element, timeline );
+
+	return { timeline, lastStart: delay + lastStart };
+}
+
+/**
+ * Runs several elements as one cascade: each sets off a stagger after the last
+ * piece of the one before it, so a title and its paragraph read as one thing
+ * being set rather than two animations. Each step is { element, run( at ) },
+ * where run returns what sequence() returns.
+ */
+export function cascade( steps, { delay = 0 } = {} ) {
+	let at = delay;
+
+	steps.forEach( ( step ) => {
+		if ( ! step || ! step.element ) {
+			return;
+		}
+
+		const handle = step.run( at );
+
+		if ( handle ) {
+			at = handle.lastStart + ( step.gap !== undefined ? step.gap : STAGGER );
+		}
+	} );
+
+	return at;
+}
+
+/**
+ * For entrances further down the page (E3.2, E4.1, E4.3, E4.5, F2).
+ *
+ * When motion is armed the stylesheet hides these before the first paint, so
+ * nothing can show and then vanish. This takes them over: they stay hidden
+ * until they reach the reveal line, and play once, the first time they do.
+ *
+ * The decision waits for the page to finish loading. Measured at parse time,
+ * the Our News "Get in touch" heading sat at 719px, on a 900px screen, because
+ * the news tiles above it had not loaded; at load it sat at 2494px. Deciding
+ * early played it off screen before anyone scrolled to it. The wait is capped,
+ * so a slow image cannot hold text back for long.
+ *
+ * ScrollTrigger is passed in by the caller so this module does not register the
+ * plugin twice in bundles that already do.
+ */
+export function onReveal( ScrollTrigger, trigger, targets, play, { line = 0.85 } = {} ) {
+	const list = ( Array.isArray( targets ) ? targets : [ targets ] ).filter( Boolean );
+
+	if ( ! trigger || ! list.length ) {
+		return;
+	}
+
+	const armed = document.documentElement.classList.contains( 'tm-armed' );
+
+	if ( ! armed || reducedMotion() ) {
+		// Nothing was hidden, so there is nothing to take over and nothing moves.
+		list.forEach( ( el ) => el.classList.add( 'tm-owned' ) );
+
+		return;
+	}
+
+	// Hidden inline first, then released from the stylesheet's rule, in the same
+	// frame, so the elements never show in between.
+	gsap.set( list, { opacity: 0 } );
+	list.forEach( ( el ) => el.classList.add( 'tm-owned' ) );
+
+	let played = false;
+
+	const go = () => {
+		if ( played ) {
+			return;
+		}
+
+		played = true;
+		play();
+	};
+
+	const decide = () => {
+		if ( played ) {
+			return;
+		}
+
+		if ( trigger.getBoundingClientRect().top < window.innerHeight * line ) {
+			go();
+
+			return;
+		}
+
+		ScrollTrigger.create( { trigger, start: `top ${ Math.round( line * 100 ) }%`, once: true, onEnter: go } );
+
+		// Near the foot of a short page an element can never reach its start
+		// line, so reaching the bottom of the page plays anything still waiting.
+		ScrollTrigger.create( {
+			trigger: document.documentElement,
+			start: 'bottom bottom',
+			once: true,
+			onEnter: go,
+		} );
+	};
+
+	whenSettled( decide );
+}
+
+// Runs `callback` once the page has loaded, or after 2.5s, whichever is first.
+export function whenSettled( callback ) {
+	let done = false;
+
+	const run = () => {
+		if ( ! done ) {
+			done = true;
+			callback();
+		}
+	};
+
+	if ( document.readyState === 'complete' ) {
+		run();
+
+		return;
+	}
+
+	window.addEventListener( 'load', run, { once: true } );
+	setTimeout( run, 2500 );
 }

@@ -1,6 +1,6 @@
 import Splide from '@splidejs/splide';
 import { gsap } from 'gsap';
-import { build, settle } from '../shared/text-motion';
+import { sequence, settle } from '../shared/text-motion';
 
 const headerSlider = new Splide('.header-slider .splide', {
     type: 'loop',
@@ -59,11 +59,13 @@ headerSlider.on('mounted', () => {
  * broke at 9 of 483 widths. The lines are now cut where the browser already
  * broke them and put back afterwards; see text-motion.js.
  *
- * One divergence from E3.1's wording, flagged rather than hidden. E3.1 asks for
- * the acid lead-in to glide in on its own first. Hoffman get that free because
- * their accent phrase is the whole of their first line. Our approved hero runs
- * the lead-in inline with the remainder, per the Figma, so line one carries
- * both and the lead-in does not arrive alone.
+ * E3.1 also asks for the acid lead-in to glide in on its own first, with the
+ * rest of the sentence building beneath it half a beat later. Hoffman get that
+ * free because their accent phrase is the whole of their first line. Ours runs
+ * inline with the remainder, per the Figma, so the line it shares is divided:
+ * the lead-in moves whole (E6.3 never splits a serif phrase), and the rest of
+ * that line and every line below build in turn. See sequence() in
+ * text-motion.js.
  *
  * Client decision, Sept 2026: it replays on every slide change. E6.1's "once
  * per visit" governs a ScrollTrigger re-firing on scroll, not a carousel that
@@ -146,7 +148,7 @@ function playSlide( slide ) {
 
 	if ( statement ) {
 		prepare( statement );
-		build( statement );
+		sequence( statement, { phrase: '.heading', order: 'first', rest: 'build' } );
 	}
 }
 
@@ -160,7 +162,7 @@ function failsafe() {
 		return;
 	}
 
-	const pieces = [ statement, ...statement.querySelectorAll( '.tm-line' ) ];
+	const pieces = [ statement, ...statement.querySelectorAll( '.tm-line, .tm-part' ) ];
 
 	if ( pieces.some( ( piece ) => parseFloat( getComputedStyle( piece ).opacity ) < 0.9 ) ) {
 		settle( statement );

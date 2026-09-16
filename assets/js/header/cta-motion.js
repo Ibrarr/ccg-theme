@@ -8,13 +8,16 @@
  *
  * Three rules this file keeps, and the reason each one matters here:
  *
- *  1. Nothing is hidden in CSS. The resting styles are the finished heading;
- *     the `.cta-motion` class that introduces the hidden state is added by this
- *     script, so a page with no JavaScript is complete and the first frame is
- *     never blank.
- *  2. Only headings BELOW the fold are hidden. Anything already on screen when
- *     the script runs is left alone, which keeps the LCP untouched and means a
- *     reader never watches content they can already see animate itself in.
+ *  1. A page with no JavaScript is complete. The pieces are hidden before the
+ *     first paint only when the head has armed motion (`tm-armed`, which reduced
+ *     motion and no-JS never get), and the stylesheet shows them after three
+ *     seconds if this script never runs.
+ *  2. The decision waits for the page to load. Our News measured the heading at
+ *     719px on a 900px screen at parse time, because the tiles above it had not
+ *     loaded, and at 2494px once they had. Deciding at parse time called it
+ *     "already on screen", left it finished, and it never animated. A heading
+ *     that really is on screen at load plays at once; the rest play when they
+ *     scroll into view.
  *  3. prefers-reduced-motion stands the whole thing down before it touches the
  *     DOM, with a CSS block behind it for anyone who changes the setting later.
  *
@@ -55,6 +58,17 @@
         heading.addEventListener('transitioncancel', check);
     }
 
+    function reveal(heading) {
+        if (heading.classList.contains('is-in')) {
+            return;
+        }
+        // Read a layout value first so the hidden state is applied before the
+        // transition target, or the browser would skip straight to the end.
+        void heading.offsetWidth;
+        heading.classList.add('is-in');
+        settleWhenStill(heading);
+    }
+
     function start() {
         var headings = document.querySelectorAll('.bottom-cta h3:has(.cta-phrase), .contact-form h3:has(.cta-phrase)');
 
@@ -67,30 +81,50 @@
             });
         }
 
+        headings = Array.prototype.filter.call(headings, function (heading) {
+            return heading && heading.querySelector('.cta-phrase');
+        });
+
+        // Take the headings over straight away. .cta-motion is the hidden state,
+        // so this replaces the stylesheet's pre-paint hiding without a flash.
+        headings.forEach(function (heading) {
+            heading.classList.add('cta-motion');
+        });
+
+        var decided = false;
         var observer = new IntersectionObserver(function (entries) {
+            if (!decided) {
+                return;
+            }
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) {
                     return;
                 }
-                entry.target.classList.add('is-in');
                 observer.unobserve(entry.target);
-                settleWhenStill(entry.target);
+                reveal(entry.target);
             });
-        }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
+        }, { rootMargin: '0px 0px -15% 0px', threshold: 0 });
 
-        Array.prototype.forEach.call(headings, function (heading) {
-            if (!heading || !heading.querySelector('.cta-phrase')) {
+        function decide() {
+            if (decided) {
                 return;
             }
+            decided = true;
+            headings.forEach(function (heading) {
+                if (heading.getBoundingClientRect().top < window.innerHeight * 0.85) {
+                    reveal(heading);
+                } else {
+                    observer.observe(heading);
+                }
+            });
+        }
 
-            // Already on screen: leave it finished.
-            if (heading.getBoundingClientRect().top < window.innerHeight) {
-                return;
-            }
-
-            heading.classList.add('cta-motion');
-            observer.observe(heading);
-        });
+        if (document.readyState === 'complete') {
+            decide();
+        } else {
+            window.addEventListener('load', decide, { once: true });
+            setTimeout(decide, 2500);
+        }
     }
 
     if (document.readyState === 'loading') {

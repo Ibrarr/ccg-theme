@@ -141,3 +141,17 @@ function ccg_preload_fonts() {
 		);
 	}
 }
+
+/**
+ * Section E, E6.5: text at the top of a page glides in as the page loads (the
+ * E3.5 mastheads, the E4.2 sector and service statements, the E4.4
+ * standfirsts). It has to be hidden before the first paint, or the finished
+ * text shows for a frame and then vanishes to animate. The flag is set here in
+ * the head, and only when the visitor has not asked for reduced motion. With no
+ * JavaScript it is never set, so the page is complete; and the stylesheet shows
+ * anything still hidden after three seconds, in case a script never runs.
+ */
+add_action( 'wp_head', 'ccg_text_motion_prepaint', 1 );
+function ccg_text_motion_prepaint() {
+	echo '<script>if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.classList.add("tm-armed");}</script>' . "\n";
+}

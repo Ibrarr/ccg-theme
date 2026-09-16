@@ -93,6 +93,52 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
   white-space: nowrap;
 }
 
+// When a serif phrase shares a line with the rest of its sentence, the line is
+// divided so the phrase can move whole (E6.3). Each piece has to be an
+// inline-block to be transformable. Like the lines, they only exist mid-entrance.
+.tm-part {
+  display: inline-block;
+}
+
+.tm-line--centred {
+  margin-inline: -2em;
+}
+
+// E6.5: the passages at the top of a page that glide in on load are hidden
+// before the first paint, and only when the head armed motion, so a page with
+// no JavaScript or with reduced motion shows them as they are. If a script
+// never runs, the fallback animation shows them after three seconds.
+html.tm-armed {
+  :is(.post-type-archive-insight, .post-type-archive-work, .post-type-archive-news) .archive-header :is(h1.title, .intro .statement),
+  .page-template-page-awards .awards-header :is(h1.title, .intro .statement),
+  .page-template-page-careers .careers-header :is(h1.title, .intro .statement),
+  :is(.tax-sector, .tax-service) .term-header .intro .statement,
+  :is(.single-post, .single-insight, .single-work) .intro .statement,
+  .single-insight .report-standfirst {
+    opacity: 0;
+    animation: tm-failsafe 0s 3s forwards;
+  }
+
+  // The scroll entrances, hidden the same way until their script takes them
+  // over (`tm-owned`), so one already on screen at load cannot flash. The "Get
+  // in touch" pieces hand over to .cta-motion instead.
+  .home section.intro .statement:not(.tm-owned),
+  .home .about-ccg .container > p:not(.tm-owned),
+  :is(.tax-sector, .tax-service) .why-ccg .statement:not(.tm-owned),
+  :is(.tax-sector, .tax-service) .quotes-slider :is(.quote, .author):not(.tm-owned),
+  footer .footer-logo svg:not(.tm-owned),
+  :is(.bottom-cta, .contact-form) h3:not(.cta-motion) :is(.cta-phrase, .cta-rest) {
+    opacity: 0;
+    animation: tm-failsafe 0s 3s forwards;
+  }
+}
+
+@keyframes tm-failsafe {
+  to {
+    opacity: 1;
+  }
+}
+
 // B1 (v0.12): the "Get in touch" heading. The phrase is the serif voice; the
 // rest of the line stays in Poppins. cta-motion.js adds .cta-motion to the
 // heading and .is-in once it scrolls into view, so with no JavaScript both
