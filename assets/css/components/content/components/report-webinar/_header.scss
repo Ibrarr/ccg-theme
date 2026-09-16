@@ -6,6 +6,10 @@
   background-position: center;
   background-repeat: no-repeat;
 
+  // The webinar keeps a photographic masthead, so it takes section 2's one
+  // wash recipe, navy at 70%, like every other text-bearing photograph on the
+  // site. It was a 50% black scrim. The report removes the photograph and
+  // this wash entirely (C6, _insight-report.scss).
   &:after {
     content: '';
     position: absolute;
@@ -13,14 +17,17 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(24, 45, 67, 0.7);
   }
 
   .header-content {
     z-index: 1;
 
     p.term {
-      @include term($ccg-orange);
+      // Acid on the washed dark ground (section 1). It came from $ccg-orange,
+      // navy since the reskin, and read at about 2:1 on the photograph: the
+      // fault C6 fixed on the report, still live on the webinar.
+      @include term($hof-acid);
     }
 
     h1.title {
@@ -39,7 +46,7 @@
         line-height: 1.5;
 
         a {
-          color: $ccg-green;
+          color: $hof-acid;
           position: relative;
 
           // Section 5, rule 2: the underline draws in on transform, which the
@@ -52,7 +59,7 @@
             right: 0;
             bottom: 0;
             height: 1px;
-            background-color: $ccg-orange;
+            background-color: $hof-acid;
             transform: scaleX(0);
             transform-origin: left center;
             transition: transform 350ms ease-out;

@@ -22,7 +22,9 @@
   }
 
   p.term {
-    @include term($ccg-orange);
+    // A9: eyebrows on light grounds are deep violet. This one still came from
+    // $ccg-orange, which is navy by design, so it matched the H1 beneath it.
+    @include term($hof-violet-deep);
   }
 
   .parent-term {

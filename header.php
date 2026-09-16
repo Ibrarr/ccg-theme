@@ -197,7 +197,7 @@
                                                 <a href="tel:<?php the_field( 'ccg_phone', 'option' ) ?>"><?php the_field( 'ccg_phone', 'option' ) ?></a>
                                             </p>
                                         </div>
-                                        <div class="col-md-5 col-6 d-flex align-items-end">
+                                        <div class="col-md-5 col-6 d-flex align-items-end info-menu-slot">
 											<?php wp_nav_menu( array(
 												'theme_location' => 'info-menu',
 											) ); ?>
@@ -308,7 +308,7 @@
                                                 <a href="tel:<?php the_field( 'ccg_phone', 'option' ) ?>"><?php the_field( 'ccg_phone', 'option' ) ?></a>
                                             </p>
                                         </div>
-                                        <div class="col-md-5 col-6 d-flex align-items-end">
+                                        <div class="col-md-5 col-6 d-flex align-items-end info-menu-slot">
 											<?php wp_nav_menu( array(
 												'theme_location' => 'info-menu',
 											) ); ?>

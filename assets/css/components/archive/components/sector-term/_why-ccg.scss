@@ -38,9 +38,12 @@
   // so it was never a page heading. Demoted to h2.kicker; the styling is
   // unchanged and the big serif statement below is scoped off it.
   .kicker {
-    font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
-    font-family: $font-circular-medium;
-    color: #fff;
+    // A7 sweeps every type role against section 1, and T4/T5 cast "Why choose
+    // CCGroup?" in the eyebrow role: Poppins SemiBold letter-spaced caps, acid
+    // on the washed dark ground. It had been white sentence case at 20-28px
+    // since before the reskin.
+    @include term($hof-acid);
+    letter-spacing: 1.5px;
     margin-bottom: 20px;
   }
 

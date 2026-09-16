@@ -1,8 +1,11 @@
 .post-content {
   position: relative;
   
+  // A3: headings over long runs of navy body copy on a light ground take the
+  // editorial teal. The shared content component already does this for blog
+  // and article bodies; the report and webinar bodies render here instead.
   .content-heading {
-    @include sub-heading-text($ccg-dark-green);
+    @include sub-heading-text(var(--body-heading, #{$hof-teal}));
     font-family: $font-circular-medium;
   }
 
@@ -16,7 +19,7 @@
 
   .points-section {
     h3 {
-      @include sub-heading-text($ccg-orange);
+      @include sub-heading-text(var(--body-heading, #{$hof-teal}));
       font-family: $font-circular-medium;
     }
 

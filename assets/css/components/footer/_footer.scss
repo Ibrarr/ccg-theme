@@ -39,11 +39,11 @@ footer {
     }
 
     a {
-      // B7: the credit matches the copyright line.
+      // B7: the credit matches the copyright line, 14px, at every width.
       font-family: $font-serif;
       font-style: normal;
       text-decoration: none;
-      font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+      font-size: 0.875rem;
       line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
       color: $hof-grey-warm;
       transition: $ccg-transition-all;
@@ -167,12 +167,13 @@ footer {
 
         a {
           // B7 (v0.12): the credit matches the copyright line exactly, which is
-          // Libre Baskerville Regular 14px.
+          // Libre Baskerville Regular 14px. A clamp on the line below used to
+          // override the 14px, so the credit rendered 16px beside a 14px
+          // copyright. The leading is the copyright's own clamp.
           font-family: $font-serif;
           font-style: normal;
           font-size: 0.875rem;
           text-decoration: none;
-          font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
           line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
           color: $hof-grey-warm;
           transition: $ccg-transition-all;

@@ -22,7 +22,11 @@
     text-decoration: none;
   }
 
-  .menu-info-menu-container {
+  // Keyed to the slot the info menu renders into, not to WordPress's
+  // `menu-{slug}-container` class. That class only exists when a menu with the
+  // slug "info-menu" is assigned, so on an install with a different slug, or
+  // none, B7's serif legal links silently fell back to Poppins.
+  .info-menu-slot > div {
     width: 100%;
 
     ul {
