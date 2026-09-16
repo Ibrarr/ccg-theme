@@ -174,18 +174,50 @@ headerSlider.on( 'mounted', () => {
 	setTimeout( failsafe, 2500 );
 } );
 
+// The new sentence starts building before its slide has quite landed.
+//
+// Waiting for `moved` left the hero with no readable text for 592ms at 1440 and
+// about 445ms at 375 on every slide change: the outgoing sentence has left the
+// screen 575ms into the 1000ms slide, and the incoming one stayed hidden until
+// the slide stopped. Client decision, Sept 2026: keep the replay and start it
+// earlier. At 85% of the slide's time the carousel's ease-in-out has 19px of
+// travel left at 1440 and 5px at 375, so the lines begin their glide right while
+// the slide is all but still. Taken from Splide's live options, so an instant
+// move under reduced motion starts the build at once.
+const BUILD_AT = 0.85;
+
+let pendingBuild = null;
+
 // Every copy of the incoming slide is hidden, because which copy the carousel
 // actually brings on screen depends on whether it has to wrap. The outgoing
 // slide is not touched, so its sentence stays put as it leaves.
 headerSlider.on( 'move', ( index ) => {
 	copiesOf( index ).forEach( prime );
+
+	clearTimeout( pendingBuild );
+	pendingBuild = setTimeout( () => {
+		pendingBuild = null;
+		playSlide( slideAt( index ) );
+	}, ( headerSlider.options.speed || 0 ) * BUILD_AT );
 } );
 
-// Client decision, Sept 2026: every slide change replays it. Once the move has
-// landed the real slide is the one on screen, so that is the one that builds,
-// and its clones go straight back to visible so no copy is left hidden.
+// Client decision, Sept 2026: every slide change replays it. By the time the
+// move lands the build is normally already running on the real slide and must
+// not be restarted, so this only starts it if it has not begun: a move that
+// landed before the timer fired, or a carousel that brought a clone on screen
+// and has just swapped the real slide in. Either way the clones go straight
+// back to visible, so no copy is left hidden.
 headerSlider.on( 'moved', ( index ) => {
+	clearTimeout( pendingBuild );
+	pendingBuild = null;
+
 	const real = slideAt( index );
+	const statement = statementOf( real );
+	const building = statement && statement.querySelector( ':scope > .tm-line' );
+
+	if ( statement && ! building && parseFloat( getComputedStyle( statement ).opacity ) < 0.5 ) {
+		playSlide( real );
+	}
 
 	copiesOf( index ).forEach( ( slide ) => {
 		if ( slide !== real ) {
@@ -193,7 +225,6 @@ headerSlider.on( 'moved', ( index ) => {
 		}
 	} );
 
-	playSlide( real );
 	setTimeout( failsafe, 2500 );
 } );
 

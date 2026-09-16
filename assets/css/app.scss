@@ -140,6 +140,16 @@ p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
       transform: none;
     }
   }
+
+  // will-change only earns its layer while the halves are moving. cta-motion.js
+  // adds this once every transition in the heading has finished, so the layers
+  // the hint created do not outlive a one-off entrance.
+  &.is-settled {
+    .cta-phrase,
+    .cta-rest {
+      will-change: auto;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

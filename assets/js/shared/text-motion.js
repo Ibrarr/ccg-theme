@@ -59,6 +59,75 @@ export const EASE = 'power1.out';
 // their section headings). Their homepage hero does not wait at all.
 export const DELAY = token( '--text-glide-delay', 100 ) / 1000;
 
+// cubic-bezier(x1, y1, x2, y2) as a GSAP ease: a function from progress to value.
+// Written out rather than loaded through GSAP's CustomEase plugin, which put
+// about 6.6KB on the homepage bundle for a fallback most visitors never see.
+// Each axis of the curve is a cubic in the curve parameter s, with the ends
+// pinned at 0 and 1. Solve x(s) = progress for s, by Newton's method and by
+// bisection when the slope is too flat to trust, then return y(s).
+function cubicBezier( x1, y1, x2, y2 ) {
+	const axis = ( s, a, b ) => ( ( ( ( 1 - ( 3 * b ) ) + ( 3 * a ) ) * s + ( ( 3 * b ) - ( 6 * a ) ) ) * s + ( 3 * a ) ) * s;
+	const slope = ( s, a, b ) => ( 3 * ( ( 1 - ( 3 * b ) ) + ( 3 * a ) ) * s * s ) + ( 2 * ( ( 3 * b ) - ( 6 * a ) ) * s ) + ( 3 * a );
+
+	return ( progress ) => {
+		if ( progress <= 0 ) {
+			return 0;
+		}
+
+		if ( progress >= 1 ) {
+			return 1;
+		}
+
+		let s = progress;
+
+		for ( let i = 0; i < 8; i++ ) {
+			const miss = axis( s, x1, x2 ) - progress;
+
+			if ( Math.abs( miss ) < 1e-7 ) {
+				return axis( s, y1, y2 );
+			}
+
+			const gradient = slope( s, x1, x2 );
+
+			if ( Math.abs( gradient ) < 1e-6 ) {
+				break;
+			}
+
+			s -= miss / gradient;
+		}
+
+		let low = 0;
+		let high = 1;
+
+		s = progress;
+
+		for ( let i = 0; i < 40; i++ ) {
+			const x = axis( s, x1, x2 );
+
+			if ( Math.abs( x - progress ) < 1e-7 ) {
+				break;
+			}
+
+			if ( x < progress ) {
+				low = s;
+			} else {
+				high = s;
+			}
+
+			s = ( low + high ) / 2;
+		}
+
+		return axis( s, y1, y2 );
+	};
+}
+
+// The reduced-motion fallback is ours rather than Hoffman's: a short fade with
+// no travel. It is still an entrance, so it takes a strong ease-out, which puts
+// most of the change in the first frames, rather than a linear ramp that builds
+// evenly. The curve is the standard strong ease-out, cubic-bezier(0.23, 1, 0.32, 1).
+const FADE_DURATION = 0.2;
+const FADE_EASE = cubicBezier( 0.23, 1, 0.32, 1 );
+
 export function reducedMotion() {
 	return typeof window !== 'undefined'
 		&& window.matchMedia
@@ -83,8 +152,8 @@ export function glide( targets, vars = {} ) {
 	if ( reducedMotion() ) {
 		return gsap.fromTo( targets, { opacity: 0 }, {
 			opacity: 1,
-			duration: 0.2,
-			ease: 'none',
+			duration: FADE_DURATION,
+			ease: FADE_EASE,
 			delay: vars.delay || 0,
 		} );
 	}
@@ -300,7 +369,7 @@ export function build( element, { delay = 0, stagger = STAGGER, onComplete } = {
 		restore( element );
 
 		return gsap.fromTo( element, { opacity: 0 }, {
-			opacity: 1, duration: 0.2, ease: 'none', delay, onComplete,
+			opacity: 1, duration: FADE_DURATION, ease: FADE_EASE, delay, onComplete,
 		} );
 	}
 

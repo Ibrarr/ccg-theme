@@ -32,6 +32,29 @@
         return;
     }
 
+    // Once nothing inside the heading is still transitioning, mark it settled so
+    // the stylesheet can drop will-change. transitionend fires once per property
+    // per half, so rather than count them, ask whether any transition is still
+    // running. A cancelled transition counts as finished. Browsers without
+    // getAnimations simply keep the hint, which is how it behaved before.
+    function settleWhenStill(heading) {
+        if (typeof heading.getAnimations !== 'function') {
+            return;
+        }
+
+        function check() {
+            if (heading.getAnimations({ subtree: true }).length) {
+                return;
+            }
+            heading.classList.add('is-settled');
+            heading.removeEventListener('transitionend', check);
+            heading.removeEventListener('transitioncancel', check);
+        }
+
+        heading.addEventListener('transitionend', check);
+        heading.addEventListener('transitioncancel', check);
+    }
+
     function start() {
         var headings = document.querySelectorAll('.bottom-cta h3:has(.cta-phrase), .contact-form h3:has(.cta-phrase)');
 
@@ -51,6 +74,7 @@
                 }
                 entry.target.classList.add('is-in');
                 observer.unobserve(entry.target);
+                settleWhenStill(entry.target);
             });
         }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
 
