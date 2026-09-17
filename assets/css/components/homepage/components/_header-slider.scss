@@ -127,6 +127,10 @@
         margin: 0;
         font-weight: inherit;
         font-family: $font-serif;
+        // Section 1: the hero H1 is white. Its words sit in the lead-in and
+        // remainder spans, which set their own colours, so the heading itself
+        // was left on Bootstrap's #212529 and read that way to any check of it.
+        color: $hof-white;
         font-size: clamp(1.75rem, 1rem + 2.5vw, 3.4375rem);
         // The frame sets roughly 66px on 75px, so 1.14 rather than 1.2.
         line-height: 1.15;

@@ -129,7 +129,7 @@
         }
 
         &:not(:first-child ) {
-          padding: 50px 60px;
+          padding: 50px 45px;
 
           &:after {
             transition: all .5s;
@@ -155,12 +155,14 @@
 
             .heading {
               font-family: $font-circular-medium;
-              // Capped at 38px, down from 46px: Poppins is wider than Circular
-              // at the same size, and the longest sector name ("Cybersecurity")
-              // is a single unbreakable word that overflowed the 280px card.
-              // break-word is a safety net for any longer name added later.
-              font-size: clamp(1.75rem, 0.4167rem + 2.7778vw, 2.375rem);
-              line-height: clamp(2.125rem, 1.0139rem + 2.3148vw, 2.625rem);
+              // Section 1's card title: 42px. It was capped at 38 because the
+              // longest sector name ("Cybersecurity") is one unbreakable word
+              // and at 42 it broke mid-word in the 280px the card's padding
+              // left it. The card's side padding is narrower instead (below),
+              // so the name gets the room the type scale asks for.
+              // break-word stays as a safety net for a longer name added later.
+              font-size: clamp(1.75rem, 0.4167rem + 2.7778vw, 2.625rem);
+              line-height: 1.2;
               overflow-wrap: break-word;
               color: #ffffff;
             }
@@ -177,8 +179,9 @@
             }
           }
 
+          // "Cybersecurity" broke mid-word here too, at 28px in 195px.
           @include media-breakpoint-down(lg) {
-            padding: 35px 40px;
+            padding: 35px 30px;
           }
         }
       }

@@ -15,8 +15,13 @@
 
   // T10: the standfirst takes the T5 category-line role rather than staying a
   // second navy paragraph, so the section still has one accent on a white band.
+  // T10: the standfirst line takes the T5 category-line role, deep violet
+  // Poppins Medium, `clamp(1.25rem, 1.6vw, 1.5rem)` on 1.4.
   .intro {
-    @include sub-heading-text($hof-violet-deep);
+    font-family: $font-circular-medium;
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+    line-height: 1.4;
+    color: $hof-violet-deep;
     margin-bottom: 30px;
   }
 

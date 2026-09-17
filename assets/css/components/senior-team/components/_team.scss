@@ -54,6 +54,7 @@
     position: relative;
     cursor: pointer;
 
+
     @include media-breakpoint-up(lg) {
       padding: 24px 100px 24px 24px;
     }
@@ -197,6 +198,30 @@
         // Align the biog with the name rather than the row edge: the headshot
         // and its gap are 104px at this width.
         padding-left: 104px;
+      }
+    }
+
+    // Below 360px the name was left 88px, and a long surname
+    // ("Latibeaudiere") broke mid-word. The row gives it back some room. Kept
+    // last in the row's rules so it outranks them on source order.
+    @media (max-width: 359.98px) {
+      padding: 16px 64px 16px 16px;
+
+      &:after {
+        right: 14px;
+      }
+
+      .person-summary {
+        gap: 12px;
+      }
+
+      .person-headshot {
+        width: 48px;
+        height: 48px;
+      }
+
+      .person-identity .name {
+        font-size: 1rem;
       }
     }
   }

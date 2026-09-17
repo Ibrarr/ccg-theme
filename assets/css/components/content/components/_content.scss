@@ -94,6 +94,19 @@
       font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
       font-family: $font-circular-medium;
       color: var(--body-heading, #{$hof-teal});
+
+      // Editors often wrap a heading's words in <strong> and a Word-paste
+      // <span style="color:…">. The span rule above made those words 18px body
+      // copy and the inline colour painted them near-black, so the heading read
+      // as a bold paragraph and A3's teal never showed (C3).
+      span,
+      strong,
+      b {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit !important;
+      }
     }
   }
 

@@ -253,12 +253,19 @@ footer {
         }
 
         // Legal links are a serif role too: Libre Baskerville Regular 14px,
-        // warm grey on navy.
+        // warm grey on navy. The paragraphs inside took .legal p's 16px clamp,
+        // so the CMS link rendered 16px; they carry the 14px too.
         font-family: $font-serif;
         font-size: 14px;
         line-height: 1.5;
 
+        p {
+          font-family: $font-serif;
+          font-size: 0.875rem;
+        }
+
         a {
+          font-size: 0.875rem;
           font-family: $font-serif;
           color: $ccg-off-white;
           text-decoration: none;

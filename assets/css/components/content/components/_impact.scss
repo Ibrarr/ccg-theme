@@ -17,10 +17,18 @@
   }
 
   .number, .plus {
+    // The column's width is the editor's choice (1 to 12 of 12), so a figure
+    // like "+127%" can be wider than its cell at the role's size, and it broke
+    // mid-word. Measured against its own column, the numeral takes the role's
+    // clamp wherever it fits and only steps down where it would not: the
+    // template passes the figure's length, and a Poppins SemiBold figure runs
+    // about 0.65em a character.
+    container-type: inline-size;
 
+    // Section 1 and T6: impact numerals `clamp(3rem, 4.5vw, 4rem)` on 1.
     .title {
-      font-size: clamp(2.375rem, -0.0694rem + 5.0926vw, 3.75rem);
-      line-height: clamp(2.6875rem, -0.5347rem + 6.713vw, 4.5rem);
+      font-size: min(clamp(3rem, 4.5vw, 4rem), calc(100cqi / (var(--figure-glyphs, 1) * 0.65)));
+      line-height: 1;
       font-family: $font-circular-bold;
       color: $hof-navy;
       margin-bottom: 5px;
@@ -28,9 +36,10 @@
 
     .description {
       @include body-text($ccg-text);
-      // A7: section 1 puts the impact-band labels at 15-16px, a step below the
-      // body clamp they were taking.
-      font-size: clamp(0.875rem, 0.7rem + 0.25vw, 1rem);
+      // A7: section 1 puts the impact-band labels at 15-16px; T6 writes
+      // 0.9375rem on 1.4.
+      font-size: 0.9375rem;
+      line-height: 1.4;
     }
   }
 

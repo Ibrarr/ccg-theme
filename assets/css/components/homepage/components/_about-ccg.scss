@@ -8,10 +8,14 @@
 
   // A7 (v0.13): this statement carries the T2 statement-block device, the acid
   // serif lead-in running into white Poppins (round 2 named it), so it takes
-  // that role's size and measure rather than its own 42px. The size is the 28px
-  // C1 set for every other statement block, and the measure is the role's 60ch.
+  // that role exactly as section 1 and T2 write it: Poppins Regular
+  // clamp(1.375rem, 1.8vw, 1.5rem) on 1.55 leading, a 60ch measure, white.
+  // C1's 28px is for the three listing mastheads it names, not this band.
   p {
-    @include sub-heading-text($hof-white);
+    font-family: $font-circular-regular;
+    font-size: clamp(1.375rem, 1.8vw, 1.5rem);
+    line-height: 1.55;
+    color: $hof-white;
     max-width: 60ch;
     margin: 0 auto 40px;
     text-align: center;

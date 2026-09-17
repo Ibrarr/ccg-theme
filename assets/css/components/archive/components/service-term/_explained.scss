@@ -73,6 +73,12 @@
           color: $ccg-dark-green;
           margin-bottom: 20px;
 
+          // Below 360px the card leaves its title 172px, and a long single
+          // word ("cybersecurity?", "benchmarking?") broke mid-word at 28px.
+          @media (max-width: 359.98px) {
+            font-size: 1.25rem;
+          }
+
           @include media-breakpoint-up(md) {
             min-height: 200px;
           }

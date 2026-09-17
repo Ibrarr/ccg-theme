@@ -47,10 +47,10 @@
     .headings {
       h4 {
         font-family: $font-circular-medium;
-        // "Careers value words": 32-44px clamp. The stepped sizes below ran
-        // 20/31/56, so the deck was under the floor on mobile and well over the
-        // cap at desktop.
-        font-size: clamp(2rem, 1.15rem + 1.85vw, 2.75rem);
+        // "Careers value words": T10 writes `clamp(2rem, 2.8vw, 2.75rem)` on
+        // 1.2, at every width.
+        font-size: clamp(2rem, 2.8vw, 2.75rem);
+        line-height: 1.2;
         color: $hof-white;
         transition: $ccg-transition-all;
         margin-bottom: 10px !important;
@@ -75,7 +75,6 @@
         margin-bottom: 26px;
 
         h4 {
-          font-size: 18px;
           margin-bottom: 0 !important;
         }
       }

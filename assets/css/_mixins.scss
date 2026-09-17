@@ -100,11 +100,15 @@
   }
 }
 
+// Section 1's eyebrow label: Poppins SemiBold, letter-spaced caps, 12-14px.
+// The spacing is the handover's own 0.08em; a call site that sets its own
+// tracking after the include keeps it.
 @mixin term($color) {
   font-family: $font-circular-bold;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin: 0;
-  font-size: clamp(0.625rem, 0.1806rem + 0.9259vw, 0.875rem);
+  font-size: clamp(0.75rem, 0.1806rem + 0.9259vw, 0.875rem);
   color: $color;
 }
 

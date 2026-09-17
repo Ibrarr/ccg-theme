@@ -49,11 +49,11 @@
 
   h2:not(.kicker),
   p.statement {
-    // Floor lowered from 58px to 36px: at 375px the old floor made a single
-    // unbreakable word ("Communication") wider than its column. The desktop
-    // cap is unchanged, so the design reads as before from md up.
-    font-size: clamp(2.25rem, 1rem + 4.1667vw, 5.1875rem);
-    line-height: clamp(2.5rem, 1.3rem + 4vw, 4.5625rem);
+    // T4 and T5 write the washed statement as `clamp(1.75rem, 2.6vw,
+    // 2.4375rem)` on 1.35, 28-39px. It ran to 83px, and at 768px
+    // "Communication" was wider than its column and broke mid-word.
+    font-size: clamp(1.75rem, 2.6vw, 2.4375rem);
+    line-height: 1.35;
     overflow-wrap: break-word;
     // 7.4: washed statement bands are a serif voice moment, in white on the
     // navy wash. Salmon here was the old mustard-era treatment. T4/T5 both

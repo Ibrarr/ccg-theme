@@ -131,7 +131,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 								if ( $number_or_plus === 'number' ) {
 									?>
                                     <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                        <p class="title"><?php echo $number_stat; ?></p>
+                                        <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                         <p class="description"><?php echo $number_description; ?></p>
                                     </div>
 								<?php } elseif ( $number_or_plus === 'plus' ) { ?>
@@ -155,7 +155,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 								if ( $number_or_plus === 'number' ) {
 									?>
                                     <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                        <p class="title"><?php echo $number_stat; ?></p>
+                                        <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                         <p class="description"><?php echo $number_description; ?></p>
                                     </div>
 								<?php } elseif ( $number_or_plus === 'plus' ) { ?>
@@ -205,7 +205,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 							if ( $number_or_plus === 'number' ) {
 								?>
                                 <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                    <p class="title"><?php echo $number_stat; ?></p>
+                                    <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                     <p class="description"><?php echo $number_description; ?></p>
                                 </div>
 							<?php } elseif ( $number_or_plus === 'plus' ) { ?>
@@ -236,7 +236,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 							if ( $number_or_plus === 'number' ) {
 								?>
                                 <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                    <p class="title"><?php echo $number_stat; ?></p>
+                                    <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                     <p class="description"><?php echo $number_description; ?></p>
                                 </div>
 							<?php } elseif ( $number_or_plus === 'plus' ) { ?>

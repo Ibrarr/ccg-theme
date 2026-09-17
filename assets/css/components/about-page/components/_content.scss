@@ -29,7 +29,9 @@
 
   .header {
     p {
-      @include term($ccg-orange);
+      // T7: the "ABOUT US" eyebrow is deep violet caps on the white section.
+      // $ccg-orange is navy since the reskin.
+      @include term($hof-violet-deep);
       margin: 30px 0;
     }
 
