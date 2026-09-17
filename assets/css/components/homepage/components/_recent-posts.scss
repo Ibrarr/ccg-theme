@@ -28,9 +28,14 @@
       position: relative;
       z-index: 1;
       width: 100%;
+      // Section 2's ring, acid on dark: the tile is a washed photograph.
+      --focus-ring: #{$hof-acid};
 
       a {
         text-decoration: none;
+        // Inline, the link's focus outline went round empty line fragments
+        // either side of the eyebrow and title, so no ring showed.
+        display: block;
       }
 
       .post-term {

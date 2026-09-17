@@ -148,9 +148,16 @@
             cursor: pointer;
             height: 100%;
 
+            // Section 2's ring, acid on dark: the card is a washed photograph.
+            --focus-ring: #{$hof-acid};
+
             a {
               text-decoration: none;
               height: 100%;
+              // Inline, this link's focus outline went round empty line
+              // fragments either side of the heading and no ring showed. As a
+              // block it rings the card, inside the slide's padding.
+              display: block;
             }
 
             .heading {

@@ -1,5 +1,10 @@
 a {
   text-decoration: none;
+  // The link wraps the whole card, image and text blocks included. Left
+  // inline, Chrome draws its focus outline round the empty line fragments
+  // either side of those blocks, so a keyboard user saw no ring at all. As a
+  // block the ring goes round the card. The blocks inside lay out the same.
+  display: block;
 
   .image-wrapper {
     position: relative;
