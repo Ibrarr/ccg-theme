@@ -668,6 +668,15 @@ button.splide__arrow:focus-visible {
   outline-offset: 3px;
 }
 
+// A promoted button keeps its own family's ring. The rule above is the same
+// weight as the button chassis's and comes later, so a <p> or <div> button took
+// --focus-ring while a real link button beside it took --btn-ink. On washed
+// photography the two differ: the homepage "Explore" drew a navy ring on the
+// dark photograph, where the hero's "Get in touch" above it drew white.
+:is(.global-button, .global-button-benefit, .hero-button):not(.global-button--primary)[data-ccg-keyboard]:focus-visible {
+  outline-color: var(--btn-ink, #{$hof-navy});
+}
+
 // The heading-led disclosures (Awards years, Careers vacancies) have their
 // heading contents wrapped in a real button so the heading keeps its rank.
 // all: unset lets every inherited type property fall through from the heading
