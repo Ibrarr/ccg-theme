@@ -1,3 +1,14 @@
+// The rule between the stacked footer columns below md. These columns run into
+// the row's gutters, so a plain border ran 12px past the text on each side, and
+// .footer-sections used to hide that with overflow: hidden. The clip went
+// because it also cut the links' keyboard rings, so the rule is drawn inset by
+// the gutter instead: the same length as before, on the same 1px border, which
+// stays so the column keeps its height.
+@mixin footer-divider() {
+  border-bottom: 1px solid transparent;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) center bottom / calc(100% - var(--bs-gutter-x, 1.5rem)) 1px no-repeat border-box;
+}
+
 footer {
   background-color: $ccg-dark-green;
   margin-top: -25px;
@@ -55,7 +66,11 @@ footer {
   }
 
   .footer-sections {
-    overflow: hidden;
+    // Was overflow: hidden, which clipped the keyboard ring of every link along
+    // the block's edges: the menu's first row lost its top, the left column its
+    // left side, the last row its bottom. flow-root keeps the new block
+    // formatting context that overflow gave it, so nothing moves.
+    display: flow-root;
 
     .main-footer-menu {
       .logo-text {
@@ -95,7 +110,7 @@ footer {
         margin-top: 20px;
         padding-bottom: 30px;
         margin-bottom: 30px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        @include footer-divider();
       }
     }
 
@@ -151,7 +166,7 @@ footer {
       @include media-breakpoint-down(md) {
         padding-bottom: 30px;
         margin-bottom: 30px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        @include footer-divider();
       }
     }
 
