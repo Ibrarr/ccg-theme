@@ -3,6 +3,11 @@
   // initial containing block, so it carries the same offset independently.
   top: calc(48px + var(--ccg-topbar-height));
   position: absolute;
+  // Section 2's ring, acid on dark and navy on light, follows the mark's own
+  // ground. The logo sits on the masthead, which is dark unless the template is
+  // light-headed, so the default navy ring was invisible on the homepage hero
+  // and every navy masthead.
+  --focus-ring: #{$hof-acid};
 
   @include media-breakpoint-down(md) {
     top: calc(44px + var(--ccg-topbar-height));
@@ -93,6 +98,13 @@
   // which the current vector does not share.
   .has-light-header & a svg path:not(.logo-underscore) {
     fill: $hof-navy !important;
+  }
+
+  // Navy wherever the mark is navy: a light-headed template, and the open menu's
+  // white panel below lg.
+  .has-light-header &,
+  &.mobile-menu-open {
+    --focus-ring: #{$hof-navy};
   }
 
   &.mobile-menu-open {
