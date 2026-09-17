@@ -1,3 +1,15 @@
+// 7.5's underline draw-in. The ::after rests at scaleX(0) with no transition of
+// its own, so keyboard focus draws it at once and it retracts at once; only a
+// real pointer hovering draws it in, on the strong ease-out. It used to run
+// 350ms ease-out on hover and focus alike, ungated on touch.
+@mixin underline-draw-in() {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover::after {
+      transition: $ccg-underline-draw;
+    }
+  }
+}
+
 @mixin title-text($color) {
   font-family: $font-circular-medium;
   font-size: $ccg-heading-size;
@@ -58,12 +70,13 @@
       background-color: var(--link-underline);
       transform: scaleX(0);
       transform-origin: left center;
-      transition: transform 350ms ease-out;
     }
 
     &:where(:hover, :focus-visible) {
       &::after { transform: scaleX(1); }
     }
+
+    @include underline-draw-in();
   }
 }
 
@@ -91,12 +104,13 @@
       background-color: #fff;
       transform: scaleX(0);
       transform-origin: left center;
-      transition: transform 350ms ease-out;
     }
 
     &:where(:hover, :focus-visible)::after {
       transform: scaleX(1);
     }
+
+    @include underline-draw-in();
   }
 }
 
@@ -313,12 +327,13 @@
     background-color: $underline;
     transform: scaleX(0);
     transform-origin: left center;
-    transition: transform .3s;
   }
 
   &:where(:hover, :focus-visible):after {
     transform: scaleX(1);
   }
+
+  @include underline-draw-in();
 
   &:focus-visible {
     outline: 2px solid $color;

@@ -91,13 +91,14 @@
       background-color: $rd-amber;
       transform: scaleX(0);
       transform-origin: left center;
-      transition: transform 350ms ease-out;
     }
 
     &:where(:hover, :focus-visible) {
       color: $rd-dark-green;
       &::after { transform: scaleX(1); }
     }
+
+    @include underline-draw-in();
   }
 
   ul, ol {

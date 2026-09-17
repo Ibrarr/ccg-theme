@@ -232,12 +232,13 @@ html.notice-dismissed .notification-bar {
       background-color: $hof-navy;
       transform: scaleX(0);
       transform-origin: left center;
-      transition: transform 350ms ease-out;
     }
 
     &:where(:hover, :focus-visible)::after {
       transform: scaleX(1);
     }
+
+    @include underline-draw-in();
 
     &:focus-visible {
       outline: 2px solid $hof-navy;
