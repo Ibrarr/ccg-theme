@@ -7,15 +7,15 @@
   //max-width: 825px;
   border-radius: var(--radius-btn);
   background-color: #ffffff;
-  // Section 2's nav keyline, scoped to light-headed templates only:
-  // `.has-light-header .site-header { border-bottom: 1px solid var(--hairline); }`.
-  // Dark mastheads never carry it (section 6: "absent on dark mastheads"). The
-  // border is always there, transparent, so the pill is the same size on every
-  // template and nothing moves.
+  // Section 2's nav keyline, on light-headed templates only; dark mastheads never
+  // carry it (section 6: "absent on dark mastheads"). B2 (v0.14): the whole
+  // perimeter, not the bottom edge alone, which read as a keyline cut in half.
+  // The border is always there, transparent, so the pill is the same size on
+  // every template and nothing moves.
   border: 1px solid transparent;
 
   .has-light-header & {
-    border-bottom-color: var(--hairline);
+    border-color: var(--hairline);
   }
   transition: all .3s;
   cursor: pointer;
@@ -157,6 +157,12 @@
   @include media-breakpoint-down(lg) {
     &.menu-open {
       background: #EFEFEC;
+    }
+
+    // B2 (v0.14): open below lg, the pill sits on the white overlay on every
+    // template, so it carries the keyline all the way round there too.
+    &:is(.menu-open, .search-open) {
+      border-color: var(--hairline);
     }
   }
 }
