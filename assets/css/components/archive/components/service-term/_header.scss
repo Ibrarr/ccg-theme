@@ -109,4 +109,14 @@
       @include body-text($ccg-green);
     }
   }
+
+  // B5 (v0.14): below lg the dropdown sits on its own row under the statement,
+  // right-aligned in a half-width column narrower than itself, so it spilled
+  // left to 8px from the screen edge. It starts on the text gutter instead.
+  // !important because the markup's justify-content-end utility carries it.
+  .services-links {
+    @include media-breakpoint-down(lg) {
+      justify-content: flex-start !important;
+    }
+  }
 }
