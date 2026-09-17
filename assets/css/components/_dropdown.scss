@@ -15,6 +15,12 @@
 @mixin custom-dropdown($name, $header: null) {
   .#{$name}-container {
     position: relative;
+    // Above the bands that follow it. On the Sectors page the carousel painted
+    // over the bottom edge of the trigger's keyboard ring, and on sector and
+    // service pages, whose bands stack from 4 up to 11, the open menu dropped
+    // behind "Why choose CCGroup?" below lg, hiding half its options. The menu
+    // itself stays at 4 inside this layer.
+    z-index: 12;
     // The trigger used to carry a hard 210px width, so a two-word label
     // ("Sector / Service") wrapped to two lines inside the box. The width now
     // lives on the container as a floor rather than a fixed size: max-content
