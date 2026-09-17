@@ -145,9 +145,9 @@
   // A1: every label uppercase, sitewide, both variants.
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  // F1 (v0.13): labels are 14px at every width, both variants. This amends the
-  // 17px the section 1 scale gave them; uppercase and letter-spacing stand.
-  font-size: 14px;
+  // F1 (v0.13) set labels to 14px, both variants; B1 (v0.14) makes that the top
+  // of a 12-14px fluid size, set here once for every variant.
+  font-size: $ccg-button-label-size;
   // Padding and leading add to exactly 44px rather than leaning on min-height:
   // jQuery's .show() writes an inline display: block over the flex value on
   // every load-more button, and a block box does not centre its own line.

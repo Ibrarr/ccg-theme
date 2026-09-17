@@ -178,6 +178,11 @@ $ccg-img-border-radius: 10px;
 // and 160ms so the colour answers the pointer rather than trailing it.
 $ccg-transition-colours: color 160ms ease, background-color 160ms ease, border-color 160ms ease, fill 160ms ease, stroke 160ms ease;
 
+// B1 (v0.14): button labels, 12px on phones rising to 14px, every variant. The
+// same fluid family as the footer labels. Used by the button chassis and the
+// Gravity Forms submit, which is the solid primary variant too.
+$ccg-button-label-size: clamp(0.75rem, 0.5278rem + 0.463vw, 0.875rem);
+
 // 7.5's underline draw-in, on the strong ease-out. Only a real pointer hover
 // draws it in; keyboard focus and touch show it at once. See underline-draw-in().
 $ccg-underline-draw: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
