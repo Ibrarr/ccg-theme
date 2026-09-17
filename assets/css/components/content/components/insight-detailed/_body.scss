@@ -49,11 +49,13 @@
     margin-bottom: 20px;
   }
 
+  // A3 and C3: subheads inside the report's body copy take the editorial teal.
+  // The section H2s above are the display headings and stay navy.
   h3, h4, h5, h6 {
     font-family: $font-circular-medium;
     font-size: 19px;
     line-height: 26px;
-    color: $rd-dark-green;
+    color: var(--body-heading, #{$hof-teal});
     margin: 4px 0 12px;
   }
 

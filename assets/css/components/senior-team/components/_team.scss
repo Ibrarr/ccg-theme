@@ -163,6 +163,25 @@
             margin-bottom: 0;
           }
         }
+
+        // A3 (v0.12), the senior team extension: headings inside a biog take the
+        // people-context deep violet, as Our Work's and the careers panels' do,
+        // in the same in-body heading role. No biog carries one today, and one
+        // added in the editor would otherwise render Bootstrap's near-black.
+        h2, h3, h4, h5, h6 {
+          font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+          font-family: $font-circular-medium;
+          color: $hof-violet-deep;
+
+          span,
+          strong,
+          b {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            color: inherit !important;
+          }
+        }
       }
 
       .social-icons {

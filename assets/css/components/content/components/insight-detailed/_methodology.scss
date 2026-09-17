@@ -35,6 +35,12 @@
     }
   }
 
+  // The panel is navy, so a subhead an editor writes inside it is white. The
+  // body rule's teal (A3) is for light grounds only.
+  .report-text :is(h3, h4, h5, h6) {
+    color: $hof-white;
+  }
+
   p, li {
     font-family: $font-circular-regular;
     font-size: 14px;
