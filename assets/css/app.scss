@@ -194,6 +194,9 @@ footer,
 // PDF button resolved to a navy box on the navy card, leaving only the acid
 // label, and both fields took a navy keyboard ring nobody could see.
 .report-download,
+// The sector pages' newsletter popup is a navy card holding a form, so its
+// Subscribe button was a navy box on navy and its fields took a navy ring.
+.newsletter-popup,
 // T5's stepped deck: the middle card is the navy 70% tint and the back one is
 // solid navy, so a navy focus ring on either is invisible. The front card is
 // white and keeps the navy ring.
@@ -201,6 +204,8 @@ footer,
 .explain-card:nth-child(3n + 3) {
   --interaction-accent: #{$hof-acid};
   --focus-ring: #{$hof-acid};
+  // A2's ring leaves a gap between itself and the field in the ground's colour.
+  --focus-gap: #{$hof-navy};
   // A1: "acid keyline/acid label on navy", and the solid primary inverts to an
   // acid fill with a navy label on the same grounds.
   --btn-ink: #{$hof-acid};
@@ -440,14 +445,14 @@ button.splide__arrow:focus-visible {
   // The ring takes --focus-ring, not a literal navy. The gated report's form
   // sits on the navy gate band, where a navy ring round the white field could
   // not be seen at all; that band is on the dark-ground list, so it gets acid,
-  // section 2's ring on dark. The acid contact bands keep navy.
+  // section 2's ring on dark. The acid contact bands keep navy. It is a true
+  // 1.5px, drawn as a shadow, with the field's resting shadow kept beneath it:
+  // see focus-ring-shadow() in _mixins.scss.
   input:not([type='hidden']):focus-visible,
   select:focus-visible,
   textarea:focus-visible,
   button:focus-visible {
-    outline: 1.5px solid var(--focus-ring, #{$hof-navy}) !important;
-    outline-offset: 2px !important;
-    box-shadow: var(--gf-ctrl-shadow, none) !important;
+    @include focus-ring-shadow($rest: var(--gf-ctrl-shadow, 0 0 transparent), $important: true);
   }
 
   // Rule 1 alone does not cover a text field. Browsers match :focus-visible on
@@ -641,9 +646,7 @@ button.splide__arrow:focus-visible {
     }
 
     &:focus-visible {
-      outline: 1.5px solid var(--btn-primary-fill, #{$hof-navy}) !important;
-      outline-offset: 3px !important;
-      box-shadow: none !important;
+      @include focus-ring-shadow($offset: 3px, $ring: var(--btn-primary-fill, #{$hof-navy}), $important: true);
     }
 
     // F1 (v0.13): 14px at every width, like every other button label.

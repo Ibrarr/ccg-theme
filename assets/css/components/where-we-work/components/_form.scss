@@ -4,6 +4,8 @@
   // it back at $ccg-orange: that token is navy, and navy-on-navy erases the
   // boundary between the section and the footer.
   background-color: $hof-acid;
+  // A2's keyboard ring leaves its 2px gap in the band's own acid.
+  --focus-gap: #{$hof-acid};
   position: relative;
   z-index: 3;
   padding: 65px 0;

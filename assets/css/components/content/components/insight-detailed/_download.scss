@@ -74,7 +74,9 @@
     // own custom properties from an ID scoped block. Overriding the properties
     // is more reliable than fighting that specificity, and an !important custom
     // property beats its plain declaration.
-    --gf-ctrl-shadow: none !important;
+    // An empty shadow rather than none: the A2 ring lists this after its own
+    // two shadows, and `none` inside a list would void the whole declaration.
+    --gf-ctrl-shadow: 0 0 transparent !important;
     // The inputs have no visible border (a transparent 2px one holds the 42px
     // box), so focus must not colour it in. The A2 rule reads this instead of
     // its navy default.

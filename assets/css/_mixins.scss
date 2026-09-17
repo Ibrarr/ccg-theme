@@ -161,19 +161,42 @@
 // the form fields. Nothing is added under a pointer (field-focus.js flags
 // <html>), and keyboard focus takes the 1.5px ring. These fields used to set
 // outline: none on every focus, so a keyboard user could not see them at all.
+//
+// The ring is drawn by focus-ring-shadow(), not an outline: see there.
 @mixin field-focus() {
   &:focus {
     outline: none;
   }
 
   &:focus-visible {
-    outline: 1.5px solid var(--focus-ring, #{$hof-navy});
-    outline-offset: 2px;
+    @include focus-ring-shadow();
   }
 
   html.pointer-focus &:focus-visible {
     outline: none;
+    box-shadow: none;
   }
+}
+
+// A2's ring: 1.5px wide, 2px off the control (T11's offset). Chrome and Firefox
+// round an outline's width down to whole pixels, so `outline: 1.5px` painted
+// 1px and computed as 1px at every pixel density. A shadow's spread is not
+// rounded, so the ring is two shadows: the first paints the 2px gap in the
+// ground's own colour (--focus-gap), the second the 1.5px ring outside it.
+// The outline stays, transparent, because forced-colours mode removes shadows
+// and draws outlines in the system colour, so the focus state survives there.
+// $rest is any shadow the control already wears, kept underneath.
+@mixin focus-ring-shadow($offset: 2px, $ring: var(--focus-ring, #{$hof-navy}), $rest: null, $important: false) {
+  $flag: if($important, ' !important', '');
+  $shadows: 0 0 0 $offset var(--focus-gap, #{$hof-white}), 0 0 0 ($offset + 1.5px) $ring;
+
+  @if $rest {
+    $shadows: append($shadows, $rest, comma);
+  }
+
+  outline: 1.5px solid transparent#{$flag};
+  outline-offset: $offset#{$flag};
+  box-shadow: $shadows#{$flag};
 }
 
 // F5 (v0.13): one share icon set everywhere, sized and coloured as the Our Work
