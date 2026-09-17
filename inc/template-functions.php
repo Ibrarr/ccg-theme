@@ -608,11 +608,14 @@ function ccg_light_header_body_class( $classes ) {
 	// `_header-logo.scss`.
 	//
 	// T11 asks for the class on Contact and Where We Work; Careers is light
-	// too and had the CSS without the class.
+	// too and had the CSS without the class. The site map, like the default
+	// page template below, opens on white too, and without the class its logo
+	// was white on white, with only the underscore showing.
 	$light_templates = array(
 		'page-templates/page-contact.php',
 		'page-templates/page-where-we-work.php',
 		'page-templates/page-careers.php',
+		'page-templates/page-site-map.php',
 	);
 
 	// The webinar variant is the one insight that keeps the dark photographic
@@ -622,8 +625,13 @@ function ccg_light_header_body_class( $classes ) {
 		return $classes;
 	}
 
+	// The default page template (the privacy and cookie policies) opens on
+	// white. The front page also uses it, and its hero is dark.
+	$default_page = is_page() && ! is_front_page() && '' === get_page_template_slug();
+
 	if ( is_singular( array( 'post', 'insight', 'work' ) )
 		|| is_tax( array( 'sector', 'service' ) )
+		|| $default_page
 		|| ( is_page() && in_array( get_page_template_slug(), $light_templates, true ) ) ) {
 		$classes[] = 'has-light-header';
 	}

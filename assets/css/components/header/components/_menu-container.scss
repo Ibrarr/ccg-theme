@@ -7,9 +7,16 @@
   //max-width: 825px;
   border-radius: var(--radius-btn);
   background-color: #ffffff;
-  // The white pill loses its edge against a light page ground, so it carries
-  // the site-wide hairline. One value, defined in _variables.scss.
-  border: 1px solid var(--hairline);
+  // Section 2's nav keyline, scoped to light-headed templates only:
+  // `.has-light-header .site-header { border-bottom: 1px solid var(--hairline); }`.
+  // Dark mastheads never carry it (section 6: "absent on dark mastheads"). The
+  // border is always there, transparent, so the pill is the same size on every
+  // template and nothing moves.
+  border: 1px solid transparent;
+
+  .has-light-header & {
+    border-bottom-color: var(--hairline);
+  }
   transition: all .3s;
   cursor: pointer;
 
@@ -101,10 +108,15 @@
   //
   // Below lg there is no join to close: the panel is a full-screen overlay
   // rather than something hanging off the pill, so the pill stays a pill.
+  //
+  // Open, the pill takes the panel's hairline down its sides and across its top
+  // so the two keep one edge (T1a's panel edge), whatever the template. :is()
+  // rather than :where() so this outranks the light-header keyline above.
   @include media-breakpoint-up(lg) {
-    &:where(.menu-open, .search-open) {
+    &:is(.menu-open, .search-open) {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+      border-color: var(--hairline);
       border-bottom-color: transparent;
     }
   }
