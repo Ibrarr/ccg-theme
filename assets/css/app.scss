@@ -394,6 +394,21 @@ button.splide__arrow:focus-visible {
 //
 // !important throughout: the orbital theme injects a per-form <style> block
 // scoped to #gform_wrapper_{id}, which outranks any stylesheet selector.
+
+// R1 (v0.14): Bootstrap's own select and checkbox states, globally, as supplied.
+// Its focus paints a blue border and glow and its checked state fills solid
+// blue. Keyboard focus keeps the navy ring from the rules below.
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--hof-navy);
+  box-shadow: none;
+}
+
+.form-check-input:checked {
+  background-color: var(--hof-navy);
+  border-color: var(--hof-navy);
+}
+
 .gform_wrapper,
 .contact-gform-form,
 .insight-reports-form,
