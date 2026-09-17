@@ -50,6 +50,13 @@
           cursor: auto;
         }
       }
+
+      // Below md the wash covers the whole band, so the arrows sit on the
+      // photograph and a navy ring could not be seen. Section 2: acid on dark.
+      // From md the wash slides left and the arrows are back on warm grey.
+      @include media-breakpoint-down(md) {
+        --focus-ring: #{$hof-acid};
+      }
     }
 
     .splide__track {
