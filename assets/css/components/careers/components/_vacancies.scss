@@ -141,6 +141,17 @@
           text-decoration: none;
           display: flex;
 
+          // The sentence takes the column and wraps inside it. Editors put the
+          // raw application URL in this field, which has no break point, and
+          // as a flex item the paragraph would not shrink below that URL, so
+          // it ran past the card and under the minus disc on phones. It did
+          // on live too. The icon beside it is squeezed to nothing, which is
+          // also how it renders on live and staging.
+          p {
+            flex: 0 0 100%;
+            min-width: 0;
+          }
+
           svg {
             width: 120px;
           }
