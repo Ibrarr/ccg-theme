@@ -64,8 +64,22 @@
 
     h4 {
       @include sub-heading-text($ccg-dark-green);
+      // B4 (v0.14): closed vacancy titles, 24px rising to 28px. Set on the
+      // heading, which the keyboard trigger inside it inherits from; on the
+      // shared .ccg-kb-trigger it would also resize the Awards years and team
+      // names, and hold an opened title below its 44px role.
+      font-size: clamp(1.5rem, 1.05rem + 0.93vw, 1.75rem);
       margin: 0;
       cursor: pointer;
+
+      // Below 375px the 24px floor cannot hold a long compound word in the
+      // column beside the toggle ("Kommunikationsarbeit", in a German vacancy,
+      // needs 273px against 222px at 320), and it broke mid-word. Under 375 the
+      // size eases down with the screen and meets the floor at 375: the phone
+      // guard the service names and team surnames use.
+      @media (max-width: 374.98px) {
+        font-size: calc(1.5rem - (375px - 100vw) * 0.09);
+      }
     }
 
     .vacancy-details {
