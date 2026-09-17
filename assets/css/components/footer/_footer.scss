@@ -4,6 +4,11 @@
 // because it also cut the links' keyboard rings, so the rule is drawn inset by
 // the gutter instead: the same length as before, on the same 1px border, which
 // stays so the column keeps its height.
+// B3 (v0.14): the Libre Baskerville legal and credit lines take the fluid size
+// of the acid micro-labels above them ("Get in touch", "Find us", "Follow"),
+// 12px rising to 13.5px. They were a fixed 14px.
+$footer-legal-size: clamp(0.75rem, 0.5278rem + 0.463vw, 0.84375rem);
+
 @mixin footer-divider() {
   border-bottom: 1px solid transparent;
   background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) center bottom / calc(100% - var(--bs-gutter-x, 1.5rem)) 1px no-repeat border-box;
@@ -50,11 +55,11 @@ footer {
     }
 
     a {
-      // B7: the credit matches the copyright line, 14px, at every width.
+      // B7: the credit matches the copyright line; B3 (v0.14) sets their size.
       font-family: $font-serif;
       font-style: normal;
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: $footer-legal-size;
       line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
       color: $hof-grey-warm;
       transition: $ccg-transition-colours;
@@ -184,18 +189,18 @@ footer {
         // near-black, which is what a computed-style check on the credit reads.
         font-family: $font-serif;
         font-style: normal;
-        font-size: 0.875rem;
+        font-size: $footer-legal-size;
         line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
         color: $hof-grey-warm;
 
         a {
-          // B7 (v0.12): the credit matches the copyright line exactly, which is
-          // Libre Baskerville Regular 14px. A clamp on the line below used to
-          // override the 14px, so the credit rendered 16px beside a 14px
-          // copyright. The leading is the copyright's own clamp.
+          // B7 (v0.12): the credit matches the copyright line exactly, in
+          // Libre Baskerville Regular. A clamp on the line below once overrode
+          // the size, so the credit rendered 16px beside a smaller copyright.
+          // The leading is the copyright's own clamp; B3 (v0.14) sets the size.
           font-family: $font-serif;
           font-style: normal;
-          font-size: 0.875rem;
+          font-size: $footer-legal-size;
           text-decoration: none;
           line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
           color: $hof-grey-warm;
@@ -230,7 +235,7 @@ footer {
         color: #E5E4E0;
       }
 
-      // Section 1's "Legal links" role: Libre Baskerville Regular 14px, warm
+      // Section 1's "Legal links" role: Libre Baskerville Regular (B3 size), warm
       // grey. Roman, not italic, per the serif audit's three roman exceptions.
       .company-name,
       .credit-text,
@@ -239,7 +244,7 @@ footer {
       .credit a {
         font-family: $font-serif;
         font-style: normal;
-        font-size: 0.875rem;
+        font-size: $footer-legal-size;
       }
 
       .company-name {
@@ -267,20 +272,20 @@ footer {
           }
         }
 
-        // Legal links are a serif role too: Libre Baskerville Regular 14px,
-        // warm grey on navy. The paragraphs inside took .legal p's 16px clamp,
-        // so the CMS link rendered 16px; they carry the 14px too.
+        // Legal links are a serif role too: Libre Baskerville Regular, warm
+        // grey on navy. The paragraphs inside took .legal p's 16px clamp, so the
+        // CMS link rendered 16px; they carry the B3 size too.
         font-family: $font-serif;
-        font-size: 14px;
+        font-size: $footer-legal-size;
         line-height: 1.5;
 
         p {
           font-family: $font-serif;
-          font-size: 0.875rem;
+          font-size: $footer-legal-size;
         }
 
         a {
-          font-size: 0.875rem;
+          font-size: $footer-legal-size;
           font-family: $font-serif;
           color: $ccg-off-white;
           text-decoration: none;
@@ -299,7 +304,7 @@ footer {
             font-family: $font-serif;
             font-style: normal;
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: $footer-legal-size;
             line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
             color: $hof-grey-warm;
             transition: $ccg-transition-colours;
@@ -331,7 +336,7 @@ footer {
               // B7: Site Map / Privacy Policy / Cookie Policy are Libre
               // Baskerville, in the footer and in the menu overlay alike.
               font-family: $font-serif;
-              font-size: 0.875rem;
+              font-size: $footer-legal-size;
               line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
               color: #E5E4E0;
               transition: $ccg-transition-colours;
