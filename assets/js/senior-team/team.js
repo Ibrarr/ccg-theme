@@ -13,12 +13,14 @@ jQuery(document).ready(function ($) {
 
         var $this = $(this);
 
+        // 250ms: a disclosure answers inside the 150-250ms band. jQuery's default
+        // 400ms read as the list catching up with the click.
         $('.person.active').not(this).each(function () {
-            $(this).find('.person-details').stop(true, true).slideUp();
+            $(this).find('.person-details').stop(true, true).slideUp(250);
             $(this).removeClass('active');
         });
 
-        $this.find('.person-details').stop(true, true).slideToggle();
+        $this.find('.person-details').stop(true, true).slideToggle(250);
         $this.toggleClass('active');
     });
 

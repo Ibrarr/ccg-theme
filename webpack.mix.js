@@ -17,6 +17,7 @@ mix.webpackConfig({
 });
 
 mix.js([
+    'assets/js/header/reduced-motion.js',
     'assets/js/header/main-menu.js',
     'assets/js/header/sliders.js',
     'assets/js/header/load-search-results.js',
