@@ -189,11 +189,13 @@
       // The masthead statement is Libre Baskerville Regular, whole element and
       // no lead-in span, per the T7 row of the type scale.
       //
-      // A7: T7 writes it as `clamp(2.75rem, 3.5vw, 3.4375rem)` on 1.2.
+      // A7: T7 writes it as `clamp(2.75rem, 3.5vw, 3.4375rem)` on 1.2. B6 (v0.14)
+      // keeps the 55px cap and restores the old 32px phone floor, which the 44px
+      // floor had lost, for both Libre Baskerville Regular statements here.
       .sub-heading {
         font-family: $font-serif;
         font-weight: 400;
-        font-size: clamp(2.75rem, 3.5vw, 3.4375rem);
+        font-size: clamp(2rem, 0.25rem + 3.6vw, 3.4375rem);
         line-height: 1.2;
         color: #ffffff;
       }
@@ -205,7 +207,7 @@
       .sub-heading.two-color {
         font-family: $font-serif;
         font-weight: 400;
-        font-size: clamp(2.75rem, 3.5vw, 3.4375rem);
+        font-size: clamp(2rem, 0.25rem + 3.6vw, 3.4375rem);
         line-height: 1.2;
         color: $hof-white;
 
