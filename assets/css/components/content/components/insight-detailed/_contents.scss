@@ -170,6 +170,15 @@
       padding: 16px 22px;
     }
 
+    // The accordion clips its own overflow to keep its rounded corners, so the
+    // ring section 2 draws outside a control was cut away on every side and
+    // this toggle showed no focus at all. Drawn inside the bar instead, in
+    // acid, because the bar is navy.
+    &:focus-visible {
+      outline: 2px solid $hof-acid;
+      outline-offset: -6px;
+    }
+
     span {
       flex: 1 0 0;
       font-family: $font-circular-medium;
