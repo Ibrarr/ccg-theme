@@ -25,6 +25,10 @@
     // over the toggle itself, which is the part people aim at.
     cursor: pointer;
 
+    // The title sizes below cap themselves against the card's own width (cqi),
+    // so a long word always fits the line it lands on.
+    container-type: inline-size;
+
     &:after {
       content: "";
       width: 40px;
@@ -55,6 +59,30 @@
       }
     }
 
+    // Phones: the toggle sits beside the title's first line rather than the
+    // card's middle. Centred, it covered the middle of a three- or four-line
+    // title, and a title long enough to need the width could not clear it
+    // without dropping below the 24px B4 asks for. 19px puts the disc's centre
+    // on the first line's.
+    @include media-breakpoint-down(md) {
+      &:not(.active):after {
+        top: 19px;
+        transform: none;
+      }
+
+      // ...and the title makes room for it beside those first lines only, so
+      // the lines below keep the card's full width. The spacer sits inside the
+      // keyboard trigger when there is one, because a button lays out its own
+      // content and would otherwise step the whole title in.
+      &:not(.active) > h4 .ccg-kb-trigger::before,
+      &:not(.active) > h4:not(:has(.ccg-kb-trigger))::before {
+        content: '';
+        float: right;
+        width: 52px;
+        height: 40px;
+      }
+    }
+
     // Rollover per T10: the pair swaps, so the toggle answers the pointer in
     // both the closed and the open state.
     &:where(:hover, :focus-within):after {
@@ -68,17 +96,28 @@
       // heading, which the keyboard trigger inside it inherits from; on the
       // shared .ccg-kb-trigger it would also resize the Awards years and team
       // names, and hold an opened title below its 44px role.
-      font-size: clamp(1.5rem, 1.05rem + 0.93vw, 1.75rem);
+      //
+      // Capped against the card width so the title's longest word still fits
+      // a line. vacancy-fit.js sets --title-word to that word's width as a
+      // multiple of the font size, so a title whose words fit keeps B4's size
+      // and only a long compound steps down. Without the script the cap is
+      // the longest word a live vacancy has used: "Kommunikationsarbeit", 11.38
+      // in Poppins Regular, plus a little room.
+      font-size: min(clamp(1.5rem, 1.05rem + 0.93vw, 1.75rem), calc(100cqi / var(--title-word, 11.45)));
+      // The sub-heading leading is 20px at phone widths, shorter than a 24px
+      // line, so B4's size made the lines overlap.
+      line-height: 1.2;
       margin: 0;
       cursor: pointer;
 
-      // Below 375px the 24px floor cannot hold a long compound word in the
-      // column beside the toggle ("Kommunikationsarbeit", in a German vacancy,
-      // needs 273px against 222px at 320), and it broke mid-word. Under 375 the
-      // size eases down with the screen and meets the floor at 375: the phone
-      // guard the service names and team surnames use.
-      @media (max-width: 374.98px) {
-        font-size: calc(1.5rem - (375px - 100vw) * 0.09);
+      // From md the toggle is vertically centred, so the title keeps clear of
+      // it on every line: the disc plus a 12px gap.
+      @include media-breakpoint-up(md) {
+        padding-right: 52px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding-right: 62px;
       }
     }
 
@@ -123,6 +162,16 @@
       h4 {
         @include title-text($ccg-dark-green);
         @include section-title-44();
+
+        // On phones the 44px role's 38px floor cannot hold every title's
+        // longest word ("Communications" needs 334px at 38px against 277px of
+        // card), so it broke mid-word. The same per-title cap as the closed
+        // state, measured in the opened weight: the UK titles keep 38px, and
+        // the fallback is "Kommunikationsarbeit", 11.59 in Poppins Medium.
+        @include media-breakpoint-down(md) {
+          font-size: min(clamp(2.375rem, 0.375rem + 4.1667vw, 2.75rem), calc(100cqi / var(--title-word-open, 11.66)));
+          line-height: 1.2;
+        }
       }
     }
   }

@@ -63,6 +63,7 @@ mix.js([
     'assets/js/careers/gsap-animations.js',
     'assets/js/careers/cards.js',
     'assets/js/careers/accordion.js',
+    'assets/js/careers/vacancy-fit.js',
     'assets/js/careers/benefits.js',
     'assets/js/shared/masthead-motion.js',
 ], 'js/careers.js');
