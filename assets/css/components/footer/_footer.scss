@@ -4,10 +4,14 @@
 // because it also cut the links' keyboard rings, so the rule is drawn inset by
 // the gutter instead: the same length as before, on the same 1px border, which
 // stays so the column keeps its height.
-// B3 (v0.14): the Libre Baskerville legal and credit lines take the fluid size
-// of the acid micro-labels above them ("Get in touch", "Find us", "Follow"),
-// 12px rising to 13.5px. They were a fixed 14px.
-$footer-legal-size: clamp(0.75rem, 0.5278rem + 0.463vw, 0.84375rem);
+// B3 (v0.14) gave the Libre Baskerville legal and credit lines the fluid size of
+// the acid micro-labels above them ("Get in touch", "Find us", "Follow"), 12px
+// rising to 13.5px. At the same size the roman reads larger than those italic
+// labels, because it sets about 11% wider on the same x-height, so the client
+// asked for 10px (17 Sept 2026). This is that clamp scaled by 10/12: 10px on
+// phones rising to 11.25px, on the same breakpoints, so the lines stay the same
+// step below the labels at every width.
+$footer-legal-size: clamp(0.625rem, 0.4398rem + 0.3858vw, 0.703125rem);
 
 @mixin footer-divider() {
   border-bottom: 1px solid transparent;
