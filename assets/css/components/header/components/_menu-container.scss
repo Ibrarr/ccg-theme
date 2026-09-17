@@ -27,7 +27,7 @@
     color: $hof-navy;
     margin: 0;
     display: block;
-    transition: $ccg-transition-all;
+    transition: $ccg-transition-colours;
 
     @include media-breakpoint-down(lg) {
       font-size: 14px;
@@ -73,7 +73,7 @@
 
     .cross, .menu, .header-search {
       svg path, svg rect {
-        transition: $ccg-transition-all;
+        transition: $ccg-transition-colours;
       }
 
       &:hover svg path, &:hover svg rect {

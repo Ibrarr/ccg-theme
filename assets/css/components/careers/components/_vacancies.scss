@@ -47,7 +47,7 @@
       background-size: 45% 2px, 2px 45%;
       background-position: center, center;
       background-repeat: no-repeat;
-      transition: $ccg-transition-all;
+      transition: $ccg-transition-colours, background-size 160ms ease;
 
       @include media-breakpoint-up(lg) {
         width: 50px;

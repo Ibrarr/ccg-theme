@@ -20,7 +20,7 @@
 
       a {
         position: relative;
-        transition: all .3s;
+        transition: color 160ms ease, margin-left .3s;
         text-decoration: none;
       }
 
@@ -34,7 +34,7 @@
           // navigation stayed at 3.74:1 on white. The handover names navy 70%
           // as the resting value for exactly this reason: 5.4:1.
           color: $hof-navy-70;
-          transition: all .3s;
+          transition: color 160ms ease, margin-left .3s;
 
           &:hover {
             color: $ccg-dark-green;
@@ -51,7 +51,7 @@
               font-size: $ccg-body-size;
               line-height: $ccg-body-line-height;
               color: $ccg-dark-green;
-              transition: $ccg-transition-all;
+              transition: $ccg-transition-colours;
 
               &:hover {
                 color: var(--interaction-accent);

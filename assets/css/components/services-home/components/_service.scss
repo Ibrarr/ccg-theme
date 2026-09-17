@@ -71,7 +71,7 @@
             margin: 0;
 
             a {
-              transition: $ccg-transition-all;
+              transition: $ccg-transition-colours;
               text-decoration: none;
               color: $ccg-green;
             }
@@ -86,7 +86,7 @@
 
             svg {
               path {
-                transition: $ccg-transition-all;
+                transition: $ccg-transition-colours;
               }
 
               &:hover g > path {

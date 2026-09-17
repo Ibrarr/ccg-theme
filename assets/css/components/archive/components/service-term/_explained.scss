@@ -57,7 +57,7 @@
       height: auto;
       box-shadow: 0 0 18px 0 rgba(0, 0, 0, .15);
       position: relative;
-      transition: $ccg-transition-all;
+      transition: transform .3s;
 
       &.is-active {
         z-index: 3;

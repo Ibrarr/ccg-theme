@@ -57,7 +57,7 @@ footer {
       font-size: 0.875rem;
       line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
       color: $hof-grey-warm;
-      transition: $ccg-transition-all;
+      transition: $ccg-transition-colours;
 
       &:hover {
         color: $ccg-body-bg;
@@ -98,7 +98,7 @@ footer {
           font-family: $font-circular-bold;
           font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
           color: $hof-grey-warm;
-          transition: $ccg-transition-all;
+          transition: $ccg-transition-colours;
 
           &:hover {
             color: var(--interaction-accent);
@@ -142,7 +142,7 @@ footer {
         line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
         color: #E5E4E0;
         width: fit-content;
-        transition: $ccg-transition-all;
+        transition: $ccg-transition-colours;
 
         &:hover {
           color: var(--interaction-accent);
@@ -199,7 +199,7 @@ footer {
           text-decoration: none;
           line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
           color: $hof-grey-warm;
-          transition: $ccg-transition-all;
+          transition: $ccg-transition-colours;
 
           &:hover {
             color: $ccg-body-bg;
@@ -284,7 +284,7 @@ footer {
           font-family: $font-serif;
           color: $ccg-off-white;
           text-decoration: none;
-          transition: $ccg-transition-all;
+          transition: $ccg-transition-colours;
 
           &:hover {
             color: var(--interaction-accent);
@@ -302,7 +302,7 @@ footer {
             font-size: 0.875rem;
             line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
             color: $hof-grey-warm;
-            transition: $ccg-transition-all;
+            transition: $ccg-transition-colours;
 
             &:hover {
               color: $ccg-body-bg;
@@ -334,7 +334,7 @@ footer {
               font-size: 0.875rem;
               line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
               color: #E5E4E0;
-              transition: $ccg-transition-all;
+              transition: $ccg-transition-colours;
 
               &:hover {
                 color: var(--interaction-accent);

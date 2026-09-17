@@ -398,6 +398,19 @@ button.splide__arrow:focus-visible {
 .contact-gform-form,
 .insight-reports-form,
 .newsletter-popup-form_wrapper {
+  // The orbital theme transitions `all` on its fields and buttons, which slid the
+  // keyboard ring in over 150ms rather than showing it. Only the colours a field
+  // or button changes may transition. Its ID-scoped sheet needs the priority, as
+  // everywhere in this block.
+  input:not([type='hidden']),
+  select,
+  textarea,
+  button {
+    transition-property: color, background-color, border-color !important;
+    transition-duration: 160ms !important;
+    transition-timing-function: ease !important;
+  }
+
   // The field keeps Gravity Forms' own faint resting shadow on focus rather than
   // losing it, so a click changes nothing at all. Forms without it get none.
   input:not([type='hidden']):focus:not(:focus-visible),
@@ -527,7 +540,7 @@ button.splide__arrow:focus-visible {
     cursor: pointer;
     position: relative;
     vertical-align: middle;
-    transition: $ccg-transition-all;
+    transition: $ccg-transition-colours;
   }
 
   input[type='radio'] {
@@ -592,7 +605,7 @@ button.splide__arrow:focus-visible {
     padding: 10px 18px;
     margin-right: 12px;
     cursor: pointer;
-    transition: $ccg-transition-all;
+    transition: $ccg-transition-colours;
 
     &:where(:hover, :focus-visible) {
       background-color: $hof-navy;
@@ -629,7 +642,7 @@ button.splide__arrow:focus-visible {
     min-height: 44px;
     border-radius: var(--radius-btn) !important;
     cursor: pointer;
-    transition: $ccg-transition-all;
+    transition: $ccg-transition-colours;
 
     &:where(:hover, :focus-visible) {
       background-color: var(--btn-primary-label, #{$hof-acid}) !important;

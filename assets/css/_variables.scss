@@ -172,5 +172,13 @@ $ccg-text: $hof-navy;                    // was #2B2B2B, section 1: body on ligh
 
 //Other
 $ccg-img-border-radius: 10px;
-$ccg-transition-all: all .3s;
+// Hover colour changes, named. Never `all`: it also animated the keyboard focus
+// ring, so on every Tab the outline slid and faded in over 300ms instead of
+// appearing. `ease` because a hover is a colour change rather than an entrance,
+// and 160ms so the colour answers the pointer rather than trailing it.
+$ccg-transition-colours: color 160ms ease, background-color 160ms ease, border-color 160ms ease, fill 160ms ease, stroke 160ms ease;
+
+// 7.5's underline draw-in, on the strong ease-out. Only a real pointer hover
+// draws it in; keyboard focus and touch show it at once. See underline-draw-in().
+$ccg-underline-draw: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
 $ccg-top-page-padding: 200px;

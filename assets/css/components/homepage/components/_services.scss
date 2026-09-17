@@ -44,7 +44,7 @@
           @include sub-heading-text($ccg-green);
           font-family: $font-circular-medium;
           margin: 0;
-          transition: $ccg-transition-all;
+          transition: $ccg-transition-colours;
         }
 
         .open-close-accordion {
@@ -52,7 +52,7 @@
 
           svg {
             path {
-              transition: $ccg-transition-all;
+              transition: $ccg-transition-colours;
             }
           }
         }
