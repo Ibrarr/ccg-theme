@@ -67,9 +67,9 @@ headerSlider.on('mounted', () => {
  * that line and every line below build in turn. See sequence() in
  * text-motion.js.
  *
- * Client decision, Sept 2026: it replays on every slide change. E6.1's "once
- * per visit" governs a ScrollTrigger re-firing on scroll, not a carousel that
- * is already moving on its own.
+ * E6.1: once per visit. Each slide's sentence builds the first time that slide
+ * comes on screen; when the carousel comes round to it again it arrives as it
+ * is, with no entrance. (It replayed on every slide change until Sept 2026.)
  */
 
 function statementOf( slide ) {
@@ -169,9 +169,17 @@ function failsafe() {
 	}
 }
 
+// The slides whose sentence has already had its entrance this visit, by
+// Splide's index for the real slide.
+const played = new Set();
+
+// The slide whose first entrance the current move is running, if it is one.
+let incoming = null;
+
 headerSlider.on( 'mounted', () => {
 	// E6.5: the hero must not sit empty. This runs the moment the carousel
 	// mounts rather than waiting on a scroll or a font.
+	played.add( headerSlider.index );
 	playSlide( slideAt( headerSlider.index ) );
 	setTimeout( failsafe, 2500 );
 } );
@@ -181,8 +189,8 @@ headerSlider.on( 'mounted', () => {
 // Waiting for `moved` left the hero with no readable text for 592ms at 1440 and
 // about 445ms at 375 on every slide change: the outgoing sentence has left the
 // screen 575ms into the 1000ms slide, and the incoming one stayed hidden until
-// the slide stopped. Client decision, Sept 2026: keep the replay and start it
-// earlier. At 85% of the slide's time the carousel's ease-in-out has 19px of
+// the slide stopped, so it starts earlier. At 85% of the slide's time the
+// carousel's ease-in-out has 19px of
 // travel left at 1440 and 5px at 375, so the lines begin their glide right while
 // the slide is all but still. Taken from Splide's live options, so an instant
 // move under reduced motion starts the build at once.
@@ -192,26 +200,42 @@ let pendingBuild = null;
 
 // Every copy of the incoming slide is hidden, because which copy the carousel
 // actually brings on screen depends on whether it has to wrap. The outgoing
-// slide is not touched, so its sentence stays put as it leaves.
+// slide is not touched, so its sentence stays put as it leaves. A slide that
+// has already had its entrance is not touched either: it slides in finished.
 headerSlider.on( 'move', ( index ) => {
+	clearTimeout( pendingBuild );
+	pendingBuild = null;
+
+	if ( played.has( index ) ) {
+		incoming = null;
+
+		return;
+	}
+
+	played.add( index );
+	incoming = index;
 	copiesOf( index ).forEach( prime );
 
-	clearTimeout( pendingBuild );
 	pendingBuild = setTimeout( () => {
 		pendingBuild = null;
 		playSlide( slideAt( index ) );
 	}, ( headerSlider.options.speed || 0 ) * BUILD_AT );
 } );
 
-// Client decision, Sept 2026: every slide change replays it. By the time the
-// move lands the build is normally already running on the real slide and must
-// not be restarted, so this only starts it if it has not begun: a move that
-// landed before the timer fired, or a carousel that brought a clone on screen
-// and has just swapped the real slide in. Either way the clones go straight
-// back to visible, so no copy is left hidden.
+// By the time a first move lands the build is normally already running on the
+// real slide and must not be restarted, so this only starts it if it has not
+// begun: a move that landed before the timer fired, or a carousel that brought
+// a clone on screen and has just swapped the real slide in. Either way the
+// clones go straight back to visible, so no copy is left hidden.
 headerSlider.on( 'moved', ( index ) => {
 	clearTimeout( pendingBuild );
 	pendingBuild = null;
+
+	if ( incoming !== index ) {
+		return;
+	}
+
+	incoming = null;
 
 	const real = slideAt( index );
 	const statement = statementOf( real );

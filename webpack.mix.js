@@ -1,5 +1,21 @@
 const mix = require('laravel-mix');
 
+// E1: GSAP, ScrollTrigger and SplitText, the stack hoffman.com runs, are loaded
+// once per page as their own files, in the page's globals, like Hoffman's. The
+// bundles import them from those globals instead of each carrying its own copy,
+// so every script on a page shares one GSAP and one ScrollTrigger.
+['gsap.min.js', 'ScrollTrigger.min.js', 'SplitText.min.js'].forEach((file) => {
+    mix.copy(`node_modules/gsap/dist/${file}`, 'dist/vendor/gsap');
+});
+
+mix.webpackConfig({
+    externals: {
+        gsap: 'window',
+        'gsap/ScrollTrigger': 'window',
+        'gsap/SplitText': 'window',
+    },
+});
+
 mix.js([
     'assets/js/header/main-menu.js',
     'assets/js/header/sliders.js',

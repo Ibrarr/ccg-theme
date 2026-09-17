@@ -25,8 +25,13 @@
  *   6. reduced motion        - the travel is dropped, a short fade remains
  *   7. whole sentences       - the text stays in the element, in order, and the
  *                              markup is restored untouched once the lines land
+ *
+ * E1 asks for Hoffman's stack, so GSAP, ScrollTrigger and SplitText are loaded
+ * once per page as their own files (inc/styles-scripts.php) and every bundle
+ * imports them from the page rather than carrying a copy (webpack.mix.js).
  */
 import { gsap } from 'gsap';
+import { SplitText } from 'gsap/SplitText';
 
 // The numbers come off :root, not out of this file, so the CSS implementation
 // of the glide and this one read the SAME source.
@@ -173,39 +178,44 @@ export function glide( targets, vars = {} ) {
 }
 
 /*
- * Movement 2 needs the element's rendered lines, and it cannot get them from
- * SplitText, for two reasons measured on this theme's markup (GSAP 3.13.0).
+ * Movement 2 needs the element's rendered lines. SplitText makes them, and its
+ * lines are checked against the page before a single one moves.
  *
- * SplitText's line grouping walks the split element's top-level children and
- * starts a line where one sits both lower and further left than the last. That
- * is exact when those children are words. Statements here are coloured spans,
- * and with two of them it merges pieces of the second: the homepage hero came
- * out as two line wrappers for three rendered lines.
+ * The check is needed because SplitText works its lines out from a copy of the
+ * passage with every word made an inline-block, and an inline-block word loses
+ * its kerning against the spaces either side. The drift builds along a line,
+ * about 0.6px a word and more at glyphs like "A" and "&", so at some widths a
+ * word that fitted at the end of a line no longer does, and SplitText files it
+ * on the next. Measured on GSAP 3.15.0 at every 40px from 320 to 1920: the
+ * Insight Hub statement came out wrong at 12 of 41 widths, the homepage About
+ * statement at 7, with words 230 to 700px from where the browser had drawn
+ * them. A hyphenated word the browser broke after its hyphen cannot be broken
+ * that way inside an inline-block either.
  *
- * And splitting into words instead does not rescue it. A transform does nothing
- * to an inline box and 3.13 creates inline spans, so the words have to become
- * inline-block to move, and an inline-block word loses its kerning against the
- * spaces either side. The drift builds along the line, about 0.6px a word and
- * more at glyphs like "A" and "&", and across a 320-1920px sweep in 10px steps
- * it changed where 9 of 483 statement-widths broke, adding a whole line at 750,
- * 890 and 960px.
- *
- * So the lines are cut where the browser already broke them. Each word's range
+ * So after SplitText has made its lines, every word is measured again: it must
+ * sit within a pixel of where it was drawn before the split, each line must
+ * hold exactly one of the browser's lines, and the passage must be exactly as
+ * tall. If any of that fails, the split is reverted in the same frame and the
+ * lines are cut where the browser already broke them instead. Each word's range
  * reports where it landed; a word lower than the line before starts a new line;
  * and Range.extractContents() lifts each line out whole. A coloured span that
- * straddles a line boundary is cloned into both halves by the DOM itself, which
- * is the slicing SplitText calls deepSlice, and a line that sits wholly inside
- * one span gets that span rebuilt around it. Each line goes into a block
- * wrapper, `.tm-line`, so it can move. The text inside a line is still ordinary
- * inline text, shaped and kerned as it was, which is why nothing shifts.
+ * straddles a line boundary is cloned into both halves by the DOM itself, the
+ * slicing SplitText calls deepSlice, and a line that sits wholly inside one span
+ * gets that span rebuilt around it.
  *
- * A block line cannot reflow, so the lines only exist while they are moving.
- * When the last line lands, the element's original markup goes back, byte for
- * byte, and the sentence is free to wrap again on a resize or a late font.
+ * Either way each line is a block wrapper, `<tm-line class="tm-line">`, so it
+ * can move, and the text inside a line is still ordinary inline text, shaped
+ * and kerned as it was, which is why nothing shifts. A block line cannot
+ * reflow, so the lines only exist while they are moving. When the last line
+ * lands, the element's original markup goes back, byte for byte, and the
+ * sentence is free to wrap again on a resize or a late font.
  */
 
 // Original markup, per element, captured before the first cut.
 const pristine = new WeakMap();
+
+// The SplitText instance holding an element's lines, while it holds them.
+const splits = new WeakMap();
 
 // The tween currently moving an element's lines, so a second build can stop it
 // cleanly rather than have its onComplete tear down the new lines mid-flight.
@@ -283,7 +293,12 @@ function restore( element ) {
 		running.delete( element );
 	}
 
-	if ( pristine.has( element ) && element.querySelector( ':scope > .tm-line' ) ) {
+	const split = splits.get( element );
+
+	if ( split ) {
+		splits.delete( element );
+		split.revert();
+	} else if ( pristine.has( element ) && element.querySelector( ':scope > .tm-line' ) ) {
 		element.innerHTML = pristine.get( element );
 	}
 
@@ -291,6 +306,122 @@ function restore( element ) {
 		element.style.width = heldWidth.get( element );
 		heldWidth.delete( element );
 	}
+}
+
+// Every word in `element`, in reading order, with the boxes it was drawn in. A
+// word the browser broke across two lines has two.
+function wordBoxes( element ) {
+	const walker = document.createTreeWalker( element, NodeFilter.SHOW_TEXT );
+	const range = document.createRange();
+	const words = [];
+	let node;
+
+	while ( ( node = walker.nextNode() ) ) {
+		const word = /\S+/g;
+		let match;
+
+		while ( ( match = word.exec( node.textContent ) ) ) {
+			range.setStart( node, match.index );
+			range.setEnd( node, match.index + match[ 0 ].length );
+
+			const boxes = [ ...range.getClientRects() ];
+
+			if ( boxes.length ) {
+				words.push( { text: match[ 0 ], boxes } );
+			}
+		}
+	}
+
+	return words;
+}
+
+// Every word where it was, to the pixel, and drawn in as many pieces.
+function sameWords( before, after ) {
+	if ( before.length !== after.length ) {
+		return false;
+	}
+
+	return before.every( ( word, i ) => {
+		const now = after[ i ];
+
+		return now.text === word.text
+			&& now.boxes.length === word.boxes.length
+			&& word.boxes.every( ( box, j ) => (
+				Math.abs( box.left - now.boxes[ j ].left ) <= 1 && Math.abs( box.top - now.boxes[ j ].top ) <= 1
+			) );
+	} );
+}
+
+// Each wrapper holds one of the browser's lines: no wrapper spans two, and no
+// line is shared by two wrappers. A wrapper with no words (the gap a paragraph
+// break leaves) holds nothing to move and is left alone.
+function oneLineEach( lines, tolerance ) {
+	let previous = null;
+
+	return lines.every( ( line ) => {
+		const tops = wordBoxes( line ).flatMap( ( word ) => word.boxes.map( ( box ) => box.top ) );
+
+		if ( ! tops.length ) {
+			return true;
+		}
+
+		const top = Math.min( ...tops );
+
+		if ( ( Math.max( ...tops ) - top ) > tolerance || ( previous !== null && ( top - previous ) <= tolerance ) ) {
+			return false;
+		}
+
+		previous = top;
+
+		return true;
+	} );
+}
+
+// SplitText's lines, if they are exactly the lines on screen; otherwise the
+// split is undone before anything is painted and this returns null.
+function splitText( element, centred ) {
+	if ( ! SplitText || typeof SplitText.create !== 'function' ) {
+		return null;
+	}
+
+	const leading = parseFloat( getComputedStyle( element ).lineHeight );
+	const tolerance = Number.isFinite( leading ) ? leading / 2 : 8;
+	const before = wordBoxes( element );
+	const height = element.getBoundingClientRect().height;
+
+	if ( ! before.length ) {
+		return null;
+	}
+
+	let split;
+
+	try {
+		split = SplitText.create( element, {
+			type: 'lines',
+			// The same custom element and class the cutter makes, for the same
+			// reason: editor bands style their own spans and divs.
+			tag: 'tm-line',
+			linesClass: centred ? 'tm-line tm-line--centred' : 'tm-line',
+			// The words stay in the element, in order, so assistive technology
+			// reads the sentence exactly as authored (E6.7).
+			aria: 'none',
+		} );
+	} catch ( error ) {
+		return null;
+	}
+
+	const faithful = split.lines.length > 0
+		&& Math.abs( element.getBoundingClientRect().height - height ) <= 0.5
+		&& sameWords( before, wordBoxes( element ) )
+		&& oneLineEach( split.lines, tolerance );
+
+	if ( ! faithful ) {
+		split.revert();
+
+		return null;
+	}
+
+	return split;
 }
 
 // Cut `element` into its rendered lines. Returns the line wrappers.
@@ -301,14 +432,27 @@ function cutLines( element ) {
 		pristine.set( element, element.innerHTML );
 	}
 
+	heldWidth.set( element, element.style.width );
+	element.style.width = `${ element.getBoundingClientRect().width }px`;
+
+	// A centred line that measures a fraction wider on its own than it did in the
+	// flow cannot stay centred: an overflowing line starts at the left edge, so
+	// at 375px a whole line of the homepage About statement jumped 20px left.
+	// Centred lines are given room either side, which keeps their centre.
+	const centred = getComputedStyle( element ).textAlign === 'center';
+	const split = splitText( element, centred );
+
+	if ( split ) {
+		splits.set( element, split );
+
+		return [ ...split.lines ];
+	}
+
 	const starts = lineStarts( element );
 
 	if ( ! starts.length ) {
 		return [];
 	}
-
-	heldWidth.set( element, element.style.width );
-	element.style.width = `${ element.getBoundingClientRect().width }px`;
 
 	// Lift the lines out last first, so each boundary still names the same
 	// place in the text when its turn comes. The first line takes everything
@@ -359,12 +503,6 @@ function cutLines( element ) {
 	// What is left is only the emptied shells of spans that were cloned into
 	// the lines.
 	element.textContent = '';
-
-	// A centred line that measures a fraction wider on its own than it did in the
-	// flow cannot stay centred: an overflowing line starts at the left edge, so
-	// at 375px a whole line of the homepage About statement jumped 20px left.
-	// Centred lines are given room either side, which keeps their centre.
-	const centred = getComputedStyle( element ).textAlign === 'center';
 
 	return fragments.map( ( fragment ) => {
 		// A custom element rather than a span: editor bands style their own spans
@@ -839,14 +977,27 @@ export function whenSettled( callback ) {
 
 		const $ = window.jQuery;
 
-		if ( ! $ || ! $.active ) {
+		if ( ! $ ) {
 			run();
 
 			return;
 		}
 
-		$( document ).one( 'ajaxStop', () => requestAnimationFrame( () => requestAnimationFrame( run ) ) );
-		setTimeout( run, 4000 );
+		// jQuery runs ready callbacks a tick after DOMContentLoaded, so on a fast
+		// server `load` can arrive before a grid has even asked for its posts,
+		// and nothing looks in flight. Our News played its heading that way. A
+		// callback queued now runs after every ready callback already waiting,
+		// so by then the grid's request has been made.
+		$( () => {
+			if ( ! $.active ) {
+				run();
+
+				return;
+			}
+
+			$( document ).one( 'ajaxStop', () => requestAnimationFrame( () => requestAnimationFrame( run ) ) );
+			setTimeout( run, 4000 );
+		} );
 	};
 
 	if ( document.readyState === 'complete' ) {

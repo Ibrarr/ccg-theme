@@ -120,15 +120,14 @@ html.tm-armed {
   }
 
   // The scroll entrances, hidden the same way until their script takes them
-  // over (`tm-owned`), so one already on screen at load cannot flash. The "Get
-  // in touch" pieces hand over to .cta-motion instead.
+  // over (`tm-owned`), so one already on screen at load cannot flash.
   .home section.intro .statement:not(.tm-owned),
   .home .about-ccg .container > p:not(.tm-owned),
   :is(.tax-sector, .tax-service) .why-ccg .statement:not(.tm-owned),
   :is(.tax-sector, .tax-service) .quotes-slider :is(.quote, .author):not(.tm-owned),
   footer .footer-logo svg:not(.tm-owned),
-  :is(.bottom-cta, .contact-form) h3:not(.cta-motion) :is(.cta-phrase, .cta-rest),
-  .bottom-cta .second-row h3:not(.cta-motion):not(:has(.cta-phrase)) {
+  :is(.bottom-cta, .contact-form) h3 :is(.cta-phrase, .cta-rest):not(.tm-owned),
+  .bottom-cta .second-row h3:not(:has(.cta-phrase)):not(.tm-owned) {
     opacity: 0;
     animation: tm-failsafe 0s 3s forwards;
   }
@@ -141,100 +140,19 @@ html.tm-armed {
 }
 
 // B1 (v0.12): the "Get in touch" heading. The phrase is the serif voice; the
-// rest of the line stays in Poppins. cta-motion.js adds .cta-motion to the
-// heading and .is-in once it scrolls into view, so with no JavaScript both
-// halves are simply typography and the finished heading is the first frame.
+// rest of the line stays in Poppins. With no JavaScript both halves are simply
+// typography and the finished heading is the first frame.
 .cta-phrase {
   font-family: $font-serif;
   font-style: italic;
 }
 
+// E3.4: cta-motion.js glides the two halves in on GSAP, and a transform does
+// nothing to an inline box, so while motion is on they are inline-blocks.
 .cta-motion {
   .cta-phrase,
   .cta-rest {
     display: inline-block;
-    will-change: transform, opacity;
-    opacity: 0;
-  }
-
-  // E3.4, and the reference for the serif glide. Transform and opacity only,
-  // so the whole sequence stays on the compositor and neither half reflows the
-  // other: the phrase travels across its own box while the remainder already
-  // occupies its final position.
-  //
-  // The distance, duration and curve are the shared tokens, so this transition
-  // and the GSAP tween on the homepage hero travel identically. Do not write
-  // literals here.
-  .cta-phrase {
-    transform: translate3d(calc(var(--text-glide-distance) * -1), 0, 0);
-    transition:
-      transform var(--text-glide-duration) var(--text-glide-ease),
-      opacity var(--text-glide-duration) var(--text-glide-ease);
-  }
-
-  // "the rest of the paragraph slides in just before 'Get in touch' reaches its
-  // end position". The phrase is visually home around 300ms into its 500ms
-  // travel on this curve, so that is where this starts.
-  .cta-rest {
-    transform: translate3d(calc(var(--text-glide-distance) * -1), 0, 0);
-    transition:
-      transform var(--text-glide-duration) var(--text-glide-ease) 300ms,
-      opacity var(--text-glide-duration) var(--text-glide-ease) 300ms;
-  }
-
-  &.is-in {
-    .cta-phrase,
-    .cta-rest {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  // will-change only earns its layer while the halves are moving. cta-motion.js
-  // adds this once every transition in the heading has finished, so the layers
-  // the hint created do not outlive a one-off entrance.
-  &.is-settled {
-    .cta-phrase,
-    .cta-rest {
-      will-change: auto;
-    }
-  }
-}
-
-// E4.6: a closing band whose title has no serif phrase ("Contact us" on sixteen
-// service pages) still takes its single glide, as one piece.
-.cta-motion.cta-motion--whole {
-  opacity: 0;
-  transform: translate3d(calc(var(--text-glide-distance) * -1), 0, 0);
-  will-change: transform, opacity;
-  transition:
-    transform var(--text-glide-duration) var(--text-glide-ease),
-    opacity var(--text-glide-duration) var(--text-glide-ease);
-
-  &.is-in {
-    opacity: 1;
-    transform: none;
-  }
-
-  &.is-settled {
-    will-change: auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cta-motion {
-    .cta-phrase,
-    .cta-rest {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-  }
-
-  .cta-motion.cta-motion--whole {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 }
 
