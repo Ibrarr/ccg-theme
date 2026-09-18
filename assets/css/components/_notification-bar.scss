@@ -1,0 +1,307 @@
+// Site-wide notification bar.
+//
+// The one-line desktop bar does not start at lg. The message needs two lines at
+// 13.5px until the viewport is about 1400 wide: swept in 20px steps, the bar
+// clipped its second line from 992 all the way to 1392 and was first clear at
+// 1412, so every common laptop width was slicing it. The single-line treatment
+// therefore starts here instead, and md's two-line treatment runs up to it.
+//
+// This is measured against the CURRENT message. If an editor lengthens it,
+// re-sweep: the QA check is that `bar.scrollHeight` never exceeds
+// `bar.clientHeight` at any width.
+$notification-bar-single-line: 1420px;
+
+// The bar's height IS --ccg-topbar-height, so the space reserved for it and the
+// space it actually occupies cannot drift apart. That property is set on the
+// body class PHP adds, because only the server knows whether the bar rendered,
+// and body sits above every element that reads it (#wrapper's padding, the
+// fixed header's inset, the logo's inset, the Insight anchor offsets).
+
+body.has-notification-bar {
+  // Three lines on mobile, two at md, one at lg. These are tied to the
+  // -webkit-line-clamp values below: change one and change the other, or the
+  // bar reserves a height it does not fill.
+  //
+  // 58px is the Figma's own mobile figure (the 390 frame, Sept 2026). It was
+  // 84px, which held three lines of 12.5px type; at the design's 10px on 1.26
+  // the same three lines need 38px and the bar closes up around them.
+  --ccg-topbar-height: 58px;
+
+  @include media-breakpoint-up(md) {
+    --ccg-topbar-height: 64px;
+  }
+
+  @media (min-width: #{$notification-bar-single-line}) {
+    --ccg-topbar-height: 48px;
+  }
+}
+
+// The pre-paint script flags <html> before the first frame. Written as a
+// descendant selector so it outranks the body rule above, which sets the same
+// property on the same element.
+html.notice-dismissed body.has-notification-bar {
+  --ccg-topbar-height: 0px;
+}
+
+html.notice-dismissed .notification-bar {
+  display: none;
+}
+
+// The bar stays put while the menu is open. It used to hide itself so the
+// overlay could own the whole viewport, but its height stays reserved either
+// way, so hiding it left a blank white strip across the top of the panel. It
+// sits at z-index 200, above the overlay, so it simply stays on top and the
+// notice stays readable.
+
+.notification-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  // Above the header (99) and the logo (100), which is a separately positioned
+  // sibling that would otherwise scroll up over the bar.
+  z-index: 200;
+  height: var(--ccg-topbar-height);
+  background-color: $hof-acid;
+  // Clips rather than spills if an editor pastes copy longer than the field
+  // guidance allows. QA checks scrollHeight against clientHeight on the real
+  // copy; the fix is shorter copy, not a taller bar.
+  overflow: hidden;
+
+  // One centre line for the icon, the sentence and the dismiss control.
+  .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    // The design gutters the mobile bar at 16px rather than the container's 24.
+    // Those 8px a side are the rest of what the three-line message needs; the
+    // bar is its own full-bleed band, so it does not have to hold the body
+    // grid's rhythm.
+    @include media-breakpoint-down(md) {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+  }
+
+  // The eye from the design. currentColor so it tracks the bar's text colour
+  // rather than carrying its own navy literal.
+  .notification-bar-icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    color: $hof-navy;
+
+    svg {
+      display: block;
+      // Scaled with the type: the design drops the message from 12.5px to 10px
+      // on mobile and the icon follows, or it starts to shout over the sentence.
+      width: 18px;
+      height: auto;
+
+      @include media-breakpoint-up(md) {
+        width: 22px;
+      }
+
+      @media (min-width: #{$notification-bar-single-line}) {
+        width: 26px;
+      }
+    }
+  }
+
+  // A real paragraph, not a flex row: the boxed label sits INSIDE the sentence,
+  // so the line has to wrap as prose. As flex items the clauses could only wrap
+  // between each other, which left the long clause overflowing at 375.
+  .notification-bar-text {
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    color: $hof-navy;
+    // The size and leading have to be set HERE, not only on the spans inside.
+    // A line box is at least as tall as its block's own strut, and this
+    // paragraph inherits 16px at Bootstrap's 1.5, so every line was 24px tall
+    // however small the spans were: the design's three 12.6px lines came to
+    // 72px in a 58px bar. It also explains the old 1.9 leading on the spans,
+    // which was tuned to match a 24px strut nobody had noticed.
+    //
+    // Scoped to mobile deliberately. md and lg keep the inherited 24px strut,
+    // because that is what their bar heights were built around: at lg the
+    // message needs two lines between 992 and roughly 1250, and 2 x 24 is
+    // exactly the 48px reserved there. Setting the strut at those widths made
+    // each line 25.65px and pushed the copy 5px out of its own bar.
+    @include media-breakpoint-down(md) {
+      font-size: 10px;
+      line-height: 1.26;
+    }
+  }
+
+  // There is deliberately NO -webkit-line-clamp here, and it should not come
+  // back. The idiom needs `display: -webkit-box` + `-webkit-box-orient:
+  // vertical`, and in this browser that pair behaves as a LEGACY FLEXBOX rather
+  // than a clamp box: the lead, the boxed label and the message each take a
+  // line of their own and the sentence runs to nearly six lines in a
+  // three-line bar. It was broken a second way before that, on the paragraph
+  // itself, where autoprefixer expands `flex: 1 1 auto` into
+  // `-webkit-box-flex: 1` and produces the same legacy box. Two different
+  // shapes, same silent failure, and the "hard guard" never guarded anything.
+  //
+  // Containment is the bar's own `overflow: hidden`, and the real guard is that
+  // the copy fits: the QA sweep asserts the message is never trimmed at any
+  // width. If it ever is, the fix is shorter copy, not a taller bar.
+  .notification-bar-clamp {
+    display: block;
+  }
+
+  // Libre Baskerville Italic navy, per the approved design. The lead clause and
+  // the message are the same voice either side of the boxed label.
+  .notification-bar-lead,
+  .notification-bar-message {
+    font-family: $font-serif;
+    font-style: italic;
+    // The Figma's mobile figures: 10px on a 12.6px line. The old 12.5px on 1.9
+    // leading could not fit the whole message in three lines, so the clamp
+    // trimmed it at "same great people," and the sentence never reached its
+    // point. The kicker's own box is pulled back in below rather than the
+    // leading being opened up to clear it.
+    font-size: 10px;
+    line-height: 1.26;
+    color: $hof-navy;
+
+    @include media-breakpoint-up(md) {
+      font-size: 12.5px;
+      line-height: 1.9;
+    }
+
+    @media (min-width: #{$notification-bar-single-line}) {
+      font-size: 13.5px;
+    }
+  }
+
+  // The boxed caps label from the design: navy keyline, square corners, set in
+  // the sans so it reads as a tag rather than part of the sentence.
+  .notification-bar-kicker {
+    // The Figma's mobile label: Poppins SemiBold 8px, no tracking, a 1px
+    // keyline, and the whole box 14px tall.
+    font-family: $font-sans-semibold;
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-block;
+    border: 1px solid $hof-navy;
+    // 1px of vertical padding, not 2. At 2px the box stood 14px against a
+    // 12.6px line and its lower border crossed into the line beneath, which is
+    // what the client photographed: the label looked like it was sitting on the
+    // next line rather than inside its own. At 1px the box is 12px and lives
+    // entirely within its line.
+    padding: 1px 6px;
+    // Centred on the sentence's x-height rather than sitting on its baseline,
+    // so the box and the italic either side of it share a centre line.
+    vertical-align: middle;
+
+    @include media-breakpoint-up(md) {
+      font-size: 10px;
+      letter-spacing: 1px;
+      border-width: 2.5px;
+      padding: 4px 7px;
+    }
+
+    @media (min-width: #{$notification-bar-single-line}) {
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      padding: 5px 9px;
+    }
+  }
+
+  a.notification-bar-message {
+    text-decoration: none;
+    position: relative;
+
+    // Section 5, rule 2: the underline draws in on transform, which the
+    // compositor handles, rather than on background-size, which does not
+    // animate off the paint step. Same 350ms, same look.
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: $hof-navy;
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    &:where(:hover, :focus-visible)::after {
+      transform: scaleX(1);
+    }
+
+    @include underline-draw-in();
+
+    &:focus-visible {
+      outline: 2px solid $hof-navy;
+      outline-offset: 3px;
+    }
+  }
+
+  .notification-bar-dismiss {
+    flex: 0 0 auto;
+    appearance: none;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: $hof-navy;
+    line-height: 0;
+    padding: 0;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      display: block;
+
+      rect,
+      path {
+        fill: $hof-navy;
+      }
+    }
+    // A 44px target, per the handover QA checklist, without charging the
+    // sentence 44px of column for it. The box is the size of its glyph and an
+    // invisible ::after carries the hit area, which is the same device the
+    // services accordion toggles use. On mobile that hands the message back
+    // roughly 24px, which is most of what it needs for the design's three
+    // lines.
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 44px;
+      height: 44px;
+      transform: translate(-50%, -50%);
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 44px;
+      height: 44px;
+      margin-right: -14px;
+
+      &:after {
+        content: none;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $hof-navy;
+      outline-offset: -2px;
+    }
+  }
+}

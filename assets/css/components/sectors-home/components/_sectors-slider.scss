@@ -28,15 +28,12 @@
 
     .splide__arrows {
       .splide__arrow {
-        background-color: $ccg-dark-green !important;
 
         &:hover {
-          background-color: $ccg-orange !important;
         }
 
 
         &.splide__arrow--next:disabled {
-          background-color: #808080 !important;
           cursor: auto;
         }
       }
@@ -57,7 +54,7 @@
             justify-content: flex-end;
 
             .term {
-              @include term($ccg-pink);
+              @include term($hof-violet-deep);
             }
 
             .heading {
@@ -71,7 +68,7 @@
             }
 
             .global-button {
-              @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
+              margin-top: 8px;
             }
           }
 
@@ -103,7 +100,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(24, 45, 67, 0.7);   // the Hoffman wash, hero recipe
           }
 
           .sector-slide {
@@ -112,15 +109,27 @@
             cursor: pointer;
             height: 100%;
 
+            // Section 2's ring, acid on dark: the card is a washed photograph.
+            --focus-ring: #{$hof-acid};
+
             a {
               text-decoration: none;
               height: 100%;
+              // Inline, this link's focus outline went round empty line
+              // fragments either side of the heading and no ring showed. As a
+              // block it rings the card, inside the slide's padding.
+              display: block;
             }
 
             .heading {
               font-family: $font-circular-medium;
-              font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.875rem);
-              line-height: clamp(2.125rem, 0.5694rem + 3.2407vw, 3rem);
+              // Capped at 38px, down from 46px: Poppins is wider than Circular
+              // at the same size, and the longest sector name ("Cybersecurity")
+              // is a single unbreakable word that overflowed the 280px card.
+              // break-word is a safety net for any longer name added later.
+              font-size: clamp(1.75rem, 0.4167rem + 2.7778vw, 2.375rem);
+              line-height: clamp(2.125rem, 1.0139rem + 2.3148vw, 2.625rem);
+              overflow-wrap: break-word;
               color: #ffffff;
             }
 
@@ -132,7 +141,7 @@
 
           &:hover {
             &:after {
-              background-color: rgba(0, 0, 0, 0.50);
+              background-color: rgba(24, 45, 67, 0.85);
             }
           }
 

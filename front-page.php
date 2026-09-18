@@ -17,14 +17,27 @@
                 <ul class="splide__list">
 					<?php
 					if ( have_rows( 'header_slider' ) ):
+						// Every slide used to render its own <h1>, which gave the page three,
+						// and Splide's loop clones took that to seven. Only the first slide
+						// carries the heading rank now; the rest render the identical markup
+						// in a <p>. The design sets the title and the body as one flowing
+						// serif sentence, so the heading is the whole block rather than the
+						// two-word phrase on its own, which is also what the handover's
+						// markup flag asks for: one element, an inline span for the acid
+						// italic lead-in.
+						$ccg_slide_index = 0;
 						while ( have_rows( 'header_slider' ) ) : the_row();
+							$ccg_slide_index ++;
+							$ccg_statement_tag = 1 === $ccg_slide_index ? 'h1' : 'p';
 							?>
                             <li class="splide__slide">
                                 <img src="<?php echo wp_get_attachment_image_src( get_sub_field( 'image' ), 'header-image' )[0] ?>">
                                 <div class="container px-4 h-100 d-flex align-items-end">
                                     <div class="header-slide">
-                                        <h1 class="heading"><?php the_sub_field( 'title' ); ?></h1>
-                                        <p class="sub-heading"><?php the_sub_field( 'body' ); ?></p>
+                                        <<?php echo $ccg_statement_tag; ?> class="header-statement">
+                                            <span class="heading"><?php the_sub_field( 'title' ); ?></span>
+                                            <span class="sub-heading"><?php the_sub_field( 'body' ); ?></span>
+                                        </<?php echo $ccg_statement_tag; ?>>
 	                                    <?php if ($button = get_sub_field('button')) : ?>
                                             <a class="hero-button" href="<?php echo esc_url($button['url']); ?>">
 			                                    <?php echo esc_html($button['title']); ?>
@@ -44,7 +57,7 @@
 
     <section class="intro">
         <div class="container px-4">
-            <h2><?php the_field( 'intro' ); ?></h2>
+            <p class="statement"><?php echo ccg_statement_band_html( get_field( 'intro' ) ); ?></p>
         </div>
     </section>
 
@@ -67,7 +80,7 @@
 				if ( $pinned_posts->have_posts() ) {
 					while ( $pinned_posts->have_posts() ) {
 						$pinned_posts->the_post();
-						$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+						$term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
 						?>
                         <div class="col-md-6 recent-post-container"
                              style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">
@@ -98,7 +111,7 @@
 					if ( $query->have_posts() ) {
 						while ( $query->have_posts() ) {
 							$query->the_post();
-							$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+							$term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
 							?>
                             <div class="col-md-6 recent-post-container"
                                  style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">
@@ -132,7 +145,7 @@
 				if ( $pinned_posts->have_posts() ) {
 					while ( $pinned_posts->have_posts() ) {
 						$pinned_posts->the_post();
-						$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+						$term_name = ccg_term_eyebrow( get_the_ID(), 'type' );
 						?>
                         <div class="col-md-6 recent-post-container"
                              style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">
@@ -163,7 +176,7 @@
 					if ( $query->have_posts() ) {
 						while ( $query->have_posts() ) {
 							$query->the_post();
-							$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+							$term_name = ccg_term_eyebrow( get_the_ID(), 'type' );
 							?>
                             <div class="col-md-6 recent-post-container"
                                  style="background: url(<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'header-image' )[0]; ?>) center center / cover no-repeat;">
@@ -279,7 +292,7 @@
 				?>
             </div>
             <div class="row">
-                <a class="global-button" href="/insight-hub">See More</a>
+                <a class="global-button global-button--index" href="/insight-hub">See More</a>
             </div>
         </div>
     </section>
@@ -303,7 +316,7 @@
                     <li class="splide__slide first-set">
                         <div class="sector-slide">
                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-                            <?php the_sub_field( 'description' ); ?>
+                            <?php echo ccg_more_link_html( get_sub_field( 'description' ) ); ?>
                             <span class="count"><?php the_field( 'first_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
                         </div>
                     </li>
@@ -319,7 +332,7 @@
                     <li class="splide__slide second-set">
                         <div class="sector-slide">
                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-                            <?php the_sub_field( 'description' ); ?>
+                            <?php echo ccg_more_link_html( get_sub_field( 'description' ) ); ?>
                             <span class="count"><?php the_field( 'second_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
                         </div>
                     </li>
@@ -335,7 +348,7 @@
                     <li class="splide__slide third-set">
                         <div class="sector-slide">
                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
-                            <?php the_sub_field( 'description' ); ?>
+                            <?php echo ccg_more_link_html( get_sub_field( 'description' ) ); ?>
                             <span class="count"><?php the_field( 'third_service_name' ); ?>, <?php echo $current_count; ?> — <?php echo $total_count ?></span>
                         </div>
                     </li>
@@ -441,7 +454,7 @@
 				?>
             </div>
             <div class="row">
-                <a class="global-button" href="/our-work">See More</a>
+                <a class="global-button global-button--index" href="/our-work">See More</a>
             </div>
         </div>
     </section>
@@ -465,7 +478,7 @@
                     endif;
                     ?>
                 </div>
-                <div class="row"><a class="global-button" href="/contact-us">Get in touch</a></div>
+                <div class="row"><a class="global-button global-button--primary" href="/contact-us">Get in touch</a></div>
             </div>
         </section>
 	<?php } ?>

@@ -11,7 +11,7 @@ get_header();
         <div class="container px-4">
             <h1 class="title"><?php the_title(); ?></h1>
             <div class="row">
-                <div class="col-lg-8 intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                <div class="col-lg-8 intro"><p class="statement"><?php echo ccg_statement_clause_html( get_field( 'intro' ) ); ?></p></div>
             </div>
         </div>
     </section>
@@ -129,7 +129,7 @@ get_header();
 
     <section class="contact-form">
         <div class="container px-4">
-            <h3>Get in touch</h3>
+            <h3><?php echo ccg_cta_phrase_html( 'Get in touch' ); ?></h3>
             <div class="row">
                 <div class="col-lg-8 contact-gform-form">
 					<?php echo do_shortcode( '[gravityform id="' . get_field( 'select_gform_form' ) . '" title="false" description="false" ajax="true"]' ); ?>

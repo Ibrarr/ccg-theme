@@ -15,7 +15,7 @@
     line-height: 14px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: $rd-coral;
+    color: $hof-acid;
     margin-bottom: 14px;
   }
 
@@ -39,13 +39,13 @@
     transition: color .3s;
 
     &:where(:hover, :focus-visible) {
-      color: $rd-coral;
+      color: $hof-acid;
     }
   }
 
   li.is-active a {
     font-family: $font-circular-medium;
-    color: $rd-coral;
+    color: $hof-acid;
   }
 }
 
@@ -170,12 +170,21 @@
       padding: 16px 22px;
     }
 
+    // The accordion clips its own overflow to keep its rounded corners, so the
+    // ring section 2 draws outside a control was cut away on every side and
+    // this toggle showed no focus at all. Drawn inside the bar instead, in
+    // acid, because the bar is navy.
+    &:focus-visible {
+      outline: 2px solid $hof-acid;
+      outline-offset: -6px;
+    }
+
     span {
       flex: 1 0 0;
       font-family: $font-circular-medium;
       font-size: 15px;
       line-height: 22px;
-      color: $rd-coral;
+      color: $hof-acid;
 
       @include media-breakpoint-up(md) {
         font-size: 16px;
@@ -189,7 +198,7 @@
       font-family: $font-circular-regular;
       font-size: 18px;
       line-height: 1;
-      color: $rd-coral;
+      color: $hof-acid;
 
       @include media-breakpoint-up(md) {
         font-size: 20px;
@@ -227,12 +236,12 @@
     display: block;
 
     &:where(:hover, :focus-visible) {
-      color: $rd-coral;
+      color: $hof-acid;
     }
   }
 
   li.is-active a {
     font-family: $font-circular-medium;
-    color: $rd-coral;
+    color: $hof-acid;
   }
 }

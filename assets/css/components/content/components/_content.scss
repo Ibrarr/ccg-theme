@@ -4,6 +4,43 @@
   position: relative;
 
   .content {
+    // T3 pull quote: "Libre Baskerville Italic, deep violet, 22px, with a 3px
+    // deep-violet left rule". Body quotes arrive as WYSIWYG <blockquote>, so
+    // the role is carried here rather than by an editor-applied class.
+    blockquote {
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.125rem, 0.875rem + 0.7vw, 1.375rem);
+      line-height: 1.5;
+      color: $hof-violet-deep;
+      border-left: 3px solid $hof-violet-deep;
+      // 1.25rem and 2rem, the values the T3 scoped CSS gives for this rule.
+      padding-left: 20px;
+      margin: 32px 0;
+
+      p {
+        font-family: inherit;
+        font-style: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // 7.5 in-body text links: deep violet on light, underline draw-in. The
+    // !important is aimed at inline style="color:…" left in older WYSIWYG
+    // copy: one post set its links #54B8DB, which read 2.27:1 on white. Only
+    // links are forced; the editorial span colours 7.2 keeps as policy (chart
+    // and figure colours) are untouched.
+    a {
+      color: $hof-violet-deep !important;
+    }
+
     ul {
       @include body-text($ccg-text);
       padding-left: 20px;
@@ -46,10 +83,30 @@
       font-family: $font-circular-bold;
     }
 
+    // A3 (v0.12): headings inside a long run of navy body copy on a light
+    // ground take a differentiating colour, and which one depends on the
+    // context: teal in editorial (blog, articles, sectors), deep violet in
+    // showcase and people (Our Work, careers panels). Teal is the default
+    // because the editorial templates are the majority; _work.scss sets the
+    // violet. H2 display headings and anything on a dark ground are unaffected,
+    // which is why this is scoped to `.post-content .content`.
     h1, h2, h3, h4, h5, h6 {
       font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
       font-family: $font-circular-medium;
-      color: $ccg-orange;
+      color: var(--body-heading, #{$hof-teal});
+
+      // Editors often wrap a heading's words in <strong> and a Word-paste
+      // <span style="color:…">. The span rule above made those words 18px body
+      // copy and the inline colour painted them near-black, so the heading read
+      // as a bold paragraph and A3's teal never showed (C3).
+      span,
+      strong,
+      b {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit !important;
+      }
     }
   }
 
@@ -82,67 +139,28 @@
     }
   }
 
-  .social {
-    .social-icons {
-      display: flex;
-      align-items: center;
-      margin-top: 30px;
+  // A8 (v0.12): the share block, on standard blog posts and every Our Work
+  // page as well as the insight templates. Same grammar as the detailed
+  // report's `.report-share`: a Libre Baskerville Italic deep violet label over
+  // navy glyphs.
+  //
+  // The glyphs carry no colour of their own except the mail icon, which ships
+  // stroked acid (a dark-ground colour) and was therefore invisible here.
+  .post-share {
+    margin-top: 30px;
 
-      a {
-        margin-right: 20px;
-
-        svg {
-          overflow: visible;
-
-          path {
-            transition: $ccg-transition-all;
-          }
-        }
-
-        &.linkedin-icon:hover, &.x-icon:hover {
-          svg {
-            fill: $ccg-orange;
-          }
-        }
-
-        &.mail-icon:hover {
-          svg path {
-            stroke: $ccg-text;
-          }
-        }
-
-        @include media-breakpoint-only(md) {
-          &.linkedin-icon, &.mail-icon {
-            svg {
-              width: 21px;
-              height: 21px;
-            }
-          }
-
-          &.x-icon {
-            svg {
-              width: 17px;
-              height: 17px;
-            }
-          }
-        }
-
-        @include media-breakpoint-down(md) {
-          &.linkedin-icon, &.mail-icon {
-            svg {
-              width: 19px;
-              height: 19px;
-            }
-          }
-
-          &.x-icon {
-            svg {
-              width: 15px;
-              height: 15px;
-            }
-          }
-        }
-      }
+    .post-share-label {
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: none;
+      color: $hof-violet-deep;
+      margin-bottom: 12px;
     }
+
+    @include share-icons();
   }
 }

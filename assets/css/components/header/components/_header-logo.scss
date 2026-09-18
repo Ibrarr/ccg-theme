@@ -1,35 +1,110 @@
 .header-logo {
-  top: 48px;
+  // Not inside <header>: this is a sibling, absolutely positioned against the
+  // initial containing block, so it carries the same offset independently.
+  top: calc(48px + var(--ccg-topbar-height));
   position: absolute;
+  // Section 2's ring, acid on dark and navy on light, follows the mark's own
+  // ground. The logo sits on the masthead, which is dark unless the template is
+  // light-headed, so the default navy ring was invisible on the homepage hero
+  // and every navy masthead.
+  --focus-ring: #{$hof-acid};
 
   @include media-breakpoint-down(md) {
-    top: 44px;
+    top: calc(44px + var(--ccg-topbar-height));
   }
 
   a {
     position: relative;
     z-index: 100;
+    display: block;
 
+    // C7 (v0.12): desktop keeps the horizontal lockup; tablet and mobile take
+    // the stacked Hoffman mark, as the live site does. Both are rendered and
+    // CSS picks one, so the swap needs no JavaScript and cannot shift the
+    // layout on load.
+    .lockup {
+      display: block;
+    }
+
+    .lockup--wide {
+      display: none;
+
+      @include media-breakpoint-up(lg) {
+        display: block;
+      }
+    }
+
+    .lockup--stacked {
+      @include media-breakpoint-up(lg) {
+        display: none;
+      }
+    }
+
+    // The co-brand lockup is 401x54, a 7.43:1 ratio against the old mark's
+    // 4.77:1, so the widths are retuned: the same max-width would have drawn it
+    // a third shorter. height: auto matters as much, because the asset carries
+    // height="54" and without it the box kept that height and letterboxed the
+    // artwork inside it.
     svg {
-      max-width: 195px;
+      width: 100%;
+      height: auto;
+      // Below md the search-and-burger pill is right-aligned to the viewport and
+      // sits a flat 139px from its right edge, with the logo starting at 24px,
+      // so the space between them is the viewport less 163px. Sized against
+      // that measurement plus a 22px gutter rather than a vw fraction: a single
+      // vw has to be set for the worst case at 320, which then leaves the mark
+      // far smaller than it needs to be on every larger phone.
+      max-width: min(340px, calc(100vw - 185px));
 
       @include media-breakpoint-up(md) {
-        width: 100%;
-        max-width: 296px;
+        max-width: 401px;
       }
 
-      @include media-breakpoint-between(lg, xl) {
-        max-width: 200px;
+      // Clearance limits, measured rather than guessed. The nav pill sits inside
+      // a Bootstrap container, so the space left of it steps with the
+      // container's max-width and does NOT scale with the viewport: it is a
+      // flat 214px from 992 to 1199, 352px from 1200 to 1399 and 412px above
+      // that. Every vw value tried here collided somewhere in the middle of a
+      // step for exactly that reason, at 1120 and 1160. These are the measured
+      // widths less a 20px gap.
+      @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+        max-width: 214px;
       }
 
-      @media only screen and (max-width: 380px) {
-        width: 40vw;
+      @media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+        max-width: 352px;
       }
 
       path, rect {
         transition: all 1s;
       }
     }
+
+    .lockup--stacked svg {
+      // 296x62, a 4.78:1 ratio, so at the wide lockup's 340px ceiling it would
+      // stand 71px tall against that mark's 46px. Capped to hold about the same
+      // height instead, and still clear of the search-and-burger pill, which
+      // below md is right-aligned to the viewport 139px in.
+      max-width: min(215px, calc(100vw - 185px));
+    }
+  }
+
+  // A5 (v0.12): the light header runs off the body class and nothing else.
+  // The mark ships white, so on a light ground everything but the underscore is
+  // repainted navy. Eight templates carried their own copy of this rule; they
+  // now all read `has-light-header`, which `ccg_light_header_body_class()` sets.
+  //
+  // Selected by class, not by position: the old rule read path:nth-child(25),
+  // which the current vector does not share.
+  .has-light-header & a svg path:not(.logo-underscore) {
+    fill: $hof-navy !important;
+  }
+
+  // Navy wherever the mark is navy: a light-headed template, and the open menu's
+  // white panel below lg.
+  .has-light-header &,
+  &.mobile-menu-open {
+    --focus-ring: #{$hof-navy};
   }
 
   &.mobile-menu-open {
@@ -37,13 +112,11 @@
     z-index: 99;
 
     a {
-      svg rect,
-      svg path {
+      // Light template: the mark ships white, so everything but the underscore
+      // is repainted navy. Selected by class, not by position: the old rule
+      // read path:nth-child(25), which the new vector does not share.
+      svg path:not(.logo-underscore) {
         fill: $ccg-dark-green !important;
-      }
-
-      svg g g path:nth-child(25) {
-        fill: $ccg-pink !important;
       }
     }
   }

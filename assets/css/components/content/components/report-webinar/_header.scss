@@ -6,6 +6,10 @@
   background-position: center;
   background-repeat: no-repeat;
 
+  // The webinar keeps a photographic masthead, so it takes section 2's one
+  // wash recipe, navy at 70%, like every other text-bearing photograph on the
+  // site. It was a 50% black scrim. The report removes the photograph and
+  // this wash entirely (C6, _insight-report.scss).
   &:after {
     content: '';
     position: absolute;
@@ -13,14 +17,17 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(24, 45, 67, 0.7);
   }
 
   .header-content {
     z-index: 1;
 
     p.term {
-      @include term($ccg-orange);
+      // Acid on the washed dark ground (section 1). It came from $ccg-orange,
+      // navy since the reskin, and read at about 2:1 on the photograph: the
+      // fault C6 fixed on the report, still live on the webinar.
+      @include term($hof-acid);
     }
 
     h1.title {
@@ -28,18 +35,42 @@
     }
 
     .intro {
-      h2 {
+      // The standfirst is a serif voice here too, same class-level rule as the
+      // blog and insight header: Libre Baskerville Italic at 1.5 leading.
+      h2,
+      p.statement {
         @include sub-heading-text(#ffffff);
+        font-family: $font-serif;
+        font-style: italic;
+        // Section 1 and T3: `clamp(1.375rem, 1.8vw, 1.5rem)` on 1.5, 60ch.
+        font-size: clamp(1.375rem, 1.8vw, 1.5rem);
+        line-height: 1.5;
+        max-width: 60ch;
 
         a {
-          color: $ccg-green;
-          background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-          transition: background-size 350ms;
+          color: $hof-acid;
+          position: relative;
 
-          &:where(:hover, :focus-visible) {
-            background-size: 100%;
-            background-position-x: left;
+          // Section 5, rule 2: the underline draws in on transform, which the
+          // compositor handles, rather than on background-size, which does not
+          // animate off the paint step. Same 350ms, same look.
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background-color: $hof-acid;
+            transform: scaleX(0);
+            transform-origin: left center;
           }
+
+          &:where(:hover, :focus-visible)::after {
+            transform: scaleX(1);
+          }
+
+          @include underline-draw-in();
         }
       }
     }

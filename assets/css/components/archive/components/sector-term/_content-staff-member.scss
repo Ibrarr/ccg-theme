@@ -65,18 +65,21 @@
     h1, h2, h3, h4, h5, h6 {
       font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
       font-family: $font-circular-medium;
-      color: $ccg-orange;
+      color: $hof-teal;
     }
   }
 
+  // F6 (v0.13): the card takes the warm grey ground, like the insight hub index
+  // cards. White on the white page, it had only a hairline to find it by. The
+  // headshots are transparent cut-outs, so the grey runs behind them too.
   .staff-member {
     overflow: hidden;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: $hof-grey-warm;
     margin-bottom: 40px;
 
     .content {
-      background: #ffffff;
+      background: $hof-grey-warm;
       padding-top: 35px;
       padding-left: 30px;
       padding-bottom: 20px;
@@ -104,7 +107,7 @@
             overflow: visible;
 
             path {
-              transition: $ccg-transition-all;
+              transition: $ccg-transition-colours;
             }
           }
 
@@ -116,7 +119,7 @@
 
           &.linkedin-icon:hover, &.x-icon:hover {
             svg {
-              fill: $ccg-orange;
+              fill: var(--interaction-accent);
             }
           }
 
@@ -163,7 +166,7 @@
 
     .headshot-container {
       border-radius: 0 8px 8px 0;
-      background: white;
+      background: $hof-grey-warm;
       overflow: hidden;
 
       .headshot {
@@ -190,13 +193,10 @@
     }
 
     @include media-breakpoint-up(lg) {
-      background-color: $ccg-orange;
+      background-color: $hof-grey-warm;
     }
   }
 
-  .global-button {
-    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
-  }
 
   @include media-breakpoint-up(lg) {
     margin-bottom: 125px;

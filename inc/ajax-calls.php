@@ -72,7 +72,7 @@ function load_insight_hub_posts() {
 		$query->the_post();
 
 		$post_type = get_post_type();
-		$term_name = $post_type === 'insight' ? get_the_terms( get_the_ID(), 'type' )[0]->name : 'Blog';
+		$term_name = $post_type === 'insight' ? ccg_term_eyebrow( get_the_ID(), 'type' ) : 'Blog';
 
 		ob_start();
 		require( CCG_TEMPLATE_DIR . '/template-parts/article-card.php' );
@@ -133,7 +133,7 @@ function load_our_work_posts() {
 	$posts_html = '';
 	while ( $query->have_posts() ) {
 		$query->the_post();
-		$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+		$term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
 		ob_start();
 		require( CCG_TEMPLATE_DIR . '/template-parts/article-card.php' );
 		$posts_html .= ob_get_clean();
@@ -184,7 +184,7 @@ function load_our_blog_posts() {
 	$posts_html = '';
 	while ( $query->have_posts() ) {
 		$query->the_post();
-		$term_name = get_the_terms( get_the_ID(), 'category' )[0]->name;
+		$term_name = ccg_term_eyebrow( get_the_ID(), 'category' );
 		ob_start();
 		require( CCG_TEMPLATE_DIR . '/template-parts/article-card.php' );
 		$posts_html .= ob_get_clean();
@@ -236,7 +236,7 @@ function load_our_news_posts() {
 	while ( $query->have_posts() ) {
 		$query->the_post();
 		$terms     = get_the_terms( get_the_ID(), 'source' );
-		$term_name = $terms[0]->name;
+		$term_name = ccg_term_eyebrow( get_the_ID(), 'source' );
 		ob_start();
 		require( CCG_TEMPLATE_DIR . '/template-parts/article-card-news.php' );
 		$posts_html .= ob_get_clean();
@@ -329,11 +329,11 @@ function load_search_results_page() {
 
 		$post_type = get_post_type();
 		if ( $post_type === 'insight' ) {
-			$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+			$term_name = ccg_term_eyebrow( get_the_ID(), 'type' );
 		} elseif ( $post_type === 'work' ) {
-			$term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+			$term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
 		} elseif ( $post_type === 'news' ) {
-			$term_name = get_the_terms( get_the_ID(), 'source' )[0]->name;
+			$term_name = ccg_term_eyebrow( get_the_ID(), 'source' );
 		} else {
 			$term_name = 'Blog';
 		}
@@ -396,7 +396,7 @@ function load_type_posts() {
 	while ( $query->have_posts() ) {
 		$query->the_post();
 		$post_type = get_post_type();
-		$term_name = $post_type === 'insight' ? get_the_terms( get_the_ID(), 'type' )[0]->name : 'Blog';
+		$term_name = $post_type === 'insight' ? ccg_term_eyebrow( get_the_ID(), 'type' ) : 'Blog';
 
 		ob_start();
 		require( CCG_TEMPLATE_DIR . '/template-parts/article-card.php' );
@@ -443,7 +443,7 @@ function load_category_posts() {
 	while ( $query->have_posts() ) {
 		$query->the_post();
 		$terms     = get_the_terms( get_the_ID(), 'category' );
-		$term_name = $terms[0]->name;
+		$term_name = ccg_term_eyebrow( get_the_ID(), 'category' );
 		ob_start();
 		require( CCG_TEMPLATE_DIR . '/template-parts/article-card.php' );
 		$posts_html .= ob_get_clean();
@@ -489,7 +489,7 @@ function load_source_posts() {
 	while ( $query->have_posts() ) {
 		$query->the_post();
 		$terms     = get_the_terms( get_the_ID(), 'source' );
-		$term_name = $terms[0]->name;
+		$term_name = ccg_term_eyebrow( get_the_ID(), 'source' );
 		ob_start();
 		require( CCG_TEMPLATE_DIR . '/template-parts/article-card.php' );
 		$posts_html .= ob_get_clean();

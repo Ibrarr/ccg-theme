@@ -2,14 +2,17 @@
   position: relative;
   z-index: 3;
   margin-top: -25px;
-  background-color: $ccg-green;
+  // C2 (v0.12): navy. 7.2 gave this band the teal utility-index ground, but
+  // the client has since moved teal to "Challenges and opportunities" above and
+  // put this one back to navy. The newer instruction wins.
+  background-color: $hof-navy;
   padding: 55px 0;
   border-radius: 0 0 25px 25px;
 
   h3 {
     font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
     font-family: $font-circular-medium;
-    color: $ccg-orange;
+    color: $hof-white;
     margin-bottom: 40px;
 
     @include media-breakpoint-up(lg) {

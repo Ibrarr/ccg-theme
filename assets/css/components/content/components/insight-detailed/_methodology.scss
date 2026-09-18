@@ -1,7 +1,7 @@
 .report-methodology {
   background-color: $rd-dark-green;
   // Unlike the takeaways panel, this accent bar stays 6px at every size.
-  border-left: $rd-accent solid $rd-coral;
+  border-left: $rd-accent solid $hof-acid;
   border-radius: $rd-radius;
   padding: 16px 18px;
   scroll-margin-top: var(--rd-anchor-offset);
@@ -23,7 +23,7 @@
     line-height: 1.2;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: $rd-coral;
+    color: $hof-acid;
     margin: 0 0 8px;
     scroll-margin-top: var(--rd-anchor-offset);
 
@@ -33,6 +33,12 @@
       letter-spacing: 2px;
       margin-bottom: 10px;
     }
+  }
+
+  // The panel is navy, so a subhead an editor writes inside it is white. The
+  // body rule's teal (A3) is for light grounds only.
+  .report-text :is(h3, h4, h5, h6) {
+    color: $hof-white;
   }
 
   p, li {
@@ -75,14 +81,30 @@
   a {
     font-family: $font-circular-medium;
     color: $rd-cream;
-    background: linear-gradient(0deg, $rd-amber, $rd-amber) no-repeat right bottom / 0;
-    transition: background-size 350ms, color 350ms;
+    position: relative;
+      transition: color 350ms;
+
+    // Section 5, rule 2: the underline draws in on transform, which the
+    // compositor handles, rather than on background-size, which does not
+    // animate off the paint step. Same 350ms, same look.
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: $rd-amber;
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
 
     &:where(:hover, :focus-visible) {
-      background-size: 100%;
-      background-position-x: left;
       color: $rd-dark-green;
+      &::after { transform: scaleX(1); }
     }
+
+    @include underline-draw-in();
   }
 
   ul, ol {
@@ -91,6 +113,6 @@
   }
 
   ul li::marker {
-    color: $rd-coral;
+    color: $hof-acid;
   }
 }

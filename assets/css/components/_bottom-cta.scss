@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   z-index: 2;
-  background-color: $ccg-pink;
+  background-color: $hof-acid;
   margin-top: -25px;
   padding: 65px 0 50px;
   border-radius: 0 0 25px 25px;
@@ -72,6 +72,11 @@
 
   .second-row {
     h3 {
+      // The rule set family, size and margin but never colour, so Bootstrap's
+      // own h1-h6 rule won and the heading painted #212529 while the paragraph
+      // beside it was navy. T9 and T11 both say navy; this band is the loudest
+      // on the site and it appears on 20 templates.
+      color: $hof-navy;
       font-size: clamp(1.625rem, 0.5139rem + 2.3148vw, 2.25rem);
       line-height: clamp(1.75rem, 0.6389rem + 2.3148vw, 2.375rem);
       font-family: $font-circular-regular;
@@ -95,29 +100,6 @@
 
     .global-button {
       margin-top: 35px;
-      background-color: $ccg-dark-green;
-      font-family: $font-circular-medium;
-      cursor: pointer;
-      font-size: 12px;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      color: #ffffff;
-      padding: 7px;
-      border-radius: 50px;
-      transition: $ccg-transition-all;
-      width: 100px;
-
-      &:hover {
-        background-color: $ccg-orange;
-        color: #ffffff;
-      }
-
-      @include media-breakpoint-up(lg) {
-        font-size: 14px;
-        padding: 11px;
-        width: 135px;
-      }
     }
 
     @include media-breakpoint-down(md) {

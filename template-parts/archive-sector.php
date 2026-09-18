@@ -21,7 +21,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                 <div class="col-lg-8 title-intro">
                     <p class="term">Sector</p>
                     <h1 class="title"><?php echo $page_heading ?></h1>
-                    <div class="intro"><h2><?php echo strip_tags( term_description(), '<a>' ); ?></h2></div>
+                    <div class="intro"><p class="statement"><?php echo ccg_editor_html( term_description() ); ?></p></div>
                     <?php if ( get_field( 'smaller_into_text', $current_term ) ) { ?>
                         <div class="smaller-intro"><h3><?php the_field( 'smaller_into_text', $current_term ); ?></h3></div>
                     <?php } ?>
@@ -158,7 +158,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                                         <div class="service-slide">
                                             <h3 class="heading"><?php the_sub_field( 'title' ); ?></h3>
                                             <p class="description"><?php the_sub_field( 'description' ); ?></p>
-                                            <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                            <span class="count"><span aria-hidden="true"><?php echo $current_count; ?> — <?php echo $total_count ?></span><span class="screen-reader-text">Item <?php echo $current_count; ?> of <?php echo $total_count ?></span></span>
                                         </div>
                                     </li>
                                     <?php
@@ -194,9 +194,9 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
         <section class="why-ccg" style="background-image: url('<?php echo ( CCG_TEMPLATE_URI . '/assets/images/backgrounds/ccg-background.jpg' ) ?>');">
             <div class="container px-4 position-relative">
                 <div class="row content">
-                    <div class="col-12"><h1><?php the_field( 'why_choose_ccgroup_1st_title', 'option' ) ?></h1></div>
+                    <div class="col-12"><h2 class="kicker"><?php the_field( 'why_choose_ccgroup_1st_title', 'option' ) ?></h2></div>
                     <div class="col-md-6">
-                        <h2><?php the_field( 'why_choose_ccgroup_2nd_title', 'option' ) ?></h2>
+                        <p class="statement"><?php the_field( 'why_choose_ccgroup_2nd_title', 'option' ) ?></p>
                         <h3><?php the_field( 'why_choose_ccgroup_3rd_title', 'option' ) ?></h3>
                     </div>
                     <div class="col-md-6">
@@ -241,7 +241,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                                                        target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
                                                 </p>
                                             <?php } ?>
-                                            <span class="count"><?php echo $current_count; ?> — <?php echo $total_count ?></span>
+                                            <span class="count"><span aria-hidden="true"><?php echo $current_count; ?> — <?php echo $total_count ?></span><span class="screen-reader-text">Item <?php echo $current_count; ?> of <?php echo $total_count ?></span></span>
                                         </div>
                                     </li>
                                     <?php
@@ -267,7 +267,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                             $case_study = get_sub_field('case_study');
                             $post = $case_study;
                             $intro = get_sub_field('intro');
-                            $term_name = get_the_terms( get_the_ID(), 'sector' )[0]->name;
+                            $term_name = ccg_term_eyebrow( get_the_ID(), 'sector' );
                             require( 'article-card-longer.php' );
                         endwhile;
                         wp_reset_postdata();
@@ -313,11 +313,17 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                         $current_count = 1;
                         while ( have_rows( 'explained', $current_term ) ) : the_row();
                             ?>
-                            <div class="explain-card" style="background-color: <?php the_sub_field( 'background_color' ); ?>">
+                            <?php // T5 replaces the stored per-card colour with a stepped deck: white
+                            // front, a solid navy 60% tint behind it, solid navy at the
+                            // back. The ACF colour picker still holds the old brand cream
+                            // and mustard on 78 term rows, so emitting it here kept the
+                            // retired palette on the page. The rows are left alone; the
+                            // CSS simply governs now. ?>
+                            <div class="explain-card">
                                 <div class="explain-card-content">
                                     <h3><?php the_sub_field( 'title' ); ?></h3>
                                     <p><?php the_sub_field( 'content' ); ?></p>
-                                    <span class="count"><span class="number"><?php echo $current_count; ?> — <?php echo $total_count ?></span> <span class="right-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/right-arrow.svg' ) ?></span></span>
+                                    <span class="count"><span class="number" aria-hidden="true"><?php echo $current_count; ?> — <?php echo $total_count ?></span><span class="screen-reader-text">Card <?php echo $current_count; ?> of <?php echo $total_count ?></span> <span class="right-arrow"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/right-arrow.svg' ) ?></span></span>
                                 </div>
                             </div>
                             <?php
@@ -367,7 +373,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                     }
                     ?>
                 </div>
-                <div class="row"><a class="global-button" href="/our-work">See More</a></div>
+                <div class="row"><a class="global-button global-button--index" href="/our-work">See More</a></div>
             </div>
         </section>
     <?php } ?>
@@ -484,7 +490,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                         <div class="col-lg-9 col-md-10">
                             <div class="row">
                                 <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 second-row">
-                                    <h3><?php the_field( 'custom_bottom_cta_title', $current_term ); ?></h3>
+                                    <h3><?php echo ccg_cta_phrase_html( get_field( 'custom_bottom_cta_title', $current_term  ) ); ?></h3>
                                     <?php
                                     if ( get_field( 'custom_bottom_cta_description', $current_term ) ) {
                                         echo '<p>' . get_field( 'custom_bottom_cta_description', $current_term ) . '</p>';
@@ -492,7 +498,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                                     ?>
                                 </div>
                                 <div class="col-lg-3 col-md-2 third-row">
-                                    <a class="global-button" href="<?php echo $custom_link['url']; ?>"
+                                    <a class="global-button global-button--primary" href="<?php echo $custom_link['url']; ?>"
                                        target="<?php echo $custom_link['target']; ?>"><?php echo $custom_link['title']; ?></a>
                                 </div>
                             </div>
@@ -516,7 +522,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                         <div class="col-lg-9 col-md-10">
                             <div class="row">
                                 <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 second-row">
-                                    <h3><?php the_field( 'bottom_cta_title', 'option' ); ?></h3>
+                                    <h3><?php echo ccg_cta_phrase_html( get_field( 'bottom_cta_title', 'option'  ) ); ?></h3>
                                     <?php
                                     if ( get_field( 'bottom_cta_description', 'option' ) ) {
                                         echo '<p>' . get_field( 'bottom_cta_description', 'option' ) . '</p>';
@@ -524,7 +530,7 @@ $page_heading = $page_heading ? esc_html( $page_heading ) : $term_name_text;
                                     ?>
                                 </div>
                                 <div class="col-lg-3 col-md-2 third-row">
-                                    <a class="global-button" href="<?php echo $link['url']; ?>"
+                                    <a class="global-button global-button--primary" href="<?php echo $link['url']; ?>"
                                        target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 .featured-slider {
   padding-top: 45px;
   margin-top: -5px;
-  background: linear-gradient(180deg, rgb(0, 32, 41) 0%, rgb(0, 32, 41) 50%, $ccg-off-white 50%);
+  background: linear-gradient(180deg, #{$hof-navy} 0%, #{$hof-navy} 50%, $ccg-off-white 50%);
   position: relative;
 
   .parallax-bars {
@@ -37,12 +37,11 @@
   .splide {
     @import "../../../splide-arrows";
 
+    // The band is on the dark-ground list for its navy top half, but the arrows
+    // sit in the warm grey half below the cards, where the acid ring that list
+    // hands down read about 1.06:1. Section 2's ring on light is navy.
     .splide__arrows {
-      .splide__arrow {
-        &:hover {
-          background-color: $ccg-orange !important;
-        }
-      }
+      --focus-ring: #{$hof-navy};
     }
 
     .splide__track {
@@ -64,7 +63,9 @@
       }
 
       .featured-content {
-        background-color: $ccg-blue;
+        // C1 (v0.12): deep violet. The card was navy inside the navy half of the
+        // band behind it, so it merged into the ground and had no edge at all.
+        background-color: $hof-violet-deep;
         height: 100%;
         padding: 40px;
         display: flex;
@@ -73,7 +74,7 @@
         justify-content: center;
 
         .term {
-          @include term($ccg-orange);
+          @include term($hof-acid);
         }
 
         .title {
@@ -92,9 +93,6 @@
           margin-bottom: 25px;
         }
 
-        .global-button {
-          @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
-        }
       }
     }
   }

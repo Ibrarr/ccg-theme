@@ -22,7 +22,11 @@
     text-decoration: none;
   }
 
-  .menu-info-menu-container {
+  // Keyed to the slot the info menu renders into, not to WordPress's
+  // `menu-{slug}-container` class. That class only exists when a menu with the
+  // slug "info-menu" is assigned, so on an install with a different slug, or
+  // none, B7's serif legal links silently fell back to Poppins.
+  .info-menu-slot > div {
     width: 100%;
 
     ul {
@@ -34,17 +38,35 @@
       grid-template-columns: repeat(2, 1fr);
 
       a {
-        font-family: $font-circular-regular;
-        font-size: $ccg-body-size;
+        // B7 (v0.12): the legal links are Libre Baskerville in the overlay as
+        // well as the footer. !important because `.header-footer a` above sets
+        // the sans face with !important of its own.
+        font-family: $font-serif !important;
+        font-size: 0.875rem;
         line-height: $ccg-body-line-height;
         color: $ccg-dark-green;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-        transition: background-size 350ms;
+        position: relative;
 
-        &:where(:hover, :focus-visible) {
-          background-size: 100%;
-          background-position-x: left;
+        // Section 5, rule 2: the underline draws in on transform, which the
+        // compositor handles, rather than on background-size, which does not
+        // animate off the paint step. Same 350ms, same look.
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 1px;
+          background-color: $ccg-orange;
+          transform: scaleX(0);
+          transform-origin: left center;
         }
+
+        &:where(:hover, :focus-visible)::after {
+          transform: scaleX(1);
+        }
+
+        @include underline-draw-in();
       }
 
       @include media-breakpoint-down(sm) {

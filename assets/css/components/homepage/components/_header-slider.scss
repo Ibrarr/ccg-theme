@@ -1,6 +1,30 @@
 .header-slider {
   position: relative;
 
+  // Reserve the carousel's height from the first frame.
+  //
+  // Splide is given `height: '85vh'` in its config and applies it as an inline
+  // style on each slide AT MOUNT. Until then the three slides are a plain
+  // stacked list, so the hero measured 474px before the images loaded, 1530px
+  // once they had, and 765px when Splide finally mounted at about 1.3s. Every
+  // section below it moved twice, which is the homepage's whole 0.13 CLS: the
+  // layout-shift entries name `section.intro` and the parallax bars, not
+  // anything in the hero itself.
+  //
+  // min-height holds the space from the first paint; the cap and the clip keep
+  // the unmounted stack inside it. Nothing is hidden and no display is changed,
+  // so Splide still measures three real slides when it mounts.
+  //
+  // 85vh is Splide's own option value. If that config changes, change this.
+  .splide__track {
+    min-height: 85vh;
+  }
+
+  .splide:not(.is-initialized) .splide__track {
+    max-height: 85vh;
+    overflow: hidden;
+  }
+
   .parallax-bars {
     &#bar-one {
       top: 25px;
@@ -59,6 +83,9 @@
   }
 
   .splide__slide {
+    // The Hoffman wash: navy at 70% over the existing photograph, replacing the
+    // old black scrim. CSS only, so the image element, its src, dimensions and
+    // alt text are untouched.
     &:after {
       content: '';
       position: absolute;
@@ -66,35 +93,105 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(24, 45, 67, 0.7);
     }
 
     .header-slide {
       z-index: 1;
-      margin-bottom: 45px;
+      // The frame leaves about 97px below the CTA, roughly 80px at 1440.
+      margin-bottom: clamp(45px, 8vh, 80px);
+
+      // The wrapper is the heading on slide one and a paragraph elsewhere, so
+      // it must render identically either way: the browser's own h1 margin,
+      // size and leading would otherwise change the slide's rhythm on slide
+      // one only.
+      //
+      // The type sits HERE rather than only on the two spans inside. They are
+      // both `display: inline`, so it is this element's own font-size and
+      // line-height that set the strut of every line box the sentence makes,
+      // and at the inherited 16px that strut was 19.2px under an h1 and 24px
+      // under a paragraph, against 32-63px of inline content. Nothing rendered
+      // differently, because the inline content is taller either way and so
+      // drives the line box: heights measured to the pixel before and after,
+      // 160.9 / 121.4 / 143.5 / 179.4 at 375 / 768 / 1024 / 1440. It is a
+      // latent inconsistency rather than a live fault, but slide one and the
+      // other two had different leading for no reason, and a sentence whose
+      // parts are inline should carry its type on the element that owns the
+      // line boxes.
+      //
+      // This was tried as the fix for E3.1's line split, which was grouping two
+      // visual lines into one piece, and it is NOT that fix: the split was
+      // wrong for an unrelated reason and is now built differently. See the
+      // note at the top of header-slider.js.
+      .header-statement {
+        margin: 0;
+        font-weight: inherit;
+        font-family: $font-serif;
+        // Section 1: the hero H1 is white. Its words sit in the lead-in and
+        // remainder spans, which set their own colours, so the heading itself
+        // was left on Bootstrap's #212529 and read that way to any check of it.
+        color: $hof-white;
+        font-size: clamp(1.75rem, 1rem + 2.5vw, 3.4375rem);
+        // The frame sets roughly 66px on 75px, so 1.14 rather than 1.2.
+        line-height: 1.15;
+      }
+
+      // The design sets the brand phrase and the standfirst as one flowing
+      // serif sentence: the phrase in acid italic, the remainder in white
+      // roman. Both strings are untouched.
+      .heading,
+      .sub-heading {
+        display: inline;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        margin: 0;
+      }
 
       .heading {
-        font-size: clamp(3.4375rem, -0.8036rem + 13.5714vw, 9.375rem);
-        line-height: clamp(2.82825rem, -0.659432rem + 11.145108vw, 7.6875rem);
-        font-family: $font-circular-bold;
-        color: $ccg-off-white;
-
-        @media (min-width: 1400px) {
-          font-size: 193px;
-          line-height: 160px;
-        }
+        font-style: italic;
+        font-weight: 400;
+        color: $hof-acid;
       }
 
       .sub-heading {
-        @include sub-heading-text($ccg-off-white);
+        color: $hof-white;
+
+        // The separator the design draws between the two halves. A pseudo
+        // element on the standfirst rather than the heading, so the H1's own
+        // accessible name stays exactly as authored, and CSS rather than
+        // markup so it is drawn whether or not JavaScript runs.
+        &:before {
+          content: '- ';
+        }
+      }
+
+      // E3.1 promotes the separator above from a pseudo-element to a real one.
+      // The entrance cuts the sentence into its lines, which clones
+      // `.sub-heading` into every line it spans, and each clone would draw its
+      // own hyphen. header-slider.js adds `has-motion` and inserts `.header-sep`
+      // in the same breath, so the glyph is never drawn twice and never
+      // missing. Measured 0px drift against the pseudo it replaces.
+      .header-statement.has-motion .sub-heading:before {
+        content: none;
       }
 
       .hero-button {
-        @include short-button($ccg-off-white, $ccg-dark-green, $ccg-dark-green, $ccg-off-white);
+        margin-top: 28px;
+
+        @include media-breakpoint-up(lg) {
+          // The frame leaves about 193px between the statement and the CTA,
+          // roughly 158px at a 1440 viewport. Tied to viewport height so it
+          // does not crowd a short window.
+          margin-top: clamp(2rem, 17vh, 11rem);
+        }
       }
 
       @include media-breakpoint-up(lg) {
-        width: 60%;
+        // Lands on the design's 1238 of its 1759px frame, which is about
+        // 1013px at a 1440 viewport. The percentage resolves against the
+        // padded container, hence 84 rather than 70.
+        width: 84%;
       }
     }
   }

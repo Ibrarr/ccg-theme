@@ -34,7 +34,6 @@
   }
 
   .global-button {
-    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
     margin: auto;
   }
 

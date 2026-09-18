@@ -1,5 +1,10 @@
 a {
   text-decoration: none;
+  // The link wraps the whole card, image and text blocks included. Left
+  // inline, Chrome draws its focus outline round the empty line fragments
+  // either side of those blocks, so a keyboard user saw no ring at all. As a
+  // block the ring goes round the card. The blocks inside lay out the same.
+  display: block;
 
   .image-wrapper {
     position: relative;
@@ -27,7 +32,13 @@ a {
   }
 
   .term {
-    @include term($ccg-green);
+    // T2 card grammar, the one the later templates all reference: card
+    // eyebrows are deep violet letter-spaced caps on light card grounds. It
+    // was $ccg-green, which is navy since the reskin, so the eyebrow and the
+    // title beneath it were the same colour. Routed through a property so a
+    // dark-ground instance can switch to acid without a second copy.
+    @include term(var(--card-eyebrow, #{$hof-violet-deep}));
+    letter-spacing: 1.5px;
     margin-bottom: 0;
     margin-top: 20px;
   }

@@ -69,6 +69,17 @@
     }
   }
 
+  // Serif byline label, section 1: "Written by" is the violet serif
+  // micro-label; the name stays Poppins navy.
+  .byline-label {
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
+    // Section 1: the serif byline label is 14px; the name beside it is larger.
+    font-size: 0.875rem;
+    color: $hof-violet-deep;
+  }
+
   .report-author-name {
     font-family: $font-circular-medium;
     font-size: 15px;

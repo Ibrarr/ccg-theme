@@ -67,7 +67,8 @@
 
   .report-kicker {
     font-family: $font-circular-bold;
-    font-size: 11px;
+    // Section 1's eyebrow runs 12-14px; 11px sat under it on phones.
+    font-size: 12px;
     line-height: 1.2;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -104,23 +105,19 @@
   }
 
   // Regular below lg, Medium at desktop, per the design.
+  // Section 1 and T3's article standfirst, whole element, class-level: Libre
+  // Baskerville Italic, `clamp(1.375rem, 1.8vw, 1.5rem)` on 1.5, navy, a 60ch
+  // measure. This is T3's own canonical long-read, so the role applies here
+  // exactly as on the other article templates.
   .report-standfirst {
-    font-family: $font-circular-regular;
-    font-size: 16px;
-    line-height: 23px;
-    color: $rd-dark-green;
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.375rem, 1.8vw, 1.5rem);
+    line-height: 1.5;
+    color: $hof-navy;
+    max-width: 60ch;
     margin-bottom: 0;
-
-    @include media-breakpoint-up(md) {
-      font-size: 17px;
-      line-height: 25px;
-    }
-
-    @include media-breakpoint-up(lg) {
-      font-family: $font-circular-medium;
-      font-size: 19px;
-      line-height: 28px;
-    }
   }
 
   .report-dates {

@@ -3,20 +3,24 @@
   margin-top: -25px;
   position: relative;
   z-index: 9;
-  background-color: $ccg-orange;
+  background-color: $hof-violet-deep;
   border-radius: 0 0 25px 25px;
 
   .quote {
     font-size: clamp(1.75rem, 0.2463rem + 1.8519vw, 2.875rem);
     line-height: clamp(1.75rem, 0.2932rem + 1.8519vw, 3.125rem);;
-    font-family: $font-circular-medium;
-    color: $ccg-dark-green;
+    // 7.2: the quote/testimonial band is the voice band, so the quote is white
+    // Libre Baskerville Italic on the deep violet ground.
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
+    color: $hof-white;
     text-align: center;
     margin: 0 auto 40px;
     max-width: 1050px;
 
     .quote-dark {
-      color: $ccg-dark-green;
+      color: $hof-white;
     }
 
     .quote-light {
@@ -25,14 +29,18 @@
   }
 
   .author {
-    @include body-text($ccg-dark-green);
+    @include body-text($hof-white);
     text-align: center;
   }
 
+  // White, not navy. This band's ground is deep violet, so navy rested at
+  // 1.49:1. The mixin's rollover sweep is already white, which is the tell that
+  // the component was built for a dark ground and only its resting colour was
+  // left behind.
   .link {
     text-decoration: underline;
     display: block;
-    @include body-text-white-rollover($ccg-dark-green);
+    @include body-text-white-rollover($hof-white);
     text-align: center;
   }
 

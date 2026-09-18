@@ -1,53 +1,20 @@
 .report-share {
+  // T3: the "Share" label is the serif micro-label on light, not a caps
+  // eyebrow: Libre Baskerville Italic deep violet.
   .report-share-label {
-    font-family: $font-circular-bold;
-    font-size: 12px;
-    line-height: 14px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: $rd-muted;
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+    color: $hof-violet-deep;
     margin-bottom: 12px;
   }
 
-  .social-icons {
-    display: flex;
-    align-items: flex-end;
-    gap: 17px;
-
-    a {
-      display: inline-flex;
-      align-items: flex-end;
-
-      svg {
-        overflow: visible;
-
-        path {
-          transition: $ccg-transition-all;
-        }
-      }
-
-      &:where(.linkedin-icon, .x-icon):where(:hover, :focus-visible) svg {
-        fill: $rd-coral;
-      }
-
-      &.mail-icon:where(:hover, :focus-visible) svg path {
-        stroke: $rd-coral;
-      }
-    }
-
-    .mail-icon svg {
-      width: 22px;
-      height: 27px;
-    }
-
-    .linkedin-icon svg {
-      width: 25px;
-      height: 25px;
-    }
-
-    .x-icon svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
+  // F5 (v0.13): the same icon set, size and colour as every other share block,
+  // hover included. These were 22x27, 25x25 and 20x20, black, with the mail
+  // glyph stroked acid, and a violet hover the other blocks did not share.
+  @include share-icons();
 }

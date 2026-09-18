@@ -12,7 +12,17 @@
         <p class="term"><?php echo $term_name; ?></p>
         <p class="title"><strong><?php the_title(); ?></strong></p>
         <p class="intro"><?php echo $intro ?></p>
-        <p class="find-out-more"><a href="<?php the_permalink(); ?>">Find out more here</a></p>
-        <p></p>
     </a>
+    <?php // Register #6: every card carried the same "Find out more here", which
+    // is a weak anchor for a reader on links alone and for a crawler. The
+    // visible label is the design, so the card's own title is appended out
+    // of sight instead: the anchor reads distinctly, the page looks the same.
+    //
+    // It sits outside the card's own link. It used to be nested inside it,
+    // which is invalid HTML: the browser closed the outer link early and left
+    // an empty <a> in this paragraph, harmless until the link took the 7.5
+    // arrow and the empty one drew a stray arrow of its own. The DOM is now
+    // exactly what the browser used to recover to, minus that empty link. ?>
+    <p class="find-out-more"><a href="<?php the_permalink(); ?>">Find out more here<span class="screen-reader-text"> about <?php the_title(); ?></span></a></p>
+    <p></p>
 </div>

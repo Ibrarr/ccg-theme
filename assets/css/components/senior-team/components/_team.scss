@@ -37,298 +37,209 @@
     }
   }
 
+  // B5 (v0.12): the list. Each person is a white row on the warm grey band,
+  // with the biog revealed in place. Same card, same toggle and same open
+  // behaviour as the careers vacancies, which is what the client asked for.
   .person-container {
-    transition: margin-bottom .5s;
+    // The theme's own GSAP ScrollTrigger reveal batches on this class and
+    // predates the rebrand, so the rows start hidden and it fades them in.
     opacity: 0;
+  }
 
-    .person {
-      margin-bottom: 50px;
-      cursor: pointer;
-      position: relative;
+  .person {
+    background-color: $hof-white;
+    border-radius: var(--radius-btn);
+    padding: 20px 80px 20px 20px;
+    margin-bottom: 16px;
+    position: relative;
+    cursor: pointer;
 
-      .headshot {
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-
-        img {
-          width: 100%;
-          transition: $ccg-transition-all;
-          filter: grayscale(100%);
-          position: relative;
-        }
-
-        &:after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: $ccg-dark-green;
-          transition: $ccg-transition-all;
-          opacity: 0.25;
-        }
-      }
-
-      .details-closed {
-        margin-top: 20px;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-
-        .info {
-          width: 100%;
-
-          .name {
-            @include body-text($ccg-dark-green);
-            margin-bottom: 0;
-            width: 80%;
-          }
-
-          .job-title {
-            @include body-text($ccg-dark-green);
-            font-family: $font-circular-medium;
-            margin-bottom: 0;
-            width: 80%;
-          }
-        }
-
-        .plus-icon {
-          svg {
-            width: 40px;
-            height: 40px;
-
-            path {
-              transition: $ccg-transition-all;
-            }
-
-            @include media-breakpoint-up(lg) {
-              width: 50px;
-              height: 50px;
-            }
-          }
-        }
-      }
-
-      .details-open {
-        z-index: 1;
-        padding: 30px;
-        border-radius: 8px;
-        display: none;
-        position: absolute;
-        top: 0;
-        width: 212%;
-        background-color: $ccg-dark-green;
-
-        .top-section {
-          width: 50%;
-          margin-left: 50%;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-
-          .name {
-            @include body-text($ccg-orange);
-            font-family: $font-circular-medium;
-            margin-bottom: 0;
-          }
-
-          .job-title {
-            @include body-text(#ffffff);
-            margin-bottom: 0;
-          }
-
-          .email {
-            @include body-text(#ffffff);
-            margin-top: 20px;
-            width: fit-content;
-
-            background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-            transition: background-size 350ms;
-
-            &:where(:hover, :focus-visible) {
-              background-size: 100%;
-              background-position-x: left;
-            }
-          }
-
-          .social-icons {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-
-            a {
-              margin-right: 20px;
-
-              svg {
-                overflow: visible;
-
-                path {
-                  transition: $ccg-transition-all;
-                }
-              }
-
-              &.linkedin-icon, &.x-icon {
-                svg {
-                  fill: #ffffff;
-                }
-              }
-
-              &.linkedin-icon:hover, &.x-icon:hover {
-                svg {
-                  fill: $ccg-orange;
-                }
-              }
-
-              @include media-breakpoint-up(md) {
-                &.linkedin-icon {
-                  svg {
-                    width: 21px;
-                    height: 21px;
-                  }
-                }
-
-                &.x-icon {
-                  svg {
-                    width: 17px;
-                    height: 17px;
-                  }
-                }
-              }
-
-              @include media-breakpoint-down(md) {
-                &.linkedin-icon {
-                  svg {
-                    width: 19px;
-                    height: 19px;
-                  }
-                }
-
-                &.x-icon {
-                  svg {
-                    width: 15px;
-                    height: 15px;
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        .bio {
-          margin-top: 30px;
-
-          p {
-            @include body-text(#ffffff);
-          }
-        }
-
-        .cross-icon {
-          margin-left: auto;
-          width: fit-content;
-
-          svg {
-            width: 40px;
-            height: 40px;
-
-            path {
-              transition: $ccg-transition-all;
-            }
-
-            @include media-breakpoint-up(lg) {
-              width: 50px;
-              height: 50px;
-            }
-          }
-
-          &:hover svg g {
-
-            > path {
-              fill: $ccg-orange;
-            }
-
-            g path {
-              fill: #ffffff !important;
-            }
-          }
-        }
-      }
-
-      &:hover {
-        .headshot {
-          &:after {
-            opacity: 0;
-          }
-
-          img {
-            filter: grayscale(0%);
-          }
-        }
-
-        .details-closed {
-          .plus-icon {
-            svg {
-              g > path {
-                fill: $ccg-orange;
-              }
-
-              g > g path {
-                fill: #ffffff;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.active {
-      .person {
-        .headshot {
-          z-index: 2;
-
-          &:after {
-            opacity: 0;
-          }
-
-          img {
-            filter: grayscale(0%);
-          }
-        }
-      }
-    }
 
     @include media-breakpoint-up(lg) {
-      &:nth-child(4n) .details-open {
-        margin-left: -112%;
+      padding: 24px 100px 24px 24px;
+    }
 
-        .top-section {
-          margin-left: 0;
-        }
+    // The section 2 circle family, identical to the vacancies toggle: the disc
+    // is the background and the glyph is currentColor, so the open and hover
+    // states are two properties rather than a second asset.
+    &:after {
+      content: "";
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background-color: $hof-navy;
+      color: $hof-acid;
+      background-image:
+        linear-gradient(currentColor, currentColor),
+        linear-gradient(currentColor, currentColor);
+      background-size: 45% 2px, 2px 45%;
+      background-position: center, center;
+      background-repeat: no-repeat;
+      transition: $ccg-transition-colours, background-size 160ms ease;
+
+      @include media-breakpoint-up(lg) {
+        width: 50px;
+        height: 50px;
+        right: 25px;
       }
     }
 
-    @include media-breakpoint-down(lg) {
-      &:nth-child(2n) .details-open {
-        margin-left: -112%;
+    &:where(:hover, :focus-within):after {
+      background-color: $hof-acid;
+      color: $hof-navy;
+    }
 
-        .top-section {
-          margin-left: 0;
-        }
+    // Open: the vertical bar goes and the disc reads as a minus.
+    &.active:after {
+      background-size: 45% 2px, 0 0;
+    }
+
+    .person-summary {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .person-headshot {
+      flex: 0 0 auto;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        // The grid used to grey the tiles and restore colour on hover. A list
+        // row is not a photographic tile, so the portraits simply read.
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: 84px;
+        height: 84px;
       }
     }
 
-    @include media-breakpoint-down(sm) {
-      &:nth-child(2n) .details-open {
-        margin-left: -115%;
+    .person-identity {
+      min-width: 0;
 
-        .top-section {
-          margin-left: 0;
+      // B5: names in Libre Baskerville Italic.
+      .name {
+        font-family: $font-serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(1.125rem, 0.6944rem + 0.9259vw, 1.5rem);
+        line-height: 1.3;
+        color: $hof-navy;
+        margin: 0;
+        overflow-wrap: break-word;
+      }
+
+      .job-title {
+        @include body-text($hof-navy);
+        font-family: $font-circular-medium;
+        margin: 2px 0 0;
+        overflow-wrap: break-word;
+      }
+    }
+
+    .person-details {
+      display: none;
+      padding-top: 20px;
+      margin-top: 20px;
+      border-top: 1px solid var(--hairline);
+
+      .bio {
+        p {
+          @include body-text($hof-navy);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        // A3 (v0.12), the senior team extension: headings inside a biog take the
+        // people-context deep violet, as Our Work's and the careers panels' do,
+        // in the same in-body heading role. No biog carries one today, and one
+        // added in the editor would otherwise render Bootstrap's near-black.
+        h2, h3, h4, h5, h6 {
+          font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+          font-family: $font-circular-medium;
+          color: $hof-violet-deep;
+
+          span,
+          strong,
+          b {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            color: inherit !important;
+          }
         }
       }
 
-      .details-open {
-        width: 215% !important;
+      .social-icons {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 24px;
+
+        a {
+          display: inline-flex;
+          align-items: center;
+
+          svg {
+            overflow: visible;
+            fill: $hof-navy;
+
+            path {
+              transition: $ccg-transition-colours;
+            }
+          }
+
+          &:where(:hover, :focus-visible) svg {
+            fill: var(--interaction-accent);
+          }
+        }
+
+        .linkedin-icon svg { width: 21px; height: 21px; }
+        .x-icon svg { width: 18px; height: 18px; }
+      }
+
+      @include media-breakpoint-up(lg) {
+        // Align the biog with the name rather than the row edge: the headshot
+        // and its gap are 104px at this width.
+        padding-left: 104px;
+      }
+    }
+
+    // Below 360px the name was left 88px, and a long surname
+    // ("Latibeaudiere") broke mid-word. The row gives it back some room. Kept
+    // last in the row's rules so it outranks them on source order.
+    @media (max-width: 359.98px) {
+      padding: 16px 64px 16px 16px;
+
+      &:after {
+        right: 14px;
+      }
+
+      .person-summary {
+        gap: 12px;
+      }
+
+      .person-headshot {
+        width: 48px;
+        height: 48px;
+      }
+
+      .person-identity .name {
+        font-size: 1rem;
       }
     }
   }
@@ -337,5 +248,3 @@
     background: linear-gradient($ccg-green 180px, $ccg-off-white 10px);
   }
 }
-
-

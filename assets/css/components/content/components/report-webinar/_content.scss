@@ -1,8 +1,11 @@
 .post-content {
   position: relative;
   
+  // A3: headings over long runs of navy body copy on a light ground take the
+  // editorial teal. The shared content component already does this for blog
+  // and article bodies; the report and webinar bodies render here instead.
   .content-heading {
-    @include sub-heading-text($ccg-dark-green);
+    @include sub-heading-text(var(--body-heading, #{$hof-teal}));
     font-family: $font-circular-medium;
   }
 
@@ -12,11 +15,29 @@
 
   .content-body {
     @include body-text($ccg-dark-green);
+
+    // A3 and C3: headings an editor writes into the body take the editorial
+    // teal and the in-body heading role, as blog and standard insight bodies do
+    // through the shared content component. They fell back to navy here.
+    h2, h3, h4, h5, h6 {
+      font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
+      font-family: $font-circular-medium;
+      color: var(--body-heading, #{$hof-teal});
+
+      span,
+      strong,
+      b {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit !important;
+      }
+    }
   }
 
   .points-section {
     h3 {
-      @include sub-heading-text($ccg-orange);
+      @include sub-heading-text(var(--body-heading, #{$hof-teal}));
       font-family: $font-circular-medium;
     }
 

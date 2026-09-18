@@ -7,6 +7,29 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<?php if ( $ccg_notice = ccg_notification_bar() ) : ?>
+    <aside class="notification-bar" aria-label="Announcement">
+        <div class="container px-4">
+            <span class="notification-bar-icon" aria-hidden="true"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/eye.svg' ); ?></span>
+            <p class="notification-bar-text"><span class="notification-bar-clamp">
+                <?php if ( '' !== $ccg_notice['lead'] ) : ?>
+                    <span class="notification-bar-lead"><?php echo esc_html( $ccg_notice['lead'] ); ?></span>
+                <?php endif; ?>
+                <?php if ( '' !== $ccg_notice['kicker'] ) : ?>
+                    <span class="notification-bar-kicker"><?php echo esc_html( $ccg_notice['kicker'] ); ?></span>
+                <?php endif; ?>
+                <?php if ( ! empty( $ccg_notice['link']['url'] ) ) : ?>
+                    <a class="notification-bar-message" href="<?php echo esc_url( $ccg_notice['link']['url'] ); ?>"<?php if ( ! empty( $ccg_notice['link']['target'] ) ) : ?> target="<?php echo esc_attr( $ccg_notice['link']['target'] ); ?>" rel="noopener"<?php endif; ?>><?php echo esc_html( $ccg_notice['message'] ); ?></a>
+                <?php else : ?>
+                    <span class="notification-bar-message"><?php echo esc_html( $ccg_notice['message'] ); ?></span>
+                <?php endif; ?>
+            </span></p>
+            <button type="button" class="notification-bar-dismiss" aria-label="Dismiss announcement">
+                <?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/menu-close.svg' ); ?>
+            </button>
+        </div>
+    </aside>
+<?php endif; ?>
 <div id="wrapper" class="hfeed">
     <header id="header" role="banner">
         <div class="container px-4">
@@ -29,7 +52,7 @@
                                 <div class="header-search-input"><input type="text" placeholder="Search"></div>
                                 <p id="header-search-count"><!-- Search results number will be loaded here --></p>
                                 <div id="header-search-container"><!-- Posts will be loaded here --></div>
-                                <div class="global-button" id="load-more-search-results">See More</div>
+                                <div class="global-button global-button--index" id="load-more-search-results">See More</div>
                                 <div id="search-loading-indicator">
                                     <div class="spinner-border" role="status">
                                         <span class="visually-hidden">Loading...</span>
@@ -56,7 +79,7 @@
 												if ( $featured_posts->have_posts() ) {
 													while ( $featured_posts->have_posts() ) {
 														$featured_posts->the_post();
-														$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+														$term_name = ccg_card_eyebrow( get_the_ID() );
 														echo '<li class="splide__slide">';
 														require( 'template-parts/article-card-slider.php' );
 														echo '</li>';
@@ -83,7 +106,7 @@
 														while ( $recent_posts->have_posts() ) {
 															$recent_posts->the_post();
 															$post_type = get_post_type();
-															$term_name = $post_type === 'insight' ? get_the_terms( get_the_ID(), 'type' )[0]->name : 'Blog';
+															$term_name = $post_type === 'insight' ? ccg_term_eyebrow( get_the_ID(), 'type' ) : 'Blog';
 															echo '<li class="splide__slide">';
 															require( 'template-parts/article-card-slider.php' );
 															echo '</li>';
@@ -134,7 +157,7 @@
 												if ( $recent_news->have_posts() ) {
 													while ( $recent_news->have_posts() ) {
 														$recent_news->the_post();
-														$term_name = get_the_terms( get_the_ID(), 'source' )[0]->name;
+														$term_name = ccg_term_eyebrow( get_the_ID(), 'source' );
 														echo '<li class="splide__slide">';
 														require( 'template-parts/article-card-slider-news.php' );
 														echo '</li>';
@@ -174,7 +197,7 @@
                                                 <a href="tel:<?php the_field( 'ccg_phone', 'option' ) ?>"><?php the_field( 'ccg_phone', 'option' ) ?></a>
                                             </p>
                                         </div>
-                                        <div class="col-md-5 col-6 d-flex align-items-end">
+                                        <div class="col-md-5 col-6 d-flex align-items-end info-menu-slot">
 											<?php wp_nav_menu( array(
 												'theme_location' => 'info-menu',
 											) ); ?>
@@ -212,7 +235,7 @@
 												if ( $featured_posts->have_posts() ) {
 													while ( $featured_posts->have_posts() ) {
 														$featured_posts->the_post();
-														$term_name = get_the_terms( get_the_ID(), 'type' )[0]->name;
+														$term_name = ccg_card_eyebrow( get_the_ID() );
 														echo '<li class="splide__slide">';
 														require( 'template-parts/article-card-slider.php' );
 														echo '</li>';
@@ -239,7 +262,7 @@
 														while ( $recent_posts->have_posts() ) {
 															$recent_posts->the_post();
 															$post_type = get_post_type();
-															$term_name = $post_type === 'insight' ? get_the_terms( get_the_ID(), 'type' )[0]->name : 'Blog';
+															$term_name = $post_type === 'insight' ? ccg_term_eyebrow( get_the_ID(), 'type' ) : 'Blog';
 															echo '<li class="splide__slide">';
 															require( 'template-parts/article-card-slider.php' );
 															echo '</li>';
@@ -285,7 +308,7 @@
                                                 <a href="tel:<?php the_field( 'ccg_phone', 'option' ) ?>"><?php the_field( 'ccg_phone', 'option' ) ?></a>
                                             </p>
                                         </div>
-                                        <div class="col-md-5 col-6 d-flex align-items-end">
+                                        <div class="col-md-5 col-6 d-flex align-items-end info-menu-slot">
 											<?php wp_nav_menu( array(
 												'theme_location' => 'info-menu',
 											) ); ?>
@@ -301,7 +324,10 @@
     </header>
     <div class="container px-4">
         <div class="header-logo">
-            <a href="/"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-new.svg' ) ?></a>
+            <a href="/">
+                <span class="lockup lockup--wide"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-new.svg' ) ?></span>
+                <span class="lockup lockup--stacked"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/logos/ccg-logo-stacked.svg' ) ?></span>
+            </a>
         </div>
     </div>
 

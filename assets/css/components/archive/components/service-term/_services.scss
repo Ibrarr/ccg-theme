@@ -28,25 +28,12 @@
     z-index: 1;
     @import "../../../splide-arrows";
 
+    // No colour override here. This carousel sits on white, so forcing the
+    // arrows white left them at 1:1 against their own ground. The section 2
+    // navy/acid pair with its keyline reads on any band, so the base wins.
     .splide__arrows {
       .splide__arrow {
-        background-color: #fff !important;
-
-        svg, path {
-          fill: $ccg-orange !important;
-        }
-
-        &:hover {
-          background-color: $ccg-orange !important;
-
-          svg, path {
-            fill: #fff !important;
-          }
-        }
-
-
         &.splide__arrow--next:disabled {
-          background-color: #808080 !important;
           cursor: auto;
         }
       }
@@ -77,7 +64,7 @@
             .heading {
               font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
               font-family: $font-circular-medium;
-              color: $ccg-orange;
+              color: $hof-teal;
             }
 
             .description {
@@ -127,7 +114,13 @@
             .count {
               display: block;
               margin-top: 40px;
-              @include body-text($ccg-dark-green);
+              // Acid: this is the "1 - 5" numbering on a navy card, so navy
+              // painted it navy-on-navy. Type scale calls it acid on navy cards.
+              @include body-text($hof-acid);
+              // "Service-card numbering": Poppins SemiBold, 14-16px. body-text()
+              // gives Regular at the body clamp, which ran to 18px at desktop.
+              font-family: $font-sans-semibold;
+              font-size: clamp(0.875rem, 0.7rem + 0.19vw, 1rem);
             }
           }
 

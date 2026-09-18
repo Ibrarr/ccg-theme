@@ -1,4 +1,11 @@
 .services-slider {
+  // Some slide headings in the second set had no rule reaching them and fell
+  // back to Bootstrap's body font and colour.
+  .sector-slide .heading {
+    font-family: $font-circular-medium;
+    color: $hof-navy;
+  }
+
   overflow: hidden;
   background-color: #EFEFEC;
   position: relative;
@@ -26,18 +33,18 @@
         justify-content: space-between;
 
         &:hover svg g > path {
-          fill: $ccg-orange;
+          fill: var(--interaction-accent);
         }
 
         &:hover h4 {
-          color: $ccg-orange;
+          color: var(--interaction-accent);
         }
 
         h4 {
           @include sub-heading-text($ccg-green);
           font-family: $font-circular-medium;
           margin: 0;
-          transition: $ccg-transition-all;
+          transition: $ccg-transition-colours;
         }
 
         .open-close-accordion {
@@ -45,7 +52,7 @@
 
           svg {
             path {
-              transition: $ccg-transition-all;
+              transition: $ccg-transition-colours;
             }
           }
         }
@@ -114,15 +121,8 @@
 
     .splide__arrows {
       .splide__arrow {
-        background-color: $ccg-dark-green !important;
-
-        &:hover {
-          background-color: $ccg-orange !important;
-        }
-
-
+        // Colours come from the shared arrow component, per the section 2 pair.
         &.splide__arrow--next:disabled {
-          background-color: #808080 !important;
           cursor: auto;
         }
       }
@@ -211,9 +211,18 @@
               margin-bottom: 0;
             }
 
+            // A1 / 7.5: the "Read more" that closes each description is a card
+            // CTA, so it takes the caps-and-arrow recipe, acid on the navy card.
+            // ccg_more_link_html() marks it; other links in the field are not.
+            p .more-link {
+              @include caps-arrow-link($hof-acid);
+              margin-top: 14px;
+            }
+
             .count {
               width: 100%;
-              @include body-text($ccg-orange);
+              // Acid: this sits on a navy card, where orange resolved to navy.
+              @include body-text($hof-acid);
 
               @include media-breakpoint-up(md) {
                 margin-top: auto;

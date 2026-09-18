@@ -11,7 +11,7 @@ get_header();
         <div class="container px-4">
             <h1 class="title"><?php the_title(); ?></h1>
             <div class="row">
-                <div class="col-lg-8 intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                <div class="col-lg-8 intro"><p class="statement"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p></div>
             </div>
         </div>
     </section>
@@ -22,60 +22,62 @@ get_header();
         <div class="parallax-bars"
              id="bar-three"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/bars/pink.svg' ) ?></div>
         <div class="container px-4">
-            <div class="row">
-				<?php
-				if ( have_rows( 'senior_team' ) ):
-					while ( have_rows( 'senior_team' ) ) : the_row();
-						$name       = get_sub_field( 'name' );
-						$name_words = explode( ' ', $name );
-						?>
-                        <div class="col-lg-3 col-6 person-container">
-                            <div class="person">
-                                <div class="headshot">
-                                    <img src="<?php the_sub_field( 'headshot' ); ?>"
-                                         alt="<?php the_sub_field( 'name' ); ?>">
-                                </div>
-                                <div class="details-closed">
-                                    <div class="info">
-                                        <p class="name"><?php the_sub_field( 'name' ); ?></p>
-                                        <p class="job-title"><?php the_sub_field( 'job_title' ); ?></p>
+			<?php
+			/**
+			 * B5 (v0.12): a list page, with each biog revealed in place.
+			 *
+			 * The grid of headshot tiles is gone. Each person is now a row that
+			 * expands, the same concertina the careers vacancies use, so the
+			 * two disclosures on the site behave identically and share both the
+			 * accordion script and the keyboard promotion.
+			 *
+			 * `.person-container` keeps its class because the theme's own GSAP
+			 * ScrollTrigger reveal batches on it, and that reveal predates the
+			 * rebrand.
+			 */
+			if ( have_rows( 'senior_team' ) ):
+				while ( have_rows( 'senior_team' ) ) : the_row();
+					$headshot = get_sub_field( 'headshot' );
+					$x        = get_sub_field( 'x_twitter' );
+					$linkedin = get_sub_field( 'linkedin' );
+					?>
+                    <div class="person-container">
+                        <div class="person">
+                            <div class="person-summary">
+								<?php if ( $headshot ) { ?>
+                                    <div class="person-headshot">
+                                        <img src="<?php echo esc_url( $headshot ); ?>"
+                                             alt="<?php the_sub_field( 'name' ); ?>" loading="lazy">
                                     </div>
-                                    <div class="plus-icon"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/team-plus.svg' ) ?></div>
-                                </div>
-
-                                <div class="details-open">
-                                    <div class="top-section">
-                                        <p class="name"><?php the_sub_field( 'name' ); ?></p>
-                                        <p class="job-title"><?php the_sub_field( 'job_title' ); ?></p>
-                                        <!--                                        <a href="mailto:-->
-										<?php //the_sub_field( 'email' ); ?><!--" class="email">Email-->
-                                        <!--                                            - -->
-										<?php //echo $name_words[0]; ?><!--</a>-->
-                                        <?php if (get_sub_field( 'x_twitter' ) || get_sub_field( 'linkedin' )) { ?>
-                                            <div class="social-icons">
-                                                <?php if (get_sub_field( 'x_twitter' )) { ?>
-                                                <a class="x-icon" rel="nofollow"
-                                                   href="<?php the_sub_field( 'x_twitter' ); ?>"
-                                                   target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/x-icon.svg' ) ?></a>
-                                                <?php } ?>
-                                                <?php if (get_sub_field( 'linkedin' )) { ?>
-                                                <a class="linkedin-icon" rel="nofollow"
-                                                   href="<?php the_sub_field( 'linkedin' ); ?>"
-                                                   target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/linkedin-icon.svg' ) ?></a>
-                                                <?php } ?>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                    <div class="bio"><?php the_sub_field( 'bio' ); ?></div>
-                                    <div class="cross-icon"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/icons/team-cross.svg' ) ?></div>
+								<?php } ?>
+                                <div class="person-identity">
+                                    <h2 class="name"><?php the_sub_field( 'name' ); ?></h2>
+                                    <p class="job-title"><?php the_sub_field( 'job_title' ); ?></p>
                                 </div>
                             </div>
+
+                            <div class="person-details">
+                                <div class="bio"><?php the_sub_field( 'bio' ); ?></div>
+								<?php if ( $x || $linkedin ) { ?>
+                                    <div class="social-icons">
+										<?php if ( $x ) { ?>
+                                            <a class="x-icon" rel="nofollow" href="<?php echo esc_url( $x ); ?>"
+                                               target="_blank"><span class="screen-reader-text"><?php the_sub_field( 'name' ); ?> on X</span><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/x-icon.svg' ) ?></a>
+										<?php } ?>
+										<?php if ( $linkedin ) { ?>
+                                            <a class="linkedin-icon" rel="nofollow"
+                                               href="<?php echo esc_url( $linkedin ); ?>"
+                                               target="_blank"><span class="screen-reader-text"><?php the_sub_field( 'name' ); ?> on LinkedIn</span><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/linkedin-icon.svg' ) ?></a>
+										<?php } ?>
+                                    </div>
+								<?php } ?>
+                            </div>
                         </div>
-					<?php
-					endwhile;
-				endif;
-				?>
-            </div>
+                    </div>
+				<?php
+				endwhile;
+			endif;
+			?>
         </div>
     </section>
 

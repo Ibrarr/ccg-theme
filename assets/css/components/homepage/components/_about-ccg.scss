@@ -6,20 +6,33 @@
   padding: 55px 0;
   border-radius: 0 0 25px 25px;
 
+  // A7 (v0.13): this statement carries the T2 statement-block device, the acid
+  // serif lead-in running into white Poppins (round 2 named it), so it takes
+  // that role exactly as section 1 and T2 write it: Poppins Regular
+  // clamp(1.375rem, 1.8vw, 1.5rem) on 1.55 leading, a 60ch measure, white.
+  // C1's 28px is for the three listing mastheads it names, not this band.
   p {
-    font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
     font-family: $font-circular-regular;
-    color: $ccg-orange;
-    margin-bottom: 40px;
-    text-align:center;
-    line-height: 48px;
+    font-size: clamp(1.375rem, 1.8vw, 1.5rem);
+    line-height: 1.55;
+    color: $hof-white;
+    max-width: 60ch;
+    margin: 0 auto 40px;
+    text-align: center;
 
-    a {
-      color: $ccg-orange;
+    // The T2 statement-block device, on the existing author highlight span:
+    // Libre Baskerville Italic acid running into white Poppins. T7 sets the
+    // precedent of restyling the highlight span in place rather than adding
+    // markup, so the editor keeps control of where the lead-in ends.
+    span {
+      color: $hof-acid;
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
     }
 
-    @include media-breakpoint-down(md) {
-      line-height: 32px;
+    a {
+      color: $hof-acid;
     }
   }
 

@@ -5,7 +5,7 @@
         <div class="row">
             <h1 class="title"><?php the_field( 'insight_hub_heading', 'option' ); ?></h1>
             <div class="col-lg-8 col-md-10 intro">
-                <h2><?php the_field( 'insight_hub_description', 'option' ); ?></h2>
+                <p class="statement"><?php echo ccg_statement_closer_html( ccg_statement_lead_html( get_field( 'insight_hub_description', 'option' ) ) ); ?></p>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                                                     <div class="featured-content">
                                                         <p class="term"><?php echo $term; ?></p>
                                                         <h3 class="title"><?php the_title(); ?></h3>
-                                                        <p class="intro"><?php echo strip_tags( get_field( 'intro' ) ); ?></p>
+                                                        <p class="intro"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p>
                                                         <a class="global-button" href="<?php the_permalink(); ?>">Learn
                                                             more</a>
                                                     </div>
@@ -99,7 +99,7 @@
                                                         <div class="featured-content">
                                                             <p class="term"><?php echo $term; ?></p>
                                                             <h3 class="title"><?php the_title(); ?></h3>
-                                                            <p class="intro"><?php echo strip_tags( get_field( 'intro' ) ); ?></p>
+                                                            <p class="intro"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p>
                                                             <a class="global-button" href="<?php the_permalink(); ?>">Learn
                                                                 more</a>
                                                         </div>
@@ -177,7 +177,7 @@
         <div class="row" id="posts-container">
             <!-- Posts will be loaded here -->
         </div>
-        <div class="global-button" id="load-more-posts">See More</div>
+        <div class="global-button global-button--index" id="load-more-posts">See More</div>
         <div id="loading-indicator">
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -203,7 +203,7 @@ if ( ! get_field( 'insight_hub_disable_bottom_cta', 'option' ) ) {
                     <div class="col-lg-9 col-md-10">
                         <div class="row">
                             <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 second-row">
-                                <h3><?php the_field( 'insight_hub_custom_bottom_cta_title', 'option' ); ?></h3>
+                                <h3><?php echo ccg_cta_phrase_html( get_field( 'insight_hub_custom_bottom_cta_title', 'option'  ) ); ?></h3>
 								<?php
 								if ( get_field( 'insight_hub_custom_bottom_cta_description', 'option' ) ) {
 									echo '<p>' . get_field( 'insight_hub_custom_bottom_cta_description', 'option' ) . '</p>';
@@ -211,7 +211,7 @@ if ( ! get_field( 'insight_hub_disable_bottom_cta', 'option' ) ) {
 								?>
                             </div>
                             <div class="col-lg-3 col-md-2 third-row">
-                                <a class="global-button" href="<?php echo $custom_link['url']; ?>"
+                                <a class="global-button global-button--primary" href="<?php echo $custom_link['url']; ?>"
                                    target="<?php echo $custom_link['target']; ?>"><?php echo $custom_link['title']; ?></a>
                             </div>
                         </div>
@@ -235,7 +235,7 @@ if ( ! get_field( 'insight_hub_disable_bottom_cta', 'option' ) ) {
                     <div class="col-lg-9 col-md-10">
                         <div class="row">
                             <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 second-row">
-                                <h3><?php the_field( 'bottom_cta_title', 'option' ); ?></h3>
+                                <h3><?php echo ccg_cta_phrase_html( get_field( 'bottom_cta_title', 'option'  ) ); ?></h3>
 								<?php
 								if ( get_field( 'bottom_cta_description', 'option' ) ) {
 									echo '<p>' . get_field( 'bottom_cta_description', 'option' ) . '</p>';
@@ -243,7 +243,7 @@ if ( ! get_field( 'insight_hub_disable_bottom_cta', 'option' ) ) {
 								?>
                             </div>
                             <div class="col-lg-3 col-md-2 third-row">
-                                <a class="global-button" href="<?php echo $link['url']; ?>"
+                                <a class="global-button global-button--primary" href="<?php echo $link['url']; ?>"
                                    target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
                             </div>
                         </div>

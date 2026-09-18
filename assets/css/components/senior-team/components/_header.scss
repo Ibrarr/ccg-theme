@@ -21,23 +21,46 @@
     }
   }
 
+  // T7: "H1 'Senior team' white ... intro white" on the navy header. Both were
+  // warm grey, the same off-white straggler already fixed on the listing
+  // statements.
   h1.title {
-    @include title-text($ccg-off-white);
+    @include title-text($hof-white);
   }
 
   .intro {
-    h2 {
-      @include sub-heading-text($ccg-off-white);
+    h2,
+    p.statement {
+      @include sub-heading-text($hof-white);
+      // B4 (v0.12): the whole intro sentence is the serif voice here, not just
+      // its opening phrase, because the passage is one sentence long.
+      font-family: $font-serif;
+      font-style: italic;
 
       a {
-        color: $ccg-off-white;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-        transition: background-size 350ms;
+        color: $hof-white;
+        position: relative;
 
-        &:where(:hover, :focus-visible) {
-          background-size: 100%;
-          background-position-x: left;
+        // Section 5, rule 2: the underline draws in on transform, which the
+        // compositor handles, rather than on background-size, which does not
+        // animate off the paint step. Same 350ms, same look.
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 1px;
+          background-color: $ccg-orange;
+          transform: scaleX(0);
+          transform-origin: left center;
         }
+
+        &:where(:hover, :focus-visible)::after {
+          transform: scaleX(1);
+        }
+
+        @include underline-draw-in();
       }
     }
   }

@@ -19,31 +19,33 @@ $button = get_field( 'button' );
                 <ul class="splide__list">
 					<?php
 					if ( have_rows( 'slider' ) ):
+						// Every slide rendered its own <h1>, so the page had four. The
+						// statement on the first slide is the page's heading, per the
+						// client, so it takes the rank and the display words below it
+						// become paragraphs. Classes and copy are untouched: only the
+						// tag changes, so nothing about the slider moves.
+						$ccg_about_index = 0;
 						while ( have_rows( 'slider' ) ) : the_row();
+							$ccg_about_index ++;
+							$ccg_is_first = ( 1 === $ccg_about_index );
 							?>
                             <li class="splide__slide">
                                 <div class="container px-4 h-100 d-flex align-items-center justify-content-center">
                                     <div class="about-slide">
-										<?php if ( get_sub_field( 'tag' ) ) { ?>
-                                            <p class="tag"><?php the_sub_field( 'tag' ); ?></p>
-										<?php } ?>
-
-										<?php if ( get_sub_field( 'header' ) ) { ?>
-                                            <h1 class="heading"><?php the_sub_field( 'header' ); ?></h1>
-										<?php } ?>
-
-										<?php if ( get_sub_field( 'sub_heading' ) && get_sub_field( 'sub_heading_2nd_colour' ) ) { ?>
-                                            <h2 class="sub-heading two-color"><?php the_sub_field( 'sub_heading' ); ?>
-                                                <span><?php the_sub_field( 'sub_heading_2nd_colour' ); ?></span></h2>
-										<?php } ?>
-
-										<?php if ( get_sub_field( 'sub_heading' ) && ! get_sub_field( 'sub_heading_2nd_colour' ) ) { ?>
-                                            <h2 class="sub-heading"><?php the_sub_field( 'sub_heading' ); ?></h2>
-										<?php } ?>
-
-										<?php if ( get_sub_field( 'body' ) ) { ?>
-                                            <p class="body"><?php the_sub_field( 'body' ); ?></p>
-										<?php } ?>
+										<?php
+										// The beat is cast by what it holds, because the fields
+										// have been filled two different ways. See the helper.
+										echo ccg_about_beat_html(
+											array(
+												'tag'                    => get_sub_field( 'tag' ),
+												'header'                 => get_sub_field( 'header' ),
+												'sub_heading'            => get_sub_field( 'sub_heading' ),
+												'sub_heading_2nd_colour' => get_sub_field( 'sub_heading_2nd_colour' ),
+												'body'                   => get_sub_field( 'body' ),
+											),
+											$ccg_is_first
+										);
+										?>
                                     </div>
                                 </div>
                             </li>

@@ -12,7 +12,9 @@
     font-family: $font-circular-bold;
     font-size: 30px;
     line-height: 30px;
-    color: $ccg-dark-green;
+    // White on the navy card. $ccg-dark-green is navy since the reskin, so the
+    // heading was navy on navy.
+    color: $hof-white;
     margin-bottom: 30px;
 
     @include media-breakpoint-up(lg) {
@@ -68,7 +70,6 @@
       margin-top: 25px;
       height: 32px;
       margin-bottom: 20px;
-      @include long-button($ccg-dark-green, #ffffff, #ffffff, $ccg-dark-green);
       max-width: 148px;
 
       @include media-breakpoint-up(lg) {

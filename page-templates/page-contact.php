@@ -10,7 +10,7 @@ get_header();
         <div class="container px-4">
             <h1 class="title"><?php the_title(); ?></h1>
             <div class="row">
-                <div class="col-lg-8 intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                <div class="col-lg-8 intro"><p class="statement"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p></div>
             </div>
         </div>
     </section>
@@ -49,7 +49,7 @@ get_header();
         <div class="parallax-bars"
              id="bar-four"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/bars/keyline.svg' ) ?></div>
         <div class="container px- position-relative">
-            <h3>Get in touch</h3>
+            <h3><?php echo ccg_cta_phrase_html( 'Get in touch' ); ?></h3>
             <div class="row">
                 <div class="col-lg-8 contact-gform-form">
 					<?php echo do_shortcode( '[gravityform id="' . get_field( 'select_gform_form' ) . '" title="false" description="false" ajax="true"]' ); ?>

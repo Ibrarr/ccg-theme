@@ -1,4 +1,7 @@
 .careers-header {
+  // The serif statement lead defaults to acid, which is a dark-ground
+  // colour. This masthead sits on white, so it takes the light-ground accent.
+  --statement-lead-colour: #{$hof-violet-deep};
   padding-top: $ccg-top-page-padding;
   padding-bottom: 60px;
   position: relative;
@@ -25,44 +28,40 @@
   }
 
   .intro {
-    h2 {
+    h2,
+    p.statement {
       @include sub-heading-text($ccg-dark-green);
       margin-bottom: 30px;
 
       a {
         color: $ccg-dark-green;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-        transition: background-size 350ms;
+        position: relative;
+
+        // Section 5, rule 2: the underline draws in on transform, which the
+        // compositor handles, rather than on background-size, which does not
+        // animate off the paint step. Same 350ms, same look.
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 1px;
+          background-color: var(--link-underline);
+          transform: scaleX(0);
+          transform-origin: left center;
+        }
 
         &:where(:hover, :focus-visible) {
-          background-size: 100%;
-          background-position-x: left;
+          &::after { transform: scaleX(1); }
         }
+
+        @include underline-draw-in();
       }
     }
 
     .global-button {
-      background-color: #ffffff;
-      font-family: $font-circular-medium;
-      cursor: pointer;
-      font-size: 12px;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      color: $ccg-dark-green;
-      border-radius: 50px;
-      transition: $ccg-transition-all;
-      width: fit-content;
-      padding: 10px 50px;
-
-      &:hover {
-        background-color: $ccg-orange;
-        color: #ffffff;
-      }
-
-      @include media-breakpoint-up(lg) {
-        font-size: 18px;
-      }
+      margin-top: 10px;
     }
   }
 }

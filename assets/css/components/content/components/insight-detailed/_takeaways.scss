@@ -1,7 +1,13 @@
 .report-takeaways {
-  background-color: #ffffff;
-  // The accent bar steps 4 / 5 / 6 across the three design frames.
-  border-left: 4px solid $rd-coral;
+  // T3: "card ground flips to --hof-grey-warm (no keyline; the grey ground IS
+  // the system's edge device)" - a white panel on a white article ground had
+  // no edge at all. Navy body and bullets read 11:1 on it, the violet label
+  // 7.4:1.
+  background-color: $hof-grey-warm;
+  // T3 names this border acid, not the panel's violet: it is a graphic shape,
+  // and acid is permitted on light grounds for shapes. The width keeps the
+  // approved 4 / 5 / 6 step across the three design frames.
+  border-left: 4px solid $hof-acid;
   border-radius: $rd-radius;
   padding: 18px;
   margin-top: 18px;
@@ -69,7 +75,9 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: $rd-coral;
+      // T3: "bullet markers navy". They were coral, so they migrated to violet
+      // with the rest of that alias and competed with the label.
+      background-color: $hof-navy;
     }
 
     @include media-breakpoint-up(md) {

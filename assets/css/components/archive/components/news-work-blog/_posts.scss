@@ -4,6 +4,18 @@
   margin-top: -5px;
   background: linear-gradient($ccg-green 200px, $ccg-off-white 10px);
 
+  // The filter sits about 54px into the navy top of that hard stop, so the
+  // component's default navy fill had nothing to read against. Acid ground,
+  // navy label, per section 1. Declared here rather than on the bare class
+  // because the Insight Hub uses the same class over a flat warm grey, where
+  // acid would sit at 1.06:1. Hover goes to white, not navy, so the control
+  // cannot vanish into the band on the way.
+  --dropdown-fill: #{$hof-acid};
+  --dropdown-label: #{$hof-navy};
+  --dropdown-fill-hover: #{$hof-white};
+  --dropdown-label-hover: #{$hof-navy};
+  --dropdown-ring: #{$hof-white};
+
   @import "term-selector";
   @import "../../../article-card";
 
@@ -12,6 +24,19 @@
     opacity: 0;
     z-index: 3;
     position: relative;
+
+    // The first row of cards straddles the hard stop, so a single ring colour
+    // vanishes along half the card: navy on the navy top, acid on the warm grey
+    // below. Two bands answer both halves the way section 2 asks, acid on dark
+    // and navy on light: a navy band against the card, which reads on the warm
+    // grey, and the acid ring outside it, which reads on the navy. It is the
+    // dark-ground A2 recipe, used on every card in these grids so the ring does
+    // not change shape between rows. The outline keeps a ring in forced colours.
+    > a:focus-visible {
+      outline: 2px solid $hof-acid;
+      outline-offset: 3px;
+      box-shadow: 0 0 0 3px $hof-navy;
+    }
   }
 
   .no-results {
@@ -20,7 +45,6 @@
   }
 
   .global-button {
-    @include long-button($ccg-dark-green, $ccg-orange, #ffffff, #ffffff);
     display: none;
     margin: auto;
   }

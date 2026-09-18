@@ -5,7 +5,9 @@
   position: relative;
 
   p.term {
-    @include term($ccg-orange);
+    // A9 (v0.12): eyebrows on light grounds are deep violet. This one was
+    // navy, which matched the H1 under it rather than setting it off.
+    @include term($hof-violet-deep);
   }
 
   h1.title {
@@ -13,18 +15,45 @@
   }
 
   .intro {
-    h2 {
+    // The standfirst is Libre Baskerville Italic at class level, per the type
+    // scale: a serif voice, no per-post spans, 1.5 leading.
+    h2,
+    p.statement {
       @include sub-heading-text($ccg-green);
+      font-family: $font-serif;
+      font-style: italic;
+      // Section 1 and T3: `clamp(1.375rem, 1.8vw, 1.5rem)` on 1.5, 60ch.
+      font-size: clamp(1.375rem, 1.8vw, 1.5rem);
+      line-height: 1.5;
+      max-width: 60ch;
 
+      // 7.5: standfirst links are deep violet on light with an underline
+      // draw-in. !important because editors have left inline colours on some
+      // of these links (one measured 2.27:1 against white).
       a {
-        color: $ccg-green;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-        transition: background-size 350ms;
+        color: $hof-violet-deep !important;
+        position: relative;
 
-        &:where(:hover, :focus-visible) {
-          background-size: 100%;
-          background-position-x: left;
+        // Section 5, rule 2: the underline draws in on transform, which the
+        // compositor handles, rather than on background-size, which does not
+        // animate off the paint step. Same 350ms, same look.
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 1px;
+          background-color: $hof-violet-deep;
+          transform: scaleX(0);
+          transform-origin: left center;
         }
+
+        &:where(:hover, :focus-visible)::after {
+          transform: scaleX(1);
+        }
+
+        @include underline-draw-in();
       }
     }
   }

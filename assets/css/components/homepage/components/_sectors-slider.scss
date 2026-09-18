@@ -27,7 +27,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(24, 45, 67, 0.7);   // the Hoffman wash, hero recipe
     @include media-breakpoint-up(md) {
       transform: translateX(-35%);
     }
@@ -41,41 +41,21 @@
     z-index: 1;
     @import "../../splide-arrows";
 
+    // The mobile overrides that used to live here forced a navy glyph onto both
+    // arrows below md, which left the navy prev arrow with no glyph at all.
+    // The base pair already handles every ground.
     .splide__arrows {
       .splide__arrow {
-        background-color: #ffffff !important;
-
-        &:hover {
-          background-color: $ccg-orange !important;
-
-          @include media-breakpoint-down(md) {
-            svg path {
-              fill: #ffffff !important;
-            }
-          }
-        }
-
-
         &.splide__arrow--next:disabled {
-          background-color: #808080 !important;
           cursor: auto;
-
-          @include media-breakpoint-down(md) {
-            svg path {
-              fill: $ccg-dark-green !important;
-            }
-          }
         }
+      }
 
-        svg path {
-          @include media-breakpoint-down(md) {
-            fill: $ccg-dark-green !important;
-          }
-        }
-
-        @include media-breakpoint-up(md) {
-          background-color: $ccg-dark-green !important;
-        }
+      // Below md the wash covers the whole band, so the arrows sit on the
+      // photograph and a navy ring could not be seen. Section 2: acid on dark.
+      // From md the wash slides left and the arrows are back on warm grey.
+      @include media-breakpoint-down(md) {
+        --focus-ring: #{$hof-acid};
       }
     }
 
@@ -99,23 +79,44 @@
             .heading {
               word-spacing: 1000px;
               font-family: $font-circular-medium;
+              // White: this slide sits on the dark photograph the section
+              // paints in its ::before, so navy disappeared into it.
+              color: $hof-white !important;
+              overflow-wrap: break-word;
               font-size: clamp(2.25rem, -0.6389rem + 6.0185vw, 3.875rem);
               line-height: clamp(2.375rem, -0.5139rem + 6.0185vw, 4rem);
-              color: #ffffff;
             }
 
+            // A7: section 1's "Sub-statement", the 36px line under the 62px
+            // section display, is Poppins Regular. The size was right; the
+            // weight had come across from Circular Medium.
             .sub-heading {
-              font-family: $font-circular-medium;
+              font-family: $font-circular-regular;
+              overflow-wrap: break-word;
               font-size: clamp(1.5rem, 0.1667rem + 2.7778vw, 2.25rem);
               line-height: clamp(1.625rem, 0.2917rem + 2.7778vw, 2.375rem);
               color: #ffffff;
+
+              // Below lg the slide is only 360px tall and the stacked heading
+              // takes about 150px of it, so the statement is set smaller here
+              // to fit rather than be clipped.
+              @include media-breakpoint-down(lg) {
+                font-size: 17px;
+                line-height: 22px;
+              }
             }
 
             .global-button {
-              @include short-button(#ffffff, $ccg-orange, $ccg-dark-green, #ffffff);
+              margin-top: 8px;
             }
           }
 
+          // The statement slide's width, and it has to be wide enough for the
+          // copy to fit the slide's FIXED height: Splide sets 530px, or 360px
+          // below 800, and .splide__slide is overflow: hidden with the content
+          // bottom-aligned, so anything too tall is cut off the TOP rather than
+          // spilling visibly. At the old 250px and 155px the statement ran to
+          // roughly 600px in a 360px box and lost its first four lines.
           @include media-breakpoint-up(xl) {
             width: 600px !important;
           }
@@ -125,17 +126,17 @@
           }
 
           @include media-breakpoint-only(md) {
-            width: 250px !important;
+            width: 400px !important;
           }
 
           @include media-breakpoint-down(md) {
-            width: 155px !important;
+            width: min(320px, 82vw) !important;
             padding-right: 0 !important;
           }
         }
 
         &:not(:first-child ) {
-          padding: 50px 60px;
+          padding: 50px 45px;
 
           &:after {
             transition: all .5s;
@@ -145,7 +146,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(24, 45, 67, 0.7);   // the Hoffman wash, hero recipe
           }
 
           .sector-slide {
@@ -154,15 +155,29 @@
             cursor: pointer;
             height: 100%;
 
+            // Section 2's ring, acid on dark: the card is a washed photograph.
+            --focus-ring: #{$hof-acid};
+
             a {
               text-decoration: none;
               height: 100%;
+              // Inline, this link's focus outline went round empty line
+              // fragments either side of the heading and no ring showed. As a
+              // block it rings the card, inside the slide's padding.
+              display: block;
             }
 
             .heading {
               font-family: $font-circular-medium;
-              font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.875rem);
-              line-height: clamp(2.125rem, 0.5694rem + 3.2407vw, 3rem);
+              // Section 1's card title: 42px. It was capped at 38 because the
+              // longest sector name ("Cybersecurity") is one unbreakable word
+              // and at 42 it broke mid-word in the 280px the card's padding
+              // left it. The card's side padding is narrower instead (below),
+              // so the name gets the room the type scale asks for.
+              // break-word stays as a safety net for a longer name added later.
+              font-size: clamp(1.75rem, 0.4167rem + 2.7778vw, 2.625rem);
+              line-height: 1.2;
+              overflow-wrap: break-word;
               color: #ffffff;
             }
 
@@ -174,12 +189,13 @@
 
           &:hover {
             &:after {
-              background-color: rgba(0, 0, 0, 0.50);
+              background-color: rgba(24, 45, 67, 0.85);
             }
           }
 
+          // "Cybersecurity" broke mid-word here too, at 28px in 195px.
           @include media-breakpoint-down(lg) {
-            padding: 35px 40px;
+            padding: 35px 30px;
           }
         }
       }

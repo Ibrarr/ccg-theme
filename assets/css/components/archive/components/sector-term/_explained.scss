@@ -9,7 +9,7 @@
   h3 {
     font-size: clamp(1.75rem, 0.1944rem + 3.2407vw, 2.625rem);
     font-family: $font-circular-medium;
-    color: $ccg-orange;
+    color: $hof-teal;
     margin-bottom: 40px;
 
     @include media-breakpoint-up(lg) {
@@ -57,7 +57,7 @@
       height: auto;
       box-shadow: 0 0 18px 0 rgba(0, 0, 0, .15);
       position: relative;
-      transition: $ccg-transition-all;
+      transition: transform .3s;
 
       &.is-active {
         z-index: 3;
@@ -72,6 +72,12 @@
         h3 {
           color: $ccg-dark-green;
           margin-bottom: 20px;
+
+          // Below 360px the card leaves its title 172px, and a long single
+          // word ("cybersecurity?", "benchmarking?") broke mid-word at 28px.
+          @media (max-width: 359.98px) {
+            font-size: 1.25rem;
+          }
 
           @include media-breakpoint-up(md) {
             min-height: 200px;
@@ -127,5 +133,43 @@
 
   @include media-breakpoint-up(lg) {
     padding: 75px 0;
+  }
+
+  // T5 stepped deck. Front card white, because the warm-grey section ground is
+  // the edge device and no keyline is wanted; behind it a SOLID 60% navy tint,
+  // not an opacity, so the card underneath cannot ghost through as the deck
+  // shuffles; solid navy at the back. White on the tint measures 3.98:1, which
+  // is the ~4:1 the spec predicts: it passes at the 42px the peeking titles
+  // render, and the spec's fallback to a 70% tint is a one-line change here if
+  // a smaller text ever sits on it.
+  .cards-container {
+    .explain-card:nth-child(3n + 1) {
+      background-color: $hof-white;
+
+      .explain-card-content {
+        h3, p, .count, .number { color: $hof-navy; }
+      }
+    }
+
+    .explain-card:nth-child(3n + 2) {
+      // T5 offers the 60% tint #74818E first and names its own fallback:
+      // "deepen the tint to 70% (#5D6C7B) if any visible text fails". It does.
+      // At 60% the peeking title cleared 3.98:1 at 42px, but the card's body
+      // copy and its "2 - 3" counter are small text needing 4.5 and sat at the
+      // same 3.98. At 70% they read 5.4:1.
+      background-color: #5D6C7B;
+
+      .explain-card-content {
+        h3, p, .count, .number { color: $hof-white; }
+      }
+    }
+
+    .explain-card:nth-child(3n + 3) {
+      background-color: $hof-navy;
+
+      .explain-card-content {
+        h3, p, .count, .number { color: $hof-white; }
+      }
+    }
   }
 }

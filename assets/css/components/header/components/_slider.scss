@@ -7,6 +7,15 @@
     }
   }
 
+  // C7: "the circular buttons bottom-right move left with the same right-edge
+  // padding as live". Live keeps Splide's own `right: 1em` on the next arrow,
+  // which puts it 16px inside the panel at every desktop width; the shared
+  // arrow partial neutralises those offsets for the page carousels, which left
+  // these two flush against the panel edge. One em is that same 16px here.
+  .splide__arrows {
+    padding-right: 1em;
+  }
+
   .splide__slide {
     margin-right: 15px;
     @import "../../article-card";

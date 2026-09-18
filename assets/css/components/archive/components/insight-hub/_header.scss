@@ -1,6 +1,6 @@
 .archive-header {
   padding-top: $ccg-top-page-padding;
-  background-color: rgb(0, 32, 41);
+  background-color: $hof-navy;
   position: relative;
 
   .parallax-bars {
@@ -18,12 +18,13 @@
   }
 
   h1.title {
-    @include title-text($ccg-off-white);
+    @include title-text($hof-white);
   }
 
   .intro {
-    h2 {
-      @include sub-heading-text($ccg-off-white);
+    h2,
+    p.statement {
+      @include sub-heading-text($hof-white);
     }
   }
 }

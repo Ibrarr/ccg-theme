@@ -1,10 +1,31 @@
 const mix = require('laravel-mix');
 
+// E1: GSAP, ScrollTrigger and SplitText, the stack hoffman.com runs, are loaded
+// once per page as their own files, in the page's globals, like Hoffman's. The
+// bundles import them from those globals instead of each carrying its own copy,
+// so every script on a page shares one GSAP and one ScrollTrigger.
+['gsap.min.js', 'ScrollTrigger.min.js', 'SplitText.min.js'].forEach((file) => {
+    mix.copy(`node_modules/gsap/dist/${file}`, 'dist/vendor/gsap');
+});
+
+mix.webpackConfig({
+    externals: {
+        gsap: 'window',
+        'gsap/ScrollTrigger': 'window',
+        'gsap/SplitText': 'window',
+    },
+});
+
 mix.js([
+    'assets/js/header/reduced-motion.js',
     'assets/js/header/main-menu.js',
     'assets/js/header/sliders.js',
     'assets/js/header/load-search-results.js',
-    'assets/js/header/announce-popup.js'
+    'assets/js/header/announce-popup.js',
+    'assets/js/header/notification-bar.js',
+    'assets/js/header/cta-motion.js',
+    'assets/js/header/keyboard-controls.js',
+    'assets/js/header/field-focus.js'
 ], 'js/header.js');
 
 mix.js([
@@ -13,6 +34,7 @@ mix.js([
     'assets/js/homepage/sector-slider.js',
     'assets/js/homepage/services-slider.js',
     'assets/js/homepage/accordion.js',
+    'assets/js/homepage/statement-motion.js',
 ], 'js/homepage.js');
 
 mix.js([
@@ -34,13 +56,16 @@ mix.js([
 mix.js([
     'assets/js/awards/gsap-animations.js',
     'assets/js/awards/accordion.js',
+    'assets/js/shared/masthead-motion.js',
 ], 'js/awards.js');
 
 mix.js([
     'assets/js/careers/gsap-animations.js',
     'assets/js/careers/cards.js',
     'assets/js/careers/accordion.js',
+    'assets/js/careers/vacancy-fit.js',
     'assets/js/careers/benefits.js',
+    'assets/js/shared/masthead-motion.js',
 ], 'js/careers.js');
 
 mix.js([
@@ -56,20 +81,24 @@ mix.js([
 mix.js([
     'assets/js/work-single/gsap-animations.js',
     'assets/js/work-single/dropdown.js',
+    'assets/js/shared/standfirst-motion.js',
 ], 'js/work-single.js');
 
 mix.js([
     'assets/js/blog-single/gsap-animations.js',
+    'assets/js/shared/standfirst-motion.js',
 ], 'js/blog-single.js');
 
 mix.js([
     'assets/js/insight-single/gsap-animations.js',
+    'assets/js/shared/standfirst-motion.js',
 ], 'js/insight-single.js');
 
 mix.js([
     'assets/js/insight-detailed/contents-menu.js',
     'assets/js/insight-detailed/faq.js',
     'assets/js/insight-detailed/related-content.js',
+    'assets/js/shared/standfirst-motion.js',
 ], 'js/insight-detailed.js');
 
 mix.js([
@@ -78,6 +107,7 @@ mix.js([
     'assets/js/sector-term/dropdown.js',
     'assets/js/sector-term/quote-slider.js',
     'assets/js/sector-term/explain-cards.js',
+    'assets/js/shared/term-motion.js',
 ], 'js/sector-term.js');
 
 mix.js([
@@ -86,17 +116,20 @@ mix.js([
     'assets/js/service-term/gsap-animations.js',
     'assets/js/service-term/quote-slider.js',
     'assets/js/service-term/services-slider.js',
+    'assets/js/shared/term-motion.js',
 ], 'js/service-term.js');
 
 mix.js([
     'assets/js/insight-archive/gsap-animations.js',
     'assets/js/insight-archive/slider.js',
-    'assets/js/insight-archive/load-posts.js'
+    'assets/js/insight-archive/load-posts.js',
+    'assets/js/shared/masthead-motion.js'
 ], 'js/insight-archive.js');
 
 mix.js([
     'assets/js/work-archive/gsap-animations.js',
-    'assets/js/work-archive/load-posts.js'
+    'assets/js/work-archive/load-posts.js',
+    'assets/js/shared/masthead-motion.js'
 ], 'js/work-archive.js');
 
 mix.js([
@@ -106,6 +139,7 @@ mix.js([
 
 mix.js([
     'assets/js/bottom-cta/gsap-animations.js',
+    'assets/js/bottom-cta/footer-motion.js',
 ], 'js/bottom-cta.js');
 
 mix.js([
@@ -118,7 +152,8 @@ mix.js([
 
 mix.js([
     'assets/js/news-archive/gsap-animations.js',
-    'assets/js/news-archive/load-posts.js'
+    'assets/js/news-archive/load-posts.js',
+    'assets/js/shared/masthead-motion.js'
 ], 'js/news-archive.js');
 
 mix.js([

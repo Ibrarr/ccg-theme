@@ -25,5 +25,8 @@
     "/js/source-term.js": "/js/source-term.js",
     "/js/category-term.js": "/js/category-term.js",
     "/js/search.js": "/js/search.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/vendor/gsap/gsap.min.js": "/vendor/gsap/gsap.min.js",
+    "/vendor/gsap/ScrollTrigger.min.js": "/vendor/gsap/ScrollTrigger.min.js",
+    "/vendor/gsap/SplitText.min.js": "/vendor/gsap/SplitText.min.js"
 }

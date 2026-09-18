@@ -1,3 +1,15 @@
+// 7.5's underline draw-in. The ::after rests at scaleX(0) with no transition of
+// its own, so keyboard focus draws it at once and it retracts at once; only a
+// real pointer hovering draws it in, on the strong ease-out. It used to run
+// 350ms ease-out on hover and focus alike, ungated on touch.
+@mixin underline-draw-in() {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover::after {
+      transition: $ccg-underline-draw;
+    }
+  }
+}
+
 @mixin title-text($color) {
   font-family: $font-circular-medium;
   font-size: $ccg-heading-size;
@@ -17,6 +29,14 @@
   color: $color;
 }
 
+// C4 (v0.12): the careers concertina section titles come down from 56px to
+// 44px. Same ramp as title-text(), capped lower, so the mobile end of the scale
+// is untouched and only the desktop value moves. Include AFTER title-text().
+@mixin section-title-44() {
+  font-size: clamp(2.375rem, 0.375rem + 4.1667vw, 2.75rem);
+  line-height: clamp(2.625rem, -0.375rem + 6.25vw, 3.375rem);
+}
+
 @mixin body-text($color) {
   font-family: $font-circular-regular;
   font-size: $ccg-body-size;
@@ -26,13 +46,37 @@
   a {
     font-family: $font-circular-medium;
     color: $color;
-    background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-    transition: background-size 350ms;
+    // The sweep colour comes from a custom property so a light-ground section can
+    // switch it to deep violet without a second copy of this mixin.
+    //
+    // The size is "0 1px" growing to "100% 1px", NOT "0" growing to "100%". A
+    // gradient has no intrinsic height, so an unqualified 100% fills the whole
+    // box: under the old mustard that read as a highlight sweep, but with the
+    // violet token behind navy text it measured 1.49:1 and the label vanished
+    // on hover. 7.5 asks for an underline draw-in, which is also what this is
+    // now. Same correction applied at all 23 call sites.
+    position: relative;
+
+    // Section 5, rule 2: the underline draws in on transform, which the
+    // compositor handles, rather than on background-size, which does not
+    // animate off the paint step. Same 350ms, same look.
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: var(--link-underline);
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
 
     &:where(:hover, :focus-visible) {
-      background-size: 100%;
-      background-position-x: left;
+      &::after { transform: scaleX(1); }
     }
+
+    @include underline-draw-in();
   }
 }
 
@@ -45,73 +89,274 @@
   a {
     font-family: $font-circular-medium;
     color: $color;
-    background: linear-gradient(0deg, #fff, #fff) no-repeat right bottom / 0;
-    transition: background-size 350ms;
+    position: relative;
 
-    &:where(:hover, :focus-visible) {
-      background-size: 100%;
-      background-position-x: left;
+    // Section 5, rule 2: the underline draws in on transform, which the
+    // compositor handles, rather than on background-size, which does not
+    // animate off the paint step. Same 350ms, same look.
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: #fff;
+      transform: scaleX(0);
+      transform-origin: left center;
     }
+
+    &:where(:hover, :focus-visible)::after {
+      transform: scaleX(1);
+    }
+
+    @include underline-draw-in();
   }
 }
 
+// Section 1's eyebrow label: Poppins SemiBold, letter-spaced caps, 12-14px.
+// The spacing is the handover's own 0.08em; a call site that sets its own
+// tracking after the include keeps it.
 @mixin term($color) {
   font-family: $font-circular-bold;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin: 0;
-  font-size: clamp(0.625rem, 0.1806rem + 0.9259vw, 0.875rem);
+  font-size: clamp(0.75rem, 0.1806rem + 0.9259vw, 0.875rem);
   color: $color;
 }
 
-@mixin long-button($background-color,$hover-background-color,$color,$hover-color) {
-  border: none;
-  background-color: $background-color;
+// Shared button chassis. Separated out so the filled, outlined and link variants
+// below cannot drift apart on sizing, radius, focus or tap target.
+//
+// display is flex rather than inline-flex so these stay block-level: several call
+// sites rely on that for their own width and `margin: auto` centring.
+//
+// min-height meets the 44px tap target the handover QA checklist asks for. The old
+// padding-only sizing came out at roughly 27px on mobile.
+// A1 (v0.12): one button system, two variants, and nothing else survives.
+//
+// Colour is not baked in. --btn-ink is the keyline and the label; --btn-ground
+// is what the label becomes when the box fills on hover, so a band sets the
+// pair once and every button inside it follows. Navy ink on light and warm
+// grey (the default), acid on navy, white on washed photography.
+@mixin button-shell() {
   font-family: $font-circular-medium;
-  cursor: pointer;
-  font-size: 12px;
+  // A1: every label uppercase, sitewide, both variants.
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  // F1 (v0.13) set labels to 14px, both variants; B1 (v0.14) makes that the top
+  // of a 12-14px fluid size, set here once for every variant.
+  font-size: $ccg-button-label-size;
+  // Padding and leading add to exactly 44px rather than leaning on min-height:
+  // jQuery's .show() writes an inline display: block over the flex value on
+  // every load-more button, and a block box does not centre its own line.
+  line-height: 20px;
+  padding: 12px 20px;
+  min-height: 44px;
+  display: block;
+  width: fit-content;
   text-align: center;
   text-decoration: none;
-  display: block;
-  color: $color;
-  padding: 7px;
-  border-radius: 50px;
-  transition: $ccg-transition-all;
-  width: 112px;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+  transition: $ccg-transition-colours;
 
-  &:hover {
-    background-color: $hover-background-color;
-    color: $hover-color;
+  &:focus-visible {
+    outline: 2px solid var(--btn-ink, #{$hof-navy});
+    outline-offset: 3px;
+  }
+
+  // The leading and padding still add to 44px, so the box does not move.
+  @include media-breakpoint-up(lg) {
+    letter-spacing: 2px;
+    line-height: 22px;
+    padding: 11px 28px;
+  }
+}
+
+// A2 (v0.13): a text field outside Gravity Forms keeps the same focus recipe as
+// the form fields. Nothing is added under a pointer (field-focus.js flags
+// <html>), and keyboard focus takes the 1.5px ring. These fields used to set
+// outline: none on every focus, so a keyboard user could not see them at all.
+//
+// The ring is drawn by focus-ring-shadow(), not an outline: see there.
+@mixin field-focus() {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    @include focus-ring-shadow();
+  }
+
+  html.pointer-focus &:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+// A2's ring: 1.5px wide, 2px off the control (T11's offset). Chrome and Firefox
+// round an outline's width down to whole pixels, so `outline: 1.5px` painted
+// 1px and computed as 1px at every pixel density. A shadow's spread is not
+// rounded, so the ring is two shadows: the first paints the 2px gap in the
+// ground's own colour (--focus-gap), the second the 1.5px ring outside it.
+// The outline stays, transparent, because forced-colours mode removes shadows
+// and draws outlines in the system colour, so the focus state survives there.
+// $rest is any shadow the control already wears, kept underneath.
+@mixin focus-ring-shadow($offset: 2px, $ring: var(--focus-ring, #{$hof-navy}), $rest: null, $important: false) {
+  $flag: if($important, ' !important', '');
+  $shadows: 0 0 0 $offset var(--focus-gap, #{$hof-white}), 0 0 0 ($offset + 1.5px) $ring;
+
+  @if $rest {
+    $shadows: append($shadows, $rest, comma);
+  }
+
+  outline: 1.5px solid transparent#{$flag};
+  outline-offset: $offset#{$flag};
+  box-shadow: $shadows#{$flag};
+}
+
+// F5 (v0.13): one share icon set everywhere, sized and coloured as the Our Work
+// pages already were. Each glyph is centred in the same 22px square, so the
+// three read as one optical size rather than three drawings at their own
+// scales, and all three are navy at rest.
+@mixin share-icons() {
+  .social-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+
+      svg {
+        overflow: visible;
+        fill: $hof-navy;
+
+        path {
+          transition: $ccg-transition-colours;
+        }
+      }
+
+      &.mail-icon svg path {
+        stroke: $hof-navy;
+      }
+
+      // The same hover everywhere too: the light-ground interaction accent.
+      &:where(:hover, :focus-visible) svg {
+        fill: var(--interaction-accent, #{$hof-teal});
+      }
+
+      &.mail-icon:where(:hover, :focus-visible) svg path {
+        stroke: var(--interaction-accent, #{$hof-teal});
+      }
+    }
+
+    .mail-icon svg { width: 22px; height: 17px; }
+    .linkedin-icon svg { width: 21px; height: 21px; }
+    .x-icon svg { width: 18px; height: 18px; }
+  }
+}
+
+// The default variant. Everything that is not a major CTA takes this.
+@mixin button-keyline() {
+  @include button-shell();
+  background-color: transparent;
+  // A1 asks for a 1.5px keyline. Blink floors a border width to whole CSS
+  // pixels, so `border: 1.5px` computed and painted 1px in Chrome even on a
+  // retina screen (2 device pixels, measured), and Firefox does the same.
+  // An inset shadow is not floored in Chrome and paints the true 3 device
+  // pixels there and in Safari. The border stays, transparent, so the box is
+  // exactly the size it was in every engine.
+  border: 1.5px solid transparent;
+  box-shadow: inset 0 0 0 1.5px var(--btn-ink, #{$hof-navy});
+  color: var(--btn-ink, #{$hof-navy});
+
+  &:where(:hover, :focus-visible) {
+    background-color: var(--btn-ink, #{$hof-navy});
+    color: var(--btn-ground, #{$hof-white});
+  }
+}
+
+// Reserved for major CTAs: the pre-footer "Get in touch", the contact Send and
+// the gated report Download. Navy fill with an acid label; on navy grounds the
+// pair inverts to an acid fill with a navy label.
+@mixin button-primary() {
+  @include button-shell();
+  background-color: var(--btn-primary-fill, #{$hof-navy});
+  border: 1.5px solid var(--btn-primary-fill, #{$hof-navy});
+  color: var(--btn-primary-label, #{$hof-acid});
+
+  &:where(:hover, :focus-visible) {
+    background-color: var(--btn-primary-label, #{$hof-acid});
+    color: var(--btn-primary-fill, #{$hof-navy});
+  }
+
+  &:focus-visible {
+    outline-color: var(--btn-primary-fill, #{$hof-navy});
+  }
+}
+
+// In-copy CTA: letter-spaced caps plus an underline that draws in on hover.
+// Composited transform only, so it costs nothing on the main thread.
+@mixin caps-arrow-link($color, $underline: currentColor) {
+  font-family: $font-circular-bold;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: $color;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding-bottom: 2px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: $underline;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  &:where(:hover, :focus-visible):after {
+    transform: scaleX(1);
+  }
+
+  @include underline-draw-in();
+
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 3px;
+  }
+
+  // 7.5: "letter-spaced Poppins caps + arrow". The D3 board's own line arrow,
+  // the one the carousels use, masked so it takes the link colour. order puts
+  // it after the label; the underline above is absolutely positioned, so it is
+  // not a flex item and does not move.
+  &::before {
+    content: '';
+    order: 1;
+    flex: 0 0 auto;
+    width: 14px;
+    height: 6px;
+    background-color: currentColor;
+    -webkit-mask: url("../../assets/images/icons/arrow.svg") no-repeat center / contain;
+    mask: url("../../assets/images/icons/arrow.svg") no-repeat center / contain;
   }
 
   @include media-breakpoint-up(lg) {
     font-size: 14px;
-    padding: 11px;
-    width: 195px;
-  }
-}
-
-@mixin short-button($background-color,$hover-background-color,$color,$hover-color) {
-  background-color: $background-color;
-  font-family: $font-circular-medium;
-  cursor: pointer;
-  font-size: 12px;
-  text-align: center;
-  text-decoration: none;
-  display: block;
-  color: $color;
-  padding: 7px;
-  border-radius: 50px;
-  transition: $ccg-transition-all;
-  width: 112px;
-
-  &:hover {
-    background-color: $hover-background-color;
-    color: $hover-color;
-  }
-
-  @include media-breakpoint-up(lg) {
-    font-size: 14px;
-    padding: 11px;
-    width: 125px;
+    letter-spacing: 2px;
   }
 }

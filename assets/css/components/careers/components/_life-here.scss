@@ -8,6 +8,7 @@
 
   h3 {
     @include title-text(#ffffff);
+    @include section-title-44();
     margin-bottom: 20px !important;
   }
 

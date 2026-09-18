@@ -4,6 +4,9 @@
 
 #wrapper {
   overflow-x: hidden;
+  // Reserves the fixed notification bar's height from first paint, so there is
+  // no shift when it renders and none when it is dismissed.
+  padding-top: var(--ccg-topbar-height);
 }
 
 // Fonts
@@ -20,6 +23,701 @@
 
 // Mixins
 @import 'mixins';
+
+// The custom dropdown, shared by the four templates that use one.
+@import 'components/dropdown';
+
+// Poppins is wider than Circular, so any column previously tuned to hold a
+// long word no longer does: the footer site-map list and the case-study stat
+// columns both had a single word hanging over the column beside them. This
+// only fires when a word genuinely cannot fit on a line of its own, so it
+// changes nothing where the copy already fitted, and it stops the next long
+// word doing the same thing.
+h1, h2, h3, h4, h5, h6,
+p, li, dd, dt, figcaption, blockquote, .description, .heading, .sub-heading {
+  overflow-wrap: break-word;
+}
+
+// Gravity Forms paints the required asterisk its own red (#C02B0A). That is
+// not a colour in this palette and it fails on the grounds the forms sit on
+// (2.4:1 on navy, 2.5:1 on acid). Inheriting the label's colour makes it right
+// on every ground by construction, so no form band needs its own rule.
+// !important because the orbital theme injects a per-form <style> scoped to
+// #gform_wrapper_{id}, so it wins on ID specificity from a stylesheet. Same
+// reason the download form's button rules carry it.
+.gform_wrapper {
+  .gfield_required,
+  .gfield_required_asterisk,
+  .gform_required_legend {
+    color: inherit !important;
+  }
+}
+
+// The statement-block lead voice, per 7.4 and the type scale: the opening
+// sentence of a statement passage in Libre Baskerville Italic, with the
+// remainder left in Poppins. Acid on the dark bands these passages sit on;
+// the colour is a property so a light-ground use can override it.
+.statement-lead {
+  font-family: $font-serif;
+  font-style: italic;
+  color: var(--statement-lead-colour, #{$hof-acid});
+}
+
+// B6 (v0.12): the closing paragraph of a masthead statement, in the same serif
+// voice as the opening lead.
+//
+// F3 (v0.13): the closer is white. Acid stays for the short lead-in phrases,
+// which are impact moments; a whole paragraph in acid is not.
+.statement-closer {
+  font-family: $font-serif;
+  font-style: italic;
+  color: var(--statement-closer-colour, #{$hof-white});
+}
+
+// Section E's line wrappers. Movement 2 in text-motion.js cuts a statement into
+// its rendered lines while they move, and a line has to be a block for two
+// reasons: a transform does nothing to an inline box, and a block line holds
+// exactly the text the browser had already put on that line. The text inside
+// stays ordinary inline text, so it is shaped and kerned exactly as it was.
+// The class only exists mid-entrance, so a page with no JavaScript, and every
+// page at rest, is untouched.
+//
+// nowrap because a line that exactly filled its width in the flowing sentence
+// can measure a fraction of a pixel wider once it is lifted out on its own, and
+// would then break onto a second line mid-flight. Measured on the homepage hero
+// at 890px: 132px of statement became 175.9px. The wrapper holds exactly the
+// words the browser already put on that line, so it must never re-break them;
+// any sub-pixel overhang is invisible and gone when the markup is restored.
+.tm-line {
+  display: block;
+  white-space: nowrap;
+}
+
+// When a serif phrase shares a line with the rest of its sentence, the line is
+// divided so the phrase can move whole (E6.3). Each piece has to be an
+// inline-block to be transformable. Like the lines, they only exist mid-entrance.
+.tm-part {
+  display: inline-block;
+}
+
+.tm-line--centred {
+  margin-inline: -2em;
+}
+
+// E6.5: the passages at the top of a page that glide in on load are hidden
+// before the first paint, and only when the head armed motion, so a page with
+// no JavaScript or with reduced motion shows them as they are. If a script
+// never runs, the fallback animation shows them after three seconds.
+html.tm-armed {
+  :is(.post-type-archive-insight, .post-type-archive-work, .post-type-archive-news) .archive-header :is(h1.title, .intro .statement),
+  .page-template-page-awards .awards-header :is(h1.title, .intro .statement),
+  .page-template-page-careers .careers-header :is(h1.title, .intro .statement),
+  :is(.tax-sector, .tax-service) .term-header .intro .statement,
+  :is(.single-post, .single-insight, .single-work) .intro .statement,
+  .single-insight .report-standfirst {
+    opacity: 0;
+    animation: tm-failsafe 0s 3s forwards;
+  }
+
+  // The scroll entrances, hidden the same way until their script takes them
+  // over (`tm-owned`), so one already on screen at load cannot flash.
+  .home section.intro .statement:not(.tm-owned),
+  .home .about-ccg .container > p:not(.tm-owned),
+  :is(.tax-sector, .tax-service) .why-ccg .statement:not(.tm-owned),
+  :is(.tax-sector, .tax-service) .quotes-slider :is(.quote, .author):not(.tm-owned),
+  footer .footer-logo svg:not(.tm-owned),
+  :is(.bottom-cta, .contact-form) h3 :is(.cta-phrase, .cta-rest):not(.tm-owned),
+  .bottom-cta .second-row h3:not(:has(.cta-phrase)):not(.tm-owned) {
+    opacity: 0;
+    animation: tm-failsafe 0s 3s forwards;
+  }
+}
+
+@keyframes tm-failsafe {
+  to {
+    opacity: 1;
+  }
+}
+
+// B1 (v0.12): the "Get in touch" heading. The phrase is the serif voice; the
+// rest of the line stays in Poppins. With no JavaScript both halves are simply
+// typography and the finished heading is the first frame.
+.cta-phrase {
+  font-family: $font-serif;
+  font-style: italic;
+}
+
+// E3.4: cta-motion.js glides the two halves in on GSAP, and a transform does
+// nothing to an inline box, so while motion is on they are inline-blocks.
+.cta-motion {
+  .cta-phrase,
+  .cta-rest {
+    display: inline-block;
+  }
+}
+
+// Tint for the decorative bars. Light by default; the dark bands below set it
+// white. Separate from --interaction-accent on purpose: a band can be dark
+// enough to need a white bar without every hover in it turning acid.
+:root {
+  --bar-tint: #EFEFEC;
+}
+
+.archive-header,
+.services-header,
+.sectors-header,
+.post-header,
+.team,
+.featured-slider,
+.holding-page,
+footer {
+  --bar-tint: #{$hof-white};
+}
+
+// Dark-ground containers: acid is the interaction accent here, per 7.5. Kept in
+// one place so a new navy section only has to join this list.
+footer,
+.about-ccg,
+.quotes-slider,
+.challenges-opportunities,
+.other-services,
+.report-methodology,
+.term-selector,
+.form-section,
+.featured-slider,
+.holding-page,
+.notification-bar,
+// The detailed report's contents menu is a navy panel, so its links were taking
+// a navy ring on navy.
+.report-contents-panel,
+// The detailed report's download card is navy too. Off this list its Download
+// PDF button resolved to a navy box on the navy card, leaving only the acid
+// label, and both fields took a navy keyboard ring nobody could see.
+.report-download,
+// The sector pages' newsletter popup is a navy card holding a form, so its
+// Subscribe button was a navy box on navy and its fields took a navy ring.
+.newsletter-popup,
+// T5's stepped deck: the middle card is the navy 70% tint and the back one is
+// solid navy, so a navy focus ring on either is invisible. The front card is
+// white and keeps the navy ring.
+.explain-card:nth-child(3n + 2),
+.explain-card:nth-child(3n + 3) {
+  --interaction-accent: #{$hof-acid};
+  --focus-ring: #{$hof-acid};
+  // A2's ring leaves a gap between itself and the field in the ground's colour.
+  --focus-gap: #{$hof-navy};
+  // A1: "acid keyline/acid label on navy", and the solid primary inverts to an
+  // acid fill with a navy label on the same grounds.
+  --btn-ink: #{$hof-acid};
+  --btn-ground: #{$hof-navy};
+  --btn-primary-fill: #{$hof-acid};
+  --btn-primary-label: #{$hof-navy};
+}
+
+// With the faces above answering for any weight, <strong> and <b> would render
+// at the face they inherit, so editorial bold would stop looking bold. Give
+// them the real SemiBold face instead, which is what 7.2 asks for anyway
+// ("bold lead-ins: Poppins SemiBold navy").
+strong,
+b {
+  font-family: $font-sans-semibold;
+}
+
+// T4, and register #7: a "1 - 1" counter is a redundant control on a carousel
+// that holds one slide. The :has() guard means one rule serves both cases with
+// no per-page work, which is what the section asks for: a multi-slide carousel
+// keeps its counter, a single-slide one loses it. It hides a UI control, not
+// content, and it takes the spoken "Item 1 of 1" with it, which is noise.
+// !important because the component rules that show the counter are deeply
+// nested off a body class, e.g. .archive.tax-sector .services-slider .splide
+// .splide__track .splide__slide:not(:first-child) .service-slide .count, and a
+// suppression written once for every carousel cannot out-specify each of them
+// without repeating the whole chain per template, which is the per-page work
+// the section says to avoid.
+.splide__list:not(:has(> .splide__slide:nth-child(2))) .count {
+  display: none !important;
+}
+
+// Visually hidden, still spoken. The class was already in the markup on the
+// skip link and is now used to give the repeated "Find out more here" anchors
+// and the bare "1 - 5" carousel counters a distinct name, but nothing in the
+// theme ever defined it, so the text it wraps was simply on the page.
+//
+// clip-path rather than the old clip, and no display:none or visibility:hidden,
+// because either of those takes the text out of the accessibility tree too and
+// the point is that a screen reader still reads it.
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// The skip link is the one that has to come back on focus.
+a.screen-reader-text:focus {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100000;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 12px 20px;
+  clip-path: none;
+  background-color: $hof-white;
+  color: $hof-navy;
+  font-family: $font-sans-semibold;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: var(--radius-btn);
+  outline: 2px solid $hof-navy;
+  outline-offset: 2px;
+}
+
+// The link underline draws in on hover with transform: scaleX(), which is an
+// affordance rather than entrance animation, but there is no reason to move
+// under a setting that asks for stillness. !important because each call site
+// sets this transition on its own ::after, which outranks a bare selector here.
+@media (prefers-reduced-motion: reduce) {
+  a::after {
+    transition: none !important;
+  }
+}
+
+// Register #2 and #4 turned 21 statement bands from <h2> into <p class="statement">.
+// Bootstrap's reboot gives a paragraph a 1rem bottom margin where a heading gets
+// 0.5rem, so every one of those bands silently grew 8px taller. Match the heading
+// the paragraph replaced. This sits above the component imports deliberately: it
+// has the same specificity as a component's own rule, so source order lets any
+// band that sets its own spacing keep winning.
+p.statement {
+  margin-bottom: 0.5rem;
+}
+
+// Section 2's floor: "minimum = visible 2px focus ring (acid on dark, navy on
+// light), no removal of outline", and section 6 asks for a focus state on every
+// interactive element. The theme only ever styled the named controls, so 704 of
+// 862 focusable elements across eleven templates fell back to Chrome's own ring:
+// visible, but not the brand's, and weak on a navy ground.
+//
+// :where() gives this zero specificity, so it beats the user-agent sheet (author
+// styles always do) while losing to every component rule that sets its own focus
+// state. One rule, nothing to maintain per template.
+:where(
+  a[href],
+  button,
+  input:not([type='hidden']),
+  select,
+  textarea,
+  summary,
+  [tabindex]:not([tabindex='-1'])
+):focus-visible {
+  outline: 2px solid var(--focus-ring, #{$hof-navy});
+  outline-offset: 3px;
+}
+
+// Splide's own stylesheet carries `.splide__arrow:focus-visible` with a 3px
+// ring of its own, which outranks the zero-specificity guard above and rendered
+// black on the navy bands at 1.50:1. Same weight, imported later, so this wins.
+// A1 (v0.12): one button system, two variants, nothing else survives.
+//
+// The keyline box is now the DEFAULT, not a modifier, so it is defined on the
+// bare class and the 24 per-template colour rules that used to set a navy fill
+// are gone rather than overridden. The `--index` modifier stays valid in the
+// markup and simply means the same thing as the base class now.
+//
+// .global-button covers every index action, card CTA, load-more and slider
+// action. .global-button--primary is reserved for the major CTAs the section
+// names: the pre-footer "Get in touch", the contact Send and the gated
+// Download.
+.global-button,
+.global-button-benefit,
+.hero-button {
+  @include button-keyline();
+}
+
+.global-button.global-button--primary {
+  @include button-primary();
+}
+
+// Washed photography: A1 casts the keyline white here, where navy would sink
+// into the wash and acid is barred below display sizes on a photograph.
+.header-slider,
+.sectors-slider {
+  --btn-ink: #{$hof-white};
+  --btn-ground: #{$hof-navy};
+}
+
+// Both the homepage and the /sectors/ page use `section.sectors-slider`, but
+// only the homepage one sits on a washed photograph; the /sectors/ page's sits
+// on flat warm grey, where white reads 1.27:1. The scope is the page-template
+// body class, because `.sectors-home` is a stylesheet folder name and never
+// appears in the markup.
+.page-template-page-sectors .sectors-slider {
+  --btn-ink: #{$hof-navy};
+  --btn-ground: #{$hof-grey-warm};
+}
+
+// Splide's sheet is enqueued after app.css and carries its own arrow focus
+// ring. Matching its weight is not enough, and the shorthand was resolving to
+// the initial 3px currentColor (black, 1.50:1 on navy) whichever rule won, so
+// set the longhands explicitly and take the priority.
+button.splide__arrow:focus-visible {
+  outline-width: 2px !important;
+  outline-style: solid !important;
+  outline-color: var(--focus-ring, #{$hof-navy}) !important;
+  outline-offset: 3px;
+}
+
+// The detailed report's contents menu is a navy panel with navy links, so its
+// focus ring was navy on navy. Its component uses the $rd-* token block rather
+// than --focus-ring, hence the explicit rule.
+.report-contents a:focus-visible {
+  outline-color: #{$hof-acid} !important;
+}
+
+// A2 (v0.12): form controls take the brand, and the focus story is explicit.
+//
+// Three rules, in this order:
+//  1. Nothing is added on a mouse interaction. Bootstrap's reboot and Gravity
+//     Forms both paint their own blue ring on :focus, and A2 asks for the field
+//     to keep its resting look under a pointer. :focus:not(:focus-visible)
+//     covers buttons; text fields need the pointer flag at the end of the block.
+//  2. Keyboard focus takes a 1.5px ring, so WCAG 2.4.7 is satisfied without a
+//     pointer user ever seeing a change.
+//  3. The submit button is the solid primary variant.
+//
+// !important throughout: the orbital theme injects a per-form <style> block
+// scoped to #gform_wrapper_{id}, which outranks any stylesheet selector.
+
+// R1 (v0.14): Bootstrap's own select and checkbox states, globally, as supplied.
+// Its focus paints a blue border and glow and its checked state fills solid
+// blue. Keyboard focus keeps the navy ring from the rules below.
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--hof-navy);
+  box-shadow: none;
+}
+
+.form-check-input:checked {
+  background-color: var(--hof-navy);
+  border-color: var(--hof-navy);
+}
+
+.gform_wrapper,
+.contact-gform-form,
+.insight-reports-form,
+.newsletter-popup-form_wrapper {
+  // The orbital theme transitions `all` on its fields and buttons, which slid the
+  // keyboard ring in over 150ms rather than showing it. Only the colours a field
+  // or button changes may transition. Its ID-scoped sheet needs the priority, as
+  // everywhere in this block.
+  input:not([type='hidden']),
+  select,
+  textarea,
+  button {
+    transition-property: color, background-color, border-color !important;
+    transition-duration: 160ms !important;
+    transition-timing-function: ease !important;
+  }
+
+  // The field keeps Gravity Forms' own faint resting shadow on focus rather than
+  // losing it, so a click changes nothing at all. Forms without it get none.
+  input:not([type='hidden']):focus:not(:focus-visible),
+  select:focus:not(:focus-visible),
+  textarea:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: var(--gf-ctrl-shadow, none) !important;
+  }
+
+  // A2 (v0.13): the blue keyline must not appear on any form, whichever Gravity
+  // Forms style a form was saved with. Its themes can draw focus as a border
+  // colour as well as an outline or shadow, so the field keeps its resting
+  // navy hairline on focus too, and the plugin's own focus colours are pointed
+  // at navy in case anything else reads them.
+  // A form whose fields have no visible border at rest sets
+  // --field-focus-border to transparent, so focus leaves it alone as well: the
+  // detailed report's download card is the one today.
+  --gf-ctrl-outline-color-focus: #{$hof-navy} !important;
+  --gf-ctrl-border-color-focus: var(--field-focus-border, #{$hof-navy}) !important;
+  --gf-ctrl-shadow-focus: none !important;
+
+  input:not([type='hidden']):not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='file']):focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--field-focus-border, #{$hof-navy}) !important;
+  }
+
+  // F4 (v0.13): placeholder text is navy. Gravity Forms paints it warm grey
+  // at 65% opacity, which read as light grey on the white field.
+  input::placeholder,
+  textarea::placeholder {
+    color: $hof-navy !important;
+    opacity: 1 !important;
+  }
+
+  // Typed text is navy too. The detailed report's download form already set it;
+  // the Contact, Where We Work and gated report forms fell through to the orbital
+  // theme's own control colour, #112337, a near-navy that is not in the palette.
+  // Every field here is a white field, so navy reads on all of them.
+  input:not([type='hidden']):not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='file']),
+  textarea {
+    color: $hof-navy !important;
+  }
+
+  // The ring takes --focus-ring, not a literal navy. The gated report's form
+  // sits on the navy gate band, where a navy ring round the white field could
+  // not be seen at all; that band is on the dark-ground list, so it gets acid,
+  // section 2's ring on dark. The acid contact bands keep navy. It is a true
+  // 1.5px, drawn as a shadow, with the field's resting shadow kept beneath it:
+  // see focus-ring-shadow() in _mixins.scss.
+  input:not([type='hidden']):focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  button:focus-visible {
+    @include focus-ring-shadow($rest: var(--gf-ctrl-shadow, 0 0 transparent), $important: true);
+  }
+
+  // Rule 1 alone does not cover a text field. Browsers match :focus-visible on
+  // ANY focus of a control that takes typing, a click included, so the ring
+  // above appeared as soon as anyone clicked into a form. field-focus.js flags
+  // <html> on a pointer press and clears it on Tab, so under the flag the field
+  // keeps its resting look and keyboard focus still gets the ring.
+  html.pointer-focus & {
+    input:not([type='hidden']):focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: none !important;
+      box-shadow: var(--gf-ctrl-shadow, none) !important;
+    }
+  }
+}
+
+// A2, "and any other native controls". Gravity Forms renders none of these on
+// the three live forms today, so nothing on the site is wrong now; the moment an
+// editor adds a dropdown, a checkbox set or an upload field it would arrive as a
+// raw browser default. Measured across the three engines, those defaults differ
+// in size as well as look: a select is 68px wide in Chromium, 75.6 in Firefox
+// and 82 in WebKit, a checkbox 13 / 14 / 12, and none of them take the navy
+// hairline or the 8px radius the fields beside them carry.
+//
+// appearance: none is what removes the engine's own widget. Everything after it
+// rebuilds the control from the same three values the text fields use: a white
+// fill, a 1px navy hairline and --radius-btn.
+.gform_wrapper,
+.contact-gform-form,
+.insight-reports-form,
+.newsletter-popup-form_wrapper {
+  select {
+    appearance: none;
+    background-color: $hof-white;
+    color: $hof-navy;
+    border: 1px solid $hof-navy;
+    border-radius: var(--radius-btn);
+    font-family: $font-circular-regular;
+    height: 40px;
+    padding: 0 40px 0 14px;
+    width: 100%;
+    cursor: pointer;
+
+    // The chevron the engine no longer draws. Inline so it needs no asset and
+    // no extra request, and navy so it matches the hairline around it.
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23182D43' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px 8px;
+
+    // iOS zooms the page when it focuses a control under 16px.
+    @include media-breakpoint-down(md) {
+      font-size: 16px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      height: 50px;
+    }
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    appearance: none;
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 0 0;
+    background-color: $hof-white;
+    border: 1px solid $hof-navy;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    transition: $ccg-transition-colours;
+  }
+
+  input[type='radio'] {
+    border-radius: 50%;
+  }
+
+  // Checked reuses the primary button's pair, so it inverts with the ground the
+  // same way that button does: navy box with an acid mark on light and on the
+  // acid form band, acid box with a navy mark on the navy gated card. A flat
+  // acid fill would have matched the acid band it sits on and left the border
+  // doing all the work.
+  input[type='checkbox']:checked,
+  input[type='radio']:checked {
+    background-color: var(--btn-primary-fill, #{$hof-navy});
+    border-color: var(--btn-primary-fill, #{$hof-navy});
+  }
+
+  input[type='checkbox']:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--btn-primary-label, #{$hof-acid});
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  input[type='radio']:checked::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background-color: var(--btn-primary-label, #{$hof-acid});
+  }
+
+  // The upload control. The engines disagree on the button's label as well as
+  // its size ("Choose File" against "Browse..."), so the button is restyled and
+  // the label left to the engine: it is the one string here the CSS must not
+  // invent, because it describes the platform's own file picker.
+  input[type='file'] {
+    font-family: $font-circular-regular;
+    color: $hof-navy;
+    max-width: 100%;
+
+    @include media-breakpoint-down(md) {
+      font-size: 16px;
+    }
+  }
+
+  input[type='file']::file-selector-button {
+    appearance: none;
+    background-color: transparent;
+    border: 1.5px solid $hof-navy;
+    color: $hof-navy;
+    border-radius: var(--radius-btn);
+    font-family: $font-circular-medium;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 12px;
+    padding: 10px 18px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: $ccg-transition-colours;
+
+    &:where(:hover, :focus-visible) {
+      background-color: $hof-navy;
+      color: $hof-white;
+    }
+  }
+}
+
+// The Send and Download buttons. Same recipe as .global-button--primary, but
+// written out rather than @included: these are plugin-rendered <input> and
+// <button> elements that need every property forced past the injected sheet,
+// and an @include cannot carry !important through.
+.gform_wrapper,
+.contact-gform-form,
+.insight-reports-form,
+.newsletter-popup-form_wrapper {
+  input[type='submit'].gform_button,
+  button.gform_button,
+  .gform_footer input[type='submit'],
+  .gform_footer button[type='submit'] {
+    appearance: none;
+    background-color: var(--btn-primary-fill, #{$hof-navy}) !important;
+    border: 1.5px solid var(--btn-primary-fill, #{$hof-navy}) !important;
+    color: var(--btn-primary-label, #{$hof-acid}) !important;
+    font-family: $font-circular-medium !important;
+    // A1: uppercase like every other button. Without !important, Gravity
+    // Forms' injected per-form sheet won at ID specificity and the labels
+    // rendered "Send Message" and "Download".
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    // B1 (v0.14): the button label size, as on every other variant.
+    font-size: $ccg-button-label-size !important;
+    line-height: 20px !important;
+    padding: 12px 20px !important;
+    min-height: 44px;
+    border-radius: var(--radius-btn) !important;
+    cursor: pointer;
+    transition: $ccg-transition-colours;
+
+    &:where(:hover, :focus-visible) {
+      background-color: var(--btn-primary-label, #{$hof-acid}) !important;
+      color: var(--btn-primary-fill, #{$hof-navy}) !important;
+    }
+
+    // Gravity Forms draws its blue focus outline from
+    // --gf-ctrl-outline-color-focus, declared on its own theme container rather
+    // than on this wrapper, so the property cannot be reached from here.
+    // Setting the outline on the button itself is deterministic.
+    &:focus:not(:focus-visible) {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    &:focus-visible {
+      @include focus-ring-shadow($offset: 3px, $ring: var(--btn-primary-fill, #{$hof-navy}), $important: true);
+    }
+
+    // F1 (v0.13): 14px at every width, like every other button label.
+    @include media-breakpoint-up(lg) {
+      letter-spacing: 2px !important;
+      line-height: 22px !important;
+      padding: 11px 28px !important;
+    }
+  }
+}
+
+// Controls promoted to keyboard operability at runtime by
+// keyboard-controls.js. The theme builds its controls from <div>, so until
+// that script runs they cannot hold focus and no focus rule can fire for
+// them; these two selectors are the promoted states. 2px ring per section 2.
+[data-ccg-keyboard]:focus-visible,
+.ccg-kb-trigger:focus-visible {
+  outline: 2px solid var(--focus-ring, #{$hof-navy});
+  outline-offset: 3px;
+}
+
+// A promoted button keeps its own family's ring. The rule above is the same
+// weight as the button chassis's and comes later, so a <p> or <div> button took
+// --focus-ring while a real link button beside it took --btn-ink. On washed
+// photography the two differ: the homepage "Explore" drew a navy ring on the
+// dark photograph, where the hero's "Get in touch" above it drew white.
+:is(.global-button, .global-button-benefit, .hero-button):not(.global-button--primary)[data-ccg-keyboard]:focus-visible {
+  outline-color: var(--btn-ink, #{$hof-navy});
+}
+
+// The heading-led disclosures (Awards years, Careers vacancies) have their
+// heading contents wrapped in a real button so the heading keeps its rank.
+// all: unset lets every inherited type property fall through from the heading
+// exactly as before; only the box needs restoring.
+.ccg-kb-trigger {
+  all: unset;
+  display: block;
+  width: 100%;
+  text-align: inherit;
+  cursor: pointer;
+}
+
 
 // Components
 @import "components/header/header";
@@ -60,4 +758,5 @@
 @import "components/bottom-cta";
 @import "components/footer/footer";
 
+@import "components/notification-bar";
 @import "components/announce-popup";

@@ -26,32 +26,21 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                 <p class="term"><?php echo $term_name; ?></p>
                 <h1 class="title"><?php the_title(); ?></h1>
                 <div class="row">
-                    <div class="col-lg-8 intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                    <div class="col-lg-8 intro"><p class="statement"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p></div>
                 </div>
             </section>
             <section class="post-content">
                 <div class="row gx-5">
-                    <div class="col-lg-7 content"><?php the_field( 'body' ); ?></div>
+                    <div class="col-lg-7 content"><?php echo ccg_pull_quote_html( get_field( 'body' ) ); ?></div>
                     <div class="col-lg-5 image social">
                         <img src="<?php the_post_thumbnail_url() ?>" alt="<?php the_title(); ?>"
                              srcset="<?php echo esc_attr( $image_srcset ); ?>" sizes="(min-width: 391px) 1024px, 100vw">
-                        <div class="social-icons">
-                            <a class="mail-icon"
-                               href="mailto:?subject=<?php echo rawurlencode( get_the_title() ); ?>&body=Check out this insight from CCGroup <?php echo rawurlencode( get_permalink() ); ?>"
-                               target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/mail-icon.svg' ) ?></a>
-                            <a class="linkedin-icon" rel="nofollow"
-                               href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo rawurlencode( get_permalink() ); ?>&title=<?php echo rawurlencode( get_the_title() ); ?>"
-                               target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/linkedin-icon.svg' ) ?></a>
-                            <a class="x-icon" rel="nofollow"
-                               href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode( get_permalink() ); ?>/&text='<?php echo rawurlencode( get_the_title() ); ?>'&via=<?php the_field( 'xtwitter_username', 'option' ); ?>"
-                               title="Tweet this blog"
-                               target="_blank"><?php echo file_get_contents( CCG_TEMPLATE_DIR . '/assets/images/social-icons/x-icon.svg' ) ?></a>
-                        </div>
+                        <?php get_template_part( 'template-parts/components/share' ); ?>
                     </div>
                 </div>
             </section>
             <div class="author">
-                <p>Written by <?php the_author(); ?></p>
+                <p><span class="byline-label">Written by</span> <?php the_author(); ?></p>
 				<?php
 				if ( $linkedin_url ) {
 					echo '<a href="' . esc_url( $linkedin_url ) . '" target="_blank">LinkedIn</a>';
@@ -122,13 +111,26 @@ if ( $related_ids ) {
 		echo '<h3>Related content</h3>';
 		echo '<div class="row mb-3">';
 
+		// article-card.php prints $term_name, so it has to be each card's own
+		// term rather than the host page's. Inheriting the host's value labelled
+		// every related card with the host page's term: register #11, where two
+		// case studies showed the sector of the page they were listed on. The
+		// host value is restored afterwards because the "See More" link below
+		// still needs it. This is the same per-post idiom the listing loops in
+		// ajax-calls.php and front-page.php already use.
+		$host_term_name = $term_name;
+
 		while ( $related_posts->have_posts() ) {
 			$related_posts->the_post();
+			$card_terms = get_the_terms( get_the_ID(), $taxonomy );
+			$term_name  = ( $card_terms && ! is_wp_error( $card_terms ) ) ? $card_terms[0]->name : '';
 			require( 'article-card.php' );
 		}
 
+		$term_name = $host_term_name;
+
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/our-blog' . ( $term_name ? '?categories=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
+		echo '<div class="row"><a class="global-button global-button--index" href="/our-blog' . ( $term_name ? '?categories=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}

@@ -82,7 +82,11 @@ if ( have_rows( 'sectors_order' ) ) {
                         <li class="splide__slide">
                             <div class="first-slide">
                                 <p class="term">Sectors</p>
-                                <h3 class="heading"><?php the_field( 'header' ); ?></h3>
+                                <?php // The page's only heading of rank 1. It was an <h3>, so /sectors/
+                                      // rendered no H1 at all. The text and the .heading class are
+                                      // unchanged, so nothing about the wording or the styling moves;
+                                      // only the rank does. ?>
+                                <h1 class="heading"><?php the_field( 'header' ); ?></h1>
                                 <p class="sub-heading"><?php the_field( 'sub_heading' ); ?></p>
                                 <p class="global-button next-slide"><?php the_field( 'button_text' ); ?></p>
                             </div>

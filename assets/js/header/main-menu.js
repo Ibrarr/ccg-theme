@@ -6,7 +6,11 @@ jQuery(document).ready(function ($) {
         let currentScrollPos = window.pageYOffset;
 
         if (prevScrollpos > currentScrollPos || currentScrollPos <= 70) {
-            document.getElementById("header").style.top = "50px";
+            // Cleared rather than set to a literal: the stylesheet owns this
+            // value now, so the header returns to its inset whether or not a
+            // notification bar is showing. contents-menu.js already falls back
+            // to the computed value when the inline style is empty.
+            document.getElementById("header").style.top = "";
             $('.main-menu-text').fadeIn(300);
         } else {
             document.getElementById("header").style.top = "-100px";
@@ -16,21 +20,14 @@ jQuery(document).ready(function ($) {
         prevScrollpos = currentScrollPos;
     }
 
+    // CSS owns the panel's height. This used to write it inline, which beat the
+    // stylesheet, so the mobile panel was always a full viewport tall and ran
+    // past the bottom of the screen once the notification bar took its share of
+    // the top. The desktop branch also computed `'100%' - 50`, which is NaN, so
+    // that half never applied anything. Same resolution as the header's `top`:
+    // clear the property and let the stylesheet decide.
     function setMaxHeight() {
-        if ($(window).width() > 960) {
-            var maxHeight = $(window).height() * 0.85;
-            var windowHeight = $(window).height();
-            var menuHeight = $('.main-menu-container').height();
-
-            if (menuHeight > windowHeight) {
-                $('.main-menu-container').css('height', maxHeight + 'px');
-            } else {
-                $('.main-menu-container').css('height', '100%' - 50);
-            }
-
-        } else {
-            $('.main-menu-container').css('height', 'var(--app-height)');
-        }
+        $('.main-menu-container').css('height', '');
     }
 
     setMaxHeight();
@@ -48,10 +45,26 @@ jQuery(document).ready(function ($) {
     $(window).on('resize', appHeight);
 
     function clickHandler(event) {
+        const $item = $(this);
+        const $ownSubMenu = $item.children('.sub-menu');
+
+        // A click that started inside this item's OWN sub-menu belongs to that
+        // sub-menu: either a nested toggle, which has its own handler, or an
+        // ordinary link, which has to be allowed to navigate.
+        //
+        // The handler is bound to the <li>, not to its anchor, so without this
+        // guard every click on a child link bubbled up to the parent item and
+        // hit preventDefault(): the link never followed and toggleClass closed
+        // the panel the reader had just opened. Returning before
+        // stopPropagation() also lets the event carry on to any ancestor item,
+        // which reaches the same conclusion and likewise stands aside.
+        if ($ownSubMenu.length
+            && ($ownSubMenu.is(event.target) || $ownSubMenu.has(event.target).length)) {
+            return;
+        }
+
         event.stopPropagation();
         event.preventDefault();
-
-        const $item = $(this);
 
         // Close siblings at the same level only, and reset any items they had open inside.
         $item.siblings('.menu-item-has-children.active')
@@ -166,9 +179,17 @@ jQuery(document).ready(function ($) {
 
             if (!$(event.target).hasClass('header-search')) {
                 $('.menu-container').toggleClass('menu-open');
-                $('.main-menu-container').slideDown(500);
-                $('.nav-container').slideDown(500);
-                $('.mobile-menu-header-background').slideDown(500);
+                // The panel slides; the nav inside it is shown instantly. They
+                // used to slide together, and because .nav-container is a CHILD
+                // of .main-menu-container that meant jQuery measured the
+                // panel's target height while the nav was still collapsed. The
+                // first open worked because the nav had never been hidden yet;
+                // every open after it animated to about 1px and then snapped
+                // open when jQuery released the inline height.
+                $('.nav-container').show();
+                $('.search-container').hide();
+                $('.main-menu-container').stop(true, true).slideDown(500);
+                $('.mobile-menu-header-background').stop(true, true).slideDown(500);
 
                 if (window.matchMedia('(max-width: 991px)').matches) {
                     setTimeout(function () {
@@ -177,7 +198,10 @@ jQuery(document).ready(function ($) {
                 }
 
                 if (!$('body').hasClass('no-scroll')) {
-                    $('body').addClass('no-scroll');
+                    // html as well as body: html is the scrolling element, so
+                    // locking body on its own left the page scrolling behind
+                    // the open menu.
+                    $('body, html').addClass('no-scroll');
                 }
             }
         }
@@ -192,10 +216,12 @@ jQuery(document).ready(function ($) {
 
         $('.menu-container').addClass('search-open');
         $('.menu-container').addClass('menu-open');
-        $('.main-menu-container').slideDown(500);
-        $('.search-container').slideDown(500);
-        $('.mobile-menu-header-background').slideDown(500);
-        $('.nav-container').slideUp(1000);
+        // Same reasoning as the menu handler above: the panel slides, its
+        // contents swap instantly.
+        $('.search-container').show();
+        $('.nav-container').hide();
+        $('.main-menu-container').stop(true, true).slideDown(500);
+        $('.mobile-menu-header-background').stop(true, true).slideDown(500);
 
         if (window.matchMedia('(max-width: 991px)').matches) {
             setTimeout(function () {
@@ -204,20 +230,18 @@ jQuery(document).ready(function ($) {
         }
 
         if (!$('body').hasClass('no-scroll')) {
-            $('body').addClass('no-scroll');
+            $('body, html').addClass('no-scroll');
         }
     });
 
     $('.cross').click(function (event) {
         event.stopPropagation();
 
-        $('.main-menu-container').slideUp(500);
-        $('.search-container').slideUp(500);
-        $('.nav-container').slideUp(500);
-        $('.mobile-menu-header-background').slideUp(500);
+        $('.main-menu-container').stop(true, true).slideUp(500);
+        $('.mobile-menu-header-background').stop(true, true).slideUp(500);
         $('.menu-container').removeClass('menu-open');
         $('.menu-container').removeClass('search-open');
-        $('body').removeClass('no-scroll');
+        $('body, html').removeClass('no-scroll');
 
         if (window.matchMedia('(max-width: 991px)').matches) {
             $('.header-logo').removeClass('mobile-menu-open');
@@ -242,9 +266,9 @@ jQuery(document).ready(function ($) {
                 $('.menu-container').removeClass('menu-open');
                 $('.menu-container').removeClass('search-open');
                 $('body').removeClass('custom-cursor');
-                $('body').removeClass('no-scroll');
-                $('.main-menu-container').slideUp(500);
-                $('.search-container').slideUp(500);
+                $('body, html').removeClass('no-scroll');
+                $('.main-menu-container').stop(true, true).slideUp(500);
+                $('.mobile-menu-header-background').stop(true, true).slideUp(500);
 
                 if (window.matchMedia('(max-width: 991px)').matches) {
                     $('.header-logo').removeClass('mobile-menu-open');

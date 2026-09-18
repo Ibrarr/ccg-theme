@@ -26,7 +26,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                     <div class="col-lg-8 title-intro">
                         <p class="term"><?php echo $term_name; ?></p>
                         <h1 class="title"><?php the_title(); ?></h1>
-                        <div class="intro"><h2><?php echo strip_tags( get_field( 'intro' ), '<a>' ); ?></h2></div>
+                        <div class="intro"><p class="statement"><?php echo ccg_editor_html( get_field( 'intro' ) ); ?></p></div>
                     </div>
                     <div class="col-lg-4 d-flex align-items-center justify-content-lg-end justify-content-md-start justify-content-end sectors-links">
                         <div class="work-dropdown-container">
@@ -94,14 +94,16 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
                                 </div>
                                 <div class="col-lg-12 col-md-6">
                                     <p><?php the_field( 'image_text' ); ?></p>
+									<?php get_template_part( 'template-parts/components/share' ); ?>
                                 </div>
                             </div>
                         </div>
 					<?php } else { ?>
-                        <div class="col-lg-5 image">
+                        <div class="col-lg-5 image social">
                             <img src="<?php the_post_thumbnail_url() ?>" alt="<?php the_title(); ?>"
                                  srcset="<?php echo esc_attr( $image_srcset ); ?>"
                                  sizes="(min-width: 391px) 1024px, 100vw">
+							<?php get_template_part( 'template-parts/components/share' ); ?>
                         </div>
 					<?php } ?>
                 </div>
@@ -129,7 +131,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 								if ( $number_or_plus === 'number' ) {
 									?>
                                     <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                        <p class="title"><?php echo $number_stat; ?></p>
+                                        <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                         <p class="description"><?php echo $number_description; ?></p>
                                     </div>
 								<?php } elseif ( $number_or_plus === 'plus' ) { ?>
@@ -153,7 +155,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 								if ( $number_or_plus === 'number' ) {
 									?>
                                     <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                        <p class="title"><?php echo $number_stat; ?></p>
+                                        <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                         <p class="description"><?php echo $number_description; ?></p>
                                     </div>
 								<?php } elseif ( $number_or_plus === 'plus' ) { ?>
@@ -203,7 +205,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 							if ( $number_or_plus === 'number' ) {
 								?>
                                 <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                    <p class="title"><?php echo $number_stat; ?></p>
+                                    <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                     <p class="description"><?php echo $number_description; ?></p>
                                 </div>
 							<?php } elseif ( $number_or_plus === 'plus' ) { ?>
@@ -234,7 +236,7 @@ $image_srcset = wp_get_attachment_image_srcset( $thumbnail_id );
 							if ( $number_or_plus === 'number' ) {
 								?>
                                 <div class="col-md-<?php echo $number_of_columns; ?> col-<?php echo $number_of_columns * 2; ?> number">
-                                    <p class="title"><?php echo $number_stat; ?></p>
+                                    <p class="title" style="--figure-glyphs: <?php echo (int) mb_strlen( wp_strip_all_tags( (string) $number_stat ) ); ?>"><?php echo $number_stat; ?></p>
                                     <p class="description"><?php echo $number_description; ?></p>
                                 </div>
 							<?php } elseif ( $number_or_plus === 'plus' ) { ?>
@@ -314,13 +316,26 @@ if ( $related_ids ) {
 		echo '<h3>Related content</h3>';
 		echo '<div class="row mb-3">';
 
+		// article-card.php prints $term_name, so it has to be each card's own
+		// term rather than the host page's. Inheriting the host's value labelled
+		// every related card with the host page's term: register #11, where two
+		// case studies showed the sector of the page they were listed on. The
+		// host value is restored afterwards because the "See More" link below
+		// still needs it. This is the same per-post idiom the listing loops in
+		// ajax-calls.php and front-page.php already use.
+		$host_term_name = $term_name;
+
 		while ( $related_posts->have_posts() ) {
 			$related_posts->the_post();
+			$card_terms = get_the_terms( get_the_ID(), $taxonomy );
+			$term_name  = ( $card_terms && ! is_wp_error( $card_terms ) ) ? $card_terms[0]->name : '';
 			require( 'article-card.php' );
 		}
 
+		$term_name = $host_term_name;
+
 		echo '</div>';
-		echo '<div class="row"><a class="global-button" href="/our-work' . ( $term_name ? '?sectors=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
+		echo '<div class="row"><a class="global-button global-button--index" href="/our-work' . ( $term_name ? '?sectors=' . sanitize_title( $term_name ) : '' ) . '">See More</a></div>';
 		echo '</div>';
 		echo '</section>';
 	}

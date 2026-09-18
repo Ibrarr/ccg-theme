@@ -2,6 +2,29 @@
   position: relative;
   overflow: hidden;
 
+  // This masthead's ground is a raster plate with the old brand green baked
+  // into the artwork, so recolouring CSS cannot reach it. Section 2's wash is
+  // the system answer for a band that already carries an image ground: navy at
+  // 70% over the top, no change to the asset. A replacement plate in the new
+  // palette would be better still, and is on the client list.
+  > img {
+    position: relative;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: rgba(24, 45, 67, 0.7);
+    pointer-events: none;
+  }
+
+  > *:not(img) {
+    position: relative;
+    z-index: 2;
+  }
+
   .sector-name-slide {
     position: absolute;
     height: 100%;
@@ -36,7 +59,11 @@
             font-family: $font-circular-bold;
             color: $ccg-off-white;
             font-size: clamp(5rem, 3.8462rem + 3.2051vw, 6.25rem);
-            opacity: .5;
+            // .7, not .5. These are real sector names at 80px, so they need
+            // 3:1 against the navy wash; warm grey at .5 measured 2.41 and .7
+            // measures 3.23, which keeps them recessive against the acid
+            // active name (4.51) without dropping below AA.
+            opacity: .7;
             transition: all 1s;
           }
 
@@ -49,7 +76,12 @@
             }
 
             h3 {
-              color: $ccg-orange;
+              // Acid, per section 2's dark-ground accent. This was $ccg-orange,
+              // which is navy: navy at 50% opacity over the navy wash above
+              // measured 1.28:1, so the highlighted name was the one you
+              // could not read.
+              color: $hof-acid;
+              opacity: 1;
             }
           }
         }

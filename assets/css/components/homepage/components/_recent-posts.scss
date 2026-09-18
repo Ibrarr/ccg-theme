@@ -20,7 +20,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.25);
+      background-color: rgba(24, 45, 67, 0.7);   // the Hoffman wash, hero recipe
     }
 
     .recent-post {
@@ -28,19 +28,25 @@
       position: relative;
       z-index: 1;
       width: 100%;
+      // Section 2's ring, acid on dark: the tile is a washed photograph.
+      --focus-ring: #{$hof-acid};
 
       a {
         text-decoration: none;
+        // Inline, the link's focus outline went round empty line fragments
+        // either side of the eyebrow and title, so no ring showed.
+        display: block;
       }
 
       .post-term {
-        @include term($ccg-orange);
+        @include term($hof-acid);
       }
 
       .post-title {
         font-family: $font-circular-medium;
-        font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.875rem);
-        line-height: clamp(2.125rem, 0.5694rem + 3.2407vw, 3rem);
+        // Section 1's card title, 42px. It ran to 46.
+        font-size: clamp(1.75rem, -0.25rem + 4.1667vw, 2.625rem);
+        line-height: 1.15;
         color: #ffffff;
       }
 
@@ -60,7 +66,7 @@
 
     &:hover {
       &:after {
-        background-color: rgba(0, 0, 0, 0.50);
+        background-color: rgba(24, 45, 67, 0.85);
       }
     }
   }

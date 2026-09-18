@@ -1,0 +1,182 @@
+// The custom dropdown, once.
+//
+// This component existed as four near-identical copies (term selector, sector,
+// service, work) and they had already drifted apart. All four carried the same
+// three faults: a white fill with no border, so on a white section the control
+// had no box at all; a 12.6x8.35 chevron forced into a 15x15 box at
+// background-size: 100% 100%, which stretched it into a fat sideways arrow; and
+// menu rows set 14px on 12px leading, tighter than the type size itself.
+//
+// It lives here now and each template includes it with its own block name, so
+// the next change lands everywhere at once.
+//
+// $name   the block, e.g. "work-dropdown" for .work-dropdown-container
+// $header the optional group-heading class inside the menu
+@mixin custom-dropdown($name, $header: null) {
+  .#{$name}-container {
+    position: relative;
+    // Above the bands that follow it. On the Sectors page the carousel painted
+    // over the bottom edge of the trigger's keyboard ring, and on sector and
+    // service pages, whose bands stack from 4 up to 11, the open menu dropped
+    // behind "Why choose CCGroup?" below lg, hiding half its options. The menu
+    // itself stays at 4 inside this layer.
+    z-index: 12;
+    // The trigger used to carry a hard 210px width, so a two-word label
+    // ("Sector / Service") wrapped to two lines inside the box. The width now
+    // lives on the container as a floor rather than a fixed size: max-content
+    // lets a longer label push the box out, min-width keeps every shorter
+    // trigger at the size it has always been, and both children take 100% so
+    // the menu stays exactly as wide as the control that opens it. The menu is
+    // absolutely positioned, so it contributes nothing to max-content.
+    width: max-content;
+    min-width: 210px;
+
+    .#{$name} {
+      // The fill has to differ from the band behind it, and the bands differ:
+      // most of these sit on white or warm grey, but the three post archives
+      // put theirs inside the navy top of a hard-stop gradient, where a navy
+      // fill was invisible. Driven by properties so the band sets the pair
+      // rather than each template restating the component.
+      background-color: var(--dropdown-fill, #{$hof-navy});
+      color: var(--dropdown-label, #{$hof-white});
+      border: 1.5px solid var(--dropdown-fill, #{$hof-navy});
+      font-family: $font-circular-medium;
+      text-transform: uppercase;
+      font-size: 14px;
+      line-height: 1.3;
+      letter-spacing: 0.08em;
+      width: 100%;
+      white-space: nowrap;
+      padding: 13px 44px 13px 24px;
+      border-radius: var(--radius-btn);
+      cursor: pointer;
+      position: relative;
+      transition: $ccg-transition-colours;
+
+      &:where(:hover, :focus-visible) {
+        background-color: var(--dropdown-fill-hover, #{$hof-acid});
+        color: var(--dropdown-label-hover, #{$hof-navy});
+        border-color: var(--dropdown-fill-hover, #{$hof-acid});
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--dropdown-ring, #{$hof-navy});
+        outline-offset: 2px;
+      }
+
+      // Drawn, not an asset: a square with two borders, rotated. It takes
+      // currentColor so the hover state comes free, and it cannot be stretched
+      // by a box that does not match its aspect ratio.
+      &:after {
+        content: "";
+        display: block;
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        right: 22px;
+        top: 50%;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: translateY(-70%) rotate(45deg);
+        transition: transform .2s;
+      }
+
+      &.dropdown-open:after {
+        transform: translateY(-25%) rotate(225deg);
+      }
+    }
+
+    .#{$name}-menu-container {
+      display: none;
+      position: absolute;
+      top: 56px;
+      border-radius: var(--radius-btn);
+      background-color: $hof-white;
+      width: 100%;
+      z-index: 4;
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      box-shadow: 0 8px 24px 0 rgba(24, 45, 67, .16);
+
+      .#{$name}-menu {
+        overflow-y: auto;
+        max-height: 450px;
+      }
+
+      @if $header {
+        .#{$header} {
+          font-family: $font-circular-medium;
+          color: $hof-navy;
+          background-color: $hof-grey-warm;
+          font-size: 13px;
+          line-height: 1.45;
+          letter-spacing: 0.08em;
+          display: block;
+          padding: 11px 24px;
+          text-decoration: none;
+          text-transform: uppercase;
+        }
+      }
+
+      .#{$name}-item {
+        color: $hof-navy;
+        font-family: $font-circular-medium;
+        font-size: 13px;
+        // 1.5 leading and real tracking: these are caps labels, several of
+        // which wrap to two or three lines, and at 12px leading they set solid.
+        line-height: 1.5;
+        letter-spacing: 0.08em;
+        display: block;
+        padding: 11px 24px;
+        text-decoration: none;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 120ms ease;
+
+        &:first-child {
+          padding-top: 14px;
+        }
+
+        &:last-child {
+          padding-bottom: 14px;
+        }
+
+        &:where(:hover, :focus-visible) {
+          background-color: $hof-grey-warm;
+          color: $hof-navy;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      min-width: 168px;
+
+      .#{$name} {
+        font-size: 11px;
+        padding: 11px 36px 11px 18px;
+
+        &:after {
+          right: 17px;
+          width: 7px;
+          height: 7px;
+        }
+      }
+
+      .#{$name}-menu-container {
+        top: 46px;
+
+        @if $header {
+          .#{$header} {
+            font-size: 10px;
+            padding: 9px 18px;
+          }
+        }
+
+        .#{$name}-item {
+          font-size: 10px;
+          padding: 9px 18px;
+        }
+      }
+    }
+  }
+}

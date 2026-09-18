@@ -22,17 +22,37 @@
   }
 
   p.term {
-    @include term($ccg-orange);
+    // A9: eyebrows on light grounds are deep violet. This one still came from
+    // $ccg-orange, which is navy by design, so it matched the H1 beneath it.
+    @include term($hof-violet-deep);
   }
 
   .parent-term {
     @include title-text($ccg-green);
+    // A7/T5: "Service H1, category line — Poppins Medium, 24-30px, deep violet
+    // on white". It was taking title-text()'s full 56px in navy, identical to
+    // the service name below it, so the two lines read as one heading twice.
+    // T5's own clamp for the role: `clamp(1.5rem, 2vw, 1.875rem)` on 1.2.
+    font-size: clamp(1.5rem, 2vw, 1.875rem);
+    line-height: 1.2;
+    color: $hof-violet-deep;
     margin-bottom: 0 !important;
   }
 
   .child-term {
+    // Medium, like the parent service H1 beside it. Section 1's "Service H1,
+    // service name" role is Poppins Medium; this one override made the child
+    // pages Regular.
     @include title-text($ccg-green);
-    font-family: $font-circular-regular;
+    // A7: T5's clamp for the role, `clamp(2.75rem, 3.5vw, 3.4375rem)` on 1.15.
+    font-size: clamp(2.75rem, 3.5vw, 3.4375rem);
+    line-height: 1.15;
+
+    // At 44px a long service word ("performance") is wider than a 320px
+    // screen's column and broke mid-word. Only below 360px.
+    @media (max-width: 359.98px) {
+      font-size: 2.5rem;
+    }
   }
 
   .title {
@@ -40,18 +60,46 @@
   }
 
   .intro {
-    h2 {
+    // T4/T5: "Opening statement = the T3 standfirst role, shared" - sector and
+    // service pages open on the same serif beat as an article, so this block
+    // matches .post-header .intro h2 line for line. Change one, change both.
+    h2,
+    p.statement {
       @include sub-heading-text($ccg-green);
+      font-family: $font-serif;
+      font-style: italic;
+      font-weight: 400;
+      // Section 1 and T3: `clamp(1.375rem, 1.8vw, 1.5rem)` on 1.5, 60ch.
+      font-size: clamp(1.375rem, 1.8vw, 1.5rem);
+      line-height: 1.5;
+      max-width: 60ch;
 
       a {
-        color: $ccg-green;
-        background: linear-gradient(0deg, $ccg-orange, $ccg-orange) no-repeat right bottom / 0;
-        transition: background-size 350ms;
+        // 7.5 light-ground link colour. The underline was $ccg-orange, which
+        // is navy now, so it drew navy on navy and the affordance vanished.
+        color: $hof-violet-deep;
+        position: relative;
 
-        &:where(:hover, :focus-visible) {
-          background-size: 100%;
-          background-position-x: left;
+        // Section 5, rule 2: the underline draws in on transform, which the
+        // compositor handles, rather than on background-size, which does not
+        // animate off the paint step. Same 350ms, same look.
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 1px;
+          background-color: $hof-violet-deep;
+          transform: scaleX(0);
+          transform-origin: left center;
         }
+
+        &:where(:hover, :focus-visible)::after {
+          transform: scaleX(1);
+        }
+
+        @include underline-draw-in();
       }
     }
   }
@@ -59,6 +107,16 @@
   .smaller-intro {
     h3 {
       @include body-text($ccg-green);
+    }
+  }
+
+  // B5 (v0.14): below lg the dropdown sits on its own row under the statement,
+  // right-aligned in a half-width column narrower than itself, so it spilled
+  // left to 8px from the screen edge. It starts on the text gutter instead.
+  // !important because the markup's justify-content-end utility carries it.
+  .services-links {
+    @include media-breakpoint-down(lg) {
+      justify-content: flex-start !important;
     }
   }
 }

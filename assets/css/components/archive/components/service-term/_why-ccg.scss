@@ -1,4 +1,19 @@
 .why-ccg {
+  // The Hoffman wash. Section 2 applies it wherever a band already has a
+  // photographic ground, as a CSS overlay so the image itself is untouched.
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(24, 45, 67, 0.7);
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
   background-size: cover;
   background-repeat: no-repeat;
   padding: 120px 0;
@@ -8,33 +23,45 @@
   overflow: hidden;
   border-radius: 0 0 25px 25px;
 
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.25);
-  }
+  // Section 2: "exactly the section 2 hero spec - one wash recipe site-wide, no
+  // variants". This band used to stack a further 25% black on top of the navy
+  // 70%, which made it the one place darker than the recipe.
+
 
   .content {
     z-index: 1;
     position: relative;
   }
 
-  h1 {
-    font-size: clamp(1.25rem, 0.3611rem + 1.8519vw, 1.75rem);
-    font-family: $font-circular-medium;
-    color: #fff;
+  // Register #8: this label used to be an <h1>, which gave every service and
+  // sector page two H1s. It is the smallest of the three headings in the band,
+  // so it was never a page heading. Demoted to h2.kicker; the styling is
+  // unchanged and the big serif statement below is scoped off it.
+  .kicker {
+    // A7 sweeps every type role against section 1, and T4/T5 cast "Why choose
+    // CCGroup?" in the eyebrow role: Poppins SemiBold letter-spaced caps, acid
+    // on the washed dark ground. It had been white sentence case at 20-28px
+    // since before the reskin.
+    @include term($hof-acid);
+    letter-spacing: 1.5px;
     margin-bottom: 20px;
   }
 
-  h2 {
-    font-size: clamp(3.625rem, 0.3611rem + 1.8519vw, 5.1875rem);
-    line-height: clamp(3.1875rem, 0.3182rem + 1.8519vw, 4.5625rem);
-    font-family: $font-circular-bold;
-    color: $ccg-pink;
+  h2:not(.kicker),
+  p.statement {
+    // T4 and T5 write the washed statement as `clamp(1.75rem, 2.6vw,
+    // 2.4375rem)` on 1.35, 28-39px. It ran to 83px, and at 768px
+    // "Communication" was wider than its column and broke mid-word.
+    font-size: clamp(1.75rem, 2.6vw, 2.4375rem);
+    line-height: 1.35;
+    overflow-wrap: break-word;
+    // 7.4: washed statement bands are a serif voice moment, in white on the
+    // navy wash. Salmon here was the old mustard-era treatment. T4/T5 both
+    // name the style as well as the family: Libre Baskerville *Italic*.
+    font-family: $font-serif;
+    font-style: italic;
+    font-weight: 400;
+    color: $hof-white;
     margin-bottom: 20px;
   }
 

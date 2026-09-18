@@ -5,15 +5,16 @@
 
   h1.title {
     position: relative;
-    @include title-text($ccg-off-white);
+    @include title-text($hof-white);
   }
 
   .intro {
     position: relative;
     z-index: 3;
 
-    h2 {
-      @include sub-heading-text($ccg-off-white);
+    h2,
+    p.statement {
+      @include sub-heading-text($hof-white);
     }
   }
 }

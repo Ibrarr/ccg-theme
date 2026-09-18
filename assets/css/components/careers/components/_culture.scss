@@ -1,17 +1,27 @@
 .culture {
   position: relative;
   z-index: 2;
-  background-color: $ccg-off-white;
+  // T10: light grey -> white (7.3 direct content). It also ends the run of
+  // three consecutive warm grey bands, which had no visible seam between them.
+  background-color: $hof-white;
   margin-top: -25px;
   padding: 80px 0;
   border-radius: 0 0 25px 25px;
 
   h3 {
     @include title-text($ccg-orange);
+    @include section-title-44();
   }
 
+  // T10: the standfirst takes the T5 category-line role rather than staying a
+  // second navy paragraph, so the section still has one accent on a white band.
+  // T10: the standfirst line takes the T5 category-line role, deep violet
+  // Poppins Medium, `clamp(1.25rem, 1.6vw, 1.5rem)` on 1.4.
   .intro {
-    @include sub-heading-text($ccg-orange);
+    font-family: $font-circular-medium;
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+    line-height: 1.4;
+    color: $hof-violet-deep;
     margin-bottom: 30px;
   }
 

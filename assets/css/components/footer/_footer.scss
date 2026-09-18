@@ -1,3 +1,23 @@
+// The rule between the stacked footer columns below md. These columns run into
+// the row's gutters, so a plain border ran 12px past the text on each side, and
+// .footer-sections used to hide that with overflow: hidden. The clip went
+// because it also cut the links' keyboard rings, so the rule is drawn inset by
+// the gutter instead: the same length as before, on the same 1px border, which
+// stays so the column keeps its height.
+// B3 (v0.14) gave the Libre Baskerville legal and credit lines the fluid size of
+// the acid micro-labels above them ("Get in touch", "Find us", "Follow"), 12px
+// rising to 13.5px. At the same size the roman reads larger than those italic
+// labels, because it sets about 11% wider on the same x-height, so the client
+// asked for 10px (17 Sept 2026). This is that clamp scaled by 10/12: 10px on
+// phones rising to 11.25px, on the same breakpoints, so the lines stay the same
+// step below the labels at every width.
+$footer-legal-size: clamp(0.625rem, 0.4398rem + 0.3858vw, 0.703125rem);
+
+@mixin footer-divider() {
+  border-bottom: 1px solid transparent;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) center bottom / calc(100% - var(--bs-gutter-x, 1.5rem)) 1px no-repeat border-box;
+}
+
 footer {
   background-color: $ccg-dark-green;
   margin-top: -25px;
@@ -8,12 +28,13 @@ footer {
   .footer-logo {
     svg {
       width: 100%;
+      height: auto;
       max-width: 250px;
 
       @include media-breakpoint-up(md) {
-        width: 100%;
-        max-width: 347px;
-        height: 72px;
+        // No fixed height: the lockup is 7.43:1, so a 72px box letterboxed it
+        // with 25px of dead space under the artwork.
+        max-width: 401px;
       }
 
       @include media-breakpoint-down(lg) {
@@ -38,12 +59,14 @@ footer {
     }
 
     a {
-      font-family: $font-circular-regular;
+      // B7: the credit matches the copyright line; B3 (v0.14) sets their size.
+      font-family: $font-serif;
+      font-style: normal;
       text-decoration: none;
-      font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+      font-size: $footer-legal-size;
       line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-      color: #636363;
-      transition: $ccg-transition-all;
+      color: $hof-grey-warm;
+      transition: $ccg-transition-colours;
 
       &:hover {
         color: $ccg-body-bg;
@@ -52,7 +75,11 @@ footer {
   }
 
   .footer-sections {
-    overflow: hidden;
+    // Was overflow: hidden, which clipped the keyboard ring of every link along
+    // the block's edges: the menu's first row lost its top, the left column its
+    // left side, the last row its bottom. flow-root keeps the new block
+    // formatting context that overflow gave it, so nothing moves.
+    display: flow-root;
 
     .main-footer-menu {
       .logo-text {
@@ -79,11 +106,11 @@ footer {
           text-decoration: none;
           font-family: $font-circular-bold;
           font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-          color: $ccg-pink;
-          transition: $ccg-transition-all;
+          color: $hof-grey-warm;
+          transition: $ccg-transition-colours;
 
           &:hover {
-            color: $ccg-orange;
+            color: var(--interaction-accent);
           }
         }
       }
@@ -92,16 +119,20 @@ footer {
         margin-top: 20px;
         padding-bottom: 30px;
         margin-bottom: 30px;
-        border-bottom: 1px solid #264b55;
+        @include footer-divider();
       }
     }
 
     .social-contact {
+      // 7.4 serif micro-labels: these are the small footer section labels the
+      // policy names explicitly, Libre Baskerville Italic in acid on navy.
       h4 {
-        text-transform: uppercase;
-        font-family: $font-circular-bold;
-        font-size: clamp(0.625rem, 0.4028rem + 0.463vw, 0.75rem);
-        color: $ccg-pink;
+        font-family: $font-serif;
+        font-style: italic;
+        text-transform: none;
+        font-size: clamp(0.75rem, 0.5278rem + 0.463vw, 0.84375rem);
+        line-height: 1.3;
+        color: $hof-acid;
       }
 
       p {
@@ -120,10 +151,10 @@ footer {
         line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
         color: #E5E4E0;
         width: fit-content;
-        transition: $ccg-transition-all;
+        transition: $ccg-transition-colours;
 
         &:hover {
-          color: $ccg-orange;
+          color: var(--interaction-accent);
         }
       }
 
@@ -144,7 +175,7 @@ footer {
       @include media-breakpoint-down(md) {
         padding-bottom: 30px;
         margin-bottom: 30px;
-        border-bottom: 1px solid #264b55;
+        @include footer-divider();
       }
     }
 
@@ -157,14 +188,27 @@ footer {
         display: flex;
         margin: 0;
         align-items: flex-end;
+        // B7 (v0.13): the paragraph carries the copyright's type as well as the
+        // link inside it. Unset, it computed as the browser's system-ui 16px in
+        // near-black, which is what a computed-style check on the credit reads.
+        font-family: $font-serif;
+        font-style: normal;
+        font-size: $footer-legal-size;
+        line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
+        color: $hof-grey-warm;
 
         a {
-          font-family: $font-circular-regular;
+          // B7 (v0.12): the credit matches the copyright line exactly, in
+          // Libre Baskerville Regular. A clamp on the line below once overrode
+          // the size, so the credit rendered 16px beside a smaller copyright.
+          // The leading is the copyright's own clamp; B3 (v0.14) sets the size.
+          font-family: $font-serif;
+          font-style: normal;
+          font-size: $footer-legal-size;
           text-decoration: none;
-          font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
           line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-          color: #636363;
-          transition: $ccg-transition-all;
+          color: $hof-grey-warm;
+          transition: $ccg-transition-colours;
 
           &:hover {
             color: $ccg-body-bg;
@@ -195,6 +239,18 @@ footer {
         color: #E5E4E0;
       }
 
+      // Section 1's "Legal links" role: Libre Baskerville Regular (B3 size), warm
+      // grey. Roman, not italic, per the serif audit's three roman exceptions.
+      .company-name,
+      .credit-text,
+      .credit-text a,
+      .credit,
+      .credit a {
+        font-family: $font-serif;
+        font-style: normal;
+        font-size: $footer-legal-size;
+      }
+
       .company-name {
         display: flex;
         margin: 0;
@@ -220,13 +276,27 @@ footer {
           }
         }
 
+        // Legal links are a serif role too: Libre Baskerville Regular, warm
+        // grey on navy. The paragraphs inside took .legal p's 16px clamp, so the
+        // CMS link rendered 16px; they carry the B3 size too.
+        font-family: $font-serif;
+        font-size: $footer-legal-size;
+        line-height: 1.5;
+
+        p {
+          font-family: $font-serif;
+          font-size: $footer-legal-size;
+        }
+
         a {
+          font-size: $footer-legal-size;
+          font-family: $font-serif;
           color: $ccg-off-white;
           text-decoration: none;
-          transition: $ccg-transition-all;
+          transition: $ccg-transition-colours;
 
           &:hover {
-            color: $ccg-orange;
+            color: var(--interaction-accent);
           }
         }
 
@@ -234,12 +304,14 @@ footer {
           display: block;
 
           a {
-            font-family: $font-circular-regular;
+            // B7: same as the copyright line beside it.
+            font-family: $font-serif;
+            font-style: normal;
             text-decoration: none;
-            font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+            font-size: $footer-legal-size;
             line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
-            color: #636363;
-            transition: $ccg-transition-all;
+            color: $hof-grey-warm;
+            transition: $ccg-transition-colours;
 
             &:hover {
               color: $ccg-body-bg;
@@ -265,14 +337,16 @@ footer {
 
             a {
               text-decoration: none;
-              font-family: $font-circular-regular;
-              font-size: clamp(0.6875rem, 0.1319rem + 1.1574vw, 1rem);
+              // B7: Site Map / Privacy Policy / Cookie Policy are Libre
+              // Baskerville, in the footer and in the menu overlay alike.
+              font-family: $font-serif;
+              font-size: $footer-legal-size;
               line-height: clamp(0.875rem, 0.6528rem + 0.463vw, 1rem);
               color: #E5E4E0;
-              transition: $ccg-transition-all;
+              transition: $ccg-transition-colours;
 
               &:hover {
-                color: $ccg-orange;
+                color: var(--interaction-accent);
               }
             }
           }

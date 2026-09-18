@@ -13,7 +13,6 @@
 
   @import "components/accordion";
 
-  .bottom-cta {
-    background-color: $ccg-orange;
-  }
+  // No .bottom-cta override, for the same reason as the 404 template: it forced
+  // navy, and navy is the footer's colour too.
 }
