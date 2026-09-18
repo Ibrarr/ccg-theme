@@ -35,6 +35,9 @@ require CCG_INC_PATH . '/insight-detailed.php';
 // Notification Bar
 require CCG_INC_PATH . '/notification-bar.php';
 
+// Site Icon
+require CCG_INC_PATH . '/site-icon.php';
+
 // ACF
 require CCG_INC_PATH . '/acf.php';
 
